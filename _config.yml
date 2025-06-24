@@ -1,0 +1,36 @@
+# GitHub Pages Configuration
+title: Evolving Agents Labs
+description: Building the Future of Intelligent Agents
+url: "https://evolvingagentslabs.github.io"
+baseurl: ""
+
+# Build settings
+markdown: kramdown
+highlighter: rouge
+theme: minima
+
+# Exclude files
+exclude:
+  - README.md
+  - Gemfile
+  - Gemfile.lock
+  - node_modules
+  - vendor
+  - .bundle
+  - .sass-cache
+  - .jekyll-cache
+  - .jekyll-metadata
+
+# Collections
+collections:
+  experiments:
+    output: true
+    permalink: /:collection/:name/
+
+# Defaults
+defaults:
+  - scope:
+      path: ""
+      type: "experiments"
+    values:
+      layout: "experiment"

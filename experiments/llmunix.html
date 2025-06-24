@@ -1,0 +1,196 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>LLMunix - Evolving Agents Labs</title>
+    <link rel="stylesheet" href="../styles.css">
+    <link href="https://fonts.googleapis.com/css2?family=Google+Sans:wght@400;500;700&display=swap" rel="stylesheet">
+    <style>
+        .experiment-detail {
+            padding: 80px 0;
+        }
+        .experiment-header {
+            text-align: center;
+            margin-bottom: 64px;
+        }
+        .experiment-header h1 {
+            font-size: 48px;
+            font-weight: 400;
+            margin-bottom: 16px;
+            color: #202124;
+        }
+        .experiment-header .category {
+            font-size: 16px;
+            color: #1a73e8;
+            font-weight: 500;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+        }
+        .feature-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 32px;
+            margin: 48px 0;
+        }
+        .feature-item {
+            background: #f8f9fa;
+            padding: 32px;
+            border-radius: 12px;
+        }
+        .feature-item h3 {
+            color: #1a73e8;
+            margin-bottom: 16px;
+            font-size: 20px;
+        }
+        .code-example {
+            background: #f8f9fa;
+            border-radius: 8px;
+            padding: 24px;
+            margin: 24px 0;
+            font-family: 'Courier New', monospace;
+            overflow-x: auto;
+        }
+        .demo-section {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            padding: 64px 0;
+            margin: 64px 0;
+            border-radius: 12px;
+        }
+        .demo-content {
+            text-align: center;
+        }
+        .demo-content h2 {
+            font-size: 32px;
+            margin-bottom: 16px;
+        }
+        .demo-gif {
+            max-width: 100%;
+            border-radius: 8px;
+            margin: 32px 0;
+        }
+    </style>
+</head>
+<body>
+    <nav class="navbar">
+        <div class="nav-container">
+            <div class="nav-logo">
+                <a href="../index.html" style="text-decoration: none; color: inherit;">
+                    <h1>Evolving Agents Labs</h1>
+                </a>
+            </div>
+            <div class="nav-links">
+                <a href="../index.html#experiments">Experiments</a>
+                <a href="../index.html#about">About</a>
+                <a href="https://github.com/EvolvingAgentsLabs/llmunix" target="_blank">GitHub</a>
+            </div>
+        </div>
+    </nav>
+
+    <main>
+        <section class="experiment-detail">
+            <div class="container">
+                <div class="experiment-header">
+                    <div class="category">AI Operating System</div>
+                    <h1>LLMunix</h1>
+                    <p style="font-size: 20px; color: #5f6368; max-width: 800px; margin: 0 auto;">
+                        A Pure Markdown Operating System where everything is either an agent or tool defined in markdown documents. 
+                        Claude Code serves as the runtime engine interpreting these markdown specifications.
+                    </p>
+                </div>
+
+                <div class="demo-section">
+                    <div class="demo-content">
+                        <h2>Watch LLMunix in Action</h2>
+                        <p>See how LLMunix boots and executes intelligent tasks with adaptive behavior management</p>
+                        <img src="../images/llmunix-demo.gif" alt="LLMunix Demo" class="demo-gif" />
+                    </div>
+                </div>
+
+                <div class="feature-grid">
+                    <div class="feature-item">
+                        <h3>🧠 Sentient State Architecture</h3>
+                        <p>Behavioral constraints evolve dynamically based on user sentiment, task context, and execution events. The system maintains modular state files that enable atomic updates and resumable execution.</p>
+                    </div>
+                    
+                    <div class="feature-item">
+                        <h3>🎯 Adaptive Behavior Management</h3>
+                        <p>System behavior adapts in real-time through evolving constraints. Priority shifts between speed and comprehensiveness, communication style adjusts to user preferences, and error tolerance adapts to task criticality.</p>
+                    </div>
+                    
+                    <div class="feature-item">
+                        <h3>🔍 Intelligent Memory System</h3>
+                        <p>Structured experience database with YAML frontmatter enables intelligent querying of past executions. Pattern recognition across experiences guides current decision-making and optimization strategies.</p>
+                    </div>
+                    
+                    <div class="feature-item">
+                        <h3>🛠️ Real Tool Integration</h3>
+                        <p>Maps to Claude Code's native tools with graceful degradation and intelligent error recovery. Production-ready execution with enterprise-grade error handling and cost optimization.</p>
+                    </div>
+                    
+                    <div class="feature-item">
+                        <h3>📚 Pure Markdown Framework</h3>
+                        <p>Everything is defined in markdown documents - no code generation required. System behavior emerges from Claude interpreting markdown specifications as a functional operating system.</p>
+                    </div>
+                    
+                    <div class="feature-item">
+                        <h3>🔄 Training Data Generation</h3>
+                        <p>Automatic conversion of real execution experiences into fine-tuning datasets. Complete execution traces with behavioral context enable training of increasingly autonomous agents.</p>
+                    </div>
+                </div>
+
+                <h2 style="text-align: center; margin: 64px 0 32px; font-size: 32px;">Quick Start</h2>
+                
+                <div class="code-example">
+<strong>1. Boot LLMunix</strong><br/>
+boot llmunix<br/><br/>
+
+<strong>2. Execute Intelligent Tasks</strong><br/>
+llmunix execute: "Monitor 5 tech news sources, extract trending topics, and generate intelligence briefing"<br/>
+# System adapts constraints based on API limitations, maintains intelligence value through graceful degradation<br/><br/>
+
+llmunix execute: "Research AI safety papers - query memory for past research patterns and apply successful approaches"<br/>
+# QueryMemoryTool consults past experiences, MemoryAnalysisAgent recommends optimal strategy<br/><br/>
+
+llmunix execute: "Urgent: analyze this legal document for risks in 10 minutes"<br/>
+# System detects urgency, adapts constraints: priority='speed_and_clarity', persona='concise_assistant'
+                </div>
+
+                <h2 style="text-align: center; margin: 64px 0 32px; font-size: 32px;">Architecture</h2>
+                
+                <p style="text-align: center; font-size: 18px; color: #5f6368; margin-bottom: 32px;">
+                    LLMunix implements a modular state architecture with specialized files for different aspects of execution state:
+                </p>
+
+                <div class="code-example">
+workspace/state/<br/>
+├── plan.md          # Execution steps and metadata<br/>
+├── context.md       # Knowledge accumulation<br/>
+├── variables.json   # Structured data passing<br/>
+├── history.md       # Execution log<br/>
+└── constraints.md   # Behavioral modifiers (sentient state)<br/><br/>
+
+<strong>Key Behavioral Modifiers:</strong><br/>
+• user_sentiment: Detected emotional state (neutral, pleased, frustrated, stressed)<br/>
+• priority: Execution focus (speed_and_clarity, comprehensiveness, cost_efficiency)<br/>
+• active_persona: Communication style (concise_assistant, detailed_analyst, proactive_collaborator)<br/>
+• error_tolerance: Risk acceptance level (strict, moderate, flexible)<br/>
+• human_review_trigger_level: Guidance threshold (low, medium, high)
+                </div>
+
+                <div style="text-align: center; margin: 64px 0;">
+                    <a href="https://github.com/EvolvingAgentsLabs/llmunix" class="btn-primary" target="_blank">Explore the Code</a>
+                    <a href="../index.html" class="btn-secondary">Back to Experiments</a>
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <footer class="footer">
+        <div class="container">
+            <p>&copy; 2024 Evolving Agents Labs. Building the future of intelligent agents.</p>
+        </div>
+    </footer>
+</body>
+</html>
