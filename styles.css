@@ -76,11 +76,33 @@ body {
     margin-right: auto;
 }
 
-.hero-content p {
+.hero-content > p {
     font-size: 20px;
     opacity: 0.9;
     max-width: 600px;
-    margin: 0 auto;
+    margin: 0 auto 32px;
+}
+
+.alpha-notice {
+    margin-top: 32px;
+}
+
+.alpha-badge {
+    background: rgba(255, 255, 255, 0.2);
+    color: white;
+    padding: 8px 16px;
+    border-radius: 20px;
+    font-size: 14px;
+    font-weight: 500;
+    display: inline-block;
+    margin-bottom: 12px;
+    border: 1px solid rgba(255, 255, 255, 0.3);
+}
+
+.alpha-notice p {
+    font-size: 16px;
+    opacity: 0.8;
+    margin: 0;
 }
 
 /* Experiments Section */
@@ -181,6 +203,17 @@ body {
     border-radius: 16px;
     font-size: 12px;
     font-weight: 500;
+}
+
+.alpha-tag {
+    background: #ff6b6b;
+    color: white;
+    padding: 2px 8px;
+    border-radius: 12px;
+    font-size: 10px;
+    font-weight: 500;
+    margin-left: 8px;
+    vertical-align: middle;
 }
 
 .experiment-links {
