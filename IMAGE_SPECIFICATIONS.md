@@ -29,6 +29,30 @@ Location: `/images/`
 - **Text**: Include "Agent Examples", icons for research, legal, marketing, healthcare
 - **Colors**: Consistent with site theme (#1a73e8, #ff6b6b for alpha tags)
 
+#### **eax-router-preview.png**
+- **Size**: 400×240px
+- **Format**: PNG
+- **Content**: Network diagram showing model routing with decision flow
+- **Style**: Clean diagram with multiple LLM models and routing logic
+- **Text**: Include "EAX Router", "Cost/Latency/Quality", model names (GPT-4, Claude, etc.)
+- **Colors**: Blue theme (#1a73e8) with routing arrows and decision nodes
+
+#### **eax-marketplace-preview.png**
+- **Size**: 400×240px
+- **Format**: PNG
+- **Content**: Auction/marketplace visualization with agents bidding
+- **Style**: Marketplace interface with bid cards and agent icons
+- **Text**: Include "EAX Marketplace", "Task Auction", agent names and bid amounts
+- **Colors**: Professional theme with competitive elements (greens for winning bids)
+
+#### **sal-cp-preview.png**
+- **Size**: 400×240px
+- **Format**: PNG
+- **Content**: Communication protocol diagram showing message structure
+- **Style**: Technical diagram with message headers and payload visualization
+- **Text**: Include "SAL-CP", "Header + Payload", context awareness indicators
+- **Colors**: Communication theme (blues and teals) with data flow arrows
+
 ### 2. Demo Animation
 Location: `/images/`
 
@@ -124,10 +148,13 @@ The CSS includes styled placeholders for missing images:
 
 ## Priority Order
 1. **llmunix-preview.png** (Featured project)
-2. **framework-core-preview.png** 
-3. **agent-examples-preview.png**
-4. **llmunix-demo.gif** (Demo animation)
-5. Additional detail images (enhancement)
+2. **eax-router-preview.png** (Key EAX project)
+3. **eax-marketplace-preview.png** (Key EAX project)
+4. **sal-cp-preview.png** (Key EAX project)
+5. **framework-core-preview.png** 
+6. **agent-examples-preview.png**
+7. **llmunix-demo.gif** (Demo animation)
+8. Additional detail images (enhancement)
 
 ## Notes
 - All images should emphasize the experimental/research nature

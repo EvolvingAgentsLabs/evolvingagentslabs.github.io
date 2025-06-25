@@ -1,0 +1,179 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>EAX Router - Evolving Agents Labs</title>
+    <link rel="stylesheet" href="../styles.css">
+    <link href="https://fonts.googleapis.com/css2?family=Google+Sans:wght@400;500;700&display=swap" rel="stylesheet">
+    <style>
+        .experiment-detail {
+            padding: 80px 0;
+        }
+        .experiment-header {
+            text-align: center;
+            margin-bottom: 64px;
+        }
+        .experiment-header h1 {
+            font-size: 48px;
+            font-weight: 400;
+            margin-bottom: 16px;
+            color: #202124;
+        }
+        .experiment-header .category {
+            font-size: 16px;
+            color: #1a73e8;
+            font-weight: 500;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+        }
+        .feature-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 32px;
+            margin: 48px 0;
+        }
+        .feature-item {
+            background: #f8f9fa;
+            padding: 32px;
+            border-radius: 12px;
+        }
+        .feature-item h3 {
+            color: #1a73e8;
+            margin-bottom: 16px;
+            font-size: 20px;
+        }
+        .code-example {
+            background: #f8f9fa;
+            border-radius: 8px;
+            padding: 24px;
+            margin: 24px 0;
+            font-family: 'Courier New', monospace;
+            overflow-x: auto;
+        }
+    </style>
+</head>
+<body>
+    <nav class="navbar">
+        <div class="nav-container">
+            <div class="nav-logo">
+                <a href="../index.html" style="text-decoration: none; color: inherit;">
+                    <h1>Evolving Agents Labs</h1>
+                </a>
+            </div>
+            <div class="nav-links">
+                <a href="../index.html#experiments">Experiments</a>
+                <a href="../index.html#about">About</a>
+                <a href="https://github.com/EvolvingAgentsLabs/eax-router" target="_blank">GitHub</a>
+            </div>
+        </div>
+    </nav>
+
+    <main>
+        <section class="experiment-detail">
+            <div class="container">
+                <div class="experiment-header">
+                    <div class="category">🧪 EXPERIMENTAL LLM ROUTING</div>
+                    <h1>EAX Router <span class="alpha-tag">ALPHA</span></h1>
+                    <p style="font-size: 20px; color: #5f6368; max-width: 800px; margin: 0 auto 24px;">
+                        An experimental, intelligent, and pluggable routing layer for Large Language Models. 
+                        Research into dynamic model selection based on cost, latency, or quality priorities.
+                    </p>
+                    <div style="background: #fff3cd; border: 1px solid #ffeaa7; border-radius: 8px; padding: 16px; max-width: 600px; margin: 0 auto;">
+                        <p style="margin: 0; font-size: 14px; color: #856404;">
+                            ⚠️ <strong>Experimental Research</strong> - This project explores intelligent routing concepts and will remain permanently in alpha status.
+                        </p>
+                    </div>
+                </div>
+
+                <div class="feature-grid">
+                    <div class="feature-item">
+                        <h3>🧠 Intelligent Model Selection</h3>
+                        <p>Research into how applications can dynamically choose the optimal LLM for each task based on priority settings - cost, latency, or quality optimization.</p>
+                    </div>
+                    
+                    <div class="feature-item">
+                        <h3>🔌 Pluggable Routing Strategies</h3>
+                        <p>Experimental framework for different routing approaches: CostOptimized, LatencyOptimized, QualityOptimized, with interfaces for custom strategies.</p>
+                    </div>
+                    
+                    <div class="feature-item">
+                        <h3>📊 Model Fingerprinting</h3>
+                        <p>Research into standardized model capability descriptions through fingerprint.json files, enabling community-driven benchmarking and routing intelligence.</p>
+                    </div>
+                    
+                    <div class="feature-item">
+                        <h3>🌐 Provider Agnostic</h3>
+                        <p>Experimental design to work across any LLM provider - OpenAI, Anthropic, Google, or open-source models via Ollama and other platforms.</p>
+                    </div>
+                    
+                    <div class="feature-item">
+                        <h3>⚡ Lightweight Design</h3>
+                        <p>Research into minimal overhead routing that adds intelligence without significant latency or complexity to existing application stacks.</p>
+                    </div>
+                    
+                    <div class="feature-item">
+                        <h3>🔬 Open Research</h3>
+                        <p>Community-driven model performance data collection and sharing, making routing decisions smarter through collaborative benchmarking efforts.</p>
+                    </div>
+                </div>
+
+                <h2 style="text-align: center; margin: 64px 0 32px; font-size: 32px;">Research Hypothesis</h2>
+                
+                <p style="text-align: center; font-size: 18px; color: #5f6368; margin-bottom: 32px;">
+                    Can a smart routing layer enable developers to use the <em>right model for the right job</em> automatically, reducing costs and vendor lock-in?
+                </p>
+
+                <div class="code-example">
+<strong># Experimental Usage Pattern</strong><br/>
+from eax_router import Router, Task<br/><br/>
+
+<strong># 1. Initialize the experimental router</strong><br/>
+router = Router()<br/><br/>
+
+<strong># 2. Define your task</strong><br/>
+task = Task(<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;prompt="Summarize this 500-word article into three bullet points.",<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;priority="cost"  # or "latency", or "quality"<br/>
+)<br/><br/>
+
+<strong># 3. Intelligent routing!</strong><br/>
+model_choice = router.route(task)<br/>
+<strong># >>> Model chosen: 'claude-3-haiku-20240307' (cost-optimized)</strong>
+                </div>
+
+                <h2 style="text-align: center; margin: 64px 0 32px; font-size: 32px;">Fingerprint Standard Research</h2>
+                
+                <p style="text-align: center; font-size: 18px; color: #5f6368; margin-bottom: 32px;">
+                    Exploring an open standard for LLM capability description to enable intelligent routing decisions.
+                </p>
+
+                <div class="code-example">
+<strong># fingerprint.json Research Format</strong><br/>
+{<br/>
+&nbsp;&nbsp;"model_id": "claude-3-haiku-20240307",<br/>
+&nbsp;&nbsp;"cost_per_million_tokens": { "input": 0.25, "output": 1.25 },<br/>
+&nbsp;&nbsp;"avg_latency_ms_per_1k_tokens": 350,<br/>
+&nbsp;&nbsp;"context_window": 200000,<br/>
+&nbsp;&nbsp;"performance_by_task": {<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;"summarization": { "quality_score": 8.5 },<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;"code_generation": { "quality_score": 6.0 }<br/>
+&nbsp;&nbsp;}<br/>
+}
+                </div>
+
+                <div style="text-align: center; margin: 64px 0;">
+                    <a href="https://github.com/EvolvingAgentsLabs/eax-router" class="btn-primary" target="_blank">Explore the Research</a>
+                    <a href="../index.html" class="btn-secondary">Back to Experiments</a>
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <footer class="footer">
+        <div class="container">
+            <p>&copy; 2024 Evolving Agents Labs. Experimental research in adaptive agent systems.</p>
+        </div>
+    </footer>
+</body>
+</html>

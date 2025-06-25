@@ -1,0 +1,230 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>EAX Marketplace - Evolving Agents Labs</title>
+    <link rel="stylesheet" href="../styles.css">
+    <link href="https://fonts.googleapis.com/css2?family=Google+Sans:wght@400;500;700&display=swap" rel="stylesheet">
+    <style>
+        .experiment-detail {
+            padding: 80px 0;
+        }
+        .experiment-header {
+            text-align: center;
+            margin-bottom: 64px;
+        }
+        .experiment-header h1 {
+            font-size: 48px;
+            font-weight: 400;
+            margin-bottom: 16px;
+            color: #202124;
+        }
+        .experiment-header .category {
+            font-size: 16px;
+            color: #1a73e8;
+            font-weight: 500;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+        }
+        .feature-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 32px;
+            margin: 48px 0;
+        }
+        .feature-item {
+            background: #f8f9fa;
+            padding: 32px;
+            border-radius: 12px;
+        }
+        .feature-item h3 {
+            color: #1a73e8;
+            margin-bottom: 16px;
+            font-size: 20px;
+        }
+        .code-example {
+            background: #f8f9fa;
+            border-radius: 8px;
+            padding: 24px;
+            margin: 24px 0;
+            font-family: 'Courier New', monospace;
+            overflow-x: auto;
+        }
+        .workflow-section {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            padding: 64px 0;
+            margin: 64px 0;
+            border-radius: 12px;
+        }
+        .workflow-content {
+            text-align: center;
+        }
+        .workflow-content h2 {
+            font-size: 32px;
+            margin-bottom: 16px;
+        }
+        .workflow-steps {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 24px;
+            margin: 32px 0;
+        }
+        .workflow-step {
+            background: rgba(255, 255, 255, 0.1);
+            padding: 24px;
+            border-radius: 8px;
+            border: 1px solid rgba(255, 255, 255, 0.2);
+        }
+    </style>
+</head>
+<body>
+    <nav class="navbar">
+        <div class="nav-container">
+            <div class="nav-logo">
+                <a href="../index.html" style="text-decoration: none; color: inherit;">
+                    <h1>Evolving Agents Labs</h1>
+                </a>
+            </div>
+            <div class="nav-links">
+                <a href="../index.html#experiments">Experiments</a>
+                <a href="../index.html#about">About</a>
+                <a href="https://github.com/EvolvingAgentsLabs/eax-marketplace" target="_blank">GitHub</a>
+            </div>
+        </div>
+    </nav>
+
+    <main>
+        <section class="experiment-detail">
+            <div class="container">
+                <div class="experiment-header">
+                    <div class="category">🧪 EXPERIMENTAL AGENT COLLABORATION</div>
+                    <h1>EAX Marketplace <span class="alpha-tag">ALPHA</span></h1>
+                    <p style="font-size: 20px; color: #5f6368; max-width: 800px; margin: 0 auto 24px;">
+                        An experimental, decentralized auction protocol for AI agent collaboration. 
+                        Research into dynamic multi-agent task allocation through competitive bidding systems.
+                    </p>
+                    <div style="background: #fff3cd; border: 1px solid #ffeaa7; border-radius: 8px; padding: 16px; max-width: 600px; margin: 0 auto;">
+                        <p style="margin: 0; font-size: 14px; color: #856404;">
+                            ⚠️ <strong>Experimental Research</strong> - This project explores decentralized agent coordination and will remain permanently in alpha status.
+                        </p>
+                    </div>
+                </div>
+
+                <div class="workflow-section">
+                    <div class="workflow-content">
+                        <h2>Research: Open Market for Cognitive Work</h2>
+                        <p>Exploring whether a "job market" protocol can enable more resilient and efficient multi-agent systems</p>
+                        
+                        <div class="workflow-steps">
+                            <div class="workflow-step">
+                                <h3>1. 📢 Broadcast</h3>
+                                <p>Orchestrator broadcasts a Task with requirements and context</p>
+                            </div>
+                            <div class="workflow-step">
+                                <h3>2. 💰 Bidding</h3>
+                                <p>Specialized Worker Agents submit competitive Bids if they're a good fit</p>
+                            </div>
+                            <div class="workflow-step">
+                                <h3>3. 🏆 Selection</h3>
+                                <p>Orchestrator chooses winning bid based on strategy (confidence, cost, speed)</p>
+                            </div>
+                            <div class="workflow-step">
+                                <h3>4. ⚡ Execution</h3>
+                                <p>Winning agent executes task in dynamic, self-organizing ecosystem</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="feature-grid">
+                    <div class="feature-item">
+                        <h3>📋 Formal Protocol Specification</h3>
+                        <p>Research into clear, simple JSON-based protocol for Task_Broadcasts and Bids, enabling standardized multi-agent communication.</p>
+                    </div>
+                    
+                    <div class="feature-item">
+                        <h3>🏗️ Reference Implementations</h3>
+                        <p>Lightweight Python libraries for building experimental Orchestrator and Worker agents, providing foundation for protocol research.</p>
+                    </div>
+                    
+                    <div class="feature-item">
+                        <h3>🎯 Pluggable Selection Strategies</h3>
+                        <p>Experimental winner selection based on lowest bid, highest confidence, fastest estimated time, or custom logic research.</p>
+                    </div>
+                    
+                    <div class="feature-item">
+                        <h3>🧬 Specialization Encouragement</h3>
+                        <p>Research model that encourages building small, expert agents over monolithic ones, fostering specialized cognitive capabilities.</p>
+                    </div>
+                    
+                    <div class="feature-item">
+                        <h3>🌐 Decentralized Design</h3>
+                        <p>Protocol research that doesn't require central servers, enabling distributed agent ecosystems and resilient collaboration.</p>
+                    </div>
+                    
+                    <div class="feature-item">
+                        <h3>⚖️ Dynamic Competition</h3>
+                        <p>Research into competitive environments that naturally optimize for efficiency, quality, and cost through market mechanisms.</p>
+                    </div>
+                </div>
+
+                <h2 style="text-align: center; margin: 64px 0 32px; font-size: 32px;">Research Hypothesis</h2>
+                
+                <p style="text-align: center; font-size: 18px; color: #5f6368; margin-bottom: 32px;">
+                    Can a decentralized auction protocol replace rigid agent chains with dynamic, competitive task allocation?
+                </p>
+
+                <div class="code-example">
+<strong># Experimental Orchestrator Pattern</strong><br/>
+from eax_marketplace import Orchestrator, Task<br/><br/>
+
+orc = Orchestrator()<br/>
+task = Task(<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;description="Summarize a 10-page legal contract",<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;requirements={"domain": "legal"}<br/>
+)<br/><br/>
+
+<strong># Broadcast task and collect competitive bids</strong><br/>
+bids = orc.broadcast_and_collect(task, timeout=5)<br/><br/>
+
+<strong># Intelligent winner selection</strong><br/>
+winning_agent = orc.select_winner(bids, strategy="HighestConfidence")<br/>
+<strong># >>> Winning agent: 'LegalSummarizer-v3' with 98% confidence!</strong>
+                </div>
+
+                <h2 style="text-align: center; margin: 64px 0 32px; font-size: 32px;">Protocol Research Benefits</h2>
+
+                <div class="feature-grid">
+                    <div class="feature-item">
+                        <h3>🔄 Dynamic Adaptation</h3>
+                        <p>System can discover and utilize better, cheaper, or more specialized agents as they become available.</p>
+                    </div>
+                    
+                    <div class="feature-item">
+                        <h3>💪 Fault Tolerance</h3>
+                        <p>If one agent fails, others can immediately bid and take over, creating resilient multi-agent systems.</p>
+                    </div>
+                    
+                    <div class="feature-item">
+                        <h3>📈 Performance Optimization</h3>
+                        <p>Competitive bidding naturally drives improvements in speed, quality, and cost-effectiveness.</p>
+                    </div>
+                </div>
+
+                <div style="text-align: center; margin: 64px 0;">
+                    <a href="https://github.com/EvolvingAgentsLabs/eax-marketplace" class="btn-primary" target="_blank">Explore the Research</a>
+                    <a href="../index.html" class="btn-secondary">Back to Experiments</a>
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <footer class="footer">
+        <div class="container">
+            <p>&copy; 2024 Evolving Agents Labs. Experimental research in adaptive agent systems.</p>
+        </div>
+    </footer>
+</body>
+</html>
