@@ -120,11 +120,11 @@ body {
     margin: 0 auto 32px;
 }
 
-.alpha-notice {
+.experiment-notice {
     margin-top: 32px;
 }
 
-.alpha-badge {
+.experiment-badge {
     background: rgba(255, 255, 255, 0.15);
     color: white;
     padding: 8px 16px;
@@ -138,7 +138,7 @@ body {
     box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
 }
 
-.alpha-notice p {
+.experiment-notice p {
     font-size: 16px;
     opacity: 0.8;
     margin: 0;
@@ -245,7 +245,7 @@ body {
     border: 1px solid rgba(196, 75, 159, 0.2);
 }
 
-.alpha-tag {
+.experiment-tag {
     background: linear-gradient(135deg, #ff6b9d, #c44b9f);
     color: white;
     padding: 3px 10px;
