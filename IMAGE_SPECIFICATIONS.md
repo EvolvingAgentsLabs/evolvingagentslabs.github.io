@@ -27,7 +27,7 @@ Location: `/images/`
 - **Content**: Grid of small agent icons or workflow diagram
 - **Style**: Clean icons representing different agent types
 - **Text**: Include "Agent Examples", icons for research, legal, marketing, healthcare
-- **Colors**: Consistent with site theme (#1a73e8, #ff6b6b for alpha tags)
+- **Colors**: Consistent with site theme (#1a73e8, #ff6b6b for Experiment tags)
 
 #### **eax-router-preview.png**
 - **Size**: 400×240px
@@ -84,13 +84,13 @@ Location: `/experiments/images/` (optional enhancement)
 - **Content**: Flowchart showing constraint adaptation process
 - **Style**: Clean flowchart with decision points and feedback loops
 
-### 4. Alpha/Experimental Badges
+### 4. Experiment/Experimental Badges
 Location: Inline SVG or small PNG icons
 
-#### **alpha-badge.svg**
+#### **experiment-badge.svg**
 - **Size**: 60×20px
 - **Format**: SVG
-- **Content**: "ALPHA" text with warning icon
+- **Content**: "EXPERIMENT" text with warning icon
 - **Colors**: Red background (#ff6b6b), white text
 
 #### **experimental-icon.svg**
@@ -106,7 +106,7 @@ Location: Inline SVG or small PNG icons
 - **Secondary**: #5f6368 (Gray)
 - **Background**: #ffffff (White)
 - **Accent**: #f8f9fa (Light Gray)
-- **Alpha/Warning**: #ff6b6b (Red)
+- **Experiment/Warning**: #ff6b6b (Red)
 - **Success**: #34a853 (Green)
 
 ### Typography
@@ -121,10 +121,10 @@ Location: Inline SVG or small PNG icons
 - **Modern & Clean**: Minimal design with plenty of whitespace
 - **Professional**: Academic/research aesthetic
 - **Consistent**: All images should feel cohesive
-- **Alpha Emphasis**: Clear experimental/research indicators
+- **Experiment Emphasis**: Clear experimental/research indicators
 
 ### Content Requirements
-- All images should include "ALPHA" or "Experimental" indicators
+- All images should include "EXPERIMENT" or "Experimental" indicators
 - Avoid production/commercial language
 - Include research/lab iconography where appropriate
 - Maintain technical accuracy while emphasizing experimental nature
@@ -159,5 +159,5 @@ The CSS includes styled placeholders for missing images:
 ## Notes
 - All images should emphasize the experimental/research nature
 - Avoid suggesting production readiness
-- Include alpha/experimental indicators where appropriate
+- Include experiment/experimental indicators where appropriate
 - Maintain visual consistency across all images
