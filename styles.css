@@ -46,9 +46,11 @@ body {
 }
 
 .nav-logo .logo {
-    height: 40px;
+    height: 32px;
     width: auto;
+    max-width: 32px;
     transition: transform 0.3s ease;
+    object-fit: contain;
 }
 
 .nav-logo .logo:hover {
@@ -465,6 +467,15 @@ body {
 @media (max-width: 768px) {
     .nav-container {
         padding: 0 16px;
+    }
+    
+    .nav-logo .logo {
+        height: 28px;
+        max-width: 28px;
+    }
+    
+    .nav-logo h1 {
+        font-size: 18px;
     }
     
     .nav-links {
