@@ -1,0 +1,246 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Agent Examples - Evolving Agents Labs</title>
+    <link rel="stylesheet" href="../styles.css">
+    <link href="https://fonts.googleapis.com/css2?family=Google+Sans:wght@400;500;600;700&family=Inter:wght@400;500;600;700&family=Poppins:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <style>
+        .experiment-detail {
+            padding: 80px 0;
+        }
+        .experiment-header {
+            text-align: center;
+            margin-bottom: 64px;
+        }
+        .experiment-header h1 {
+            font-size: 48px;
+            font-weight: 400;
+            margin-bottom: 16px;
+            color: #202124;
+        }
+        .experiment-header .category {
+            font-size: 16px;
+            color: #1a73e8;
+            font-weight: 500;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+        }
+        .feature-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 32px;
+            margin: 48px 0;
+        }
+        .feature-item {
+            background: #f8f9fa;
+            padding: 32px;
+            border-radius: 12px;
+        }
+        .feature-item h3 {
+            color: #c44b9f;
+            margin-bottom: 16px;
+            font-size: 20px;
+            font-weight: 600;
+        }
+        .code-example {
+            background: #f8f9fa;
+            border-radius: 8px;
+            padding: 24px;
+            margin: 24px 0;
+            font-family: 'Courier New', monospace;
+            overflow-x: auto;
+        }
+        .example-card {
+            background: white;
+            border: 1px solid #e0e0e0;
+            border-radius: 12px;
+            padding: 24px;
+            margin: 16px 0;
+        }
+        .example-card h4 {
+            color: #c44b9f;
+            margin-bottom: 8px;
+        }
+        .example-card .category {
+            color: #1a73e8;
+            font-size: 14px;
+            font-weight: 500;
+            margin-bottom: 12px;
+        }
+    </style>
+</head>
+<body>
+    <nav class="navbar">
+        <div class="nav-container">
+            <div class="nav-logo">
+                <a href="../index.html" style="text-decoration: none; color: inherit; display: flex; align-items: center; gap: 12px;">
+                    <img src="../images/evolving_agents_lab.png" alt="Evolving Agents Lab" class="logo" style="height: 32px; max-width: 32px; object-fit: contain;">
+                    <h1>Evolving Agents Labs</h1>
+                </a>
+            </div>
+            <div class="nav-links">
+                <a href="../index.html#experiments">Experiments</a>
+                <a href="../index.html#about">About</a>
+                <a href="https://github.com/EvolvingAgentsLabs/agent-examples" target="_blank">GitHub</a>
+            </div>
+        </div>
+    </nav>
+
+    <main>
+        <section class="experiment-detail">
+            <div class="container">
+                <div class="experiment-header">
+                    <div class="category">🧪 EXPERIMENTAL RESEARCH PROTOTYPES</div>
+                    <h1>Agent Examples <span class="alpha-tag">ALPHA</span></h1>
+                    <p style="font-size: 20px; color: #5f6368; max-width: 800px; margin: 0 auto 24px;">
+                        Experimental agent implementations and research prototypes exploring adaptive AI concepts derived from LLMunix experiments. 
+                        These examples demonstrate zero-to-tool and zero-to-agent capabilities in real-world scenarios.
+                    </p>
+                    <div style="background: #fff3cd; border: 1px solid #ffeaa7; border-radius: 8px; padding: 16px; max-width: 600px; margin: 0 auto;">
+                        <p style="margin: 0; font-size: 14px; color: #856404;">
+                            ⚠️ <strong>Experimental Research</strong> - These are research prototypes exploring adaptive AI concepts and will remain permanently in alpha status.
+                        </p>
+                    </div>
+                </div>
+
+                <h2 style="text-align: center; margin: 64px 0 32px; font-size: 32px;">How to Run These Examples</h2>
+                
+                <div class="code-example">
+<strong>Prerequisites: Install Gemini CLI with Virtual Tools</strong><br/>
+# 1. Clone and compile the EvolvingAgentsLabs fork of Gemini CLI<br/>
+# 2. Ensure you have the virtual tools feature from Issue #1806<br/>
+# 3. Install Claude Code for agent execution<br/>
+claude<br/><br/>
+
+<strong>Step 1: Boot LLMunix with Gemini CLI Runtime</strong><br/>
+boot llmunix<br/>
+# Gemini CLI reads GEMINI.md manifest and initializes the OS<br/><br/>
+
+<strong>Step 2: Execute Example Commands</strong><br/>
+# Research Intelligence Agent<br/>
+llmunix execute: "Monitor 5 tech news sources, extract trending topics, and generate intelligence briefing"<br/><br/>
+
+# Legal Contract Analysis<br/>
+llmunix execute: "Review this vendor contract and summarize key terms, risks, and non-standard clauses"<br/><br/>
+
+# Marketing Campaign Generator<br/>
+llmunix execute: "Create a comprehensive marketing campaign for 'EcoFlow Pro' with budget constraints"<br/><br/>
+
+# Healthcare Patient Onboarding<br/>
+llmunix execute: "Process new patient intake with HIPAA compliance and comfort detection"
+                </div>
+
+                <h2 style="text-align: center; margin: 64px 0 32px; font-size: 32px;">Featured Examples</h2>
+
+                <div class="example-card">
+                    <h4>🔍 Research Intelligence Agent</h4>
+                    <div class="category">EXPERIMENTAL FEATURES</div>
+                    <p><strong>Time Pressure Detection Research:</strong> Investigating automatic priority mode switching based on deadline detection</p>
+                    <p><strong>Source Failure Recovery Studies:</strong> Experimental graceful degradation when news sources are unavailable</p>
+                    <p><strong>Memory-Driven Strategy Prototypes:</strong> Research into historical pattern consultation for optimal research approaches</p>
+                    <p><strong>What it demonstrates:</strong> Autonomous tool creation, adaptive behavior under constraints, and intelligent fallback mechanisms</p>
+                </div>
+
+                <div class="example-card">
+                    <h4>⚖️ Legal Contract Analysis Agent</h4>
+                    <div class="category">EXPERIMENTAL FEATURES</div>
+                    <p><strong>Urgency Awareness Research:</strong> Investigating adaptive analysis depth based on time constraints</p>
+                    <p><strong>Risk Tolerance Studies:</strong> Experimental thoroughness adjustment for critical legal documents</p>
+                    <p><strong>User Sentiment Prototypes:</strong> Research into communication style adaptation based on user stress levels</p>
+                    <p><strong>What it demonstrates:</strong> Domain-specific tool generation, compliance-aware processing, and context-sensitive analysis</p>
+                </div>
+
+                <div class="example-card">
+                    <h4>📈 Marketing Campaign Generator</h4>
+                    <div class="category">EXPERIMENTAL FEATURES</div>
+                    <p><strong>Budget Consciousness Research:</strong> Investigating dynamic scope adjustment based on financial constraints</p>
+                    <p><strong>Brand Voice Learning Studies:</strong> Experimental creative style adaptation from examples</p>
+                    <p><strong>Performance Memory Prototypes:</strong> Research into campaign pattern application from past successes</p>
+                    <p><strong>What it demonstrates:</strong> Multi-agent collaboration, creative tool generation, and constraint-based optimization</p>
+                </div>
+
+                <div class="example-card">
+                    <h4>🏥 Healthcare Patient Onboarding</h4>
+                    <div class="category">EXPERIMENTAL FEATURES</div>
+                    <p><strong>Compliance Strictness Research:</strong> Investigating error tolerance adjustment for HIPAA-critical processes</p>
+                    <p><strong>Patient Comfort Detection Studies:</strong> Experimental interaction style modification based on patient anxiety</p>
+                    <p><strong>Process Efficiency Prototypes:</strong> Research into workflow optimization while maintaining compliance</p>
+                    <p><strong>What it demonstrates:</strong> Regulated environment adaptation, sensitive data handling, and empathetic interaction</p>
+                </div>
+
+                <div class="feature-grid">
+                    <div class="feature-item">
+                        <h3>🚀 Zero-to-Tool Capability</h3>
+                        <p>Watch LLMunix autonomously generate specialized tools on-demand including legal analysis tools, marketing content generators, healthcare compliance checkers, and custom domain-specific utilities.</p>
+                    </div>
+                    
+                    <div class="feature-item">
+                        <h3>🤖 Zero-to-Agent Capability</h3>
+                        <p>Observe intelligent agents being created dynamically with decision-making capabilities, multi-step workflow coordination, learning from outcomes, and domain specialization.</p>
+                    </div>
+                    
+                    <div class="feature-item">
+                        <h3>🔧 Gemini CLI + Claude Code</h3>
+                        <p>Examples run on LLMunix powered by Gemini CLI runtime. Claude Code provides the agent execution while Gemini CLI interprets the markdown OS specifications through its virtual tools feature.</p>
+                    </div>
+                    
+                    <div class="feature-item">
+                        <h3>📚 Adaptive Behavior Patterns</h3>
+                        <p>Examples demonstrate time pressure adaptation, resource constraint handling, user sentiment response, and dynamic priority shifting based on context.</p>
+                    </div>
+                    
+                    <div class="feature-item">
+                        <h3>🧠 Memory-Driven Learning</h3>
+                        <p>The system learns from past executions, applies successful patterns to new tasks, avoids previous mistakes, and builds domain expertise over time.</p>
+                    </div>
+                    
+                    <div class="feature-item">
+                        <h3>🌐 Extensible Framework</h3>
+                        <p>Easy to add new examples, custom scenarios automatically generate required tools, learned patterns improve future performance, and contributions are welcome.</p>
+                    </div>
+                </div>
+
+                <h2 style="text-align: center; margin: 64px 0 32px; font-size: 32px;">Contributing</h2>
+                
+                <p style="text-align: center; font-size: 18px; color: #5f6368; margin-bottom: 32px;">
+                    We welcome contributions to expand the LLMunix examples! Categories we're looking for include:
+                </p>
+
+                <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(250px, 1fr)); gap: 16px; margin: 32px 0;">
+                    <div style="background: #f8f9fa; padding: 16px; border-radius: 8px;">
+                        <strong>Business Intelligence:</strong> Data analysis, reporting, dashboards
+                    </div>
+                    <div style="background: #f8f9fa; padding: 16px; border-radius: 8px;">
+                        <strong>Content Creation:</strong> Writing, editing, multimedia
+                    </div>
+                    <div style="background: #f8f9fa; padding: 16px; border-radius: 8px;">
+                        <strong>Software Development:</strong> Code analysis, documentation
+                    </div>
+                    <div style="background: #f8f9fa; padding: 16px; border-radius: 8px;">
+                        <strong>Research & Analysis:</strong> Literature review, data mining
+                    </div>
+                    <div style="background: #f8f9fa; padding: 16px; border-radius: 8px;">
+                        <strong>Education & Training:</strong> Curriculum, assessments
+                    </div>
+                    <div style="background: #f8f9fa; padding: 16px; border-radius: 8px;">
+                        <strong>Finance & Accounting:</strong> Analysis, compliance
+                    </div>
+                </div>
+
+                <div style="text-align: center; margin: 64px 0;">
+                    <a href="https://github.com/EvolvingAgentsLabs/agent-examples" class="btn-primary" target="_blank">Explore the Code</a>
+                    <a href="../index.html" class="btn-secondary">Back to Experiments</a>
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <footer class="footer">
+        <div class="container">
+            <p>&copy; 2024 Evolving Agents Labs. Building the future of intelligent agents.</p>
+        </div>
+    </footer>
+</body>
+</html>

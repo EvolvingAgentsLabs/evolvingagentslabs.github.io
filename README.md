@@ -5,7 +5,7 @@ This is the official website for Evolving Agents Labs, showcasing our experiment
 ## Projects
 
 ### LLMunix
-A Pure Markdown Operating System where everything is either an agent or tool defined in markdown documents. Features adaptive behavior management and intelligent memory systems.
+A Pure Markdown Operating System designed to be run by Gemini CLI as its runtime engine. Everything is defined in markdown documents - Gemini CLI interprets the GEMINI.md manifest file to turn these specifications into a functional operating system. Requires the virtual tools feature from Gemini CLI Issue #1806 (available in the EvolvingAgentsLabs fork).
 
 ### Framework Core
 Core architectural patterns and building blocks for autonomous agent systems with standardized interfaces and extensible components.

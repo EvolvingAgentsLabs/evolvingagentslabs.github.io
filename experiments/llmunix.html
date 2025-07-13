@@ -98,8 +98,8 @@
                     <div class="category">🧪 EXPERIMENTAL AI OPERATING SYSTEM</div>
                     <h1>LLMunix <span class="alpha-tag">ALPHA</span></h1>
                     <p style="font-size: 20px; color: #5f6368; max-width: 800px; margin: 0 auto 24px;">
-                        An experimental Pure Markdown Operating System research project where everything is either an agent or tool defined in markdown documents. 
-                        Gemini CLI serves as the runtime engine interpreting these markdown specifications.
+                        An experimental Pure Markdown Operating System designed to be run by Gemini CLI. Everything is defined in markdown documents - 
+                        Gemini CLI acts as the runtime engine that interprets the GEMINI.md manifest file and turns these markdown specifications into a functional operating system.
                     </p>
                     <div style="background: #fff3cd; border: 1px solid #ffeaa7; border-radius: 8px; padding: 16px; max-width: 600px; margin: 0 auto;">
                         <p style="margin: 0; font-size: 14px; color: #856404;">
@@ -133,13 +133,13 @@
                     </div>
                     
                     <div class="feature-item">
-                        <h3>🛠️ Real Tool Integration</h3>
-                        <p>Maps to Gemini CLI's native tools with graceful degradation and intelligent error recovery. Production-ready execution with enterprise-grade error handling and cost optimization.</p>
+                        <h3>🛠️ Gemini CLI Runtime Integration</h3>
+                        <p>Powered by Gemini CLI as the runtime engine. Requires the virtual tools feature from Gemini CLI Issue #1806. Users must compile the special branch from the EvolvingAgentsLabs fork for full functionality.</p>
                     </div>
                     
                     <div class="feature-item">
-                        <h3>📚 Pure Markdown Framework</h3>
-                        <p>Everything is defined in markdown documents - no code generation required. System behavior emerges from Gemini CLI interpreting markdown specifications as a functional operating system.</p>
+                        <h3>📚 Pure Markdown + Gemini CLI</h3>
+                        <p>Everything is defined in markdown documents - no code generation required. Gemini CLI runtime interprets the GEMINI.md manifest file, turning markdown specifications into a functional operating system through virtual tools.</p>
                     </div>
                     
                     <div class="feature-item">
@@ -151,8 +151,13 @@
                 <h2 style="text-align: center; margin: 64px 0 32px; font-size: 32px;">Quick Start</h2>
                 
                 <div class="code-example">
-<strong>1. Boot LLMunix</strong><br/>
-boot llmunix<br/><br/>
+<strong>1. Install Gemini CLI with Virtual Tools Support</strong><br/>
+# Clone and compile the special branch from EvolvingAgentsLabs fork<br/>
+# This includes the virtual tools feature from Issue #1806<br/><br/>
+
+<strong>2. Boot LLMunix via Gemini CLI</strong><br/>
+boot llmunix<br/>
+# Gemini CLI reads GEMINI.md manifest and initializes the operating system<br/><br/>
 
 <strong>2. Execute Intelligent Tasks</strong><br/>
 llmunix execute: "Monitor 5 tech news sources, extract trending topics, and generate intelligence briefing"<br/>
@@ -163,6 +168,19 @@ llmunix execute: "Research AI safety papers - query memory for past research pat
 
 llmunix execute: "Urgent: analyze this legal document for risks in 10 minutes"<br/>
 # System detects urgency, adapts constraints: priority='speed_and_clarity', persona='concise_assistant'
+                </div>
+
+                <h2 style="text-align: center; margin: 64px 0 32px; font-size: 32px;">Gemini CLI Runtime Requirements</h2>
+                
+                <div style="background: #e8f5e9; border: 1px solid #4caf50; border-radius: 8px; padding: 24px; margin: 32px auto; max-width: 800px;">
+                    <h3 style="color: #2e7d32; margin-bottom: 16px;">🚀 Powered by Gemini CLI</h3>
+                    <p style="margin-bottom: 16px;">LLMunix is a Pure Markdown Operating System that requires Gemini CLI as its runtime engine. The system cannot function without Gemini CLI's virtual tools feature.</p>
+                    <ul style="margin-bottom: 0;">
+                        <li><strong>Runtime Engine:</strong> Gemini CLI interprets the GEMINI.md manifest file</li>
+                        <li><strong>Virtual Tools:</strong> Requires the feature from Gemini CLI Issue #1806</li>
+                        <li><strong>Special Build:</strong> Must compile from the EvolvingAgentsLabs fork with virtual tools support</li>
+                        <li><strong>Execution:</strong> Gemini CLI turns markdown specifications into a functional OS</li>
+                    </ul>
                 </div>
 
                 <h2 style="text-align: center; margin: 64px 0 32px; font-size: 32px;">Architecture</h2>

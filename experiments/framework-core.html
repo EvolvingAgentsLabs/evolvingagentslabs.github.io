@@ -1,0 +1,261 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Framework Core - Evolving Agents Labs</title>
+    <link rel="stylesheet" href="../styles.css">
+    <link href="https://fonts.googleapis.com/css2?family=Google+Sans:wght@400;500;600;700&family=Inter:wght@400;500;600;700&family=Poppins:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <style>
+        .experiment-detail {
+            padding: 80px 0;
+        }
+        .experiment-header {
+            text-align: center;
+            margin-bottom: 64px;
+        }
+        .experiment-header h1 {
+            font-size: 48px;
+            font-weight: 400;
+            margin-bottom: 16px;
+            color: #202124;
+        }
+        .experiment-header .category {
+            font-size: 16px;
+            color: #1a73e8;
+            font-weight: 500;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+        }
+        .feature-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 32px;
+            margin: 48px 0;
+        }
+        .feature-item {
+            background: #f8f9fa;
+            padding: 32px;
+            border-radius: 12px;
+        }
+        .feature-item h3 {
+            color: #c44b9f;
+            margin-bottom: 16px;
+            font-size: 20px;
+            font-weight: 600;
+        }
+        .code-example {
+            background: #f8f9fa;
+            border-radius: 8px;
+            padding: 24px;
+            margin: 24px 0;
+            font-family: 'Courier New', monospace;
+            overflow-x: auto;
+        }
+        .pattern-card {
+            background: white;
+            border: 1px solid #e0e0e0;
+            border-radius: 12px;
+            padding: 24px;
+            margin: 16px 0;
+        }
+        .pattern-card h4 {
+            color: #c44b9f;
+            margin-bottom: 12px;
+        }
+        .roadmap-item {
+            background: linear-gradient(135deg, #f8f9fa 0%, #e8f0fe 100%);
+            border-radius: 12px;
+            padding: 24px;
+            margin: 16px 0;
+            border-left: 4px solid #c44b9f;
+        }
+        .roadmap-item h4 {
+            color: #202124;
+            margin-bottom: 8px;
+        }
+    </style>
+</head>
+<body>
+    <nav class="navbar">
+        <div class="nav-container">
+            <div class="nav-logo">
+                <a href="../index.html" style="text-decoration: none; color: inherit; display: flex; align-items: center; gap: 12px;">
+                    <img src="../images/evolving_agents_lab.png" alt="Evolving Agents Lab" class="logo" style="height: 32px; max-width: 32px; object-fit: contain;">
+                    <h1>Evolving Agents Labs</h1>
+                </a>
+            </div>
+            <div class="nav-links">
+                <a href="../index.html#experiments">Experiments</a>
+                <a href="../index.html#about">About</a>
+                <a href="https://github.com/EvolvingAgentsLabs/framework-core" target="_blank">GitHub</a>
+            </div>
+        </div>
+    </nav>
+
+    <main>
+        <section class="experiment-detail">
+            <div class="container">
+                <div class="experiment-header">
+                    <div class="category">🧪 EXPERIMENTAL ARCHITECTURAL PATTERNS</div>
+                    <h1>Framework Core <span class="alpha-tag">ALPHA</span></h1>
+                    <p style="font-size: 20px; color: #5f6368; max-width: 800px; margin: 0 auto 24px;">
+                        Experimental architectural patterns and building blocks derived from LLMunix's adaptive behavior management research on Gemini CLI. 
+                        This is an ongoing exploration of reusable agent system components and design patterns for Gemini CLI-powered systems.
+                    </p>
+                    <div style="background: #fff3cd; border: 1px solid #ffeaa7; border-radius: 8px; padding: 16px; max-width: 600px; margin: 0 auto;">
+                        <p style="margin: 0; font-size: 14px; color: #856404;">
+                            ⚠️ <strong>Early-Stage Research</strong> - This project attempts to distill architectural insights from LLMunix research and will remain permanently in alpha status.
+                        </p>
+                    </div>
+                </div>
+
+                <h2 style="text-align: center; margin: 64px 0 32px; font-size: 32px;">Key Innovations from LLMunix</h2>
+
+                <div class="feature-grid">
+                    <div class="feature-item">
+                        <h3>🧠 Sentient State Patterns</h3>
+                        <p>Research into behavioral constraints that modify agent decision-making through dynamic constraint evolution, memory-driven learning, and modular state components with atomic file architectures.</p>
+                    </div>
+                    
+                    <div class="feature-item">
+                        <h3>🎯 Adaptive Behavior Research</h3>
+                        <p>Experimental investigations into user sentiment detection, priority adaptation mechanisms, persona switching prototypes, and error tolerance adjustment systems for dynamic behavior modification.</p>
+                    </div>
+                    
+                    <div class="feature-item">
+                        <h3>🔍 Memory System Experiments</h3>
+                        <p>Research prototypes investigating YAML frontmatter querying for execution history, behavioral pattern tracking, user preference evolution, and context-aware recommendation systems.</p>
+                    </div>
+                </div>
+
+                <h2 style="text-align: center; margin: 64px 0 32px; font-size: 32px;">Architecture Patterns</h2>
+
+                <div class="pattern-card">
+                    <h4>1. Adaptive State Management Pattern</h4>
+                    <p>Based on LLMunix's sentient state architecture, this pattern provides a modular approach to managing agent execution state:</p>
+                    <div class="code-example">
+agent-workspace/<br/>
+├── state/<br/>
+│   ├── plan.md          # Execution roadmap and metadata<br/>
+│   ├── context.md       # Accumulated knowledge base<br/>
+│   ├── variables.json   # Structured data passing<br/>
+│   ├── history.md       # Complete execution log<br/>
+│   └── constraints.md   # Behavioral modifiers (the sentient layer)<br/>
+└── outputs/            # Task results and artifacts
+                    </div>
+                </div>
+
+                <div class="pattern-card">
+                    <h4>2. Behavioral Constraint Pattern</h4>
+                    <p>Dynamic behavior modification through evolving constraints that adapt based on context and user interaction:</p>
+                    <div class="code-example">
+# constraints.md example<br/>
+user_sentiment: "frustrated"          # Detected emotional state<br/>
+priority: "speed_and_clarity"         # Execution focus<br/>
+active_persona: "concise_assistant"   # Communication style<br/>
+error_tolerance: "strict"             # Risk acceptance level<br/>
+human_review_trigger_level: "low"     # Escalation threshold
+                    </div>
+                </div>
+
+                <div class="pattern-card">
+                    <h4>3. Memory-Driven Decision Pattern</h4>
+                    <p>Intelligent consultation of historical experiences to guide current decision-making:</p>
+                    <div class="code-example">
+# memory-entry.yml<br/>
+---<br/>
+timestamp: "2024-06-24T10:30:00Z"<br/>
+task_type: "research_analysis"<br/>
+user_sentiment_evolution: ["neutral", "impatient", "satisfied"]<br/>
+constraint_adaptations:<br/>
+  - trigger: "user_time_pressure"<br/>
+    adaptation: "priority: comprehensiveness → speed_and_clarity"<br/>
+success_metrics:<br/>
+  completion_rate: 0.95<br/>
+  user_satisfaction: 0.89<br/>
+  cost_efficiency: 0.76<br/>
+lessons_learned:<br/>
+  - "Concise summaries preferred under time pressure"<br/>
+  - "Web scraping requires graceful degradation strategies"<br/>
+---
+                    </div>
+                </div>
+
+                <h2 style="text-align: center; margin: 64px 0 32px; font-size: 32px;">How to Use This Framework</h2>
+                
+                <div class="code-example">
+<strong>1. Clone the repository</strong><br/>
+git clone https://github.com/EvolvingAgentsLabs/framework-core<br/><br/>
+
+<strong>2. Create your "software"</strong><br/>
+# Add components/agents/ and components/tools/ directories<br/>
+# Populate with markdown-defined agents and tools<br/><br/>
+
+<strong>3. Define your tasks</strong><br/>
+# Create scenarios/ directory with markdown task descriptions<br/><br/>
+
+<strong>4. Boot your OS</strong><br/>
+# Use the LLMUNIX master prompt to instruct your LLM<br/>
+# Found in the LLMUNIX repository
+                </div>
+
+                <h2 style="text-align: center; margin: 64px 0 32px; font-size: 32px;">Future Vision & Roadmap</h2>
+                
+                <div class="roadmap-item">
+                    <h4>🌱 Autonomous Evolution & Self-Improvement</h4>
+                    <p>The system will analyze its own performance from SmartMemory.md to proactively evolve existing agents and tools for better efficiency, accuracy, and cost-effectiveness.</p>
+                </div>
+
+                <div class="roadmap-item">
+                    <h4>🛡️ Controlled Evolution (Firmware)</h4>
+                    <p>Introduction of Firmware.md component defining immutable rules, ethical constraints, and operational boundaries to guide agent evolution while maintaining safety protocols.</p>
+                </div>
+
+                <div class="roadmap-item">
+                    <h4>⚡ Parallel Task Processing</h4>
+                    <p>Development of a "Process Manager" agent and state management techniques allowing orchestration of multiple, concurrent task executions.</p>
+                </div>
+
+                <div class="roadmap-item">
+                    <h4>🔌 Multi-LLM Engine Support</h4>
+                    <p>Enhancement to be truly LLM-agnostic, dynamically choosing the best LLM for specific tasks and managing interactions across different AI engines.</p>
+                </div>
+
+                <div class="roadmap-item">
+                    <h4>🌐 Distributed Environments</h4>
+                    <p>Extension to distributed systems enabling multiple LLMUNIX instances to communicate, share components, and collaborate on complex goals.</p>
+                </div>
+
+                <div class="feature-grid" style="margin-top: 64px;">
+                    <div class="feature-item">
+                        <h3>🏗️ Building Blocks</h3>
+                        <p>Provides minimal "kernel" files that serve as the foundation for building your own LLM-OS instance with customizable components.</p>
+                    </div>
+                    
+                    <div class="feature-item">
+                        <h3>📚 Pattern Library</h3>
+                        <p>Distilled architectural patterns from LLMunix research including state management, behavioral constraints, and memory systems.</p>
+                    </div>
+                    
+                    <div class="feature-item">
+                        <h3>🔬 Research Foundation</h3>
+                        <p>Early-stage exploration of how adaptive behavior management concepts translate into generalizable architectural patterns.</p>
+                    </div>
+                </div>
+
+                <div style="text-align: center; margin: 64px 0;">
+                    <a href="https://github.com/EvolvingAgentsLabs/framework-core" class="btn-primary" target="_blank">Explore the Code</a>
+                    <a href="../index.html" class="btn-secondary">Back to Experiments</a>
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <footer class="footer">
+        <div class="container">
+            <p>&copy; 2024 Evolving Agents Labs. Building the future of intelligent agents.</p>
+        </div>
+    </footer>
+</body>
+</html>
