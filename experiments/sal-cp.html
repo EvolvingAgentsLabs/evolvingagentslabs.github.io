@@ -87,11 +87,11 @@
         <section class="experiment-detail">
             <div class="container">
                 <div class="experiment-header">
-                    <div class="category">🧪 EXPERIMENTAL COMMUNICATION PROTOCOL</div>
+                    <div class="category">🧪 AGENT NETWORK PROTOCOL</div>
                     <h1>SAL-CP <span class="alpha-tag">ALPHA</span></h1>
                     <p style="font-size: 20px; color: #5f6368; max-width: 800px; margin: 0 auto 24px;">
-                        Self-Aware LLM Communication Protocol - An experimental, rich context communication protocol for collaborative AI agents. 
-                        Research into contextual agent-to-agent messaging.
+                        The TCP/IP of agent networks - a standardized protocol for context-aware communication between LLMunix instances.
+                        Research into rich messaging standards for distributed AI systems.
                     </p>
                     <div style="background: #fff3cd; border: 1px solid #ffeaa7; border-radius: 8px; padding: 16px; max-width: 600px; margin: 0 auto;">
                         <p style="margin: 0; font-size: 14px; color: #856404;">
@@ -102,126 +102,127 @@
 
                 <div class="problem-section">
                     <h3>🔍 Research Problem</h3>
-                    <p>Current agent communication is often stateless and context-poor, leading to misinterpretations and errors like the "lost in the middle" problem. An agent receiving a prompt lacks critical context: <em>Why</em> is this task being requested? What is the sender's current state?</p>
+                    <p>In distributed networks of LLMunix agents, simple text messages are insufficient. Agents need to share: cognitive state, resource constraints, task context, capability requirements, and coordination metadata. Without standardization, agent networks cannot scale effectively.</p>
                 </div>
 
                 <div class="solution-section">
-                    <h3>💡 Research Approach: Self-Aware, Contextual Communication</h3>
-                    <p>SAL-CP defines a standardized message envelope that wraps every interaction, providing rich, structured context.</p>
-                    <p><strong>SAL-CP Message = Header (State & Capabilities) + Payload (The Task)</strong></p>
-                    <p>This allows an agent to understand not just <em>what</em> to do, but <em>why</em>, and to self-assess the quality of information it receives.</p>
+                    <h3>💡 Research Approach: Standardized Agent Messaging</h3>
+                    <p>SAL-CP is not a single agent but a <strong>message format specification</strong> that all LLMunix instances implement for inter-agent communication.</p>
+                    <p><strong>SAL-CP Message = Protocol Version + Sender/Receiver + Payload + Context + Metadata</strong></p>
+                    <p>This creates a common language enabling meaningful collaboration between specialized agents across the network.</p>
                 </div>
 
                 <div class="feature-grid">
                     <div class="feature-item">
-                        <h3>📋 Formal Specification</h3>
-                        <p>Research into clear JSON schema defining message structure with standardized fields for cognitive state, context, and performance metadata.</p>
+                        <h3>📋 Protocol Specification</h3>
+                        <p>Research into standardized JSON message format with required fields for protocol version, routing, payload, context, and metadata.</p>
                     </div>
                     
                     <div class="feature-item">
-                        <h3>🧠 Cognitive State Awareness</h3>
-                        <p>Experimental fields for agents to communicate internal state: current_load, attentional_focus, confidence levels, and processing capacity.</p>
+                        <h3>🧠 Cognitive State Fields</h3>
+                        <p>Standard states like PLANNING, ANALYZING, CREATING, BLOCKED - enabling agents to share their thinking process and resource usage.</p>
                     </div>
                     
-                    <div class="feature-item">
-                        <h3>🎯 Contextual Pointers</h3>
-                        <p>Research mechanism to defeat "lost in the middle" problem by allowing agents to point to critical information within large contexts.</p>
-                    </div>
-                    
-                    <div class="feature-item">
-                        <h3>📊 Performance Metadata</h3>
-                        <p>Experimental system for agents to report confidence, ambiguities, and processing metrics, enabling trust-based collaboration frameworks.</p>
-                    </div>
-                    
-                    <div class="feature-item">
-                        <h3>📚 Reference Library</h3>
-                        <p>Research implementation providing simple tools to construct, parse, and validate SAL-CP messages across different agent systems.</p>
-                    </div>
-                    
-                    <div class="feature-item">
-                        <h3>🔗 EAX Integration</h3>
-                        <p>Designed as underlying communication layer for EAX Marketplace, where Task_Broadcasts become specialized SAL-CP messages.</p>
-                    </div>
-                </div>
-
-                <h2 style="text-align: center; margin: 64px 0 32px; font-size: 32px;">Research Example</h2>
-                
-                <p style="text-align: center; font-size: 18px; color: #5f6368; margin-bottom: 32px;">
-                    Exploring how rich context can improve agent collaboration accuracy and reliability.
-                </p>
-
-                <div class="code-example">
-<strong># Creating a rich, contextual request</strong><br/>
-from sal_cp import Message, Header, Payload<br/><br/>
-
-<strong># The sender agent describes its own state</strong><br/>
-header = Header(<br/>
-&nbsp;&nbsp;&nbsp;&nbsp;sender_agent_id="Orchestrator-001",<br/>
-&nbsp;&nbsp;&nbsp;&nbsp;cognitive_state={<br/>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;"current_load_percent": 75,<br/>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;"attentional_focus": ["sales_data"]<br/>
-&nbsp;&nbsp;&nbsp;&nbsp;}<br/>
-)<br/><br/>
-
-<strong># The payload contains task AND context</strong><br/>
-payload = Payload(<br/>
-&nbsp;&nbsp;&nbsp;&nbsp;primary_instruction="Summarize the attached document.",<br/>
-&nbsp;&nbsp;&nbsp;&nbsp;smart_summary="The user is a stressed CEO looking for risks in a Q3 sales report."<br/>
-)<br/><br/>
-
-message = Message(header=header, payload=payload)<br/>
-<strong># Rich context enables more intelligent responses</strong>
-                </div>
-
-                <h2 style="text-align: center; margin: 64px 0 32px; font-size: 32px;">Key Research Features</h2>
-
-                <div class="feature-grid">
                     <div class="feature-item">
                         <h3>🎯 Context Preservation</h3>
-                        <p>Research into maintaining critical context across multi-agent conversations, reducing information loss and misunderstanding.</p>
+                        <p>Research into maintaining task history, shared memory keys, and dependencies as work flows between specialized agents.</p>
                     </div>
                     
                     <div class="feature-item">
-                        <h3>⚡ Intelligent Prioritization</h3>
-                        <p>Experimental mechanisms for agents to communicate urgency, importance, and processing priorities to optimize resource allocation.</p>
+                        <h3>📊 Message Types</h3>
+                        <p>Standardized types like TASK_REQUEST, BID_SUBMISSION, CONTEXT_SHARE, HANDOFF - enabling rich interaction patterns.</p>
                     </div>
                     
                     <div class="feature-item">
-                        <h3>🔍 Quality Assessment</h3>
-                        <p>Research into self-reporting systems where agents can communicate confidence levels and potential ambiguities in their outputs.</p>
+                        <h3>📚 LLMunix Integration</h3>
+                        <p>Built into every LLMunix instance's send_message tool, automatically formatting messages to SAL-CP standards.</p>
                     </div>
                     
                     <div class="feature-item">
-                        <h3>🌐 Ecosystem Integration</h3>
-                        <p>Designed to enhance other EAX protocols, providing the communication foundation for marketplace bidding and router coordination.</p>
+                        <h3>🔗 Network Foundation</h3>
+                        <p>Enables EAX Router discovery, Marketplace bidding, and all agent-to-agent coordination in the ecosystem.</p>
                     </div>
                 </div>
 
-                <h2 style="text-align: center; margin: 64px 0 32px; font-size: 32px;">Research Goals</h2>
+                <h2 style="text-align: center; margin: 64px 0 32px; font-size: 32px;">Protocol Standard</h2>
                 
                 <p style="text-align: center; font-size: 18px; color: #5f6368; margin-bottom: 32px;">
-                    Investigating whether richer communication protocols can enable more effective and reliable collaboration between AI agents.
+                    Every message between LLMunix agents follows this standardized structure for interoperability.
                 </p>
 
                 <div class="code-example">
-<strong># Example SAL-CP Message Structure (Research Format)</strong><br/>
+<strong># SAL-CP Message Format (v1.0)</strong><br/>
 {<br/>
-&nbsp;&nbsp;"header": {<br/>
-&nbsp;&nbsp;&nbsp;&nbsp;"sender_agent_id": "ResearchAgent-v2",<br/>
-&nbsp;&nbsp;&nbsp;&nbsp;"timestamp": "2024-06-25T10:30:00Z",<br/>
-&nbsp;&nbsp;&nbsp;&nbsp;"cognitive_state": {<br/>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;"current_load_percent": 60,<br/>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;"attentional_focus": ["legal_analysis"],<br/>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;"confidence_level": 0.85<br/>
-&nbsp;&nbsp;&nbsp;&nbsp;}<br/>
-&nbsp;&nbsp;},<br/>
+&nbsp;&nbsp;"protocol": "SAL-CP/v1",<br/>
+&nbsp;&nbsp;"message_id": "msg_123456",<br/>
+&nbsp;&nbsp;"from": "content-writer-agent",<br/>
+&nbsp;&nbsp;"to": "market-analyst-agent",<br/>
+&nbsp;&nbsp;"timestamp": "2024-06-26T10:30:00Z",<br/><br/>
+
 &nbsp;&nbsp;"payload": {<br/>
-&nbsp;&nbsp;&nbsp;&nbsp;"primary_instruction": "Review contract for risks",<br/>
-&nbsp;&nbsp;&nbsp;&nbsp;"context_summary": "Urgent CEO request, Q3 vendor agreement",<br/>
-&nbsp;&nbsp;&nbsp;&nbsp;"priority_level": "high",<br/>
-&nbsp;&nbsp;&nbsp;&nbsp;"expected_response_format": "bullet_points"<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;"content": "Need competitor analysis for EcoFlow Pro",<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;"task_id": "report_001",<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;"priority": "high"<br/>
+&nbsp;&nbsp;},<br/><br/>
+
+&nbsp;&nbsp;"context": {<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;"cognitive_state": "DRAFTING_SECTION_3",<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;"confidence_level": 0.85,<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;"resource_usage": {<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;"token_buffer": "80%",<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;"time_remaining": "2_hours"<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;}<br/>
 &nbsp;&nbsp;}<br/>
-}
+}<br/>
+                </div>
+
+                <h2 style="text-align: center; margin: 64px 0 32px; font-size: 32px;">Protocol Benefits</h2>
+
+                <div class="feature-grid">
+                    <div class="feature-item">
+                        <h3>🎯 Interoperability</h3>
+                        <p>Any LLMunix agent can communicate with any other, regardless of their specialization or implementation details.</p>
+                    </div>
+                    
+                    <div class="feature-item">
+                        <h3>⚡ Efficient Routing</h3>
+                        <p>Standardized message types and metadata enable routers and marketplaces to make intelligent forwarding decisions.</p>
+                    </div>
+                    
+                    <div class="feature-item">
+                        <h3>🔍 Rich Context</h3>
+                        <p>Agents share cognitive state and resource constraints, enabling better collaboration and workload distribution.</p>
+                    </div>
+                    
+                    <div class="feature-item">
+                        <h3>🌐 Network Scale</h3>
+                        <p>Protocol designed to support networks of hundreds or thousands of specialized agents working in coordination.</p>
+                    </div>
+                </div>
+
+                <h2 style="text-align: center; margin: 64px 0 32px; font-size: 32px;">Implementation Example</h2>
+                
+                <p style="text-align: center; font-size: 18px; color: #5f6368; margin-bottom: 32px;">
+                    How LLMunix agents use SAL-CP for communication in their virtual tools.
+                </p>
+
+                <div class="code-example">
+<strong># In LLMunix GEMINI.md virtual tools</strong><br/>
+def send_message(recipient, content, context=None):<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;"""Send SAL-CP formatted message to another agent"""<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;message = {<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;"protocol": "SAL-CP/v1",<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;"from": self.agent_id,<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;"to": recipient,<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;"payload": {"content": content},<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;"context": {<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;"cognitive_state": self.current_state,<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;"confidence_level": self.task_confidence,<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;"resource_usage": self.get_resource_metrics()<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;}<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;}<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;return self.message_bus.send(message)<br/><br/>
+<strong># Agents automatically speak SAL-CP!</strong>
                 </div>
 
                 <div style="text-align: center; margin: 64px 0;">

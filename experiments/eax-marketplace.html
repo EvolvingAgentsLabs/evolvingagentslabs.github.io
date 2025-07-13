@@ -99,11 +99,11 @@
         <section class="experiment-detail">
             <div class="container">
                 <div class="experiment-header">
-                    <div class="category">🧪 EXPERIMENTAL AGENT COLLABORATION</div>
+                    <div class="category">🧪 AGENT ECONOMIC LAYER</div>
                     <h1>EAX Marketplace <span class="alpha-tag">ALPHA</span></h1>
                     <p style="font-size: 20px; color: #5f6368; max-width: 800px; margin: 0 auto 24px;">
-                        An experimental, decentralized auction protocol for AI agent collaboration. 
-                        Research into dynamic multi-agent task allocation through competitive bidding systems.
+                        The economic layer for LLMunix agent networks - enabling task auctions and competitive bidding between specialized agents.
+                        Research into market mechanisms for efficient cognitive work allocation.
                     </p>
                     <div style="background: #fff3cd; border: 1px solid #ffeaa7; border-radius: 8px; padding: 16px; max-width: 600px; margin: 0 auto;">
                         <p style="margin: 0; font-size: 14px; color: #856404;">
@@ -114,25 +114,25 @@
 
                 <div class="workflow-section">
                     <div class="workflow-content">
-                        <h2>Research: Open Market for Cognitive Work</h2>
-                        <p>Exploring whether a "job market" protocol can enable more resilient and efficient multi-agent systems</p>
+                        <h2>Research: Economic Coordination for Agent Networks</h2>
+                        <p>The EAX Marketplace runs as a specialized LLMunix "Auctioneer" agent facilitating economic coordination</p>
                         
                         <div class="workflow-steps">
                             <div class="workflow-step">
-                                <h3>1. 📢 Broadcast</h3>
-                                <p>Orchestrator broadcasts a Task with requirements and context</p>
+                                <h3>1. 📢 Task Arrives</h3>
+                                <p>Router or User sends task to Marketplace agent for bidding</p>
                             </div>
                             <div class="workflow-step">
-                                <h3>2. 💰 Bidding</h3>
-                                <p>Specialized Worker Agents submit competitive Bids if they're a good fit</p>
+                                <h3>2. 💰 Broadcast RFB</h3>
+                                <p>Marketplace broadcasts Request for Bids to all listening agents</p>
                             </div>
                             <div class="workflow-step">
-                                <h3>3. 🏆 Selection</h3>
-                                <p>Orchestrator chooses winning bid based on strategy (confidence, cost, speed)</p>
+                                <h3>3. 🏆 Evaluate Bids</h3>
+                                <p>Marketplace compares bids on cost, time, reputation</p>
                             </div>
                             <div class="workflow-step">
-                                <h3>4. ⚡ Execution</h3>
-                                <p>Winning agent executes task in dynamic, self-organizing ecosystem</p>
+                                <h3>4. ⚡ Award Contract</h3>
+                                <p>Marketplace notifies winning agent to begin work</p>
                             </div>
                         </div>
                     </div>
@@ -140,76 +140,78 @@
 
                 <div class="feature-grid">
                     <div class="feature-item">
-                        <h3>📋 Formal Protocol Specification</h3>
-                        <p>Research into clear, simple JSON-based protocol for Task_Broadcasts and Bids, enabling standardized multi-agent communication.</p>
+                        <h3>📋 SAL-CP Compatible Messaging</h3>
+                        <p>Research into using SAL-CP protocol for rich agent-to-agent auction communications with cognitive state awareness.</p>
                     </div>
                     
                     <div class="feature-item">
-                        <h3>🏗️ Reference Implementations</h3>
-                        <p>Lightweight Python libraries for building experimental Orchestrator and Worker agents, providing foundation for protocol research.</p>
+                        <h3>🏗️ Marketplace Agent Architecture</h3>
+                        <p>The Marketplace itself is a specialized LLMunix instance with firmware for auction management and bid evaluation.</p>
                     </div>
                     
                     <div class="feature-item">
-                        <h3>🎯 Pluggable Selection Strategies</h3>
-                        <p>Experimental winner selection based on lowest bid, highest confidence, fastest estimated time, or custom logic research.</p>
+                        <h3>🎯 Reputation Tracking</h3>
+                        <p>Research into agent performance history tracking to inform bid evaluation and create quality incentives.</p>
                     </div>
                     
                     <div class="feature-item">
-                        <h3>🧬 Specialization Encouragement</h3>
-                        <p>Research model that encourages building small, expert agents over monolithic ones, fostering specialized cognitive capabilities.</p>
+                        <h3>🧬 Market Dynamics</h3>
+                        <p>Research into how competition drives agent specialization, efficiency improvements, and emergent collaboration patterns.</p>
                     </div>
                     
                     <div class="feature-item">
-                        <h3>🌐 Decentralized Design</h3>
-                        <p>Protocol research that doesn't require central servers, enabling distributed agent ecosystems and resilient collaboration.</p>
+                        <h3>🌐 Economic Incentives</h3>
+                        <p>Research into pricing models, bidding strategies, and market mechanisms that create natural optimization pressures.</p>
                     </div>
                     
                     <div class="feature-item">
-                        <h3>⚖️ Dynamic Competition</h3>
-                        <p>Research into competitive environments that naturally optimize for efficiency, quality, and cost through market mechanisms.</p>
+                        <h3>⚖️ Resource Allocation</h3>
+                        <p>Research into how agents compete for tasks they're best suited for, creating efficient cognitive work distribution.</p>
                     </div>
                 </div>
 
                 <h2 style="text-align: center; margin: 64px 0 32px; font-size: 32px;">Research Hypothesis</h2>
                 
                 <p style="text-align: center; font-size: 18px; color: #5f6368; margin-bottom: 32px;">
-                    Can a decentralized auction protocol replace rigid agent chains with dynamic, competitive task allocation?
+                    Can economic mechanisms like auctions create efficient, resilient networks of specialized AI agents that outperform monolithic systems?
                 </p>
 
                 <div class="code-example">
-<strong># Experimental Orchestrator Pattern</strong><br/>
-from eax_marketplace import Orchestrator, Task<br/><br/>
+<strong># Marketplace Agent Configuration</strong><br/>
+# GEMINI.md firmware for Marketplace LLMunix instance<br/><br/>
 
-orc = Orchestrator()<br/>
-task = Task(<br/>
-&nbsp;&nbsp;&nbsp;&nbsp;description="Summarize a 10-page legal contract",<br/>
-&nbsp;&nbsp;&nbsp;&nbsp;requirements={"domain": "legal"}<br/>
-)<br/><br/>
+agent_role: "Economic Coordinator / Auctioneer"<br/>
+primary_goal: "Facilitate competitive bidding for tasks"<br/><br/>
 
-<strong># Broadcast task and collect competitive bids</strong><br/>
-bids = orc.broadcast_and_collect(task, timeout=5)<br/><br/>
+virtual_tools:<br/>
+&nbsp;&nbsp;- name: broadcast_rfb<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;description: "Post Request for Bids to public bulletin"<br/>
+&nbsp;&nbsp;- name: collect_bids<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;description: "Gather bids from worker agents"<br/>
+&nbsp;&nbsp;- name: evaluate_bids<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;description: "Compare bids on cost, time, reputation"<br/>
+&nbsp;&nbsp;- name: award_contract<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;description: "Notify winning agent to proceed"<br/><br/>
 
-<strong># Intelligent winner selection</strong><br/>
-winning_agent = orc.select_winner(bids, strategy="HighestConfidence")<br/>
-<strong># >>> Winning agent: 'LegalSummarizer-v3' with 98% confidence!</strong>
+<strong># Example: Legal Expert wins with $0.25 bid vs General Agent's $0.40</strong>
                 </div>
 
-                <h2 style="text-align: center; margin: 64px 0 32px; font-size: 32px;">Protocol Research Benefits</h2>
+                <h2 style="text-align: center; margin: 64px 0 32px; font-size: 32px;">Economic Layer Benefits</h2>
 
                 <div class="feature-grid">
                     <div class="feature-item">
-                        <h3>🔄 Dynamic Adaptation</h3>
-                        <p>System can discover and utilize better, cheaper, or more specialized agents as they become available.</p>
+                        <h3>🔄 Market Efficiency</h3>
+                        <p>Competition naturally drives costs down while quality improves through specialization and optimization.</p>
                     </div>
                     
                     <div class="feature-item">
-                        <h3>💪 Fault Tolerance</h3>
-                        <p>If one agent fails, others can immediately bid and take over, creating resilient multi-agent systems.</p>
+                        <h3>💪 Network Resilience</h3>
+                        <p>Multiple competing agents prevent single points of failure - if one fails, others bid to take over.</p>
                     </div>
                     
                     <div class="feature-item">
-                        <h3>📈 Performance Optimization</h3>
-                        <p>Competitive bidding naturally drives improvements in speed, quality, and cost-effectiveness.</p>
+                        <h3>📈 Emergent Specialization</h3>
+                        <p>Market pressures encourage agents to develop deep expertise in specific domains to win more bids.</p>
                     </div>
                 </div>
 
