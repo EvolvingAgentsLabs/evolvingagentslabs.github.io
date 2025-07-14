@@ -95,7 +95,7 @@
                     <div class="category">🧪 EXPERIMENTAL RESEARCH PROTOTYPES</div>
                     <h1>Agent Examples <span class="alpha-tag">ALPHA</span></h1>
                     <p style="font-size: 20px; color: #5f6368; max-width: 800px; margin: 0 auto 24px;">
-                        Experimental agent implementations and research prototypes exploring adaptive AI concepts derived from LLMunix experiments. 
+                        Experimental agent implementations and research prototypes exploring adaptive AI concepts from LLMunix research. 
                         These examples demonstrate zero-to-tool and zero-to-agent capabilities in real-world scenarios.
                     </p>
                     <div style="background: #fff3cd; border: 1px solid #ffeaa7; border-radius: 8px; padding: 16px; max-width: 600px; margin: 0 auto;">
@@ -109,27 +109,31 @@
                 
                 <div class="code-example">
 <strong>Prerequisites: Install Gemini CLI with Virtual Tools</strong><br/>
-# 1. Clone and compile the EvolvingAgentsLabs fork of Gemini CLI<br/>
-# 2. Ensure you have the virtual tools feature from Issue #1806<br/>
-# 3. Install Claude Code for agent execution<br/>
-claude<br/><br/>
+# Clone and build the special branch with virtual tools support:<br/>
+git clone https://github.com/EvolvingAgentsLabs/gemini-cli<br/>
+cd gemini-cli && git checkout issue-1806<br/>
+# Follow build instructions in the repository<br/><br/>
 
-<strong>Step 1: Boot LLMunix with Gemini CLI Runtime</strong><br/>
-boot llmunix<br/>
-# Gemini CLI reads GEMINI.md manifest and initializes the OS<br/><br/>
+<strong>Step 1: Boot LLMunix</strong><br/>
+# From the agent-examples directory:<br/>
+./llmunix-boot<br/><br/>
 
-<strong>Step 2: Execute Example Commands</strong><br/>
+<strong>Step 2: Start Gemini CLI</strong><br/>
+gemini<br/>
+# The GEMINI.md manifest will be automatically detected<br/><br/>
+
+<strong>Step 3: Execute Example Commands</strong><br/>
 # Research Intelligence Agent<br/>
-llmunix execute: "Monitor 5 tech news sources, extract trending topics, and generate intelligence briefing"<br/><br/>
+> Monitor 5 tech news sources, extract trending topics, and generate intelligence briefing<br/><br/>
 
 # Legal Contract Analysis<br/>
-llmunix execute: "Review this vendor contract and summarize key terms, risks, and non-standard clauses"<br/><br/>
+> Review this vendor contract and summarize key terms, risks, and non-standard clauses<br/><br/>
 
 # Marketing Campaign Generator<br/>
-llmunix execute: "Create a comprehensive marketing campaign for 'EcoFlow Pro' with budget constraints"<br/><br/>
+> Create a comprehensive marketing campaign for 'EcoFlow Pro' with budget constraints<br/><br/>
 
 # Healthcare Patient Onboarding<br/>
-llmunix execute: "Process new patient intake with HIPAA compliance and comfort detection"
+> Process new patient intake with HIPAA compliance and comfort detection
                 </div>
 
                 <h2 style="text-align: center; margin: 64px 0 32px; font-size: 32px;">Featured Examples</h2>
@@ -182,8 +186,8 @@ llmunix execute: "Process new patient intake with HIPAA compliance and comfort d
                     </div>
                     
                     <div class="feature-item">
-                        <h3>🔧 Gemini CLI + Claude Code</h3>
-                        <p>Examples run on LLMunix powered by Gemini CLI runtime. Claude Code provides the agent execution while Gemini CLI interprets the markdown OS specifications through its virtual tools feature.</p>
+                        <h3>🔧 Gemini CLI Virtual Tools</h3>
+                        <p>All examples use Gemini CLI's manifest-driven virtual tools for live web fetching, real file operations, state management, and training data generation. The GEMINI.md manifest defines all system capabilities.</p>
                     </div>
                     
                     <div class="feature-item">

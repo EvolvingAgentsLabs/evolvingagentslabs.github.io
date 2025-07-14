@@ -188,16 +188,23 @@ lessons_learned:<br/>
 <strong>1. Clone the repository</strong><br/>
 git clone https://github.com/EvolvingAgentsLabs/framework-core<br/><br/>
 
-<strong>2. Create your "software"</strong><br/>
+<strong>2. Install Gemini CLI with virtual tools</strong><br/>
+git clone https://github.com/EvolvingAgentsLabs/gemini-cli<br/>
+cd gemini-cli && git checkout issue-1806<br/>
+# Follow build instructions<br/><br/>
+
+<strong>3. Create your "software"</strong><br/>
 # Add components/agents/ and components/tools/ directories<br/>
 # Populate with markdown-defined agents and tools<br/><br/>
 
-<strong>3. Define your tasks</strong><br/>
-# Create scenarios/ directory with markdown task descriptions<br/><br/>
+<strong>4. Define your tasks</strong><br/>
+# Create scenarios/ directory with markdown task descriptions<br/>
+# Create GEMINI.md manifest file for your system<br/><br/>
 
-<strong>4. Boot your OS</strong><br/>
-# Use the LLMUNIX master prompt to instruct your LLM<br/>
-# Found in the LLMUNIX repository
+<strong>5. Boot your OS</strong><br/>
+./llmunix-boot  # Initialize the workspace<br/>
+gemini          # Start Gemini CLI runtime<br/>
+# The GEMINI.md manifest will be automatically loaded
                 </div>
 
                 <h2 style="text-align: center; margin: 64px 0 32px; font-size: 32px;">Future Vision & Roadmap</h2>
