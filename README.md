@@ -4,14 +4,16 @@ This is the official website for Evolving Agents Labs, showcasing our experiment
 
 ## Projects
 
+### Agent Forge
+Revolutionary hybrid architecture combining OpenAI's gpt-oss-20b orchestrator with fine-tuned CodeLlama translator. Features just-in-time code compilation, dynamic tool generation, and benchmarkable performance improvements over pure LLM approaches. Includes comprehensive Google Colab guide for replication.
+
 ### LLMunix
 A Pure Markdown Operating System designed to be run by Gemini CLI as its runtime engine. Everything is defined in markdown documents - Gemini CLI interprets the GEMINI.md manifest file to turn these specifications into a functional operating system. Requires the virtual tools feature from Gemini CLI Issue #1806 (available in the EvolvingAgentsLabs fork).
 
-### Framework Core
-Core architectural patterns and building blocks for autonomous agent systems with standardized interfaces and extensible components.
-
-### Agent Examples
-Real-world agent implementations showcasing practical applications of adaptive AI systems and autonomous task execution patterns.
+### JIT Agent Trilogy
+- **jit-agent-poc**: Just-In-Time agent that dynamically compiles executable code from LLM-provided conceptual ideas
+- **jit-agent-learn**: Extension focused on reinforcement learning capabilities and self-improvement
+- **jit-agent-memory**: Adds persistent memory capabilities for contextual awareness and long-term retention
 
 ## Development
 

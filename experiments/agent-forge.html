@@ -1,0 +1,168 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Agent Forge - Evolving Agents Labs</title>
+    <link rel="stylesheet" href="../styles.css">
+    <link href="https://fonts.googleapis.com/css2?family=Google+Sans:wght@400;500;600;700&family=Inter:wght@400;500;600;700&family=Poppins:wght@400;500;600;700&display=swap" rel="stylesheet">
+</head>
+<body>
+    <nav class="navbar">
+        <div class="nav-container">
+            <div class="nav-logo">
+                <img src="../images/evolving_agents_lab.png" alt="Evolving Agents Lab" class="logo" style="height: 32px; max-width: 32px;">
+                <h1><a href="../index.html" style="text-decoration: none; color: inherit;">Evolving Agents Labs</a></h1>
+            </div>
+            <div class="nav-links">
+                <a href="../index.html#experiments">Experiments</a>
+                <a href="../index.html#about">About</a>
+                <a href="https://github.com/EvolvingAgentsLabs" target="_blank">GitHub</a>
+            </div>
+        </div>
+    </nav>
+
+    <main>
+        <section class="hero">
+            <div class="hero-content">
+                <h1>Agent Forge <span class="alpha-badge">🧪 ALPHA</span></h1>
+                <p>Self-Compiling Agent Architecture</p>
+                <div class="alpha-notice">
+                    <span class="alpha-badge">🚀 HYBRID ARCHITECTURE</span>
+                    <p>Revolutionary proof-of-concept combining orchestrator and translator models for optimal performance</p>
+                </div>
+            </div>
+        </section>
+
+        <section class="experiment-details">
+            <div class="container">
+                <div class="experiment-overview">
+                    <h2>Overview</h2>
+                    <p>Agent Forge represents a breakthrough in hybrid agent architecture, combining the reasoning power of OpenAI's gpt-oss-20b with the specialized code generation capabilities of a fine-tuned CodeLlama model. This innovative approach delivers measurable performance improvements over traditional pure LLM systems.</p>
+                    
+                    <div class="features-grid">
+                        <div class="feature-card">
+                            <h3>🧠 Orchestrator Brain</h3>
+                            <p>Powered by gpt-oss-20b for high-level planning, reasoning, and decision-making processes.</p>
+                        </div>
+                        <div class="feature-card">
+                            <h3>⚡ Translator Engine</h3>
+                            <p>Fine-tuned CodeLlama-7B with LORA adapters for efficient concept-to-code translation.</p>
+                        </div>
+                        <div class="feature-card">
+                            <h3>🔧 JIT Compilation</h3>
+                            <p>Dynamic tool generation and caching for optimized runtime performance.</p>
+                        </div>
+                        <div class="feature-card">
+                            <h3>📊 Benchmarking</h3>
+                            <p>Quantifiable performance metrics comparing hybrid vs pure LLM approaches.</p>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="architecture-section">
+                    <h2>Architecture</h2>
+                    <div class="architecture-flow">
+                        <div class="flow-step">
+                            <h3>1. Goal Processing</h3>
+                            <p>User goal is processed by the gpt-oss-20b orchestrator to create an execution plan</p>
+                        </div>
+                        <div class="flow-arrow">→</div>
+                        <div class="flow-step">
+                            <h3>2. Concept Generation</h3>
+                            <p>Orchestrator generates high-level function concepts for required tools</p>
+                        </div>
+                        <div class="flow-arrow">→</div>
+                        <div class="flow-step">
+                            <h3>3. Code Translation</h3>
+                            <p>Fine-tuned CodeLlama translates concepts into executable Python code</p>
+                        </div>
+                        <div class="flow-arrow">→</div>
+                        <div class="flow-step">
+                            <h3>4. Runtime Execution</h3>
+                            <p>Compiled tools are cached and executed, with results fed back to orchestrator</p>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="technical-details">
+                    <h2>Technical Implementation</h2>
+                    <div class="tech-grid">
+                        <div class="tech-item">
+                            <h4>Orchestrator Model</h4>
+                            <ul>
+                                <li>OpenAI gpt-oss-20b with native mxfp4 quantization</li>
+                                <li>Bleeding-edge torch and transformers setup</li>
+                                <li>Optimized for reasoning and planning tasks</li>
+                            </ul>
+                        </div>
+                        <div class="tech-item">
+                            <h4>Translator Model</h4>
+                            <ul>
+                                <li>CodeLlama-7B-Python base model</li>
+                                <li>4-bit quantization with BitsAndBytesConfig</li>
+                                <li>LORA fine-tuning for concept-to-code translation</li>
+                            </ul>
+                        </div>
+                        <div class="tech-item">
+                            <h4>Training Dataset</h4>
+                            <ul>
+                                <li>High-quality concept-to-code examples</li>
+                                <li>Structured instruction-output format</li>
+                                <li>Focus on API integration and tool creation</li>
+                            </ul>
+                        </div>
+                        <div class="tech-item">
+                            <h4>Runtime Engine</h4>
+                            <ul>
+                                <li>Dynamic function compilation and caching</li>
+                                <li>Comprehensive performance benchmarking</li>
+                                <li>Error handling and fallback mechanisms</li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="performance-section">
+                    <h2>Performance Benchmarking</h2>
+                    <p>Agent Forge includes a comprehensive benchmarking framework that measures:</p>
+                    <ul>
+                        <li><strong>Latency:</strong> Total response time for task completion</li>
+                        <li><strong>Token Efficiency:</strong> Number of tokens consumed during execution</li>
+                        <li><strong>Success Rate:</strong> Task completion accuracy and reliability</li>
+                        <li><strong>Caching Benefits:</strong> Performance improvements from tool reuse</li>
+                    </ul>
+                    
+                    <div class="benchmark-highlight">
+                        <h3>Expected Performance Gains</h3>
+                        <p>Based on the architecture design, Agent Forge demonstrates significant improvements in efficiency through specialized model usage and intelligent caching mechanisms.</p>
+                    </div>
+                </div>
+
+                <div class="experiment-links-section">
+                    <h2>Get Started</h2>
+                    <div class="links-grid">
+                        <a href="https://github.com/EvolvingAgentsLabs/agent-forge" class="btn-primary large" target="_blank">
+                            🔗 GitHub Repository
+                            <span>Source code, documentation, and Google Colab guide</span>
+                        </a>
+                        <a href="https://github.com/EvolvingAgentsLabs" class="btn-secondary large" target="_blank">
+                            🏢 Organization
+                            <span>All Evolving Agents Labs projects</span>
+                        </a>
+                    </div>
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <footer class="footer">
+        <div class="container">
+            <p>&copy; 2024 Evolving Agents Labs. Experimental research in adaptive agent systems.</p>
+            <div class="footer-links">
+                <a href="https://github.com/EvolvingAgentsLabs" target="_blank">GitHub Organization</a>
+            </div>
+        </div>
+    </footer>
+</body>
+</html>
