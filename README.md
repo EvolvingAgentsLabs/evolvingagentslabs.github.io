@@ -21,15 +21,15 @@ We explore early-stage concepts in adaptive AI through experimental frameworks a
 
 ### [Agent Forge](https://github.com/EvolvingAgentsLabs/agent-forge) `ALPHA`
 **Self-Compiling Agent Architecture**
-- Revolutionary hybrid architecture combining OpenAI's gpt-oss-20b orchestrator with fine-tuned CodeLlama translator
+- Revolutionary unified architecture using a single fine-tuned Qwen2.5-Coder model for both orchestration and code translation
 - Features just-in-time code compilation, dynamic tool generation, and benchmarkable performance improvements over pure LLM approaches
-- Includes comprehensive Google Colab guide for replication
+- Includes comprehensive Google Colab guide for replication with Unsloth optimization
 
 [📖 Learn More](https://evolvingagentslabs.github.io/experiments/agent-forge.html) • [🚀 View Project](https://github.com/EvolvingAgentsLabs/agent-forge)
 
 #### JIT Agent Components
 
-- **[jit-agent-poc](https://github.com/EvolvingAgentsLabs/jit-agent-poc)** `ALPHA` - Just-In-Time agent that dynamically compiles executable code from LLM-provided conceptual ideas, optimizing for efficiency and runtime performance
+- **[jit-agent-poc](https://github.com/EvolvingAgentsLabs/jit-agent-poc)** `ALPHA` - Unified architecture proof-of-concept using a single fine-tuned Qwen2.5-Coder-1.5B model as both Orchestrator and Translator, eliminating multi-model complexity through specialized LoRA training with Unsloth
 - **[jit-agent-learn](https://github.com/EvolvingAgentsLabs/jit-agent-learn)** `ALPHA` - Extension focused on reinforcement learning capabilities, allowing agents to improve their performance through experience and feedback loops
 - **[jit-agent-memory](https://github.com/EvolvingAgentsLabs/jit-agent-memory)** `ALPHA` - Adds persistent memory capabilities to enable contextual awareness and long-term information retention across interactions
 
