@@ -8,6 +8,41 @@ We explore early-stage concepts in adaptive AI through experimental frameworks a
 
 ---
 
+## 📢 Project Evolution Announcement
+
+### Original Evolving Agents Toolkit (EAT) - Sunset Notice
+
+The original [Evolving Agents Toolkit (EAT) Python project](https://github.com/matiasmolinas/evolving-agents) has been **officially discontinued** as of July 2025. While EAT demonstrated powerful concepts in multi-agent orchestration with MongoDB backend, we recognized that the complex Python architecture was over-engineered for achieving adaptive agent behavior.
+
+**Key insights from EAT that led to our new direction:**
+- Complex multi-component architectures created unnecessary overhead
+- The core concept of autonomous agent evolution was sound
+- Simpler approaches could achieve the same adaptive behaviors
+- LLM capabilities alone could handle orchestration and evolution
+
+### Evolution to LLMunix
+
+The concepts pioneered in EAT have been **dramatically simplified and reimplemented** in our new flagship project: **LLMunix** - a Pure Markdown Operating System that achieves the same adaptive agent goals through elegant simplicity.
+
+**From EAT's complexity to LLMunix's simplicity:**
+- **EAT**: Multi-component Python architecture with MongoDB backend
+- **LLMunix**: Pure markdown definitions interpreted by LLM runtime engines
+- **Result**: Same adaptive capabilities, 10x simpler implementation
+
+### Current Focus & Next Steps
+
+We are actively **maintaining and evolving LLMunix** as our core research platform. However, with the recent implementation of **sub-agents in markdown as an official Claude Code feature**, we now understand that our original markdown-based agent concept was an excellent proof-of-concept that has been validated by the industry.
+
+**Our new research direction:**
+- **LLMunix continues** as a maintained research platform for markdown-based agent systems
+- **Next frontier**: Implementing agents and their tools **directly at the LLM level**
+- **Goal**: Move beyond markdown specifications to native LLM-based agent architectures
+- **Focus**: Developing truly autonomous agents that exist within the LLM's reasoning space
+
+This represents the natural evolution from external frameworks → markdown specifications → **pure LLM-native agent implementation**.
+
+---
+
 ## 🧪 Current Experiments
 
 ### [LLMunix](https://github.com/EvolvingAgentsLabs/llmunix) `ALPHA`
