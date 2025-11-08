@@ -1,0 +1,256 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>LLMunix Starter - Evolving Agents Labs</title>
+    <link rel="stylesheet" href="../styles.css">
+    <link href="https://fonts.googleapis.com/css2?family=Google+Sans:wght@400;500;600;700&family=Inter:wght@400;500;600;700&family=Poppins:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <style>
+        .experiment-detail {
+            padding: 80px 0;
+        }
+        .experiment-header {
+            text-align: center;
+            margin-bottom: 64px;
+        }
+        .experiment-header h1 {
+            font-size: 48px;
+            font-weight: 400;
+            margin-bottom: 16px;
+            color: #202124;
+        }
+        .experiment-header .category {
+            font-size: 16px;
+            color: #1a73e8;
+            font-weight: 500;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+        }
+        .feature-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 32px;
+            margin: 48px 0;
+        }
+        .feature-item {
+            background: #f8f9fa;
+            padding: 32px;
+            border-radius: 12px;
+        }
+        .feature-item h3 {
+            color: #c44b9f;
+            margin-bottom: 16px;
+            font-size: 20px;
+            font-weight: 600;
+        }
+        .code-example {
+            background: #f8f9fa;
+            border-radius: 8px;
+            padding: 24px;
+            margin: 24px 0;
+            font-family: 'Courier New', monospace;
+            overflow-x: auto;
+        }
+        .demo-section {
+            background: linear-gradient(135deg, #ff6b9d 0%, #c44b9f 50%, #9c3dd1 100%);
+            color: white;
+            padding: 64px 0;
+            margin: 64px 0;
+            border-radius: 16px;
+            box-shadow: 0 8px 32px rgba(196, 75, 159, 0.3);
+        }
+        .demo-content {
+            text-align: center;
+        }
+        .demo-content h2 {
+            font-size: 32px;
+            margin-bottom: 16px;
+        }
+        .comparison-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 32px;
+            margin: 48px 0;
+        }
+        .comparison-box {
+            padding: 24px;
+            border-radius: 12px;
+        }
+        .comparison-box.traditional {
+            background: #ffebee;
+            border: 2px solid #ef5350;
+        }
+        .comparison-box.llmunix {
+            background: #e8f5e9;
+            border: 2px solid #4caf50;
+        }
+        .comparison-box h3 {
+            margin-bottom: 16px;
+        }
+        .comparison-box ul {
+            list-style: none;
+            padding: 0;
+        }
+        .comparison-box li {
+            padding: 8px 0;
+        }
+    </style>
+</head>
+<body>
+    <nav class="navbar">
+        <div class="nav-container">
+            <div class="nav-logo">
+                <a href="../index.html" style="text-decoration: none; color: inherit; display: flex; align-items: center; gap: 12px;">
+                    <img src="../images/evolving_agents_lab.png" alt="Evolving Agents Lab" class="logo" style="height: 32px; max-width: 32px; object-fit: contain;">
+                    <h1>Evolving Agents Labs</h1>
+                </a>
+            </div>
+            <div class="nav-links">
+                <a href="../index.html#experiments">Experiments</a>
+                <a href="../index.html#about">About</a>
+                <a href="https://github.com/EvolvingAgentsLabs/llmunix-starter" target="_blank">GitHub</a>
+            </div>
+        </div>
+    </nav>
+
+    <main>
+        <section class="experiment-detail">
+            <div class="container">
+                <div class="experiment-header">
+                    <div class="category">🏭 PURE MARKDOWN OS TEMPLATE</div>
+                    <h1>LLMunix Starter <span class="alpha-tag">ALPHA</span></h1>
+                    <p style="font-size: 20px; color: #5f6368; max-width: 800px; margin: 0 auto 24px;">
+                        A fresh LLMunix template optimized for Claude Code on the web. The factory for building specialized agents dynamically—no pre-built solutions, just the essential kernel to create exactly what you need, when you need it.
+                    </p>
+                    <div style="background: #fff3cd; border: 1px solid #ffeaa7; border-radius: 8px; padding: 16px; max-width: 600px; margin: 0 auto;">
+                        <p style="margin: 0; font-size: 14px; color: #856404;">
+                            ⚠️ <strong>Experimental Research</strong> - This project is a research prototype and will remain permanently in alpha status.
+                        </p>
+                    </div>
+                </div>
+
+                <div class="demo-section">
+                    <div class="demo-content">
+                        <h2>Philosophy: The Factory, Not the Products</h2>
+                        <p style="font-size: 18px; max-width: 800px; margin: 0 auto 32px;">Traditional AI systems pre-define agents for specific domains. LLMunix inverts this model—it creates agents on demand, tailored to your exact problem, learning from every execution.</p>
+                    </div>
+                </div>
+
+                <div class="comparison-grid">
+                    <div class="comparison-box traditional">
+                        <h3>❌ Traditional Approach</h3>
+                        <ul>
+                            <li>❌ Domain coverage is bounded</li>
+                            <li>❌ Agents are generic</li>
+                            <li>❌ Systems grow bloated</li>
+                            <li>❌ No learning feedback loop</li>
+                        </ul>
+                    </div>
+                    <div class="comparison-box llmunix">
+                        <h3>✅ LLMunix Approach</h3>
+                        <ul>
+                            <li>✅ Infinite domain coverage</li>
+                            <li>✅ Problem-specific agents</li>
+                            <li>✅ Minimal core (3 agents)</li>
+                            <li>✅ Continuous evolution</li>
+                        </ul>
+                    </div>
+                </div>
+
+                <h2 style="text-align: center; margin: 64px 0 32px; font-size: 32px;">What You Get</h2>
+
+                <div class="feature-grid">
+                    <div class="feature-item">
+                        <h3>🎯 Essential Kernel Only</h3>
+                        <p>Only 3 core system agents: SystemAgent (orchestration), MemoryAnalysisAgent (pattern recognition), and MemoryConsolidationAgent (learning). No bloat, no pre-built domain agents.</p>
+                    </div>
+
+                    <div class="feature-item">
+                        <h3>🏭 Dynamic Agent Factory</h3>
+                        <p>Creates exactly the agents needed for your specific problem. Whether it's VisionaryAgent, MathematicianAgent, or QuantumEngineerAgent—generated on demand, tailored to requirements.</p>
+                    </div>
+
+                    <div class="feature-item">
+                        <h3>🧠 Continuous Learning</h3>
+                        <p>Every execution logs interactions to memory/short_term/, consolidates learnings to memory/long_term/, and uses past patterns to bootstrap future projects faster.</p>
+                    </div>
+
+                    <div class="feature-item">
+                        <h3>🌐 Web-Optimized</h3>
+                        <p>Designed specifically for Claude Code on the web. Connect your GitHub repository, give Claude a goal, and review PRs—all from your browser.</p>
+                    </div>
+
+                    <div class="feature-item">
+                        <h3>📝 Pure Markdown</h3>
+                        <p>Everything is markdown specifications. Agents, tools, memory—all defined in human-readable markdown files that Claude interprets at runtime.</p>
+                    </div>
+
+                    <div class="feature-item">
+                        <h3>🔐 Public or Private</h3>
+                        <p>Works with both public and private repositories. Configure GitHub App permissions, manage secrets securely, work on proprietary code in complete isolation.</p>
+                    </div>
+                </div>
+
+                <h2 style="text-align: center; margin: 64px 0 32px; font-size: 32px;">Quick Start</h2>
+
+                <div class="code-example">
+<strong>1. Use this template</strong><br/>
+Click "Use this template" on GitHub and create your repository (public or private)<br/><br/>
+
+<strong>2. Connect to Claude Code</strong><br/>
+Visit claude.ai/code and authorize GitHub access<br/><br/>
+
+<strong>3. Select your repository</strong><br/>
+Choose your new repository from the list<br/><br/>
+
+<strong>4. Give Claude a goal</strong><br/>
+Start with any ambitious, multi-faceted problem<br/><br/>
+
+<strong>5. Review and merge</strong><br/>
+Claude pushes changes to a branch for PR review
+                </div>
+
+                <h2 style="text-align: center; margin: 64px 0 32px; font-size: 32px;">How It Works: Dynamic Evolution</h2>
+
+                <div class="code-example">
+<strong>User Goal</strong><br/>
+    ↓<br/>
+<strong>1. SystemAgent analyzes and decomposes the goal</strong><br/>
+    ↓<br/>
+<strong>2. Creates project structure in projects/[ProjectName]/</strong><br/>
+    ↓<br/>
+<strong>3. WRITES new agent markdown files for required expertise</strong><br/>
+    ↓<br/>
+<strong>4. Reads each agent and invokes via Task tool</strong><br/>
+    ↓<br/>
+<strong>5. Logs all interactions to memory/short_term/</strong><br/>
+    ↓<br/>
+<strong>6. Produces final outputs in output/</strong><br/>
+    ↓<br/>
+<strong>7. Consolidates learnings to memory/long_term/</strong><br/>
+    ↓<br/>
+<strong>8. Future projects query and reuse these learnings</strong>
+                </div>
+
+                <div style="background: #e3f2fd; border: 1px solid #2196f3; border-radius: 8px; padding: 24px; margin: 32px auto; max-width: 800px;">
+                    <h3 style="color: #1976d2; margin-bottom: 16px;">💡 Key Innovation</h3>
+                    <p style="margin-bottom: 16px;">Instead of shipping hundreds of pre-built agents, LLMunix creates the exact agent you need with a system prompt tailored to your specific problem.</p>
+                    <p style="margin: 0;">A biomedical quantum computing project? You get VisionaryAgent, MathematicianAgent, QuantumEngineerAgent. A web scraper? You get DataExtractorAgent, ParserAgent, ValidationAgent. Exactly what you need, nothing more.</p>
+                </div>
+
+                <div style="text-align: center; margin: 64px 0;">
+                    <a href="https://github.com/EvolvingAgentsLabs/llmunix-starter" class="btn-primary" target="_blank">Use This Template</a>
+                    <a href="../index.html" class="btn-secondary">Back to Experiments</a>
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <footer class="footer">
+        <div class="container">
+            <p>&copy; 2025 Evolving Agents Labs. Building the future of intelligent agents.</p>
+        </div>
+    </footer>
+</body>
+</html>

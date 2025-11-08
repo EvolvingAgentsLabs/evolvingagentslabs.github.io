@@ -1,0 +1,241 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>LLMunix Marketplace - Evolving Agents Labs</title>
+    <link rel="stylesheet" href="../styles.css">
+    <link href="https://fonts.googleapis.com/css2?family=Google+Sans:wght@400;500;600;700&family=Inter:wght@400;500;600;700&family=Poppins:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <style>
+        .experiment-detail {
+            padding: 80px 0;
+        }
+        .experiment-header {
+            text-align: center;
+            margin-bottom: 64px;
+        }
+        .experiment-header h1 {
+            font-size: 48px;
+            font-weight: 400;
+            margin-bottom: 16px;
+            color: #202124;
+        }
+        .experiment-header .category {
+            font-size: 16px;
+            color: #1a73e8;
+            font-weight: 500;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+        }
+        .feature-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 32px;
+            margin: 48px 0;
+        }
+        .feature-item {
+            background: #f8f9fa;
+            padding: 32px;
+            border-radius: 12px;
+        }
+        .feature-item h3 {
+            color: #c44b9f;
+            margin-bottom: 16px;
+            font-size: 20px;
+            font-weight: 600;
+        }
+        .code-example {
+            background: #f8f9fa;
+            border-radius: 8px;
+            padding: 24px;
+            margin: 24px 0;
+            font-family: 'Courier New', monospace;
+            overflow-x: auto;
+        }
+        .demo-section {
+            background: linear-gradient(135deg, #ff6b9d 0%, #c44b9f 50%, #9c3dd1 100%);
+            color: white;
+            padding: 64px 0;
+            margin: 64px 0;
+            border-radius: 16px;
+            box-shadow: 0 8px 32px rgba(196, 75, 159, 0.3);
+        }
+        .demo-content {
+            text-align: center;
+        }
+        .demo-content h2 {
+            font-size: 32px;
+            margin-bottom: 16px;
+        }
+        .workflow-step {
+            background: white;
+            color: #202124;
+            padding: 24px;
+            border-radius: 8px;
+            margin: 16px auto;
+            max-width: 800px;
+        }
+        .workflow-step h4 {
+            color: #c44b9f;
+            margin-bottom: 8px;
+        }
+    </style>
+</head>
+<body>
+    <nav class="navbar">
+        <div class="nav-container">
+            <div class="nav-logo">
+                <a href="../index.html" style="text-decoration: none; color: inherit; display: flex; align-items: center; gap: 12px;">
+                    <img src="../images/evolving_agents_lab.png" alt="Evolving Agents Lab" class="logo" style="height: 32px; max-width: 32px; object-fit: contain;">
+                    <h1>Evolving Agents Labs</h1>
+                </a>
+            </div>
+            <div class="nav-links">
+                <a href="../index.html#experiments">Experiments</a>
+                <a href="../index.html#about">About</a>
+                <a href="https://github.com/EvolvingAgentsLabs/llmunix-marketplace" target="_blank">GitHub</a>
+            </div>
+        </div>
+    </nav>
+
+    <main>
+        <section class="experiment-detail">
+            <div class="container">
+                <div class="experiment-header">
+                    <div class="category">🔌 CLAUDE CODE CLI PLUGIN</div>
+                    <h1>LLMunix Marketplace <span class="alpha-tag">ALPHA</span></h1>
+                    <p style="font-size: 20px; color: #5f6368; max-width: 800px; margin: 0 auto 24px;">
+                        The LLMunix kernel as a Claude Code CLI plugin. Install the Pure Markdown Operating System into Claude Code via the marketplace and solve complex goals with the <code>/llmunix</code> command—dynamically creating specialized agent teams on the fly.
+                    </p>
+                    <div style="background: #fff3cd; border: 1px solid #ffeaa7; border-radius: 8px; padding: 16px; max-width: 600px; margin: 0 auto;">
+                        <p style="margin: 0; font-size: 14px; color: #856404;">
+                            ⚠️ <strong>Experimental Research</strong> - This project is a research prototype and will remain permanently in alpha status.
+                        </p>
+                    </div>
+                </div>
+
+                <div class="demo-section">
+                    <div class="demo-content">
+                        <h2>A Self-Evolving Kernel for Complex Problem Solving</h2>
+                        <p style="font-size: 18px; max-width: 800px; margin: 0 auto 32px;">LLMunix represents a paradigm shift in AI systems. Rather than shipping pre-built agents, it provides a kernel that creates agents on demand, learns from every execution, and evolves continuously by reusing successful strategies.</p>
+                    </div>
+                </div>
+
+                <h2 style="text-align: center; margin: 64px 0 32px; font-size: 32px;">Core Components</h2>
+
+                <div class="feature-grid">
+                    <div class="feature-item">
+                        <h3>🤖 Core System Agents</h3>
+                        <p><strong>SystemAgent</strong>: High-level orchestrator for agent lifecycle, task decomposition, and workflow coordination</p>
+                        <p><strong>MemoryAnalysisAgent</strong>: Captures and logs system activities in structured memory traces</p>
+                        <p><strong>MemoryConsolidationAgent</strong>: Extracts learnings from logs and generates reusable patterns</p>
+                    </div>
+
+                    <div class="feature-item">
+                        <h3>📚 System Specifications</h3>
+                        <p><strong>SmartMemory.md</strong>: Hierarchical memory architecture (short-term logs, long-term learnings)</p>
+                        <p><strong>QueryMemoryTool.md</strong>: Search and retrieve knowledge from past projects</p>
+                        <p><strong>ClaudeCodeToolMap.md</strong>: Maps LLMunix operations to Claude Code's actual tools</p>
+                    </div>
+
+                    <div class="feature-item">
+                        <h3>⚡ Master Command</h3>
+                        <p><strong>/llmunix</strong>: The kernel shell that analyzes goals, creates specialized agents, orchestrates execution, and consolidates learnings—all through a single command.</p>
+                    </div>
+                </div>
+
+                <h2 style="text-align: center; margin: 64px 0 32px; font-size: 32px;">How It Works: Dynamic Evolution</h2>
+
+                <div style="max-width: 900px; margin: 0 auto;">
+                    <div class="workflow-step">
+                        <h4>1. Analyze the Goal</h4>
+                        <p>Decomposes your high-level objective into distinct tasks requiring specialized expertise (e.g., 'high-level vision', 'mathematical theory', 'quantum coding', 'technical documentation').</p>
+                    </div>
+
+                    <div class="workflow-step">
+                        <h4>2. Create Project Structure</h4>
+                        <p>Generates a dedicated project workspace with components/agents/, output/, and memory/ directories for organized execution and learning.</p>
+                    </div>
+
+                    <div class="workflow-step">
+                        <h4>3. Create Specialized Agents</h4>
+                        <p><strong style="color: #c44b9f;">This is the core innovation.</strong> For each required expertise, LLMunix writes a new agent markdown file with YAML frontmatter and detailed system prompts tailored to the specific project domain.</p>
+                    </div>
+
+                    <div class="workflow-step">
+                        <h4>4. Orchestrate Execution</h4>
+                        <p>Delegates tasks to agents by reading their markdown definitions, invoking them via the Task tool, logging complete interactions, and managing dependencies between agents.</p>
+                    </div>
+
+                    <div class="workflow-step">
+                        <h4>5. Produce Outputs</h4>
+                        <p>All deliverables (code, documentation, data files, visualizations) are saved to the project's output/ directory.</p>
+                    </div>
+
+                    <div class="workflow-step">
+                        <h4>6. Learn and Improve</h4>
+                        <p>MemoryConsolidationAgent analyzes all short-term logs, extracts successful patterns, agent designs, and strategies, then generates project_learnings.md in long-term memory.</p>
+                    </div>
+
+                    <div class="workflow-step">
+                        <h4>7. Continuous Evolution</h4>
+                        <p>Future projects query long-term memory to reuse proven agent designs, apply successful workflow patterns, avoid documented pitfalls, and bootstrap faster with adapted templates.</p>
+                    </div>
+                </div>
+
+                <h2 style="text-align: center; margin: 64px 0 32px; font-size: 32px;">Installation</h2>
+
+                <div class="code-example">
+<strong>Install from Marketplace</strong><br/><br/>
+
+/plugin marketplace add evolving-agents-labs/llmunix-marketplace<br/>
+/plugin install llmunix-plugin<br/><br/>
+
+<strong>Verify Installation</strong><br/><br/>
+
+/llmunix --version<br/><br/>
+
+<strong>Start Using LLMunix</strong><br/><br/>
+
+/llmunix "Create a biomedical quantum computing research project analyzing arterial flow patterns"<br/><br/>
+
+# LLMunix will:<br/>
+# 1. Create projects/Project_aorta/<br/>
+# 2. Generate VisionaryAgent, MathematicianAgent, QuantumEngineerAgent<br/>
+# 3. Orchestrate their collaboration<br/>
+# 4. Produce outputs and consolidate learnings
+                </div>
+
+                <div style="background: #e3f2fd; border: 1px solid #2196f3; border-radius: 8px; padding: 24px; margin: 32px auto; max-width: 800px;">
+                    <h3 style="color: #1976d2; margin-bottom: 16px;">💡 Why This Matters</h3>
+                    <p style="margin-bottom: 16px;"><strong>Traditional AI Systems</strong>: Ship hundreds of pre-built agents for specific domains. Limited coverage, generic solutions, systems grow bloated, no learning loop.</p>
+                    <p style="margin: 0;"><strong>LLMunix Approach</strong>: Creates the exact agents you need with prompts tailored to your specific problem. Infinite domain coverage, problem-specific solutions, minimal core, continuous evolution.</p>
+                </div>
+
+                <div style="background: #e8f5e9; border: 1px solid #4caf50; border-radius: 8px; padding: 24px; margin: 32px auto; max-width: 800px;">
+                    <h3 style="color: #2e7d32; margin-bottom: 16px;">🚀 Example: Dynamically Created Agents</h3>
+                    <p style="margin-bottom: 8px;">For a biomedical quantum computing project, LLMunix might create:</p>
+                    <ul style="margin-bottom: 0;">
+                        <li><strong>VisionaryAgent.md</strong> - Strategic conceptualization and high-level architecture</li>
+                        <li><strong>MathematicianAgent.md</strong> - Theoretical framework and mathematical modeling</li>
+                        <li><strong>QuantumEngineerAgent.md</strong> - Quantum circuit implementation and optimization</li>
+                        <li><strong>TechnicalWriterAgent.md</strong> - Documentation and research paper generation</li>
+                        <li><strong>CodeReviewerAgent.md</strong> - Quality assurance and code validation</li>
+                    </ul>
+                </div>
+
+                <div style="text-align: center; margin: 64px 0;">
+                    <a href="https://github.com/EvolvingAgentsLabs/llmunix-marketplace" class="btn-primary" target="_blank">View on GitHub</a>
+                    <a href="../index.html" class="btn-secondary">Back to Experiments</a>
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <footer class="footer">
+        <div class="container">
+            <p>&copy; 2025 Evolving Agents Labs. Building the future of intelligent agents.</p>
+        </div>
+    </footer>
+</body>
+</html>
