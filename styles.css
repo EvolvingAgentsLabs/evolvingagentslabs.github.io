@@ -1,6 +1,16 @@
 /*
  * Evolving Agents Labs — Tron Ares stylesheet
  * Black + Ares orange + cyan accent. Monospace everywhere.
+ *
+ * The page is built as layers:
+ *   z=-2  body (pure black, ultimate fallback)
+ *   z=-1  #bg canvas (Three.js scene, fixed full-viewport)
+ *   z= 0  .bg-fallback (CSS gradient + scanlines, only visible when
+ *         <html class="scene-fallback"> is set by scene.js)
+ *   z= 1  .scanlines (CRT pattern, multiplied over everything)
+ *   z= 5+ content (.card panels with backdrop-filter for legibility)
+ *   z=50+ topbar
+ *   z=999 horizontal scan beam (scrolls down the viewport)
  */
 
 :root {
@@ -21,11 +31,16 @@
   --cyan:      #00d4ff;
   --cyan-pale: #bff7ff;
   --mono:      'SF Mono', 'Menlo', 'Consolas', 'Courier New', ui-monospace, monospace;
+
+  --glass:     rgba(0, 0, 0, 0.62);
+  --glass-edge: rgba(255, 107, 26, 0.20);
 }
 
 * { margin: 0; padding: 0; box-sizing: border-box; }
 
 html { scroll-behavior: smooth; }
+
+html, body { height: 100%; }
 
 body {
   background: var(--bg);
@@ -34,9 +49,41 @@ body {
   font-size: 15px;
   line-height: 1.6;
   overflow-x: hidden;
+  position: relative;
 }
 
-/* Subtle full-page CRT scanlines */
+/* ─────────────────────── 3D scene canvas ─────────────────────── */
+
+#bg {
+  position: fixed;
+  inset: 0;
+  width: 100vw;
+  height: 100vh;
+  display: block;
+  z-index: -1;
+  pointer-events: auto;        /* needed for raycaster click-through to repos */
+  background: transparent;
+}
+
+/* When the scene is skipped (mobile / reduced-motion / no-WebGL),
+   scene.js sets <html class="scene-fallback">. Hide the canvas and
+   reveal the static gradient layer underneath. */
+html.scene-fallback #bg { display: none; }
+
+.bg-fallback {
+  position: fixed;
+  inset: 0;
+  z-index: -1;
+  pointer-events: none;
+  display: none;
+  background:
+    radial-gradient(ellipse at 50% 80%, rgba(255, 45, 0, 0.35) 0%, transparent 55%),
+    radial-gradient(ellipse at 50% 30%, rgba(255, 107, 26, 0.15) 0%, transparent 60%),
+    linear-gradient(180deg, #000 0%, #0a0408 60%, #1a0500 100%);
+}
+html.scene-fallback .bg-fallback { display: block; }
+
+/* Subtle full-page CRT scanlines — sit above canvas and content */
 .scanlines {
   position: fixed;
   inset: 0;
@@ -52,7 +99,7 @@ body {
   mix-blend-mode: screen;
 }
 
-/* Soft horizontal scan that drifts down the page */
+/* Soft horizontal scan that drifts down the viewport */
 body::before {
   content: '';
   position: fixed;
@@ -68,7 +115,6 @@ body::before {
   animation: scan 9s linear infinite;
   box-shadow: 0 0 14px var(--cyan);
 }
-
 @keyframes scan {
   0%   { transform: translateY(0);    opacity: 0; }
   10%  { opacity: 0.45; }
@@ -82,8 +128,9 @@ body::before {
   position: sticky;
   top: 0;
   z-index: 50;
-  background: rgba(0, 0, 0, 0.85);
-  backdrop-filter: blur(8px);
+  background: rgba(0, 0, 0, 0.78);
+  backdrop-filter: blur(10px);
+  -webkit-backdrop-filter: blur(10px);
   border-bottom: 1px solid var(--ares-glow);
   box-shadow: 0 0 20px rgba(255, 107, 26, 0.18);
 }
@@ -148,24 +195,49 @@ body::before {
   50%      { opacity: 1; }
 }
 
-/* ─────────────────────── hero ─────────────────────── */
+/* ─────────────────────── hero (3D-aware) ─────────────────────── */
 
-.hero {
+.hero-3d {
   max-width: 1280px;
-  margin: 32px auto 0;
-  padding: 0 16px;
+  margin: 0 auto;
+  padding: 22vh 24px 18vh;
+  text-align: center;
+  position: relative;
+  z-index: 5;
+  /* The 3D scene shows through here — no opaque background */
 }
 
-.hero-svg {
-  display: block;
-  width: 100%;
-  height: auto;
-  aspect-ratio: 1280 / 360;
+.hero-title {
+  font-family: var(--mono);
+  font-weight: 900;
+  letter-spacing: 12px;
+  line-height: 1.05;
+  margin: 0 0 22px;
+  color: transparent;
+  font-size: clamp(34px, 6.5vw, 78px);
+}
+.hero-title .t1, .hero-title .t2, .hero-title .t3 {
+  display: inline-block;
+  background: linear-gradient(180deg, #ffd9c2 0%, #ff6b1a 55%, #ff2d00 100%);
+  -webkit-background-clip: text;
+  background-clip: text;
+  color: transparent;
+  text-shadow: 0 0 32px rgba(255, 45, 0, 0.55);
+  filter: drop-shadow(0 0 12px rgba(255, 107, 26, 0.4));
+}
+.hero-title .t2 { margin: 0 18px; }
+.hero-title .t3 {
+  background: linear-gradient(180deg, #bff7ff 0%, #00d4ff 100%);
+  -webkit-background-clip: text;
+  background-clip: text;
+  color: transparent;
+  text-shadow: 0 0 24px rgba(0, 212, 255, 0.6);
+  filter: drop-shadow(0 0 10px rgba(0, 212, 255, 0.5));
 }
 
 .hero-text {
   text-align: center;
-  margin: 28px auto 0;
+  margin: 0 auto;
   max-width: 880px;
 }
 
@@ -173,12 +245,13 @@ body::before {
   font-size: 18px;
   color: var(--ares-pale);
   letter-spacing: 0.5px;
-  text-shadow: 0 0 8px rgba(255, 107, 26, 0.3);
+  text-shadow: 0 0 8px rgba(255, 107, 26, 0.35), 0 1px 2px #000;
 }
 .hero-text .sub {
   margin-top: 10px;
-  color: var(--mid);
+  color: var(--pale);
   font-size: 14px;
+  text-shadow: 0 1px 2px #000;
 }
 .hero-text .cmd {
   color: var(--ares-red);
@@ -202,11 +275,24 @@ body::before {
 }
 
 .hero-badges {
-  margin-top: 18px;
+  margin-top: 22px;
   display: flex;
   flex-wrap: wrap;
   justify-content: center;
   gap: 10px;
+}
+
+.hero-hint {
+  margin-top: 28px;
+  font-size: 11px;
+  letter-spacing: 6px;
+  color: var(--mid);
+  opacity: 0.6;
+  animation: hint 2.4s ease-in-out infinite;
+}
+@keyframes hint {
+  0%, 100% { opacity: 0.35; transform: translateY(0); }
+  50%      { opacity: 0.8;  transform: translateY(2px); }
 }
 
 .badge {
@@ -225,7 +311,7 @@ body::before {
   display: inline-block;
 }
 .badge span {
-  background: #000;
+  background: rgba(0, 0, 0, 0.85);
   color: var(--mid);
   border-right: 1px solid currentColor;
 }
@@ -243,20 +329,27 @@ body::before {
   box-shadow: 0 0 12px currentColor;
 }
 
-/* ─────────────────────── divider ─────────────────────── */
+/* ─────────────────────── glass cards ─────────────────────── */
 
-.divider {
-  max-width: 1280px;
-  margin: 48px auto;
-  padding: 0 16px;
-}
-.divider object {
-  display: block;
-  width: 100%;
-  height: 28px;
+main section {
+  max-width: 1180px;
+  margin: 36px auto;
+  padding: 0 24px;
+  position: relative;
+  z-index: 5;
 }
 
-/* ─────────────────────── sections ─────────────────────── */
+.card {
+  background: var(--glass);
+  backdrop-filter: blur(14px) saturate(140%);
+  -webkit-backdrop-filter: blur(14px) saturate(140%);
+  border: 1px solid var(--glass-edge);
+  border-radius: 12px;
+  padding: 28px 30px;
+  box-shadow:
+    0 0 32px rgba(255, 45, 0, 0.10),
+    inset 0 0 0 1px rgba(255, 217, 194, 0.04);
+}
 
 main h2 {
   font-size: 22px;
@@ -268,19 +361,13 @@ main h2 {
   text-transform: uppercase;
 }
 
-main section {
-  max-width: 1280px;
-  margin: 0 auto;
-  padding: 0 24px;
-}
-
 main p {
   color: var(--ares-pale);
   margin-bottom: 12px;
 }
 main p strong { color: var(--white); }
 main code {
-  background: var(--bg-soft);
+  background: rgba(26, 5, 0, 0.7);
   border: 1px solid var(--deep);
   padding: 1px 6px;
   border-radius: 3px;
@@ -294,7 +381,7 @@ main code {
   margin-top: 18px;
   border: 1px solid var(--ares-glow);
   border-radius: 8px;
-  background: linear-gradient(180deg, rgba(255, 45, 0, 0.04), transparent);
+  background: linear-gradient(180deg, rgba(255, 45, 0, 0.08), transparent);
   padding: 18px 22px;
   box-shadow: 0 0 18px rgba(255, 107, 26, 0.12) inset;
 }
@@ -305,6 +392,11 @@ main code {
   padding: 12px 0;
   border-bottom: 1px dashed var(--deep);
   align-items: center;
+  cursor: pointer;
+  transition: background 0.2s;
+}
+.brain-table .row:hover {
+  background: rgba(255, 107, 26, 0.06);
 }
 .brain-table .row:last-child { border-bottom: none; }
 .brain-table .region {
@@ -328,36 +420,35 @@ main code {
 }
 
 .project {
-  margin: 32px 0 48px;
+  margin: 22px 0 0;
   border: 1px solid var(--deep);
   border-radius: 10px;
   overflow: hidden;
-  background: var(--bg-deep);
-  transition: border-color 0.25s, box-shadow 0.25s, transform 0.25s;
+  background: rgba(10, 4, 8, 0.55);
+  backdrop-filter: blur(6px);
+  -webkit-backdrop-filter: blur(6px);
+  transition: border-color 0.25s, box-shadow 0.25s, transform 0.25s, background 0.25s;
+  cursor: pointer;
 }
-.project:hover {
+.project:hover,
+.project:focus-within {
   transform: translateY(-2px);
+  background: rgba(10, 4, 8, 0.75);
 }
-.project.ares:hover {
+.project.ares:hover,
+.project.ares:focus-within {
   border-color: var(--ares-red);
   box-shadow: 0 0 32px rgba(255, 45, 0, 0.30);
 }
-.project.mcp:hover {
+.project.mcp:hover,
+.project.mcp:focus-within {
   border-color: var(--mcp-green);
   box-shadow: 0 0 32px rgba(0, 255, 127, 0.25);
 }
-.project.kernel:hover {
+.project.kernel:hover,
+.project.kernel:focus-within {
   border-color: var(--white);
   box-shadow: 0 0 32px rgba(255, 255, 255, 0.20);
-}
-
-.card-link { display: block; }
-.card-svg {
-  display: block;
-  width: 100%;
-  height: auto;
-  aspect-ratio: 1280 / 320;
-  pointer-events: none;
 }
 
 .project-body { padding: 22px 28px 28px; }
@@ -380,7 +471,7 @@ main code {
   font-size: 11px;
   font-weight: 400;
   letter-spacing: 3px;
-  background: var(--bg-soft);
+  background: rgba(26, 5, 0, 0.7);
   border: 1px solid var(--deep);
   padding: 2px 8px;
   border-radius: 999px;
@@ -391,7 +482,7 @@ main code {
 .terminal {
   margin-top: 14px;
   padding: 14px 18px;
-  background: #000;
+  background: rgba(0, 0, 0, 0.85);
   border: 1px solid var(--deep);
   border-radius: 6px;
   font-size: 12px;
@@ -417,7 +508,7 @@ main code {
 .ascii-stack {
   margin: 18px 0 4px;
   padding: 18px 22px;
-  background: #000;
+  background: rgba(0, 0, 0, 0.85);
   border: 1px solid var(--deep);
   border-radius: 8px;
   color: var(--ares-pale);
@@ -438,7 +529,7 @@ main code {
 .principles-list li {
   padding: 14px 18px;
   border-left: 3px solid var(--ares-red);
-  background: linear-gradient(90deg, rgba(255, 45, 0, 0.06), transparent 60%);
+  background: linear-gradient(90deg, rgba(255, 45, 0, 0.10), transparent 60%);
   color: var(--ares-pale);
 }
 .principles-list li strong {
@@ -452,7 +543,7 @@ main code {
 .status-box {
   margin: 14px 0;
   padding: 18px 22px;
-  background: #000;
+  background: rgba(0, 0, 0, 0.85);
   border: 1px solid var(--deep);
   border-radius: 8px;
   color: var(--ares-glow);
@@ -470,13 +561,13 @@ main code {
   padding: 0 24px 64px;
   color: var(--mid);
   font-size: 12px;
+  position: relative;
+  z-index: 5;
 }
-.footer-div {
-  display: block;
-  width: 100%;
-  height: 28px;
-  margin: 0 auto 32px;
-  max-width: 1280px;
+.footer .card {
+  max-width: 1180px;
+  margin: 0 auto;
+  padding: 22px 26px;
 }
 .footer .links {
   margin-top: 8px;
@@ -504,6 +595,10 @@ main code {
   .topnav { gap: 14px; }
   .brand-name { display: none; }
   main h2 { font-size: 18px; letter-spacing: 4px; }
+  .card { padding: 22px 18px; border-radius: 10px; }
+  .hero-3d { padding: 14vh 18px 10vh; }
+  .hero-title { letter-spacing: 6px; }
+  .hero-title .t2 { margin: 0 8px; }
   .brain-table .row {
     grid-template-columns: 1fr;
     gap: 4px;
@@ -511,4 +606,11 @@ main code {
   .brain-table .arrow { display: none; }
   .project-body { padding: 18px 16px; }
   .project-body h3 .tag { display: block; margin: 6px 0 0 0; width: max-content; }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  body::before,
+  .status-led,
+  .caret,
+  .hero-hint { animation: none; }
 }

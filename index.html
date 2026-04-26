@@ -10,9 +10,26 @@
   <meta property="og:image" content="images/avatar.png"/>
   <link rel="icon" type="image/png" href="images/avatar.png"/>
   <link rel="stylesheet" href="styles.css"/>
+
+  <!-- Three.js modules — pinned to a single CDN version for reproducibility -->
+  <script type="importmap">
+  {
+    "imports": {
+      "three":          "https://unpkg.com/three@0.160.0/build/three.module.js",
+      "three/addons/":  "https://unpkg.com/three@0.160.0/examples/jsm/"
+    }
+  }
+  </script>
 </head>
 <body>
 
+  <!-- WebGL background canvas — scene.js binds to #bg -->
+  <canvas id="bg" aria-hidden="true"></canvas>
+
+  <!-- CSS fallback layer (gradient + scanlines) — visible when .scene-fallback is set -->
+  <div class="bg-fallback" aria-hidden="true"></div>
+
+  <!-- CRT scanlines on top of everything -->
   <div class="scanlines" aria-hidden="true"></div>
 
   <header class="topbar">
@@ -33,9 +50,13 @@
 
   <main id="top">
 
-    <section class="hero">
-      <object data="assets/org-hero.svg" type="image/svg+xml" class="hero-svg" aria-label="Evolving Agents Labs hero"></object>
+    <section class="hero hero-3d">
       <div class="hero-text">
+        <h1 class="hero-title">
+          <span class="t1">EVOLVING</span>
+          <span class="t2">AGENTS</span>
+          <span class="t3">LABS</span>
+        </h1>
         <p class="lead">
           On-device adaptive AI. Four research experiments mapping a
           biological cognitive stack onto local LLMs.
@@ -50,132 +71,140 @@
           <a class="badge cyan" href="https://www.apache.org/licenses/LICENSE-2.0"><span>license</span><b>Apache-2.0</b></a>
           <a class="badge gray" href="#principles"><span>thesis</span><b>permanently alpha</b></a>
         </div>
+        <p class="hero-hint" aria-hidden="true">
+          ▾ scroll · drag · or click a monolith
+        </p>
       </div>
     </section>
-
-    <div class="divider"><object data="assets/divider.svg" type="image/svg+xml" aria-hidden="true"></object></div>
 
     <section class="what">
-      <h2>▸ what we build</h2>
-      <p>
-        We build a <strong>biological cognitive stack</strong> on top
-        of local LLMs. Three brain regions, four repos, one runtime
-        substrate.
-      </p>
-      <div class="brain-table">
-        <div class="row"><span class="region cortex">PREFRONTAL CORTEX</span><span class="arrow">┄→</span><span class="repos"><a href="https://github.com/EvolvingAgentsLabs/skillos">skillos</a> · desktop · markdown OS<br/><a href="https://github.com/EvolvingAgentsLabs/skillos_mini">skillos_mini</a> · mobile · trade-app</span></div>
-        <div class="row"><span class="region cereb">CEREBELLUM</span><span class="arrow">┄→</span><span class="repos"><a href="https://github.com/EvolvingAgentsLabs/RoClaw">RoClaw</a> · embodied · 20cm cube robot</span></div>
-        <div class="row"><span class="region kernel">KERNEL</span><span class="arrow">┄→</span><span class="repos"><a href="https://github.com/EvolvingAgentsLabs/llm_os">llm_os</a> · LLM-as-CPU · 13-opcode ISA</span></div>
+      <div class="card">
+        <h2>▸ what we build</h2>
+        <p>
+          We build a <strong>biological cognitive stack</strong> on top
+          of local LLMs. Three brain regions, four repos, one runtime
+          substrate.
+        </p>
+        <div class="brain-table">
+          <div class="row" data-project="skillos">
+            <span class="region cortex">PREFRONTAL CORTEX</span>
+            <span class="arrow">┄→</span>
+            <span class="repos">
+              <a href="https://github.com/EvolvingAgentsLabs/skillos" data-project="skillos">skillos</a> · desktop · markdown OS<br/>
+              <a href="https://github.com/EvolvingAgentsLabs/skillos_mini" data-project="skillos_mini">skillos_mini</a> · mobile · trade-app
+            </span>
+          </div>
+          <div class="row" data-project="roclaw">
+            <span class="region cereb">CEREBELLUM</span>
+            <span class="arrow">┄→</span>
+            <span class="repos">
+              <a href="https://github.com/EvolvingAgentsLabs/RoClaw" data-project="roclaw">RoClaw</a> · embodied · 20cm cube robot
+            </span>
+          </div>
+          <div class="row" data-project="llm_os">
+            <span class="region kernel">KERNEL</span>
+            <span class="arrow">┄→</span>
+            <span class="repos">
+              <a href="https://github.com/EvolvingAgentsLabs/llm_os" data-project="llm_os">llm_os</a> · LLM-as-CPU · 13-opcode ISA
+            </span>
+          </div>
+        </div>
       </div>
     </section>
 
-    <div class="divider"><object data="assets/divider.svg" type="image/svg+xml" aria-hidden="true"></object></div>
-
     <section id="projects" class="projects">
-      <h2>▸ the four active projects</h2>
-      <p class="projects-intro">
-        Each card shows the <strong>transition from real-world to terminal</strong>
-        — the physical thing on the left, the live runtime on the right,
-        with particle streams and a digitization scan line bridging them.
-      </p>
+      <div class="card">
+        <h2>▸ the four active projects</h2>
+        <p class="projects-intro">
+          Each card focuses one monolith in the 3D scene above. Hover to
+          spotlight; click the title to open the repository.
+        </p>
 
-      <article class="project ares" id="skillos">
-        <a href="https://github.com/EvolvingAgentsLabs/skillos" class="card-link">
-          <object data="assets/card-skillos.svg" type="image/svg+xml" class="card-svg" aria-label="skillos transition card"></object>
-        </a>
-        <div class="project-body">
-          <h3><a href="https://github.com/EvolvingAgentsLabs/skillos">skillos</a> <span class="tag">cortex · desktop</span></h3>
-          <p>
-            A <strong>pure markdown operating system</strong> designed to
-            run on multiple AI runtime engines. Compatible with Claude
-            Code, Gemini CLI, and Qwen Code. Define an agent once with
-            a high-end model, execute it forever on a 2 GB local model.
-          </p>
-          <pre class="terminal"><code>$ skillos execute "Run the RoClaw Dream Consolidation scenario"
+        <article class="project ares" id="skillos" data-project="skillos" tabindex="0">
+          <div class="project-body">
+            <h3><a href="https://github.com/EvolvingAgentsLabs/skillos">skillos</a> <span class="tag">cortex · desktop</span></h3>
+            <p>
+              A <strong>pure markdown operating system</strong> designed to
+              run on multiple AI runtime engines. Compatible with Claude
+              Code, Gemini CLI, and Qwen Code. Define an agent once with
+              a high-end model, execute it forever on a 2 GB local model.
+            </p>
+            <pre class="terminal"><code>$ skillos execute "Run the RoClaw Dream Consolidation scenario"
 [OK] markdown agents       ▸ RoClawNavigationAgent · RoClawSceneAnalysisAgent
 [OK] dream consolidation   ▸ traces/sim3d/*.md  →  strategies/*.md
 [OK] evolving memory       ▸ persistent · weighted by fidelity</code></pre>
-        </div>
-      </article>
+          </div>
+        </article>
 
-      <article class="project ares" id="skillos_mini">
-        <a href="https://github.com/EvolvingAgentsLabs/skillos_mini" class="card-link">
-          <object data="assets/card-skillos-mini.svg" type="image/svg+xml" class="card-svg" aria-label="skillos_mini transition card"></object>
-        </a>
-        <div class="project-body">
-          <h3><a href="https://github.com/EvolvingAgentsLabs/skillos_mini">skillos_mini</a> <span class="tag">cortex · mobile</span></h3>
-          <p>
-            The mobile-first, on-device port — a
-            <strong>Capacitor + Svelte 5</strong> Android application
-            driving Gemma 4 E2B vision locally via LiteRT. First
-            commercial vertical: a trade-app for Spanish-speaking
-            tradespeople (electricista, plomero, pintor) that captures
-            photos, runs vision diagnosis on-device, generates a
-            branded PDF, and shares it by WhatsApp.
-            <strong>No backend.</strong>
-          </p>
-          <pre class="terminal"><code>[OK] cartridges    ▸ trade-electricista · trade-plomero · trade-pintor
+        <article class="project ares" id="skillos_mini" data-project="skillos_mini" tabindex="0">
+          <div class="project-body">
+            <h3><a href="https://github.com/EvolvingAgentsLabs/skillos_mini">skillos_mini</a> <span class="tag">cortex · mobile</span></h3>
+            <p>
+              The mobile-first, on-device port — a
+              <strong>Capacitor + Svelte 5</strong> Android application
+              driving Gemma 4 E2B vision locally via LiteRT. First
+              commercial vertical: a trade-app for Spanish-speaking
+              tradespeople (electricista, plomero, pintor) that captures
+              photos, runs vision diagnosis on-device, generates a
+              branded PDF, and shares it by WhatsApp.
+              <strong>No backend.</strong>
+            </p>
+            <pre class="terminal"><code>[OK] cartridges    ▸ trade-electricista · trade-plomero · trade-pintor
 [OK] vision        ▸ gemma-4-e2b.litertlm  · on-device · ~200 ms
 [OK] tests         ▸ 278 / 278 green  ·  svelte-check 0 errors</code></pre>
-        </div>
-      </article>
+          </div>
+        </article>
 
-      <article class="project mcp" id="roclaw">
-        <a href="https://github.com/EvolvingAgentsLabs/RoClaw" class="card-link">
-          <object data="assets/card-roclaw.svg" type="image/svg+xml" class="card-svg" aria-label="RoClaw transition card"></object>
-        </a>
-        <div class="project-body">
-          <h3><a href="https://github.com/EvolvingAgentsLabs/RoClaw">RoClaw</a> <span class="tag">cerebellum · embodied</span></h3>
-          <p>
-            A <strong>20 cm cube robot</strong> powered by ESP32-S3 +
-            stepper motors, driven by a vision language model running
-            on-device. Five-tier stack: ReflexGuard collision veto at L0,
-            an 8-byte UDP ISA at L1, Qwen3-VL-2B distilled from Gemini
-            Robotics-ER at L2, scene graph + reactive controller at L3,
-            skillos planning at L4. The robot dreams overnight and
-            hot-swaps the new GGUF into Ollama by morning.
-          </p>
-          <pre class="terminal"><code>$ npm run sim:3d -- --ollama --goal "navigate to the red cube"
+        <article class="project mcp" id="roclaw" data-project="roclaw" tabindex="0">
+          <div class="project-body">
+            <h3><a href="https://github.com/EvolvingAgentsLabs/RoClaw">RoClaw</a> <span class="tag">cerebellum · embodied</span></h3>
+            <p>
+              A <strong>20 cm cube robot</strong> powered by ESP32-S3 +
+              stepper motors, driven by a vision language model running
+              on-device. Five-tier stack: ReflexGuard collision veto at L0,
+              an 8-byte UDP ISA at L1, Qwen3-VL-2B distilled from Gemini
+              Robotics-ER at L2, scene graph + reactive controller at L3,
+              skillos planning at L4. The robot dreams overnight and
+              hot-swaps the new GGUF into Ollama by morning.
+            </p>
+            <pre class="terminal"><code>$ npm run sim:3d -- --ollama --goal "navigate to the red cube"
 [OK] qwen3-vl-2b           ▸ on-device · 200 ms / frame
 [OK] scene_graph           ▸ ReactiveController · ReflexGuard shadow
 [OK] esp32-s3              ▸ udp :4210 · 8-byte ISA v2 · ack 38ms</code></pre>
-        </div>
-      </article>
+          </div>
+        </article>
 
-      <article class="project kernel" id="llm_os">
-        <a href="https://github.com/EvolvingAgentsLabs/llm_os" class="card-link">
-          <object data="assets/card-llm-os.svg" type="image/svg+xml" class="card-svg" aria-label="llm_os transition card"></object>
-        </a>
-        <div class="project-body">
-          <h3><a href="https://github.com/EvolvingAgentsLabs/llm_os">llm_os</a> <span class="tag">kernel · ground-up</span></h3>
-          <p>
-            Not an agent framework. An <strong>operating system
-            architecture</strong> where the LLM itself plays the role of
-            the CPU. 13-opcode ISA over GBNF (sampler-enforced —
-            invalid sequences are <em>physically impossible</em> to
-            emit). KV cache as RAM. Compaction as swap. Logit bias as
-            Ring 0/Ring 3 privileges. 8 Hz on a Pi 5; 200 Hz on cloud.
-          </p>
-          <pre class="terminal"><code>$ ./scripts/quickstart.sh
+        <article class="project kernel" id="llm_os" data-project="llm_os" tabindex="0">
+          <div class="project-body">
+            <h3><a href="https://github.com/EvolvingAgentsLabs/llm_os">llm_os</a> <span class="tag">kernel · ground-up</span></h3>
+            <p>
+              Not an agent framework. An <strong>operating system
+              architecture</strong> where the LLM itself plays the role of
+              the CPU. 13-opcode ISA over GBNF (sampler-enforced —
+              invalid sequences are <em>physically impossible</em> to
+              emit). KV cache as RAM. Compaction as swap. Logit bias as
+              Ring 0/Ring 3 privileges. 8 Hz on a Pi 5; 200 Hz on cloud.
+            </p>
+            <pre class="terminal"><code>$ ./scripts/quickstart.sh
 [OK] llama.cpp     ▸ qwen-2.5-3b-q4 · 4×NEON · ctx=8192
 [OK] grammar       ▸ isa.gbnf · 13 opcodes · 12/12 fixtures green
 [OK] iod daemon    ▸ /dispatch /trace /policy
 [OK] cartridges    ▸ 6 mounted · system · io · sim · domestic</code></pre>
-        </div>
-      </article>
+          </div>
+        </article>
+      </div>
     </section>
 
-    <div class="divider"><object data="assets/divider.svg" type="image/svg+xml" aria-hidden="true"></object></div>
-
     <section id="stack" class="stack">
-      <h2>▸ how the four fit together</h2>
-      <p>
-        Each layer is independently shippable and swappable. The goal is
-        a <strong>self-improving loop</strong>: every navigation produces
-        a trace, every trace becomes training data, every overnight
-        cycle ends with a better model swapped into the local runtime.
-      </p>
-      <pre class="ascii-stack">
+      <div class="card">
+        <h2>▸ how the four fit together</h2>
+        <p>
+          Each layer is independently shippable and swappable. The goal is
+          a <strong>self-improving loop</strong>: every navigation produces
+          a trace, every trace becomes training data, every overnight
+          cycle ends with a better model swapped into the local runtime.
+        </p>
+        <pre class="ascii-stack">
                 ┌──────────────────┐
                 │  USER · WhatsApp │
                 │  voice · CLI     │
@@ -204,49 +233,54 @@
                 │ UDP :4210
                 ▼
             ESP32-S3 · 20cm cube
-      </pre>
+        </pre>
+      </div>
     </section>
-
-    <div class="divider"><object data="assets/divider.svg" type="image/svg+xml" aria-hidden="true"></object></div>
 
     <section id="principles" class="principles">
-      <h2>▸ design principles</h2>
-      <ol class="principles-list">
-        <li><strong>1 · ON-DEVICE FIRST.</strong> The cloud is opt-in. No project here defaults to a cloud model. Every primitive runs on Pi 5 / Snapdragon NPU first.</li>
-        <li><strong>2 · MARKDOWN AS DATA.</strong> Agent prompts, strategies, traces, dreams — all <code>.md</code> files the runtime walks. Reviewable. Diffable. No hidden state.</li>
-        <li><strong>3 · DETERMINISTIC SAFETY.</strong> Validators are code, not prompts. ReflexGuard, GBNF, IEC 60364 — the LLM proposes; deterministic logic enforces.</li>
-        <li><strong>4 · SWAPPABLE LAYERS.</strong> Cortex doesn't know what cerebellum is running. Each layer is a contract; implementations come and go.</li>
-        <li><strong>5 · PERMANENTLY ALPHA.</strong> We optimize for thesis clarity over API stability. Breaking changes are how we learn.</li>
-      </ol>
+      <div class="card">
+        <h2>▸ design principles</h2>
+        <ol class="principles-list">
+          <li><strong>1 · ON-DEVICE FIRST.</strong> The cloud is opt-in. No project here defaults to a cloud model. Every primitive runs on Pi 5 / Snapdragon NPU first.</li>
+          <li><strong>2 · MARKDOWN AS DATA.</strong> Agent prompts, strategies, traces, dreams — all <code>.md</code> files the runtime walks. Reviewable. Diffable. No hidden state.</li>
+          <li><strong>3 · DETERMINISTIC SAFETY.</strong> Validators are code, not prompts. ReflexGuard, GBNF, IEC 60364 — the LLM proposes; deterministic logic enforces.</li>
+          <li><strong>4 · SWAPPABLE LAYERS.</strong> Cortex doesn't know what cerebellum is running. Each layer is a contract; implementations come and go.</li>
+          <li><strong>5 · PERMANENTLY ALPHA.</strong> We optimize for thesis clarity over API stability. Breaking changes are how we learn.</li>
+        </ol>
+      </div>
     </section>
 
-    <div class="divider"><object data="assets/divider.svg" type="image/svg+xml" aria-hidden="true"></object></div>
-
     <section class="status">
-      <h2>▸ status</h2>
-      <pre class="status-box">
+      <div class="card">
+        <h2>▸ status</h2>
+        <pre class="status-box">
   skillos        ▰▰▰▰▰▰▰▰▰▰▰▰▰▰▰▰▰▰▰▰▰▰▰     stable          v0.X
   skillos_mini   ▰▰▰▰▰▰▰▰▰▰▰▰▰▰▰▰▰▰▰▰▰▰      feat-complete   v0.1.0
   RoClaw         ▰▰▰▰▰▰▰▰▰▰▰▰▰▰▰▰▰▰▰▰        active research
   llm_os         ▰▰▰▰▰▰▰▰▰▰▰▰▰▰▰▰▰▰▰         v0.5-rc1 → v1.0
-      </pre>
-      <p>Each repo has its own <strong>ARCHITECTURE.md</strong>, <strong>USAGE.md</strong>, <strong>TUTORIAL.md</strong>, and <strong>NEXT_STEPS.md</strong>.</p>
+        </pre>
+        <p>Each repo has its own <strong>ARCHITECTURE.md</strong>, <strong>USAGE.md</strong>, <strong>TUTORIAL.md</strong>, and <strong>NEXT_STEPS.md</strong>.</p>
+      </div>
     </section>
 
   </main>
 
   <footer class="footer">
-    <object data="assets/divider.svg" type="image/svg+xml" class="footer-div" aria-hidden="true"></object>
-    <p><code class="cmd">// END_OF_TRANSMISSION ·  EVOLVING AGENTS LABS // 2026</code></p>
-    <p class="links">
-      <a href="https://github.com/EvolvingAgentsLabs">github.com/EvolvingAgentsLabs</a> ·
-      <a href="https://github.com/EvolvingAgentsLabs/skillos">skillos</a> ·
-      <a href="https://github.com/EvolvingAgentsLabs/skillos_mini">skillos_mini</a> ·
-      <a href="https://github.com/EvolvingAgentsLabs/RoClaw">RoClaw</a> ·
-      <a href="https://github.com/EvolvingAgentsLabs/llm_os">llm_os</a>
-    </p>
-    <p class="footnote">Apache 2.0 · permanently alpha · 2026.</p>
+    <div class="card">
+      <p><code class="cmd">// END_OF_TRANSMISSION ·  EVOLVING AGENTS LABS // 2026</code></p>
+      <p class="links">
+        <a href="https://github.com/EvolvingAgentsLabs">github.com/EvolvingAgentsLabs</a> ·
+        <a href="https://github.com/EvolvingAgentsLabs/skillos" data-project="skillos">skillos</a> ·
+        <a href="https://github.com/EvolvingAgentsLabs/skillos_mini" data-project="skillos_mini">skillos_mini</a> ·
+        <a href="https://github.com/EvolvingAgentsLabs/RoClaw" data-project="roclaw">RoClaw</a> ·
+        <a href="https://github.com/EvolvingAgentsLabs/llm_os" data-project="llm_os">llm_os</a>
+      </p>
+      <p class="footnote">Apache 2.0 · permanently alpha · 2026.</p>
+    </div>
   </footer>
+
+  <!-- Boot the 3D scene last so the DOM is ready for [data-project] wiring -->
+  <script type="module" src="scene.js"></script>
 
 </body>
 </html>
