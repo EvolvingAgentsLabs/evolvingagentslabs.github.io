@@ -1,0 +1,125 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1024 1024" role="img" aria-label="Evolving Agents Labs">
+  <defs>
+    <radialGradient id="bg" cx="50%" cy="50%" r="65%">
+      <stop offset="0%"  stop-color="#1a0500"/>
+      <stop offset="55%" stop-color="#0a0408"/>
+      <stop offset="100%" stop-color="#000000"/>
+    </radialGradient>
+    <linearGradient id="aresFill" x1="0%" y1="0%" x2="0%" y2="100%">
+      <stop offset="0%" stop-color="#ffd9c2"/>
+      <stop offset="50%" stop-color="#ff7a3d"/>
+      <stop offset="100%" stop-color="#ff2d00"/>
+    </linearGradient>
+    <filter id="aresGlow" x="-30%" y="-30%" width="160%" height="160%">
+      <feGaussianBlur stdDeviation="10" result="g1"/>
+      <feGaussianBlur stdDeviation="22" result="g2"/>
+      <feMerge>
+        <feMergeNode in="g2"/><feMergeNode in="g1"/>
+        <feMergeNode in="SourceGraphic"/>
+      </feMerge>
+    </filter>
+    <filter id="cyanGlow" x="-30%" y="-30%" width="160%" height="160%">
+      <feGaussianBlur stdDeviation="6" result="g"/>
+      <feMerge><feMergeNode in="g"/><feMergeNode in="SourceGraphic"/></feMerge>
+    </filter>
+    <pattern id="scan" x="0" y="0" width="6" height="6" patternUnits="userSpaceOnUse">
+      <rect width="6" height="2" fill="#ff2d00" opacity="0.05"/>
+    </pattern>
+  </defs>
+
+  <!-- background -->
+  <rect width="1024" height="1024" fill="url(#bg)"/>
+
+  <!-- perspective grid receding to center -->
+  <g stroke="#ff2d00" stroke-width="2" opacity="0.18" fill="none">
+    <line x1="0"    y1="900" x2="1024" y2="900"/>
+    <line x1="80"   y1="940" x2="944"  y2="940" opacity="0.25"/>
+    <line x1="160"  y1="980" x2="864"  y2="980" opacity="0.32"/>
+    <line x1="240"  y1="1020" x2="784" y2="1020" opacity="0.4"/>
+  </g>
+  <g stroke="#ff2d00" stroke-width="2" opacity="0.13" fill="none">
+    <line x1="512" y1="860" x2="0"    y2="1024"/>
+    <line x1="512" y1="860" x2="170"  y2="1024"/>
+    <line x1="512" y1="860" x2="340"  y2="1024"/>
+    <line x1="512" y1="860" x2="512"  y2="1024"/>
+    <line x1="512" y1="860" x2="684"  y2="1024"/>
+    <line x1="512" y1="860" x2="854"  y2="1024"/>
+    <line x1="512" y1="860" x2="1024" y2="1024"/>
+  </g>
+
+  <!-- horizon glow -->
+  <ellipse cx="512" cy="900" rx="380" ry="10" fill="#ff2d00" opacity="0.55" filter="url(#aresGlow)">
+    <animate attributeName="opacity" values="0.45;0.75;0.45" dur="3.2s" repeatCount="indefinite"/>
+  </ellipse>
+
+  <!-- corner brackets -->
+  <g stroke="#ff6b1a" stroke-width="6" fill="none" filter="url(#aresGlow)">
+    <polyline points="64,108 64,64 152,64"/>
+    <polyline points="960,108 960,64 872,64"/>
+    <polyline points="64,916 64,960 152,960"/>
+    <polyline points="960,916 960,960 872,960"/>
+  </g>
+
+  <!-- CENTERPIECE: triangular Ares mark inside hex -->
+  <!-- hex frame -->
+  <polygon points="512,180 836,360 836,720 512,900 188,720 188,360"
+           fill="none" stroke="#ff2d00" stroke-width="6" filter="url(#aresGlow)"/>
+  <!-- inner hex glow -->
+  <polygon points="512,260 766,400 766,680 512,820 258,680 258,400"
+           fill="none" stroke="#ff6b1a" stroke-width="3" opacity="0.7"/>
+
+  <!-- Ares triangle (signature glyph) -->
+  <polygon points="512,360 692,680 332,680"
+           fill="url(#aresFill)" filter="url(#aresGlow)" opacity="0.92">
+    <animate attributeName="opacity" values="0.7;1;0.7" dur="2.6s" repeatCount="indefinite"/>
+  </polygon>
+  <!-- triangle outline -->
+  <polygon points="512,360 692,680 332,680"
+           fill="none" stroke="#ffd9c2" stroke-width="3" opacity="0.95"/>
+
+  <!-- cyan core eye -->
+  <circle cx="512" cy="600" r="22" fill="#bff7ff" filter="url(#cyanGlow)">
+    <animate attributeName="r" values="18;26;18" dur="1.8s" repeatCount="indefinite"/>
+  </circle>
+
+  <!-- subtle inner ring around eye -->
+  <circle cx="512" cy="600" r="48" fill="none" stroke="#00d4ff" stroke-width="2" opacity="0.55" filter="url(#cyanGlow)">
+    <animate attributeName="r" values="40;60;40" dur="2.4s" repeatCount="indefinite"/>
+    <animate attributeName="opacity" values="0.7;0;0.7" dur="2.4s" repeatCount="indefinite"/>
+  </circle>
+
+  <!-- top label · ORG -->
+  <text x="512" y="100" text-anchor="middle"
+        font-family="ui-monospace, 'SF Mono', Menlo, Consolas, monospace"
+        font-size="34" letter-spacing="14" fill="#ff6b1a" filter="url(#aresGlow)" font-weight="700">
+    EVOLVING AGENTS LABS
+  </text>
+
+  <!-- left status text · vertical-style -->
+  <text x="100" y="260" font-family="ui-monospace, monospace" font-size="18"
+        fill="#ff6b1a" letter-spacing="3" filter="url(#aresGlow)">SYS//ARES</text>
+
+  <!-- right status text -->
+  <text x="924" y="260" text-anchor="end" font-family="ui-monospace, monospace" font-size="18"
+        fill="#00d4ff" letter-spacing="3" filter="url(#cyanGlow)">v2026</text>
+
+  <!-- bottom labels for the trinity -->
+  <text x="512" y="980" text-anchor="middle"
+        font-family="ui-monospace, monospace" font-size="20"
+        fill="#bff7ff" letter-spacing="6" filter="url(#cyanGlow)">CORTEX · CEREBELLUM · KERNEL</text>
+
+  <!-- traveling Ares packet on horizon -->
+  <circle r="6" fill="#ffe4b5" filter="url(#aresGlow)">
+    <animateMotion dur="3.4s" repeatCount="indefinite" path="M 144 900 L 880 900"/>
+    <animate attributeName="opacity" values="0;1;1;0" keyTimes="0;0.05;0.95;1" dur="3.4s" repeatCount="indefinite"/>
+  </circle>
+
+  <!-- scanline overlay -->
+  <rect width="1024" height="1024" fill="url(#scan)"/>
+
+  <!-- moving scan -->
+  <rect x="0" y="-4" width="1024" height="4" fill="#00d4ff" opacity="0.55" filter="url(#cyanGlow)">
+    <animate attributeName="y" values="-8;1024;-8" dur="6s" repeatCount="indefinite"/>
+    <animate attributeName="opacity" values="0;0.6;0.6;0" keyTimes="0;0.1;0.9;1" dur="6s" repeatCount="indefinite"/>
+  </rect>
+</svg>

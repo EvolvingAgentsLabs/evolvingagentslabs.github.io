@@ -1,147 +1,252 @@
-<!DOCTYPE html>
+<!doctype html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Evolving Agents Labs</title>
-    <link rel="stylesheet" href="styles.css">
-    <link href="https://fonts.googleapis.com/css2?family=Google+Sans:wght@400;500;600;700&family=Inter:wght@400;500;600;700&family=Poppins:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <meta charset="UTF-8"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Evolving Agents Labs · cortex · cerebellum · kernel</title>
+  <meta name="description" content="On-device adaptive AI · four research experiments mapping a biological cognitive stack onto local LLMs · skillos · skillos_mini · RoClaw · llm_os."/>
+  <meta property="og:title" content="Evolving Agents Labs"/>
+  <meta property="og:description" content="On-device adaptive AI · cortex · cerebellum · kernel"/>
+  <meta property="og:image" content="images/avatar.png"/>
+  <link rel="icon" type="image/png" href="images/avatar.png"/>
+  <link rel="stylesheet" href="styles.css"/>
 </head>
 <body>
-    <nav class="navbar">
-        <div class="nav-container">
-            <div class="nav-logo">
-                <img src="images/evolving_agents_lab.png" alt="Evolving Agents Lab" class="logo" style="height: 32px; max-width: 32px;">
-                <h1>Evolving Agents Labs</h1>
-            </div>
-            <div class="nav-links">
-                <a href="#experiments">Experiments</a>
-                <a href="#about">About</a>
-                <a href="https://github.com/EvolvingAgentsLabs" target="_blank">GitHub</a>
-            </div>
+
+  <div class="scanlines" aria-hidden="true"></div>
+
+  <header class="topbar">
+    <div class="topbar-inner">
+      <a class="brand" href="#top">
+        <img src="images/avatar.png" alt="" class="brand-mark"/>
+        <span class="brand-name">EVOLVING<span class="dim">_</span>AGENTS<span class="dim">_</span>LABS</span>
+      </a>
+      <nav class="topnav">
+        <a href="#projects">projects</a>
+        <a href="#stack">stack</a>
+        <a href="#principles">principles</a>
+        <a href="https://github.com/EvolvingAgentsLabs" target="_blank" rel="noopener">github</a>
+      </nav>
+      <span class="status-led" title="live">●</span>
+    </div>
+  </header>
+
+  <main id="top">
+
+    <section class="hero">
+      <object data="assets/org-hero.svg" type="image/svg+xml" class="hero-svg" aria-label="Evolving Agents Labs hero"></object>
+      <div class="hero-text">
+        <p class="lead">
+          On-device adaptive AI. Four research experiments mapping a
+          biological cognitive stack onto local LLMs.
+        </p>
+        <p class="sub">
+          <code class="cmd">$</code> we are <span class="hot">permanently alpha</span>.
+          The thesis matters more than backwards compatibility — at this stage.<span class="caret">▌</span>
+        </p>
+        <div class="hero-badges">
+          <a class="badge ares" href="https://github.com/EvolvingAgentsLabs"><span>org</span><b>EvolvingAgentsLabs</b></a>
+          <a class="badge orange" href="#projects"><span>active</span><b>4 projects</b></a>
+          <a class="badge cyan" href="https://www.apache.org/licenses/LICENSE-2.0"><span>license</span><b>Apache-2.0</b></a>
+          <a class="badge gray" href="#principles"><span>thesis</span><b>permanently alpha</b></a>
         </div>
-    </nav>
+      </div>
+    </section>
 
-    <main>
-        <section class="hero">
-            <div class="hero-content">
-                <h1>Building the Future of Intelligent Agents</h1>
-                <p>Exploring adaptive AI systems through experimental frameworks and autonomous agent architectures</p>
-                <div class="alpha-notice">
-                    <span class="alpha-badge">🧪 ALPHA EXPERIMENTS</span>
-                    <p>All projects are experimental research and will remain in permanent alpha status</p>
-                </div>
-            </div>
-        </section>
+    <div class="divider"><object data="assets/divider.svg" type="image/svg+xml" aria-hidden="true"></object></div>
 
-        <section id="experiments" class="experiments">
-            <div class="container">
-                <h2>Experiments</h2>
-                <div class="experiments-grid">
-                    <div class="experiment-card featured">
-                        <div class="experiment-image">
-                            <img src="images/llmunix-preview.png" alt="LLMunix Preview" />
-                        </div>
-                        <div class="experiment-content">
-                            <h3>LLMunix 🦄 <span class="alpha-tag">ALPHA</span></h3>
-                            <p class="experiment-category">Pure Markdown Operating System</p>
-                            <p>A revolutionary Pure Markdown Operating System designed to be run by multiple AI runtime engines. Compatible with Claude Code and Claude Code sub agents, Gemini CLI, and Qwen Code. Features multi-tier memory, inter-agent messaging, and dynamic evolution capabilities. Runtime engines interpret the manifest file to turn markdown specifications into a functional operating system.</p>
-                            <div class="experiment-features">
-                                <span class="feature-tag">Adaptive Behavior</span>
-                                <span class="feature-tag">Virtual Tools</span>
-                                <span class="feature-tag">Research</span>
-                            </div>
-                            <div class="experiment-links">
-                                <a href="https://github.com/EvolvingAgentsLabs/llmunix" class="btn-primary" target="_blank">View Project</a>
-                                <a href="experiments/llmunix.html" class="btn-secondary">Learn More</a>
-                            </div>
-                        </div>
-                    </div>
+    <section class="what">
+      <h2>▸ what we build</h2>
+      <p>
+        We build a <strong>biological cognitive stack</strong> on top
+        of local LLMs. Three brain regions, four repos, one runtime
+        substrate.
+      </p>
+      <div class="brain-table">
+        <div class="row"><span class="region cortex">PREFRONTAL CORTEX</span><span class="arrow">┄→</span><span class="repos"><a href="https://github.com/EvolvingAgentsLabs/skillos">skillos</a> · desktop · markdown OS<br/><a href="https://github.com/EvolvingAgentsLabs/skillos_mini">skillos_mini</a> · mobile · trade-app</span></div>
+        <div class="row"><span class="region cereb">CEREBELLUM</span><span class="arrow">┄→</span><span class="repos"><a href="https://github.com/EvolvingAgentsLabs/RoClaw">RoClaw</a> · embodied · 20cm cube robot</span></div>
+        <div class="row"><span class="region kernel">KERNEL</span><span class="arrow">┄→</span><span class="repos"><a href="https://github.com/EvolvingAgentsLabs/llm_os">llm_os</a> · LLM-as-CPU · 13-opcode ISA</span></div>
+      </div>
+    </section>
 
-                    <div class="experiment-card featured">
-                        <div class="experiment-content">
-                            <h3>LLMunix Starter 🏭 <span class="alpha-tag">ALPHA</span></h3>
-                            <p class="experiment-category">Pure Markdown OS Template for Claude Code Web</p>
-                            <p>A fresh LLMunix template optimized for Claude Code on the web. The factory for building specialized agents dynamically—no pre-built solutions, just the essential kernel (3 system agents) to create exactly what you need, when you need it. Every project learns and improves future executions.</p>
-                            <div class="experiment-features">
-                                <span class="feature-tag">Dynamic Agent Factory</span>
-                                <span class="feature-tag">Web-Optimized</span>
-                                <span class="feature-tag">Continuous Learning</span>
-                            </div>
-                            <div class="experiment-links">
-                                <a href="https://github.com/EvolvingAgentsLabs/llmunix-starter" class="btn-primary" target="_blank">Use Template</a>
-                                <a href="experiments/llmunix-starter.html" class="btn-secondary">Learn More</a>
-                            </div>
-                        </div>
-                    </div>
+    <div class="divider"><object data="assets/divider.svg" type="image/svg+xml" aria-hidden="true"></object></div>
 
-                    <div class="experiment-card featured">
-                        <div class="experiment-content">
-                            <h3>LLMunix Marketplace 🔌 <span class="alpha-tag">ALPHA</span></h3>
-                            <p class="experiment-category">Claude Code CLI Plugin</p>
-                            <p>The LLMunix kernel as a Claude Code CLI plugin. Install the Pure Markdown Operating System via the marketplace and solve complex goals with the /llmunix command—dynamically creating and orchestrating specialized agent teams on the fly. Self-evolving problem-solving at your fingertips.</p>
-                            <div class="experiment-features">
-                                <span class="feature-tag">CLI Plugin</span>
-                                <span class="feature-tag">Dynamic Orchestration</span>
-                                <span class="feature-tag">Self-Evolving</span>
-                            </div>
-                            <div class="experiment-links">
-                                <a href="https://github.com/EvolvingAgentsLabs/llmunix-marketplace" class="btn-primary" target="_blank">View Plugin</a>
-                                <a href="experiments/llmunix-marketplace.html" class="btn-secondary">Learn More</a>
-                            </div>
-                        </div>
-                    </div>
+    <section id="projects" class="projects">
+      <h2>▸ the four active projects</h2>
+      <p class="projects-intro">
+        Each card shows the <strong>transition from real-world to terminal</strong>
+        — the physical thing on the left, the live runtime on the right,
+        with particle streams and a digitization scan line bridging them.
+      </p>
 
-                </div>
-            </div>
-        </section>
-
-        <section id="about" class="about">
-            <div class="container">
-                <h2>About Evolving Agents Labs</h2>
-                <div class="about-content">
-                    <p>We're advancing the frontier of autonomous AI through experimental frameworks and research prototypes. Our work explores early-stage concepts in adaptive agent systems - all projects remain permanently in alpha status as ongoing research experiments.</p>
-                    
-                    <div class="project-evolution">
-                        <h3>📢 Our Research Evolution</h3>
-                        <div class="evolution-timeline">
-                            <div class="evolution-stage">
-                                <h4>Phase 1: Evolving Agents Toolkit (EAT) - Sunset</h4>
-                                <p>Our first project, the <a href="https://github.com/matiasmolinas/evolving-agents" target="_blank">Evolving Agents Toolkit (EAT)</a>, was officially discontinued in July 2025. While EAT demonstrated powerful concepts in multi-agent orchestration with MongoDB backend, we recognized that the complex Python architecture was over-engineered for achieving adaptive agent behavior.</p>
-                            </div>
-                            <div class="evolution-stage">
-                                <h4>Phase 2: LLMunix - Simplified Evolution</h4>
-                                <p>EAT's concepts were dramatically simplified and reimplemented in <strong>LLMunix</strong> - a Pure Markdown Operating System that achieves the same adaptive agent goals through elegant simplicity. From EAT's multi-component Python architecture with MongoDB backend to LLMunix's pure markdown definitions interpreted by LLM runtime engines - same adaptive capabilities, 10x simpler implementation.</p>
-                            </div>
-                            <div class="evolution-stage">
-                                <h4>Phase 3: Agent Forge JIT POCs - Current Focus</h4>
-                                <p>With Claude Code's implementation of sub-agents in markdown as an official feature, we realized our original markdown-based agent concept was validated. We now focus on <strong>Agent Forge and JIT POCs</strong> - exploring just-in-time compilation, hybrid architectures, and benchmarkable performance improvements over pure LLM approaches.</p>
-                            </div>
-                        </div>
-                    </div>
-                    
-                    <div class="research-areas">
-                        <div class="research-area">
-                            <h3>Adaptive Behavior Research</h3>
-                            <p>Experimental systems that explore how agents might modify their decision-making processes based on context and interaction patterns.</p>
-                        </div>
-                        <div class="research-area">
-                            <h3>Pure Markdown Architecture</h3>
-                            <p>Exploring the use of markdown as a full operating system specification, enabling clean separation of behavior, state, and execution logic.</p>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </section>
-    </main>
-
-    <footer class="footer">
-        <div class="container">
-            <p>&copy; 2025 Evolving Agents Labs. Experimental research in adaptive agent systems.</p>
-            <div class="footer-links">
-                <a href="https://github.com/EvolvingAgentsLabs" target="_blank">GitHub Organization</a>
-            </div>
+      <article class="project ares" id="skillos">
+        <a href="https://github.com/EvolvingAgentsLabs/skillos" class="card-link">
+          <object data="assets/card-skillos.svg" type="image/svg+xml" class="card-svg" aria-label="skillos transition card"></object>
+        </a>
+        <div class="project-body">
+          <h3><a href="https://github.com/EvolvingAgentsLabs/skillos">skillos</a> <span class="tag">cortex · desktop</span></h3>
+          <p>
+            A <strong>pure markdown operating system</strong> designed to
+            run on multiple AI runtime engines. Compatible with Claude
+            Code, Gemini CLI, and Qwen Code. Define an agent once with
+            a high-end model, execute it forever on a 2 GB local model.
+          </p>
+          <pre class="terminal"><code>$ skillos execute "Run the RoClaw Dream Consolidation scenario"
+[OK] markdown agents       ▸ RoClawNavigationAgent · RoClawSceneAnalysisAgent
+[OK] dream consolidation   ▸ traces/sim3d/*.md  →  strategies/*.md
+[OK] evolving memory       ▸ persistent · weighted by fidelity</code></pre>
         </div>
-    </footer>
+      </article>
+
+      <article class="project ares" id="skillos_mini">
+        <a href="https://github.com/EvolvingAgentsLabs/skillos_mini" class="card-link">
+          <object data="assets/card-skillos-mini.svg" type="image/svg+xml" class="card-svg" aria-label="skillos_mini transition card"></object>
+        </a>
+        <div class="project-body">
+          <h3><a href="https://github.com/EvolvingAgentsLabs/skillos_mini">skillos_mini</a> <span class="tag">cortex · mobile</span></h3>
+          <p>
+            The mobile-first, on-device port — a
+            <strong>Capacitor + Svelte 5</strong> Android application
+            driving Gemma 4 E2B vision locally via LiteRT. First
+            commercial vertical: a trade-app for Spanish-speaking
+            tradespeople (electricista, plomero, pintor) that captures
+            photos, runs vision diagnosis on-device, generates a
+            branded PDF, and shares it by WhatsApp.
+            <strong>No backend.</strong>
+          </p>
+          <pre class="terminal"><code>[OK] cartridges    ▸ trade-electricista · trade-plomero · trade-pintor
+[OK] vision        ▸ gemma-4-e2b.litertlm  · on-device · ~200 ms
+[OK] tests         ▸ 278 / 278 green  ·  svelte-check 0 errors</code></pre>
+        </div>
+      </article>
+
+      <article class="project mcp" id="roclaw">
+        <a href="https://github.com/EvolvingAgentsLabs/RoClaw" class="card-link">
+          <object data="assets/card-roclaw.svg" type="image/svg+xml" class="card-svg" aria-label="RoClaw transition card"></object>
+        </a>
+        <div class="project-body">
+          <h3><a href="https://github.com/EvolvingAgentsLabs/RoClaw">RoClaw</a> <span class="tag">cerebellum · embodied</span></h3>
+          <p>
+            A <strong>20 cm cube robot</strong> powered by ESP32-S3 +
+            stepper motors, driven by a vision language model running
+            on-device. Five-tier stack: ReflexGuard collision veto at L0,
+            an 8-byte UDP ISA at L1, Qwen3-VL-2B distilled from Gemini
+            Robotics-ER at L2, scene graph + reactive controller at L3,
+            skillos planning at L4. The robot dreams overnight and
+            hot-swaps the new GGUF into Ollama by morning.
+          </p>
+          <pre class="terminal"><code>$ npm run sim:3d -- --ollama --goal "navigate to the red cube"
+[OK] qwen3-vl-2b           ▸ on-device · 200 ms / frame
+[OK] scene_graph           ▸ ReactiveController · ReflexGuard shadow
+[OK] esp32-s3              ▸ udp :4210 · 8-byte ISA v2 · ack 38ms</code></pre>
+        </div>
+      </article>
+
+      <article class="project kernel" id="llm_os">
+        <a href="https://github.com/EvolvingAgentsLabs/llm_os" class="card-link">
+          <object data="assets/card-llm-os.svg" type="image/svg+xml" class="card-svg" aria-label="llm_os transition card"></object>
+        </a>
+        <div class="project-body">
+          <h3><a href="https://github.com/EvolvingAgentsLabs/llm_os">llm_os</a> <span class="tag">kernel · ground-up</span></h3>
+          <p>
+            Not an agent framework. An <strong>operating system
+            architecture</strong> where the LLM itself plays the role of
+            the CPU. 13-opcode ISA over GBNF (sampler-enforced —
+            invalid sequences are <em>physically impossible</em> to
+            emit). KV cache as RAM. Compaction as swap. Logit bias as
+            Ring 0/Ring 3 privileges. 8 Hz on a Pi 5; 200 Hz on cloud.
+          </p>
+          <pre class="terminal"><code>$ ./scripts/quickstart.sh
+[OK] llama.cpp     ▸ qwen-2.5-3b-q4 · 4×NEON · ctx=8192
+[OK] grammar       ▸ isa.gbnf · 13 opcodes · 12/12 fixtures green
+[OK] iod daemon    ▸ /dispatch /trace /policy
+[OK] cartridges    ▸ 6 mounted · system · io · sim · domestic</code></pre>
+        </div>
+      </article>
+    </section>
+
+    <div class="divider"><object data="assets/divider.svg" type="image/svg+xml" aria-hidden="true"></object></div>
+
+    <section id="stack" class="stack">
+      <h2>▸ how the four fit together</h2>
+      <p>
+        Each layer is independently shippable and swappable. The goal is
+        a <strong>self-improving loop</strong>: every navigation produces
+        a trace, every trace becomes training data, every overnight
+        cycle ends with a better model swapped into the local runtime.
+      </p>
+      <pre class="ascii-stack">
+                ┌──────────────────┐
+                │  USER · WhatsApp │
+                │  voice · CLI     │
+                └────────┬─────────┘
+                         │ "Go check the kitchen"
+                         ▼
+   ┌────────────────────────────────────┐
+   │  skillos · skillos_mini            │   ◄  ARES ORANGE  ◄  cortex
+   │  prefrontal cortex                 │
+   │  plan · learn · dream              │
+   └────────────┬───────────────────────┘
+                │ HTTP
+                ▼
+   ┌────────────────────────────────────┐
+   │  llm_os                            │   ◄  WHITE-ON-BLACK ◄  kernel
+   │  kernel · LLM as CPU               │
+   │  ISA · GBNF · iod · KV             │
+   └────────────┬───────────────────────┘
+                │ &lt;|call|&gt;roclaw.forward
+                ▼
+   ┌────────────────────────────────────┐
+   │  RoClaw                            │   ◄  MCP GREEN  ◄  cerebellum
+   │  cerebellum · embodied             │
+   │  perceive · move                   │
+   └────────────┬───────────────────────┘
+                │ UDP :4210
+                ▼
+            ESP32-S3 · 20cm cube
+      </pre>
+    </section>
+
+    <div class="divider"><object data="assets/divider.svg" type="image/svg+xml" aria-hidden="true"></object></div>
+
+    <section id="principles" class="principles">
+      <h2>▸ design principles</h2>
+      <ol class="principles-list">
+        <li><strong>1 · ON-DEVICE FIRST.</strong> The cloud is opt-in. No project here defaults to a cloud model. Every primitive runs on Pi 5 / Snapdragon NPU first.</li>
+        <li><strong>2 · MARKDOWN AS DATA.</strong> Agent prompts, strategies, traces, dreams — all <code>.md</code> files the runtime walks. Reviewable. Diffable. No hidden state.</li>
+        <li><strong>3 · DETERMINISTIC SAFETY.</strong> Validators are code, not prompts. ReflexGuard, GBNF, IEC 60364 — the LLM proposes; deterministic logic enforces.</li>
+        <li><strong>4 · SWAPPABLE LAYERS.</strong> Cortex doesn't know what cerebellum is running. Each layer is a contract; implementations come and go.</li>
+        <li><strong>5 · PERMANENTLY ALPHA.</strong> We optimize for thesis clarity over API stability. Breaking changes are how we learn.</li>
+      </ol>
+    </section>
+
+    <div class="divider"><object data="assets/divider.svg" type="image/svg+xml" aria-hidden="true"></object></div>
+
+    <section class="status">
+      <h2>▸ status</h2>
+      <pre class="status-box">
+  skillos        ▰▰▰▰▰▰▰▰▰▰▰▰▰▰▰▰▰▰▰▰▰▰▰     stable          v0.X
+  skillos_mini   ▰▰▰▰▰▰▰▰▰▰▰▰▰▰▰▰▰▰▰▰▰▰      feat-complete   v0.1.0
+  RoClaw         ▰▰▰▰▰▰▰▰▰▰▰▰▰▰▰▰▰▰▰▰        active research
+  llm_os         ▰▰▰▰▰▰▰▰▰▰▰▰▰▰▰▰▰▰▰         v0.5-rc1 → v1.0
+      </pre>
+      <p>Each repo has its own <strong>ARCHITECTURE.md</strong>, <strong>USAGE.md</strong>, <strong>TUTORIAL.md</strong>, and <strong>NEXT_STEPS.md</strong>.</p>
+    </section>
+
+  </main>
+
+  <footer class="footer">
+    <object data="assets/divider.svg" type="image/svg+xml" class="footer-div" aria-hidden="true"></object>
+    <p><code class="cmd">// END_OF_TRANSMISSION ·  EVOLVING AGENTS LABS // 2026</code></p>
+    <p class="links">
+      <a href="https://github.com/EvolvingAgentsLabs">github.com/EvolvingAgentsLabs</a> ·
+      <a href="https://github.com/EvolvingAgentsLabs/skillos">skillos</a> ·
+      <a href="https://github.com/EvolvingAgentsLabs/skillos_mini">skillos_mini</a> ·
+      <a href="https://github.com/EvolvingAgentsLabs/RoClaw">RoClaw</a> ·
+      <a href="https://github.com/EvolvingAgentsLabs/llm_os">llm_os</a>
+    </p>
+    <p class="footnote">Apache 2.0 · permanently alpha · 2026.</p>
+  </footer>
+
 </body>
 </html>
