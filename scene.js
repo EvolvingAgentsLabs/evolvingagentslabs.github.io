@@ -153,7 +153,7 @@ function start() {
     },
     {
       slug: "roclaw",
-      url:  "https://github.com/EvolvingAgentsLabs/RoClaw",
+      url:  "https://github.com/EvolvingAgentsLabs/skillos_robot",
       color: COLORS.MCP_GREEN,
       glow:  COLORS.MCP_GLOW,
       build: () => makeCube(2.2),

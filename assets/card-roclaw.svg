@@ -1,5 +1,5 @@
 <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1280 320"
-     role="img" aria-label="RoClaw · embodied AI cube">
+     role="img" aria-label="skillos_robot · embodied AI cube">
   <defs>
     <filter id="glow" x="-30%" y="-30%" width="160%" height="160%">
       <feGaussianBlur stdDeviation="1.5" result="g"/>
@@ -78,9 +78,9 @@
     <animate attributeName="opacity" values="0.2;0.8;0.2" dur="2.4s" repeatCount="indefinite"/>
   </line>
 
-  <!-- RIGHT: RoClaw terminal -->
+  <!-- RIGHT: skillos_robot terminal -->
   <g transform="translate(680, 80)">
-    <text x="0" y="14" font-family="'SF Mono','Menlo','Consolas','Courier New',monospace" font-size="11" fill="#4ade80" filter="url(#glow)">┌─[ MCP://RoClaw · cerebellum ]──────────────────────────┐</text>
+    <text x="0" y="14" font-family="'SF Mono','Menlo','Consolas','Courier New',monospace" font-size="11" fill="#4ade80" filter="url(#glow)">┌─[ MCP://skillos_robot · cerebellum ]──────────────────────────┐</text>
     <text x="0" y="34" font-family="'SF Mono','Menlo','Consolas','Courier New',monospace" font-size="11" fill="#bbf7d0">$ npm run sim:3d -- --ollama --goal "red cube"</text>
     <text x="0" y="54" font-family="'SF Mono','Menlo','Consolas','Courier New',monospace" font-size="11" fill="#bbf7d0">[OK] qwen3-vl-2b · on-device · 200ms</text>
     <text x="0" y="74" font-family="'SF Mono','Menlo','Consolas','Courier New',monospace" font-size="11" fill="#bbf7d0">[OK] scene_graph · reactive_controller</text>
@@ -177,8 +177,8 @@
     <text x="0" y="210" font-family="'SF Mono','Menlo','Consolas','Courier New',monospace" font-size="11" fill="#bff7ff">// green · cerebellum · embodied</text>
   </g>
 
-  <text x="40" y="296" font-family="'SF Mono','Menlo','Consolas','Courier New',monospace" font-size="10" fill="#4ade80" filter="url(#glow)">SYS//MCP.CEREBELLUM · RoClaw</text>
-  <text x="1240" y="296" text-anchor="end" font-family="'SF Mono','Menlo','Consolas','Courier New',monospace" font-size="10" fill="#00d4ff" filter="url(#glow)">github.com/EvolvingAgentsLabs/RoClaw</text>
+  <text x="40" y="296" font-family="'SF Mono','Menlo','Consolas','Courier New',monospace" font-size="10" fill="#4ade80" filter="url(#glow)">SYS//MCP.CEREBELLUM · skillos_robot</text>
+  <text x="1240" y="296" text-anchor="end" font-family="'SF Mono','Menlo','Consolas','Courier New',monospace" font-size="10" fill="#00d4ff" filter="url(#glow)">github.com/EvolvingAgentsLabs/skillos_robot</text>
 
   <rect x="0" y="-2" width="1280" height="2" fill="#00d4ff" opacity="0.4" filter="url(#glow)">
     <animate attributeName="y" values="-4;320;-4" dur="7s" repeatCount="indefinite"/>
