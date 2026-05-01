@@ -1,118 +1,151 @@
 # Evolving Agents Labs
 
-## About Our Research
+**Agents defined in markdown. Evolved through memory. Running from Claude Code to bare metal.**
 
-We explore early-stage concepts in adaptive AI through experimental frameworks and research prototypes. Our work investigates how intelligent agents might adapt, learn, and evolve their behavior based on context, user interaction, and accumulated experience.
-
-**All projects remain permanently in alpha status as ongoing research experiments.**
+One thesis explored at five levels of depth: agent behavior belongs in declarative documents, the LLM is the interpreter, memory is how agents improve, and grammar/structure is how you keep them safe.
 
 ---
 
-## 📢 Project Evolution Announcement
+## The Stack
 
-### Original Evolving Agents Toolkit (EAT) - Sunset Notice
+Each layer removes a safety net. Each one proves the same patterns work at increasing depth.
 
-The original [Evolving Agents Toolkit (EAT) Python project](https://github.com/matiasmolinas/evolving-agents) has been **officially discontinued** as of July 2025. While EAT demonstrated powerful concepts in multi-agent orchestration with MongoDB backend, we recognized that the complex Python architecture was over-engineered for achieving adaptive agent behavior.
-
-**Key insights from EAT that led to our new direction:**
-- Complex multi-component architectures created unnecessary overhead
-- The core concept of autonomous agent evolution was sound
-- Simpler approaches could achieve the same adaptive behaviors
-- LLM capabilities alone could handle orchestration and evolution
-
-### Evolution to LLMunix
-
-The concepts pioneered in EAT have been **dramatically simplified and reimplemented** in our new flagship project: **LLMunix** - a Pure Markdown Operating System that achieves the same adaptive agent goals through elegant simplicity.
-
-**From EAT's complexity to LLMunix's simplicity:**
-- **EAT**: Multi-component Python architecture with MongoDB backend
-- **LLMunix**: Pure markdown definitions interpreted by LLM runtime engines
-- **Result**: Same adaptive capabilities, 10x simpler implementation
-
-### Current Focus & Next Steps
-
-We are actively **maintaining and evolving LLMunix** as our core research platform. However, with the recent implementation of **sub-agents in markdown as an official Claude Code feature**, we now understand that our original markdown-based agent concept was an excellent proof-of-concept that has been validated by the industry.
-
-**Our new research direction:**
-- **LLMunix continues** as a maintained research platform for markdown-based agent systems
-- **Next frontier**: Implementing agents and their tools **directly at the LLM level**
-- **Goal**: Move beyond markdown specifications to native LLM-based agent architectures
-- **Focus**: Developing truly autonomous agents that exist within the LLM's reasoning space
-
-This represents the natural evolution from external frameworks → markdown specifications → **pure LLM-native agent implementation**.
+```
+                         ┌───────────────┐
+                         │    llm_os     │  LLM is the CPU. 14-opcode ISA.
+                         │    (Rust)     │  GBNF grammar = type system.
+                     ┌───┴───────────────┴───┐
+                     │     skillos_robot      │  VLM-driven robot. $30 hardware.
+                     │     (TypeScript)       │  Dream consolidation.
+                 ┌───┴───────────────────────┴───┐
+                 │        skillos_mini            │  On-device. 2B model. No internet.
+                 │        (Svelte/Capacitor)      │  Deterministic safety checks.
+             ┌───┴───────────────────────────────┴───┐
+             │              skillos                    │  Full markdown OS. Any LLM.
+             │              (Pure Markdown)            │  Memory + evolution + planning.
+         ┌───┴───────────────────────────────────────┴───┐
+         │     skillos_plugin + skillos_systemcontrol      │  Try it now. /skillos + /sysctl.
+         │     (Claude Code plugins)                       │  Install in 10 seconds.
+         └─────────────────────────────────────────────────┘
+```
 
 ---
 
-## 🧪 Current Experiments
+## Projects
 
-### [LLMunix](https://github.com/EvolvingAgentsLabs/llmunix) `ALPHA`
-**Pure Markdown Operating System**
-- Revolutionary Pure Markdown Operating System designed to be run by multiple AI runtime engines
-- Compatible with Claude Code and Claude Code sub agents, Gemini CLI, and Qwen Code
-- Features multi-tier memory, inter-agent messaging, and dynamic evolution capabilities
-- Runtime engines interpret the manifest file to turn markdown specifications into a functional operating system
+### Try it now (Claude Code plugins)
 
-[📖 Learn More](https://evolvingagentslabs.github.io/experiments/llmunix.html) • [🚀 View Project](https://github.com/EvolvingAgentsLabs/llmunix)
+| Repo | Command | What it does |
+|---|---|---|
+| **[skillos_plugin](https://github.com/EvolvingAgentsLabs/skillos_plugin)** | `/skillos` | Goal decomposition, agent creation, execution, memory consolidation. The easiest way to explore SkillOS concepts. |
+| **[skillos_systemcontrol_plugin](https://github.com/EvolvingAgentsLabs/skillos_systemcontrol_plugin)** | `/sysctl` | Security audits, agent scoring, controlled evolution, lifecycle management. Governs what `/skillos` builds. |
 
-### [Agent Forge](https://github.com/EvolvingAgentsLabs/agent-forge) `ALPHA`
-**JIT Agent Architecture Framework**
-- Comprehensive framework for just-in-time agent architectures featuring three specialized proof-of-concept implementations
-- Explores unified Qwen model architectures, reinforcement learning capabilities, and persistent memory systems
-- Features dynamic tool generation, benchmarkable performance improvements, and modular POC comparison
-- Includes comprehensive documentation and guides for each POC implementation
-
-[📖 Learn More](https://evolvingagentslabs.github.io/experiments/agent-forge.html) • [🚀 View Project](https://github.com/EvolvingAgentsLabs/agent-forge)
-
-#### Agent Forge POC Implementations
-
-- **[├── jit-agent-poc](https://github.com/EvolvingAgentsLabs/agent-forge/tree/main/jit-agent-poc)** `ALPHA` - Unified Qwen Architecture POC: Single fine-tuned Qwen2.5-Coder-1.5B model as both Orchestrator and Translator, eliminating multi-model complexity through specialized LoRA training
-- **[├── jit-agent-learn](https://github.com/EvolvingAgentsLabs/agent-forge/tree/main/jit-agent-learn)** `ALPHA` - Learning & Adaptation POC: Reinforcement learning capabilities allowing agents to improve performance through experience and feedback loops using Qwen models
-- **[└── jit-agent-memory](https://github.com/EvolvingAgentsLabs/agent-forge/tree/main/jit-agent-memory)** `ALPHA` - Persistent Memory POC: Advanced memory capabilities enabling contextual awareness and long-term information retention using Qwen models
+```bash
+/skillos "Build a REST API with auth and tests"
+/sysctl "audit and score all agents in Project_webapp"
+```
 
 ---
 
-## 🔬 Research Areas
+### Full system (markdown-defined agent OS)
 
-| Focus Area | Description |
-|------------|-------------|
-| **Adaptive Behavior Research** | How agents might modify decision-making based on context and interaction patterns |
-| **Pure Markdown Architecture** | Exploring the use of markdown as a full operating system specification, enabling clean separation of behavior, state, and execution logic |
-| **JIT Compilation Systems** | Dynamic compilation of executable code from LLM-provided conceptual ideas for enhanced performance |
-| **Memory System Experiments** | Persistent memory capabilities for contextual awareness and long-term information retention |
-| **Self-Improving Learning** | Reinforcement learning capabilities allowing agents to improve through experience and feedback loops |
-| **Hybrid Agent Architectures** | Combining multiple AI models and fine-tuned components for enhanced agent capabilities |
+**[skillos](https://github.com/EvolvingAgentsLabs/skillos)** &mdash; Pure Markdown Operating System
 
----
+Every component &mdash; agents, tools, memory, orchestration &mdash; defined entirely in `.md` files interpreted by any LLM at runtime. No code compilation. The LLM is the interpreter.
 
-## 🌐 Explore Our Research Lab
-
-**👉 [Visit evolvingagentslabs.github.io](https://evolvingagentslabs.github.io) for the complete research showcase**
-
-### Quick Navigation
-- 🔬 [View All Experiments](https://evolvingagentslabs.github.io#experiments)
-- 📊 [Research Overview](https://evolvingagentslabs.github.io#about)  
-- 📖 [LLMunix Deep Dive](https://evolvingagentslabs.github.io/experiments/llmunix.html)
-- 🛠️ [Try LLMunix](https://github.com/EvolvingAgentsLabs/llmunix#quick-start)
+- HWM two-level hierarchical planning (arXiv:2604.03208)
+- 14 domain-specific dialects (50-99% token compression)
+- Bio-inspired dream consolidation (traces become strategies overnight)
+- Self-optimization loop (detect stale skills, propose improvements)
+- Multi-provider: Claude, Gemini, Gemma 4, any OpenAI-compatible endpoint
+- Validated on complex multi-agent scenarios (Operation Echo-Q, Project Aorta)
 
 ---
 
-## ⚠️ Experimental Nature
+### On-device (mobile democratization)
 
-**Important**: All our projects are research prototypes exploring early-stage concepts. They should be treated as experimental research material rather than production-ready systems. We believe in transparent, open research that advances the field through shared exploration.
+**[skillos_mini](https://github.com/EvolvingAgentsLabs/skillos_mini)** &mdash; On-device trade assistant for Android
 
----
+Same architectural patterns running on a phone with a 2B model. Markdown cartridges (documents with embedded tool-calls) guide the LLM through trade diagnostics. The LLM picks links and decides which optional checks to run &mdash; all safety rules execute as deterministic TypeScript functions.
 
-## 🤝 Contributing
-
-We welcome researchers, developers, and curious minds to explore our work:
-
-- **🔍 Explore**: Browse our experiments and documentation
-- **🐛 Report**: Share findings or issues you discover  
-- **💡 Discuss**: Join conversations about adaptive agent concepts
-- **🧪 Experiment**: Build upon our research prototypes
+- Three production cartridges: electricista (IEC 60364), plomero, pintor
+- Gemma 4 on-device via LiteRT &mdash; no internet required
+- Regulatory compliance by construction (deterministic validators)
+- Navigator state machine: IDLE &rarr; ROUTING &rarr; WALKING &rarr; COMPOSING &rarr; DONE
 
 ---
 
-## 📄 License
+### Real world (embodied cognition)
 
-All projects are released under the Apache 2.0 License.
+**[skillos_robot](https://github.com/EvolvingAgentsLabs/skillos_robot)** &mdash; VLM-driven robot navigation
+
+A 20cm robot that sees through a camera, reasons about the scene, and drives to the target. Give it a goal in plain language. Same patterns &mdash; markdown traces, dream consolidation, strategy extraction &mdash; but in the physical world with $30 of hardware.
+
+- Dual loop: VLM perception (1-2 Hz) + reactive motor control (10-20 Hz)
+- Two modes: overhead camera (arena) or egocentric (first-person, no IMU)
+- Failed traces get retried in MuJoCo simulation during dream consolidation
+- Gemini (cloud teacher) or Ollama (local student, no internet)
+
+---
+
+### Bare metal (the LLM as CPU)
+
+**[llm_os](https://github.com/EvolvingAgentsLabs/llm_os)** &mdash; An OS where the LLM is the CPU
+
+The maximum expression of these ideas. The LLM doesn't use tools &mdash; it *is* the processor. A 14-opcode ISA enforced by GBNF grammar at decode time. Invalid instruction sequences are physically impossible to emit. KV cache is RAM. Grammar is the type system. Cartridges are syscalls. Boots from an SD card on a Raspberry Pi 5.
+
+- In-process inference via Rust FFI to llama.cpp (no HTTP boundary)
+- Deterministic KV paging with anchors (no LLM summarization)
+- WASM-sandboxed cartridges with curated host functions (real Ring 3)
+- Single-token ISA fine-tune pipeline (20 opcodes, exact capability enforcement)
+- Dual deployment: dev mode (macOS/Linux) + release mode (Buildroot Pi 5 image)
+
+---
+
+## The Unifying Patterns
+
+Across all five layers, the same patterns recur:
+
+| Pattern | Plugin | SkillOS | Trade App | Robot | LLM-OS |
+|---|---|---|---|---|---|
+| Declarative behavior | markdown agents | markdown agents | markdown cartridges | markdown traces | GBNF grammar |
+| Memory consolidation | dream command | dream engine | session blackboard | dream retries | KV pager + state |
+| Capability control | human approval | policy masks | tool whitelists | motor limits | logit bias + WASM |
+| Composable units | agent triads | skills (domain/family) | cartridge docs | navigation strategies | cartridges + schemas |
+| LLM as interpreter | Claude | any LLM | Gemma 2B | Gemini VLM | Qwen 3B (the CPU itself) |
+
+---
+
+## Research Direction
+
+**From external frameworks &rarr; markdown specifications &rarr; LLM-native execution.**
+
+The original Evolving Agents Toolkit (Python, MongoDB, 2025) proved the concept. SkillOS proved markdown alone is sufficient. LLM-OS proves you can push it all the way down to the hardware level &mdash; the LLM doesn't call tools, it *is* the processor, constrained by grammar the way a CPU is constrained by its instruction decoder.
+
+---
+
+## Quick Start
+
+The fastest path from zero to working:
+
+```bash
+# 1. Install the Claude Code plugin (10 seconds)
+/plugin install skillos-plugin
+
+# 2. Give it a goal
+/skillos "Research quantum computing and write a summary"
+
+# 3. See what it built
+ls projects/
+
+# 4. Consolidate learnings
+/skillos dream
+```
+
+Then go deeper: clone `skillos` for the full system, `skillos_mini` for mobile, `skillos_robot` for embodiment, `llm_os` for bare metal.
+
+---
+
+Apache 2.0 &middot; permanently alpha &middot; 2026
+
+[evolvingagentslabs.github.io](https://evolvingagentslabs.github.io)
