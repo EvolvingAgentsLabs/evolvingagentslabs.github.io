@@ -1,0 +1,96 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>agentvcs — Evolving Agents Labs</title>
+<meta name="description" content="Version control where one commit carries code, goal, model pins, trace and sub-agent swarm together, and conflicts are handed to a reconciler over a plain stdin/stdout contract.">
+<meta property="og:title" content="agentvcs — Evolving Agents Labs">
+<meta property="og:description" content="Version control where one commit carries code, goal, model pins, trace and sub-agent swarm together, and conflicts are handed to a reconciler over a plain stdin/stdout contract.">
+<meta property="og:type" content="website">
+<link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'><text y='25' font-size='24'>%E2%97%88</text></svg>">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Newsreader:ital,opsz,wght@0,6..72,300;0,6..72,400;1,6..72,300&family=IBM+Plex+Mono:wght@400;500&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="/assets/site.css">
+</head>
+<body>
+
+<div class="wrap narrow">
+
+  <header class="masthead">
+    <a class="wordmark" href="/"><span class="mark">◈</span>Evolving Agents Labs</a>
+    <nav class="navlinks">
+      <a href="/#experiments">Experiments</a>
+      <a href="/#method">Method</a>
+      <a href="https://github.com/EvolvingAgentsLabs">GitHub</a>
+    </nav>
+  </header>
+
+  <p class="crumb"><a href="/">Evolving Agents Labs</a><span>/</span><a href="/#experiments">Experiments</a><span>/</span>agentvcs</p>
+
+  <section class="detail-hero">
+    <h1>agentvcs</h1>
+    <p class="question">What if an agent's autonomous evolution could be merged back into your release, like any other branch?</p>
+    <div class="hero-meta">
+      <span class="badge reproducible">Reproducible</span>
+      <span class="when">Jul 2026</span>
+    </div>
+    <div class="ctas">
+      <a class="cta primary" href="https://github.com/EvolvingAgentsLabs/agentvcs">GitHub <span aria-hidden="true">→</span></a>
+    </div>
+  </section>
+
+  <article class="article">
+    <h2>Two timelines, one file</h2>
+<p>An agent in production rewrites its own skill and spawns a sub-agent to help. Meanwhile
+your team edits that same skill in git. Both changes are correct. Neither knows about the
+other. Today one of them is thrown away, usually the agent's, because there is nowhere to put
+it.</p>
+<p>agentvcs gives it somewhere. A commit is not a tree of files — it is code <em>plus</em> the
+goal, the model pins, the session trace, and the sub-agent swarm, versioned together. Which
+means the runtime line and the design-time line are both branches, and the question becomes a
+merge.</p>
+
+    <h2>The reconcile contract</h2>
+<p>Merging two prose goals or two session traces is not a job for a line-differ. So agentvcs
+does not try. It writes a bundle to a subprocess's stdin —
+<code>{base, ours, theirs}</code> goals, traces, code diffs, eval and cost metrics, plus any
+unresolved conflict text — and reads back
+<code>{goal, trace, notes, resolved_files}</code>.</p>
+<pre><code>agentvcs merge runtime/main --reconcile "nanoloop reconcile"</code></pre>
+<p>That is the whole interface. The core has no LLM dependency and no opinion about what is on
+the other end. Conflicting hunks are pre-resolved toward whichever side has the higher
+<em>verified</em> eval score before the reconciler is consulted at all.</p>
+
+    <h2>Crystallizing</h2>
+<p><code>freeze</code> turns a proven run into a deterministic recipe you can replay. It
+refuses unless the declared eval passes on every run, and <code>--force</code> past a failure
+stamps <code>verified: false</code> rather than quietly lying. "Crystallized" means "proven",
+enforced in code rather than in the README.</p>
+
+    <h2>What's proven</h2>
+<p><strong>190 tests pass in 2.9 seconds.</strong> CI runs the matrix across Python
+3.10–3.13 plus an end-to-end smoke test that executes the demo and asserts a scorecard ≥5/6.
+Packaged on PyPI with zero runtime dependencies.</p>
+<pre><code>pip install agentvcs
+bash examples/eve-evolve-merge/demo.sh   # offline, no API key, seconds</code></pre>
+<p>That demo forks a RefundBot into a runtime line and a design-time line and merges them,
+producing a marker-free skill containing both rule sets and a swarm containing both
+sub-agents.</p>
+<p><strong>What to know before you trust it.</strong> The demo's reconciler is a
+deterministic bullet-union stub, honest in its docstring but not intelligent — the LLM
+reconciler is a separate piece. And test coverage is lopsided: the optional cryptographic
+layer has 20 tests while the core object store has 5.</p>
+  </article>
+
+  <div class="nextprev"><a href="/experiments/sleep-harness/">sleep-harness →</a></div>
+  <footer class="foot">
+    <span>Apache 2.0 · permanently alpha</span>
+    <span><a href="https://github.com/EvolvingAgentsLabs">github.com/EvolvingAgentsLabs</a></span>
+  </footer>
+
+</div>
+
+</body>
+</html>

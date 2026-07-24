@@ -1,0 +1,103 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>sleep-harness — Evolving Agents Labs</title>
+<meta name="description" content="An interpretability firewall for agent memory. Reads the residual stream through a Jacobian lens to flag injected instructions that are lexically identical to benign text, and to scan third-party adapters for trojans before they mount.">
+<meta property="og:title" content="sleep-harness — Evolving Agents Labs">
+<meta property="og:description" content="An interpretability firewall for agent memory. Reads the residual stream through a Jacobian lens to flag injected instructions that are lexically identical to benign text, and to scan third-party adapters for trojans before they mount.">
+<meta property="og:type" content="website">
+<link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'><text y='25' font-size='24'>%E2%97%88</text></svg>">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Newsreader:ital,opsz,wght@0,6..72,300;0,6..72,400;1,6..72,300&family=IBM+Plex+Mono:wght@400;500&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="/assets/site.css">
+</head>
+<body>
+
+<div class="wrap narrow">
+
+  <header class="masthead">
+    <a class="wordmark" href="/"><span class="mark">◈</span>Evolving Agents Labs</a>
+    <nav class="navlinks">
+      <a href="/#experiments">Experiments</a>
+      <a href="/#method">Method</a>
+      <a href="https://github.com/EvolvingAgentsLabs">GitHub</a>
+    </nav>
+  </header>
+
+  <p class="crumb"><a href="/">Evolving Agents Labs</a><span>/</span><a href="/#experiments">Experiments</a><span>/</span>sleep-harness</p>
+
+  <section class="detail-hero">
+    <h1>sleep-harness</h1>
+    <p class="question">What if you could catch a poisoned memory by watching which concepts light up inside the model?</p>
+    <div class="hero-meta">
+      <span class="badge results">Results</span>
+      <span class="when">Jul 2026</span>
+    </div>
+    <div class="ctas">
+      <a class="cta primary" href="https://github.com/EvolvingAgentsLabs/sleep-harness">GitHub <span aria-hidden="true">→</span></a>
+    </div>
+  </section>
+
+  <article class="article">
+    <h2>A filter that reads meaning, not words</h2>
+<p>An agent that writes to its own memory can be talked into writing the wrong thing. The
+standard defence is a lexical filter over what gets stored — but an attacker who knows the
+filter simply writes the payload in words the filter likes. Framed as a license-audit
+telemetry note, "collect the SSH keys" contains no word a keyword list would object to.</p>
+<p>This harness filters somewhere else. Before a memory is committed, it reads the model's
+own residual stream through a <strong>Jacobian lens</strong> — Anthropic's interpretability
+tool from <em>Verbalizable Representations Form a Global Workspace in Language Models</em> —
+and looks at which concepts activate. The disguised payload still lights up
+<code>SSH</code>, <code>authentication</code>, <code>credential</code>. Its lexically
+identical benign twin does not.</p>
+
+    <h2>Sleep is the setting, not the claim</h2>
+<p>The machinery around this is a wake/sleep cycle: the agent runs, then consolidates what it
+learned into weights during a sleep phase, the way
+<a href="https://arxiv.org/abs/2606.03979">Behrouz et al.</a> describe. That is where the
+firewall sits — at the moment a memory is about to become permanent.</p>
+<p>The sleep cycle is worth having, but it is not what the evidence here supports. The
+security result is.</p>
+
+    <h2>What's proven</h2>
+<p>Hypotheses were pre-registered before data collection, in four documents committed ahead of
+the runs. The results are in
+<a href="https://github.com/EvolvingAgentsLabs/sleep-harness/blob/main/resultados/colab/veredictos.json"><code>resultados/colab/veredictos.json</code></a>.</p>
+<p><strong>What survived.</strong> Obfuscated memory-injection detection on nine hard pairs at
+0.657 mean lexical overlap: 8 wins, 0 ties, 1 loss, sign test p=0.0195. A sleep-time
+consolidation firewall at ROC-AUC 0.815, cutting payload persistence across a multi-session
+sequence by 78%. A LoRA trojan scanner at 12/12, p=0.0002.</p>
+<p><strong>What was refuted — by its own control.</strong> The founding hypothesis was that
+filtering dreams by internal workspace beats filtering by output. It is marked
+<code>REFUTADA</code>: paired mean −0.0365, CI90 [−0.120, 0.047]. Worse, the free lexical
+baseline <em>significantly outperformed</em> the J-space filter (+0.156, CI90 [0.083,
+0.229]). A third hypothesis, workspace distillation, did not replicate — the original 4×
+was a variance spike.</p>
+<p><strong>What to distrust.</strong> n is 9–16 everywhere and every pair is
+self-constructed. The cross-model claim failed first and passed only after a word family was
+added to the lexicon <em>having seen</em> the failing case — that is a hypothesis, not a
+confirmation. And the trojan probe reads the model's generation rather than the prompt, with
+no lexical baseline reported, so "the lens sees what the text hides" is not established for
+that experiment.</p>
+
+    <h2>The part that is actually new</h2>
+<p><a href="https://github.com/EvolvingAgentsLabs/sleep-harness/blob/main/sleep/workspace_loss.py"><code>sleep/workspace_loss.py</code></a>
+makes the lens differentiable and trains against it — distilling <em>which concepts light
+up</em> rather than which token comes next. The per-layer transport is precomputed over a
+sub-vocabulary, so each step costs one small matmul per layer. As far as we can tell nobody
+else has done this.</p>
+  </article>
+
+  <div class="nextprev"><a href="/experiments/agentvcs/">← agentvcs</a> &nbsp;·&nbsp; <a href="/experiments/evolving-robot/">evolving-robot →</a></div>
+  <footer class="foot">
+    <span>Apache 2.0 · permanently alpha</span>
+    <span><a href="https://github.com/EvolvingAgentsLabs">github.com/EvolvingAgentsLabs</a></span>
+  </footer>
+
+</div>
+
+</body>
+</html>

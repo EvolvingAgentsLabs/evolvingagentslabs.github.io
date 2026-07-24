@@ -1,0 +1,87 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>skillos — Evolving Agents Labs</title>
+<meta name="description" content="Skills as programs, traces as logs, consolidation as sleep — plus a line-op dialect that lets small models patch files by emitting edits instead of rewriting whole documents.">
+<meta property="og:title" content="skillos — Evolving Agents Labs">
+<meta property="og:description" content="Skills as programs, traces as logs, consolidation as sleep — plus a line-op dialect that lets small models patch files by emitting edits instead of rewriting whole documents.">
+<meta property="og:type" content="website">
+<link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'><text y='25' font-size='24'>%E2%97%88</text></svg>">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Newsreader:ital,opsz,wght@0,6..72,300;0,6..72,400;1,6..72,300&family=IBM+Plex+Mono:wght@400;500&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="/assets/site.css">
+</head>
+<body>
+
+<div class="wrap narrow">
+
+  <header class="masthead">
+    <a class="wordmark" href="/"><span class="mark">◈</span>Evolving Agents Labs</a>
+    <nav class="navlinks">
+      <a href="/#experiments">Experiments</a>
+      <a href="/#method">Method</a>
+      <a href="https://github.com/EvolvingAgentsLabs">GitHub</a>
+    </nav>
+  </header>
+
+  <p class="crumb"><a href="/">Evolving Agents Labs</a><span>/</span><a href="/#experiments">Experiments</a><span>/</span>skillos</p>
+
+  <section class="detail-hero">
+    <h1>skillos</h1>
+    <p class="question">What if the operating system were written entirely in markdown?</p>
+    <div class="hero-meta">
+      <span class="badge prototype">Prototype</span>
+      <span class="when">Jun 2026</span>
+    </div>
+    <div class="ctas">
+      <a class="cta primary" href="https://github.com/EvolvingAgentsLabs/skillos">GitHub <span aria-hidden="true">→</span></a>
+    </div>
+  </section>
+
+  <article class="article">
+    <h2>Markdown as the executable</h2>
+<p>Agent behaviour lives in declarative documents; the model is the interpreter; memory is
+how it improves. Skills are programs, execution traces are logs, and consolidation is what
+happens during sleep.</p>
+<p>In 2026 that framing is no longer novel on its own — Anthropic shipped Agent Skills,
+Google shipped on-device skills in Edge Gallery, and <code>SKILL.md</code> is effectively a
+standard. What is left is the parts that are measured.</p>
+
+    <h2>The dialects, which are the real work</h2>
+<p>Ask a small model to edit a file and it will rewrite the whole thing, badly and expensively.
+<a href="https://github.com/EvolvingAgentsLabs/skillos/tree/main/system/dialects"><code>system/dialects/</code></a>
+constrains it to line operations instead — <code>[DEL:N]</code>, <code>[ADD:N]</code> —
+so an edit costs the size of the edit.</p>
+<p>The part worth attention is
+<a href="https://github.com/EvolvingAgentsLabs/skillos/blob/main/benchmarks/benchmark_patch.py"><code>benchmarks/benchmark_patch.py</code></a>:
+1,661 lines that verify results with an AST and regexes rather than asking another model to
+grade the output. Self-grading benchmarks are the norm and they are worth very little.</p>
+
+    <h2>What's proven</h2>
+<p>This is the org's most-starred original repo and its only real distribution. It is also
+the one most in need of a repair pass, and it would be dishonest to point you at it without
+saying so.</p>
+<p>On a clean checkout it fails for three independent reasons: there is no dependency
+manifest of any kind, so <code>yaml</code> is missing; <code>agent_runtime.py</code> was
+deleted, which orphans <code>run_scenario.py</code>, seven documented README commands and
+about 117 tests; and a committed <code>.claude/settings.local.json</code> points
+<code>ANTHROPIC_BASE_URL</code> at a dead localhost proxy, so a fresh clone fails until you
+find and delete it.</p>
+<p>Of 533 collected tests, roughly two thirds assert that a heading exists in a markdown file
+rather than testing logic. The benchmark numbers quoted in the README have no committed
+baseline and cannot be reproduced from the repo.</p>
+  </article>
+
+  <div class="nextprev"><a href="/experiments/evolving-robot/">← evolving-robot</a> &nbsp;·&nbsp; <a href="/experiments/qa/">qa →</a></div>
+  <footer class="foot">
+    <span>Apache 2.0 · permanently alpha</span>
+    <span><a href="https://github.com/EvolvingAgentsLabs">github.com/EvolvingAgentsLabs</a></span>
+  </footer>
+
+</div>
+
+</body>
+</html>

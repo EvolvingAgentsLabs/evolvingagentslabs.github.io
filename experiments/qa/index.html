@@ -1,0 +1,81 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>qa — Evolving Agents Labs</title>
+<meta name="description" content="Every assertion is fingerprinted and diffed across runs, so a check that silently disappeared surfaces as a finding. Passing exploratory sessions get frozen into deterministic scripts.">
+<meta property="og:title" content="qa — Evolving Agents Labs">
+<meta property="og:description" content="Every assertion is fingerprinted and diffed across runs, so a check that silently disappeared surfaces as a finding. Passing exploratory sessions get frozen into deterministic scripts.">
+<meta property="og:type" content="website">
+<link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'><text y='25' font-size='24'>%E2%97%88</text></svg>">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Newsreader:ital,opsz,wght@0,6..72,300;0,6..72,400;1,6..72,300&family=IBM+Plex+Mono:wght@400;500&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="/assets/site.css">
+</head>
+<body>
+
+<div class="wrap narrow">
+
+  <header class="masthead">
+    <a class="wordmark" href="/"><span class="mark">◈</span>Evolving Agents Labs</a>
+    <nav class="navlinks">
+      <a href="/#experiments">Experiments</a>
+      <a href="/#method">Method</a>
+      <a href="https://github.com/EvolvingAgentsLabs">GitHub</a>
+    </nav>
+  </header>
+
+  <p class="crumb"><a href="/">Evolving Agents Labs</a><span>/</span><a href="/#experiments">Experiments</a><span>/</span>qa</p>
+
+  <section class="detail-hero">
+    <h1>qa</h1>
+    <p class="question">What if your test suite told you what it had quietly stopped checking?</p>
+    <div class="hero-meta">
+      <span class="badge prototype">Prototype</span>
+      <span class="when">Jun 2026</span>
+    </div>
+    <div class="ctas">
+      <a class="cta primary" href="https://github.com/EvolvingAgentsLabs/qa">GitHub <span aria-hidden="true">→</span></a>
+    </div>
+  </section>
+
+  <article class="article">
+    <h2>Coverage measures the wrong direction</h2>
+<p>Coverage tools tell you which lines ran. Nothing tells you which <em>checks you used to
+make and no longer do</em>. Assertions get deleted during a refactor, or quietly weakened to
+make a flaky test green, and no tool objects — the suite still passes, faster than before.</p>
+<p>Here every assertion is fingerprinted and diffed against a stored baseline. A check that
+vanished between runs comes back as a finding with a name.</p>
+
+    <h2>Exploration is expensive; regression should not be</h2>
+<p>An agent driving a real browser finds things a fixed script cannot. It is also slow,
+non-deterministic and costs tokens on every run — which makes it a bad regression suite.</p>
+<p>So the passing paths get crystallized into deterministic Playwright scripts that run in
+CI for free. Crystallization is <em>partial</em> on purpose: steps that passed become real
+tests, steps that failed become explicit <code>test.skip()</code> rather than silence. When a
+frozen test later breaks, it falls back to exploration.</p>
+<p>This is the same fluid→crystallized move as <a href="/experiments/agentvcs/">agentvcs</a>,
+pointed at browser tests instead of agent evolution.</p>
+
+    <h2>What's proven</h2>
+<p>v0.7.0, with thirteen commits of genuine product progression — Playwright-MCP, then
+Chrome-first plus crystallization, then static analysis, then baseline tracking, then persona
+simulation, then timestamped run folders with issue files.</p>
+<p><strong>The honest gap:</strong> this is 8,000 lines of prompt and agent markdown with no
+tests and no CI. For a prompt-defined plugin the markdown <em>is</em> the artifact, but
+nothing verifies it still works — a Claude Code or Chrome extension change breaks it
+silently. The Chrome-extension dependency also narrows who can run it.</p>
+  </article>
+
+  <div class="nextprev"><a href="/experiments/skillos/">← skillos</a> &nbsp;·&nbsp; <a href="/experiments/skillos-robot/">skillos_robot →</a></div>
+  <footer class="foot">
+    <span>Apache 2.0 · permanently alpha</span>
+    <span><a href="https://github.com/EvolvingAgentsLabs">github.com/EvolvingAgentsLabs</a></span>
+  </footer>
+
+</div>
+
+</body>
+</html>

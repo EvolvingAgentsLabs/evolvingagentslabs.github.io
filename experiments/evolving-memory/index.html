@@ -1,0 +1,83 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>evolving-memory — Evolving Agents Labs</title>
+<meta name="description" content="A trajectory engine that chunks execution traces, connects them and curates what survives — so repeated experience raises confidence and failures extract constraints.">
+<meta property="og:title" content="evolving-memory — Evolving Agents Labs">
+<meta property="og:description" content="A trajectory engine that chunks execution traces, connects them and curates what survives — so repeated experience raises confidence and failures extract constraints.">
+<meta property="og:type" content="website">
+<link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'><text y='25' font-size='24'>%E2%97%88</text></svg>">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Newsreader:ital,opsz,wght@0,6..72,300;0,6..72,400;1,6..72,300&family=IBM+Plex+Mono:wght@400;500&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="/assets/site.css">
+</head>
+<body>
+
+<div class="wrap narrow">
+
+  <header class="masthead">
+    <a class="wordmark" href="/"><span class="mark">◈</span>Evolving Agents Labs</a>
+    <nav class="navlinks">
+      <a href="/#experiments">Experiments</a>
+      <a href="/#method">Method</a>
+      <a href="https://github.com/EvolvingAgentsLabs">GitHub</a>
+    </nav>
+  </header>
+
+  <p class="crumb"><a href="/">Evolving Agents Labs</a><span>/</span><a href="/#experiments">Experiments</a><span>/</span>evolving-memory</p>
+
+  <section class="detail-hero">
+    <h1>evolving-memory</h1>
+    <p class="question">What if an agent's memory consolidated itself the way sleep consolidates yours?</p>
+    <div class="hero-meta">
+      <span class="badge results">Results</span>
+      <span class="when">Apr 2026</span>
+    </div>
+    <div class="ctas">
+      <a class="cta primary" href="https://github.com/EvolvingAgentsLabs/evolving-memory">GitHub <span aria-hidden="true">→</span></a>
+    </div>
+  </section>
+
+  <article class="article">
+    <h2>Traces in, structure out</h2>
+<p>An agent generates enormous volumes of execution trace and almost none of it is worth
+keeping verbatim. The engine chunks traces, connects related ones, and curates what survives —
+a consolidation pass, not an append-only log.</p>
+<p>What comes out has properties you can state and test: repeated experience raises
+confidence, failures extract constraints rather than just being recorded, and one domain's
+lessons do not bleed into another's.</p>
+<p>There is also an instruction set and a small VM — traces become programs with opcodes,
+versioned through a registry — plus SQLite and FAISS storage, three LLM provider backends, and
+a 14-route FastAPI server.</p>
+
+    <h2>What's proven</h2>
+<p>7,449 lines across nine subpackages with <strong>182 test functions</strong> in 14 files.
+The interesting ones are behavioural rather than structural:
+<code>test_failure_extracts_constraints</code>,
+<code>test_repeated_experience_increases_confidence</code>,
+<code>test_semantic_isolation_between_domains</code>,
+<code>test_multi_domain_agent_lifecycle</code>. Those are claims about what the engine
+<em>does</em>, checked in code.</p>
+
+    <h2>The honest status</h2>
+<p>This engine has <strong>no consumers</strong>. Nothing in the organization imports it —
+skillos_robot decoupled from it in April, and every other mention is prose. It is a
+well-tested, framework-agnostic, genuinely reusable component that nobody is currently
+plugging in.</p>
+<p>That is a statement about attention, not quality. But you should know it before adopting
+it: it has been cold since April, and if you hit a bug you are likely the first.</p>
+  </article>
+
+  <div class="nextprev"><a href="/experiments/token-trie/">← token-trie</a></div>
+  <footer class="foot">
+    <span>Apache 2.0 · permanently alpha</span>
+    <span><a href="https://github.com/EvolvingAgentsLabs">github.com/EvolvingAgentsLabs</a></span>
+  </footer>
+
+</div>
+
+</body>
+</html>

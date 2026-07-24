@@ -5,156 +5,14 @@
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>Evolving Agents Labs — Experiments in how agents learn, remember, and prove what they know</title>
 <meta name="description" content="Open experiments in agent memory, self-modification, interpretability and constrained execution. Each one labelled by how much evidence stands behind it.">
-<meta property="og:title" content="Evolving Agents Labs">
-<meta property="og:description" content="Experiments in how agents learn, remember, and prove what they know.">
+<meta property="og:title" content="Evolving Agents Labs — Experiments in how agents learn, remember, and prove what they know">
+<meta property="og:description" content="Open experiments in agent memory, self-modification, interpretability and constrained execution. Each one labelled by how much evidence stands behind it.">
 <meta property="og:type" content="website">
-<meta property="og:url" content="https://evolvingagentslabs.github.io/">
-<link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'><text y='25' font-size='24'>◈</text></svg>">
+<link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'><text y='25' font-size='24'>%E2%97%88</text></svg>">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Newsreader:ital,opsz,wght@0,6..72,300;0,6..72,400;1,6..72,300&family=IBM+Plex+Mono:wght@400;500&display=swap" rel="stylesheet">
-<style>
-:root{
-  --paper:#F5F5F2;
-  --ground:#FFFFFF;
-  --ink:#15171B;
-  --ink-2:#4A4F58;
-  --ink-3:#767C86;
-  --rule:#DEDEDA;
-  --rule-strong:#C4C4BF;
-  --accent:#3E52A3;
-  --signal:#8A5C10;
-  --serif:"Newsreader",Georgia,"Times New Roman",serif;
-  --mono:"IBM Plex Mono",ui-monospace,SFMono-Regular,Menlo,monospace;
-  --sans:-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,Helvetica,Arial,sans-serif;
-  --measure:66ch;
-  --pad:clamp(1.25rem,5vw,3rem);
-}
-@media (prefers-color-scheme:dark){
-  :root{
-    --paper:#0F1114; --ground:#15181C;
-    --ink:#E8E8E4; --ink-2:#A8ADB6; --ink-3:#767C86;
-    --rule:#262A30; --rule-strong:#363B43;
-    --accent:#8B9BE0; --signal:#D9A441;
-  }
-}
-:root[data-theme="dark"]{
-  --paper:#0F1114; --ground:#15181C;
-  --ink:#E8E8E4; --ink-2:#A8ADB6; --ink-3:#767C86;
-  --rule:#262A30; --rule-strong:#363B43;
-  --accent:#8B9BE0; --signal:#D9A441;
-}
-:root[data-theme="light"]{
-  --paper:#F5F5F2; --ground:#FFFFFF;
-  --ink:#15171B; --ink-2:#4A4F58; --ink-3:#767C86;
-  --rule:#DEDEDA; --rule-strong:#C4C4BF;
-  --accent:#3E52A3; --signal:#8A5C10;
-}
-
-*{box-sizing:border-box;}
-html{-webkit-text-size-adjust:100%;}
-body{
-  margin:0;background:var(--paper);color:var(--ink);
-  font-family:var(--sans);font-size:16px;line-height:1.6;
-  -webkit-font-smoothing:antialiased;
-}
-:focus-visible{outline:2px solid var(--accent);outline-offset:3px;border-radius:2px;}
-.wrap{max-width:min(64rem,100%);margin:0 auto;padding-inline:var(--pad);}
-
-.masthead{
-  display:flex;align-items:baseline;justify-content:space-between;
-  gap:1.5rem;flex-wrap:wrap;padding-block:1.75rem 1.5rem;
-  border-bottom:1px solid var(--rule);
-}
-.wordmark{
-  font-family:var(--mono);font-size:.8125rem;font-weight:500;
-  letter-spacing:.08em;text-transform:uppercase;
-  text-decoration:none;color:inherit;
-}
-.wordmark .mark{color:var(--accent);margin-right:.45em;}
-.navlinks{display:flex;gap:1.5rem;font-family:var(--mono);font-size:.75rem;letter-spacing:.04em;}
-.navlinks a{color:var(--ink-2);text-decoration:none;transition:color .15s;}
-.navlinks a:hover{color:var(--accent);}
-
-.hero{padding-block:clamp(3rem,9vw,5.5rem) clamp(2.5rem,6vw,4rem);}
-.hero h1{
-  font-family:var(--serif);font-weight:300;
-  font-size:clamp(2rem,5.4vw,3.5rem);line-height:1.12;
-  letter-spacing:-.018em;margin:0 0 1.5rem;
-  max-width:22ch;text-wrap:balance;
-}
-.hero h1 em{font-style:italic;color:var(--accent);}
-.hero p{margin:0;max-width:var(--measure);color:var(--ink-2);font-size:1.0625rem;line-height:1.65;}
-.hero p + p{margin-top:1rem;}
-
-.legend{
-  display:flex;flex-wrap:wrap;gap:.6rem 1.75rem;
-  padding-block:1.25rem;border-block:1px solid var(--rule);
-  font-family:var(--mono);font-size:.75rem;color:var(--ink-3);
-}
-.legend div{display:flex;align-items:center;gap:.5rem;}
-
-.badge{
-  font-family:var(--mono);font-size:.6875rem;font-weight:500;
-  letter-spacing:.06em;text-transform:uppercase;
-  padding:.2em .55em;border:1px solid currentColor;border-radius:2px;
-  white-space:nowrap;line-height:1.3;
-}
-.badge.reproducible{color:var(--accent);}
-.badge.results{color:var(--signal);}
-.badge.prototype{color:var(--ink-3);}
-
-.listing{padding-block:1rem 4rem;}
-.sectionlabel{
-  font-family:var(--mono);font-size:.6875rem;letter-spacing:.14em;
-  text-transform:uppercase;color:var(--ink-3);
-  margin:0;padding-block:2.25rem 1rem;
-}
-.row{
-  display:grid;grid-template-columns:minmax(11rem,14rem) 1fr auto;
-  gap:.5rem 2rem;align-items:start;
-  padding:1.5rem .875rem;margin-inline:-.875rem;
-  border-bottom:1px solid var(--rule);
-  text-decoration:none;color:inherit;border-radius:3px;
-  transition:background-color .18s ease;
-}
-.row:first-of-type{border-top:1px solid var(--rule-strong);}
-.row:hover{background:var(--ground);}
-.row:hover .name{color:var(--accent);}
-.row:hover .arrow{transform:translateX(3px);opacity:1;}
-.rowhead{display:flex;flex-direction:column;gap:.55rem;align-items:flex-start;}
-.name{font-family:var(--mono);font-size:.9375rem;font-weight:500;letter-spacing:-.01em;transition:color .18s;}
-.question{
-  font-family:var(--serif);font-weight:300;
-  font-size:clamp(1.125rem,2.1vw,1.4375rem);
-  line-height:1.34;letter-spacing:-.012em;
-  margin:0;max-width:44ch;text-wrap:balance;
-}
-.note{margin:.6rem 0 0;font-size:.875rem;line-height:1.55;color:var(--ink-2);max-width:52ch;}
-.meta{
-  display:flex;align-items:center;gap:.85rem;
-  font-family:var(--mono);font-size:.75rem;color:var(--ink-3);
-  font-variant-numeric:tabular-nums;white-space:nowrap;
-}
-.arrow{opacity:.45;transition:transform .18s ease,opacity .18s ease;}
-
-@media (max-width:44rem){
-  .row{grid-template-columns:1fr;gap:.85rem;padding-block:1.375rem;}
-  .rowhead{flex-direction:row;align-items:center;gap:.75rem;flex-wrap:wrap;}
-  .meta{order:3;}
-}
-
-.foot{
-  border-top:1px solid var(--rule-strong);
-  padding-block:2.5rem 3.5rem;
-  display:flex;justify-content:space-between;gap:1.5rem;flex-wrap:wrap;
-  font-family:var(--mono);font-size:.75rem;color:var(--ink-3);
-}
-.foot a{color:var(--ink-2);text-decoration:none;}
-.foot a:hover{color:var(--accent);}
-
-@media (prefers-reduced-motion:reduce){*{transition:none !important;animation:none !important;}}
-</style>
+<link rel="stylesheet" href="/assets/site.css">
 </head>
 <body>
 
@@ -163,8 +21,8 @@ body{
   <header class="masthead">
     <a class="wordmark" href="/"><span class="mark">◈</span>Evolving Agents Labs</a>
     <nav class="navlinks">
-      <a href="#experiments">Experiments</a>
-      <a href="#method">Method</a>
+      <a href="/#experiments">Experiments</a>
+      <a href="/#method">Method</a>
       <a href="https://github.com/EvolvingAgentsLabs">GitHub</a>
     </nav>
   </header>
@@ -185,7 +43,18 @@ body{
 
     <p class="sectionlabel">2026</p>
 
-    <a class="row" href="https://github.com/EvolvingAgentsLabs/sleep-harness">
+    <a class="row" href="/experiments/agentvcs/">
+      <span class="rowhead">
+        <span class="name">agentvcs</span>
+        <span class="badge reproducible">Reproducible</span>
+      </span>
+      <span>
+        <p class="question">What if an agent's autonomous evolution could be merged back into your release, like any other branch?</p>
+        <p class="note">Version control where one commit carries code, goal, model pins, trace and sub-agent swarm together, and conflicts are handed to a reconciler over a plain stdin/stdout contract.</p>
+      </span>
+      <span class="meta">Jul 2026 <span class="arrow" aria-hidden="true">→</span></span>
+    </a>
+    <a class="row" href="/experiments/sleep-harness/">
       <span class="rowhead">
         <span class="name">sleep-harness</span>
         <span class="badge results">Results</span>
@@ -196,87 +65,69 @@ body{
       </span>
       <span class="meta">Jul 2026 <span class="arrow" aria-hidden="true">→</span></span>
     </a>
-
-    <a class="row" href="https://github.com/EvolvingAgentsLabs/evolving-robot">
+    <a class="row" href="/experiments/evolving-robot/">
       <span class="rowhead">
         <span class="name">evolving-robot</span>
         <span class="badge prototype">Prototype</span>
       </span>
       <span>
         <p class="question">What if a robot that missed a fallen patient could rewrite its own care protocol overnight?</p>
-        <p class="note">Florence patrols a hospital ward, fails to check a patient standing outside her lamp radius, and revises the skill that caused it. The rewrite survives only if it outscores the protocol it replaced; otherwise it is reverted, with the reason on a durable ledger.</p>
+        <p class="note">Florence patrols a hospital ward, fails to check a patient standing outside her lamp radius, and revises the skill that caused it. The rewrite survives only if it outscores the protocol it replaced.</p>
       </span>
       <span class="meta">Jul 2026 <span class="arrow" aria-hidden="true">→</span></span>
     </a>
-
-    <a class="row" href="https://github.com/EvolvingAgentsLabs/agentvcs">
-      <span class="rowhead">
-        <span class="name">agentvcs</span>
-        <span class="badge reproducible">Reproducible</span>
-      </span>
-      <span>
-        <p class="question">What if an agent's autonomous evolution could be merged back into your release, like any other branch?</p>
-        <p class="note">Version control where one commit carries code, goal, model pins, trace and sub-agent swarm together. Conflicts between what the agent taught itself at runtime and what your team edited in git are handed to a reconciler over a plain stdin/stdout contract.</p>
-      </span>
-      <span class="meta">Jul 2026 <span class="arrow" aria-hidden="true">→</span></span>
-    </a>
-
-    <a class="row" href="https://github.com/EvolvingAgentsLabs/qa">
-      <span class="rowhead">
-        <span class="name">qa</span>
-        <span class="badge prototype">Prototype</span>
-      </span>
-      <span>
-        <p class="question">What if your test suite told you what it had quietly stopped checking?</p>
-        <p class="note">Every assertion is fingerprinted and diffed across runs, so a check that silently disappeared surfaces as a finding. Exploratory browser sessions that pass get frozen into deterministic scripts; steps that failed become explicit skips rather than silence.</p>
-      </span>
-      <span class="meta">Jun 2026 <span class="arrow" aria-hidden="true">→</span></span>
-    </a>
-
-    <a class="row" href="https://github.com/EvolvingAgentsLabs/skillos">
+    <a class="row" href="/experiments/skillos/">
       <span class="rowhead">
         <span class="name">skillos</span>
         <span class="badge prototype">Prototype</span>
       </span>
       <span>
         <p class="question">What if the operating system were written entirely in markdown?</p>
-        <p class="note">Skills as programs, traces as logs, consolidation as sleep. Includes a line-op dialect that lets small models patch files by emitting edits instead of rewriting whole documents, measured by an AST-verified benchmark rather than an LLM judge.</p>
+        <p class="note">Skills as programs, traces as logs, consolidation as sleep — plus a line-op dialect that lets small models patch files by emitting edits instead of rewriting whole documents.</p>
       </span>
       <span class="meta">Jun 2026 <span class="arrow" aria-hidden="true">→</span></span>
     </a>
-
-    <a class="row" href="https://github.com/EvolvingAgentsLabs/token-trie">
+    <a class="row" href="/experiments/qa/">
       <span class="rowhead">
-        <span class="name">token-trie</span>
-        <span class="badge reproducible">Reproducible</span>
+        <span class="name">qa</span>
+        <span class="badge prototype">Prototype</span>
       </span>
       <span>
-        <p class="question">What if a small model could not emit invalid syntax, because the decoder refused to let it?</p>
-        <p class="note">Every legal instruction is pre-tokenized into a trie of token IDs, and the sampler's valid-next set is masked at each step. A 350M-parameter model plays Tetris in a browser tab, fully offline. Grammar enforced in the decoder, not requested in the prompt.</p>
+        <p class="question">What if your test suite told you what it had quietly stopped checking?</p>
+        <p class="note">Every assertion is fingerprinted and diffed across runs, so a check that silently disappeared surfaces as a finding. Passing exploratory sessions get frozen into deterministic scripts.</p>
       </span>
-      <span class="meta">May 2026 <span class="arrow" aria-hidden="true">→</span></span>
+      <span class="meta">Jun 2026 <span class="arrow" aria-hidden="true">→</span></span>
     </a>
-
-    <a class="row" href="https://github.com/EvolvingAgentsLabs/skillos_robot">
+    <a class="row" href="/experiments/skillos-robot/">
       <span class="rowhead">
         <span class="name">skillos_robot</span>
         <span class="badge prototype">Prototype</span>
       </span>
       <span>
         <p class="question">What if the robot were just a device driver for a language model?</p>
-        <p class="note">A slow vision-language brain plans at roughly one hertz while a reactive controller drives motors at twenty, over a bytecode link to an ESP32. Firmware, CAD and simulation scenes included.</p>
+        <p class="note">A slow vision-language brain plans at roughly one hertz while a reactive controller drives motors at twenty, over a bytecode link to an ESP32.</p>
       </span>
       <span class="meta">May 2026 <span class="arrow" aria-hidden="true">→</span></span>
     </a>
-
-    <a class="row" href="https://github.com/EvolvingAgentsLabs/evolving-memory">
+    <a class="row" href="/experiments/token-trie/">
+      <span class="rowhead">
+        <span class="name">token-trie</span>
+        <span class="badge reproducible">Reproducible</span>
+      </span>
+      <span>
+        <p class="question">What if a small model could not emit invalid syntax, because the decoder refused to let it?</p>
+        <p class="note">Every legal instruction is pre-tokenized into a trie of token IDs and the sampler's valid-next set is masked at each step. A 350M-parameter model plays Tetris in a browser tab, fully offline.</p>
+      </span>
+      <span class="meta">May 2026 <span class="arrow" aria-hidden="true">→</span></span>
+    </a>
+    <a class="row" href="/experiments/evolving-memory/">
       <span class="rowhead">
         <span class="name">evolving-memory</span>
         <span class="badge results">Results</span>
       </span>
       <span>
         <p class="question">What if an agent's memory consolidated itself the way sleep consolidates yours?</p>
-        <p class="note">A trajectory engine that chunks execution traces, connects them and curates what survives, so repeated experience raises confidence and failures extract constraints — without one domain's lessons bleeding into another.</p>
+        <p class="note">A trajectory engine that chunks execution traces, connects them and curates what survives — so repeated experience raises confidence and failures extract constraints.</p>
       </span>
       <span class="meta">Apr 2026 <span class="arrow" aria-hidden="true">→</span></span>
     </a>

@@ -1,0 +1,78 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>skillos_robot — Evolving Agents Labs</title>
+<meta name="description" content="A slow vision-language brain plans at roughly one hertz while a reactive controller drives motors at twenty, over a bytecode link to an ESP32.">
+<meta property="og:title" content="skillos_robot — Evolving Agents Labs">
+<meta property="og:description" content="A slow vision-language brain plans at roughly one hertz while a reactive controller drives motors at twenty, over a bytecode link to an ESP32.">
+<meta property="og:type" content="website">
+<link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'><text y='25' font-size='24'>%E2%97%88</text></svg>">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Newsreader:ital,opsz,wght@0,6..72,300;0,6..72,400;1,6..72,300&family=IBM+Plex+Mono:wght@400;500&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="/assets/site.css">
+</head>
+<body>
+
+<div class="wrap narrow">
+
+  <header class="masthead">
+    <a class="wordmark" href="/"><span class="mark">◈</span>Evolving Agents Labs</a>
+    <nav class="navlinks">
+      <a href="/#experiments">Experiments</a>
+      <a href="/#method">Method</a>
+      <a href="https://github.com/EvolvingAgentsLabs">GitHub</a>
+    </nav>
+  </header>
+
+  <p class="crumb"><a href="/">Evolving Agents Labs</a><span>/</span><a href="/#experiments">Experiments</a><span>/</span>skillos_robot</p>
+
+  <section class="detail-hero">
+    <h1>skillos_robot</h1>
+    <p class="question">What if the robot were just a device driver for a language model?</p>
+    <div class="hero-meta">
+      <span class="badge prototype">Prototype</span>
+      <span class="when">May 2026</span>
+    </div>
+    <div class="ctas">
+      <a class="cta primary" href="https://github.com/EvolvingAgentsLabs/skillos_robot">GitHub <span aria-hidden="true">→</span></a>
+    </div>
+  </section>
+
+  <article class="article">
+    <h2>Two brains at different clock speeds</h2>
+<p>A vision-language model is a good planner and a hopeless controller. It thinks at about one
+hertz; a robot that wants to not hit things needs to react twenty times faster.</p>
+<p>So the split is explicit. The slow brain looks through the camera, reasons about the scene
+and emits intent. A reactive controller runs at 20 Hz and turns that intent into bytecode over
+UDP to an ESP32-S3-CAM. The robot exposes itself as a callable cartridge —
+<code>robot.navigate</code>, <code>observe</code>, <code>describe</code>, <code>speak</code>,
+<code>listen</code>, <code>stop</code> — which makes it, structurally, a device driver for a
+language model.</p>
+<p>Navigation is camera-only visual servoing. No lidar, no map.</p>
+
+    <h2>What's proven</h2>
+<p>This is the deepest codebase here: 118 commits, 302 files, 72 TypeScript sources, and
+<strong>44 test files carrying roughly 768 cases</strong> across cortex, memory, dream,
+navigation and integration. Plus four ESP32 firmware projects, a bill of materials, printable
+STLs and six MuJoCo scenes.</p>
+<p><strong>And none of it is running in CI.</strong> There are no workflows — 768 tests that
+nothing executes automatically. The repo has also been untouched since May.</p>
+<p><strong>There is nothing to look at.</strong> For a robotics project this is the real
+problem: the only images in the tree are four test fixtures. No video, no GIF, no screenshot
+of the thing working. A 2D viewer and MuJoCo scenes exist, so a demo is recordable — it has
+not been recorded.</p>
+  </article>
+
+  <div class="nextprev"><a href="/experiments/qa/">← qa</a> &nbsp;·&nbsp; <a href="/experiments/token-trie/">token-trie →</a></div>
+  <footer class="foot">
+    <span>Apache 2.0 · permanently alpha</span>
+    <span><a href="https://github.com/EvolvingAgentsLabs">github.com/EvolvingAgentsLabs</a></span>
+  </footer>
+
+</div>
+
+</body>
+</html>

@@ -1,0 +1,89 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>token-trie — Evolving Agents Labs</title>
+<meta name="description" content="Every legal instruction is pre-tokenized into a trie of token IDs and the sampler's valid-next set is masked at each step. A 350M-parameter model plays Tetris in a browser tab, fully offline.">
+<meta property="og:title" content="token-trie — Evolving Agents Labs">
+<meta property="og:description" content="Every legal instruction is pre-tokenized into a trie of token IDs and the sampler's valid-next set is masked at each step. A 350M-parameter model plays Tetris in a browser tab, fully offline.">
+<meta property="og:type" content="website">
+<link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'><text y='25' font-size='24'>%E2%97%88</text></svg>">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Newsreader:ital,opsz,wght@0,6..72,300;0,6..72,400;1,6..72,300&family=IBM+Plex+Mono:wght@400;500&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="/assets/site.css">
+</head>
+<body>
+
+<div class="wrap narrow">
+
+  <header class="masthead">
+    <a class="wordmark" href="/"><span class="mark">◈</span>Evolving Agents Labs</a>
+    <nav class="navlinks">
+      <a href="/#experiments">Experiments</a>
+      <a href="/#method">Method</a>
+      <a href="https://github.com/EvolvingAgentsLabs">GitHub</a>
+    </nav>
+  </header>
+
+  <p class="crumb"><a href="/">Evolving Agents Labs</a><span>/</span><a href="/#experiments">Experiments</a><span>/</span>token-trie</p>
+
+  <section class="detail-hero">
+    <h1>token-trie</h1>
+    <p class="question">What if a small model could not emit invalid syntax, because the decoder refused to let it?</p>
+    <div class="hero-meta">
+      <span class="badge reproducible">Reproducible</span>
+      <span class="when">May 2026</span>
+    </div>
+    <div class="ctas">
+      <a class="cta primary" href="https://github.com/EvolvingAgentsLabs/token-trie">GitHub <span aria-hidden="true">→</span></a>
+    </div>
+  </section>
+
+  <article class="article">
+    <h2>Constraint in the decoder, not the prompt</h2>
+<p>Asking a model nicely for valid output is a request. Every markdown-skill ecosystem trusts
+the model to comply and then repairs the JSON when it does not.</p>
+<p>The alternative is to make the invalid token unreachable. Every legal instruction is
+tokenized once with the live model's tokenizer and inserted into a trie of token-ID
+sequences. At each decoding step the sampler intersects the trie's valid-next set with the
+logits and picks the highest-probability token <em>that the trie allows</em>. Malformed
+output is not discouraged; it has no path.</p>
+<p>Downstream, that pays off immediately —
+<a href="https://github.com/EvolvingAgentsLabs/token-trie/blob/main/mobile/public/demos/_kernel/dispatch.js"><code>dispatch.js</code></a>
+parses with a plain regex. No JSON repair, no schema retry, no validation layer.</p>
+
+    <h2>The model ratifies; it does not plan</h2>
+<p>This is the part usually left out. In the Tetris demo, a hand-written program layer
+enumerates all forty placements, simulates them and scores them with Dellacherie weights. The
+model is handed the ranked options and picks. It is the decoder and the selector — not the
+planner.</p>
+<p>That is a real and useful result about what a 350M model can be trusted with. It is not
+"a small model runs an OS", and the repo should not be read as claiming that. The cost is
+that every skill needs a planner written behind it.</p>
+
+    <h2>What's proven</h2>
+<p>Clone it, serve it, watch it. No API key, no build step, no account.</p>
+<pre><code>cd mobile/public &amp;&amp; python3 -m http.server 8000</code></pre>
+<p>LFM 2.5 350M loads through wllama and plays. The kernel is five dependency-free ES modules,
+roughly 400 lines. First load downloads ~230 MB of weights; after that it is instant.</p>
+<p><strong>The three limits, stated plainly.</strong> Opcodes must be declared as complete
+literal strings — the Tetris cartridge enumerates <code>{"action":"left"}</code> and its four
+siblings — so <em>the model cannot emit an argument a human did not pre-write</em>. Trie-driven
+argument synthesis is the missing piece and the real critical path. Second, this works because
+LFM 2.5 tokenizes the opcode markers as single tokens; Qwen and Gemma split them, the trie's
+valid set stops intersecting top-K, and output stays syntactically valid while ceasing to be
+strategic. Third, one cartridge per session — there is no registry yet.</p>
+  </article>
+
+  <div class="nextprev"><a href="/experiments/skillos-robot/">← skillos_robot</a> &nbsp;·&nbsp; <a href="/experiments/evolving-memory/">evolving-memory →</a></div>
+  <footer class="foot">
+    <span>Apache 2.0 · permanently alpha</span>
+    <span><a href="https://github.com/EvolvingAgentsLabs">github.com/EvolvingAgentsLabs</a></span>
+  </footer>
+
+</div>
+
+</body>
+</html>

@@ -1,0 +1,95 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>evolving-robot — Evolving Agents Labs</title>
+<meta name="description" content="Florence patrols a hospital ward, fails to check a patient standing outside her lamp radius, and revises the skill that caused it. The rewrite survives only if it outscores the protocol it replaced.">
+<meta property="og:title" content="evolving-robot — Evolving Agents Labs">
+<meta property="og:description" content="Florence patrols a hospital ward, fails to check a patient standing outside her lamp radius, and revises the skill that caused it. The rewrite survives only if it outscores the protocol it replaced.">
+<meta property="og:type" content="website">
+<link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'><text y='25' font-size='24'>%E2%97%88</text></svg>">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Newsreader:ital,opsz,wght@0,6..72,300;0,6..72,400;1,6..72,300&family=IBM+Plex+Mono:wght@400;500&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="/assets/site.css">
+</head>
+<body>
+
+<div class="wrap narrow">
+
+  <header class="masthead">
+    <a class="wordmark" href="/"><span class="mark">◈</span>Evolving Agents Labs</a>
+    <nav class="navlinks">
+      <a href="/#experiments">Experiments</a>
+      <a href="/#method">Method</a>
+      <a href="https://github.com/EvolvingAgentsLabs">GitHub</a>
+    </nav>
+  </header>
+
+  <p class="crumb"><a href="/">Evolving Agents Labs</a><span>/</span><a href="/#experiments">Experiments</a><span>/</span>evolving-robot</p>
+
+  <section class="detail-hero">
+    <h1>evolving-robot</h1>
+    <p class="question">What if a robot that missed a fallen patient could rewrite its own care protocol overnight?</p>
+    <div class="hero-meta">
+      <span class="badge prototype">Prototype</span>
+      <span class="when">Jul 2026</span>
+    </div>
+    <div class="ctas">
+      <a class="cta" href="https://evolvingagentslabs.github.io/evolving-robot/">Demo <span aria-hidden="true">→</span></a>
+      <a class="cta primary" href="https://github.com/EvolvingAgentsLabs/evolving-robot">GitHub <span aria-hidden="true">→</span></a>
+    </div>
+  </section>
+
+  <article class="article">
+    <h2>The seeded flaw</h2>
+<p>Florence's <code>patient-check</code> skill, version 1, contains one bad line: <em>"scan
+from the doorway; if status is <code>unknown</code>, assume resting."</em> The ward has one
+physical rule that makes this matter — a patient's status is only readable inside a lamp
+radius of about 0.8 metres. Scan from the doorway and Mrs. Gomez, on the floor of room 103,
+reads as <code>unknown</code>, and therefore as resting.</p>
+<p>Night one, Florence walks past her.</p>
+
+    <h2>What happens between the two nights</h2>
+<p>The incident trace goes to a dream phase. Gemma rewrites the skill. Then three gates
+decide whether the rewrite is allowed to live:</p>
+<ul>
+<li>A <strong>skill-map gate</strong> hard-blocks an edit that breaks the skill graph before
+it can land at all.</li>
+<li><a href="https://github.com/lovellai-dev/odyssey">odyssey</a> scores the next round on
+checkpoints <em>and</em> anomaly reports, producing a performance score.</li>
+<li>If the score falls below 0.9× the incumbent, <a href="/experiments/agentvcs/">agentvcs</a>
+reverts it and writes the reason to a durable ledger.</li>
+</ul>
+<p>Night two, Florence enters the room. That is the whole demo:
+<a href="https://github.com/EvolvingAgentsLabs/evolving-robot/blob/main/scripts/night_shift.py"><code>scripts/night_shift.py</code></a>,
+209 lines, no mocking and no scripted win.</p>
+
+    <h2>What's proven</h2>
+<p>The rollback path is real and has fired in the wild — <code>PLAN.md</code> records a run
+reverted at <code>performance 0.60 &lt; 0.80 baseline</code>. Ten traces from live
+Gemma-piloted runs are committed.</p>
+<p>But this is labelled <strong>Prototype</strong> for reasons worth stating. There are no
+tests and no CI. The Gemma pilot is non-deterministic and sometimes simply fails a round —
+one committed trace shows <code>success_rate: 0.000</code>. And without an API key the demo
+stops after night one, so the recording, not a live run, is what you should trust.</p>
+
+    <h2>Why the envelope is the interesting part</h2>
+<p>Self-modifying agents are common. What is not common is a broken edit being physically
+unable to land, a regression being auto-reverted with its reason on a ledger, and a verified
+protocol being frozen so it stops changing. Every shipping care robot today — Moxi, Aeo,
+Nurabot — has frozen behaviour, for good reason. The question is what it would take to earn
+the right to change.</p>
+  </article>
+
+  <div class="nextprev"><a href="/experiments/sleep-harness/">← sleep-harness</a> &nbsp;·&nbsp; <a href="/experiments/skillos/">skillos →</a></div>
+  <footer class="foot">
+    <span>Apache 2.0 · permanently alpha</span>
+    <span><a href="https://github.com/EvolvingAgentsLabs">github.com/EvolvingAgentsLabs</a></span>
+  </footer>
+
+</div>
+
+</body>
+</html>
