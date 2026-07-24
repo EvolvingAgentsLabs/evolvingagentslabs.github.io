@@ -73,7 +73,8 @@ enforced in code rather than in the README.</p>
 <p><strong>190 tests pass in 2.9 seconds.</strong> CI runs the matrix across Python
 3.10–3.13 plus an end-to-end smoke test that executes the demo and asserts a scorecard ≥5/6.
 Packaged on PyPI with zero runtime dependencies.</p>
-<pre><code>pip install agentvcs
+<pre><code>git clone https://github.com/EvolvingAgentsLabs/agentvcs
+cd agentvcs &amp;&amp; pip install -e .
 bash examples/eve-evolve-merge/demo.sh   # offline, no API key, seconds</code></pre>
 <p>That demo forks a RefundBot into a runtime line and a design-time line and merges them,
 producing a marker-free skill containing both rule sets and a swarm containing both
