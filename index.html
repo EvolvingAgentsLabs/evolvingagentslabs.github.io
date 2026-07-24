@@ -1,170 +1,294 @@
-<!doctype html>
+<!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8"/>
-  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-  <title>Evolving Agents Labs</title>
-  <meta name="description" content="Agents defined in markdown. Evolved through memory. Running from Claude Code to bare metal."/>
-  <meta property="og:title" content="Evolving Agents Labs"/>
-  <meta property="og:description" content="Agents defined in markdown. Evolved through memory. Running from Claude Code to bare metal."/>
-  <link rel="icon" type="image/png" href="images/avatar.png"/>
-  <link rel="stylesheet" href="styles.css"/>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Evolving Agents Labs — Experiments in how agents learn, remember, and prove what they know</title>
+<meta name="description" content="Open experiments in agent memory, self-modification, interpretability and constrained execution. Each one labelled by how much evidence stands behind it.">
+<meta property="og:title" content="Evolving Agents Labs">
+<meta property="og:description" content="Experiments in how agents learn, remember, and prove what they know.">
+<meta property="og:type" content="website">
+<meta property="og:url" content="https://evolvingagentslabs.github.io/">
+<link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'><text y='25' font-size='24'>◈</text></svg>">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Newsreader:ital,opsz,wght@0,6..72,300;0,6..72,400;1,6..72,300&family=IBM+Plex+Mono:wght@400;500&display=swap" rel="stylesheet">
+<style>
+:root{
+  --paper:#F5F5F2;
+  --ground:#FFFFFF;
+  --ink:#15171B;
+  --ink-2:#4A4F58;
+  --ink-3:#767C86;
+  --rule:#DEDEDA;
+  --rule-strong:#C4C4BF;
+  --accent:#3E52A3;
+  --signal:#8A5C10;
+  --serif:"Newsreader",Georgia,"Times New Roman",serif;
+  --mono:"IBM Plex Mono",ui-monospace,SFMono-Regular,Menlo,monospace;
+  --sans:-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,Helvetica,Arial,sans-serif;
+  --measure:66ch;
+  --pad:clamp(1.25rem,5vw,3rem);
+}
+@media (prefers-color-scheme:dark){
+  :root{
+    --paper:#0F1114; --ground:#15181C;
+    --ink:#E8E8E4; --ink-2:#A8ADB6; --ink-3:#767C86;
+    --rule:#262A30; --rule-strong:#363B43;
+    --accent:#8B9BE0; --signal:#D9A441;
+  }
+}
+:root[data-theme="dark"]{
+  --paper:#0F1114; --ground:#15181C;
+  --ink:#E8E8E4; --ink-2:#A8ADB6; --ink-3:#767C86;
+  --rule:#262A30; --rule-strong:#363B43;
+  --accent:#8B9BE0; --signal:#D9A441;
+}
+:root[data-theme="light"]{
+  --paper:#F5F5F2; --ground:#FFFFFF;
+  --ink:#15171B; --ink-2:#4A4F58; --ink-3:#767C86;
+  --rule:#DEDEDA; --rule-strong:#C4C4BF;
+  --accent:#3E52A3; --signal:#8A5C10;
+}
+
+*{box-sizing:border-box;}
+html{-webkit-text-size-adjust:100%;}
+body{
+  margin:0;background:var(--paper);color:var(--ink);
+  font-family:var(--sans);font-size:16px;line-height:1.6;
+  -webkit-font-smoothing:antialiased;
+}
+:focus-visible{outline:2px solid var(--accent);outline-offset:3px;border-radius:2px;}
+.wrap{max-width:min(64rem,100%);margin:0 auto;padding-inline:var(--pad);}
+
+.masthead{
+  display:flex;align-items:baseline;justify-content:space-between;
+  gap:1.5rem;flex-wrap:wrap;padding-block:1.75rem 1.5rem;
+  border-bottom:1px solid var(--rule);
+}
+.wordmark{
+  font-family:var(--mono);font-size:.8125rem;font-weight:500;
+  letter-spacing:.08em;text-transform:uppercase;
+  text-decoration:none;color:inherit;
+}
+.wordmark .mark{color:var(--accent);margin-right:.45em;}
+.navlinks{display:flex;gap:1.5rem;font-family:var(--mono);font-size:.75rem;letter-spacing:.04em;}
+.navlinks a{color:var(--ink-2);text-decoration:none;transition:color .15s;}
+.navlinks a:hover{color:var(--accent);}
+
+.hero{padding-block:clamp(3rem,9vw,5.5rem) clamp(2.5rem,6vw,4rem);}
+.hero h1{
+  font-family:var(--serif);font-weight:300;
+  font-size:clamp(2rem,5.4vw,3.5rem);line-height:1.12;
+  letter-spacing:-.018em;margin:0 0 1.5rem;
+  max-width:22ch;text-wrap:balance;
+}
+.hero h1 em{font-style:italic;color:var(--accent);}
+.hero p{margin:0;max-width:var(--measure);color:var(--ink-2);font-size:1.0625rem;line-height:1.65;}
+.hero p + p{margin-top:1rem;}
+
+.legend{
+  display:flex;flex-wrap:wrap;gap:.6rem 1.75rem;
+  padding-block:1.25rem;border-block:1px solid var(--rule);
+  font-family:var(--mono);font-size:.75rem;color:var(--ink-3);
+}
+.legend div{display:flex;align-items:center;gap:.5rem;}
+
+.badge{
+  font-family:var(--mono);font-size:.6875rem;font-weight:500;
+  letter-spacing:.06em;text-transform:uppercase;
+  padding:.2em .55em;border:1px solid currentColor;border-radius:2px;
+  white-space:nowrap;line-height:1.3;
+}
+.badge.reproducible{color:var(--accent);}
+.badge.results{color:var(--signal);}
+.badge.prototype{color:var(--ink-3);}
+
+.listing{padding-block:1rem 4rem;}
+.sectionlabel{
+  font-family:var(--mono);font-size:.6875rem;letter-spacing:.14em;
+  text-transform:uppercase;color:var(--ink-3);
+  margin:0;padding-block:2.25rem 1rem;
+}
+.row{
+  display:grid;grid-template-columns:minmax(11rem,14rem) 1fr auto;
+  gap:.5rem 2rem;align-items:start;
+  padding:1.5rem .875rem;margin-inline:-.875rem;
+  border-bottom:1px solid var(--rule);
+  text-decoration:none;color:inherit;border-radius:3px;
+  transition:background-color .18s ease;
+}
+.row:first-of-type{border-top:1px solid var(--rule-strong);}
+.row:hover{background:var(--ground);}
+.row:hover .name{color:var(--accent);}
+.row:hover .arrow{transform:translateX(3px);opacity:1;}
+.rowhead{display:flex;flex-direction:column;gap:.55rem;align-items:flex-start;}
+.name{font-family:var(--mono);font-size:.9375rem;font-weight:500;letter-spacing:-.01em;transition:color .18s;}
+.question{
+  font-family:var(--serif);font-weight:300;
+  font-size:clamp(1.125rem,2.1vw,1.4375rem);
+  line-height:1.34;letter-spacing:-.012em;
+  margin:0;max-width:44ch;text-wrap:balance;
+}
+.note{margin:.6rem 0 0;font-size:.875rem;line-height:1.55;color:var(--ink-2);max-width:52ch;}
+.meta{
+  display:flex;align-items:center;gap:.85rem;
+  font-family:var(--mono);font-size:.75rem;color:var(--ink-3);
+  font-variant-numeric:tabular-nums;white-space:nowrap;
+}
+.arrow{opacity:.45;transition:transform .18s ease,opacity .18s ease;}
+
+@media (max-width:44rem){
+  .row{grid-template-columns:1fr;gap:.85rem;padding-block:1.375rem;}
+  .rowhead{flex-direction:row;align-items:center;gap:.75rem;flex-wrap:wrap;}
+  .meta{order:3;}
+}
+
+.foot{
+  border-top:1px solid var(--rule-strong);
+  padding-block:2.5rem 3.5rem;
+  display:flex;justify-content:space-between;gap:1.5rem;flex-wrap:wrap;
+  font-family:var(--mono);font-size:.75rem;color:var(--ink-3);
+}
+.foot a{color:var(--ink-2);text-decoration:none;}
+.foot a:hover{color:var(--accent);}
+
+@media (prefers-reduced-motion:reduce){*{transition:none !important;animation:none !important;}}
+</style>
 </head>
 <body>
 
-  <header>
-    <div class="container header-inner">
-      <a class="logo" href="#">EVOLVING AGENTS LABS</a>
-      <nav>
-        <a href="#projects">projects</a>
-        <a href="#thesis">thesis</a>
-        <a href="https://github.com/EvolvingAgentsLabs" target="_blank" rel="noopener">github</a>
-      </nav>
-    </div>
+<div class="wrap">
+
+  <header class="masthead">
+    <a class="wordmark" href="/"><span class="mark">◈</span>Evolving Agents Labs</a>
+    <nav class="navlinks">
+      <a href="#experiments">Experiments</a>
+      <a href="#method">Method</a>
+      <a href="https://github.com/EvolvingAgentsLabs">GitHub</a>
+    </nav>
   </header>
 
-  <main>
+  <section class="hero">
+    <h1>Experiments in how agents learn, remember, and <em>prove</em> what they know.</h1>
+    <p>Agents that modify themselves are easy to build and hard to trust. Everything here attacks the second half of that sentence — versioning an agent's evolution so a human can review it, reading a model's internal workspace to catch a memory it was tricked into keeping, or constraining a small model at the decoder so invalid output is not discouraged but impossible.</p>
+    <p>Each experiment is labelled by how much evidence stands behind it — including the ones where the evidence went against us.</p>
+  </section>
 
-    <section class="hero">
-      <div class="container">
-        <h1>Agents defined in markdown.<br/>Evolved through memory.<br/>Running from Claude Code to bare metal.</h1>
-        <p class="subtitle">Six open-source experiments mapping a cognitive stack onto local LLMs &mdash; from a Claude Code plugin you install in 10 seconds to a Rust OS where the LLM is the CPU.</p>
-        <p class="meta">Apache 2.0 &middot; permanently alpha &middot; 2026</p>
-      </div>
-    </section>
+  <div class="legend" id="method">
+    <div><span class="badge reproducible">Reproducible</span> clone it and run it — no API key</div>
+    <div><span class="badge results">Results</span> published findings, negative ones included</div>
+    <div><span class="badge prototype">Prototype</span> runs, but needs setup or has no eval yet</div>
+  </div>
 
-    <section id="thesis" class="thesis">
-      <div class="container">
-        <div class="thesis-content">
-          <p>One thesis, five layers of depth. Each project removes a safety net:</p>
-          <ol class="thesis-steps">
-            <li><strong>Plugin</strong> &mdash; Claude does everything. You just give it a goal.</li>
-            <li><strong>Full system</strong> &mdash; Any LLM interprets markdown agents. Memory consolidation. Self-optimization.</li>
-            <li><strong>On-device</strong> &mdash; A 2B model on a phone. No internet. Deterministic safety checks.</li>
-            <li><strong>Real world</strong> &mdash; $30 robot. VLM sees, reasons, drives. Failed runs retry in simulation overnight.</li>
-            <li><strong>Bare metal</strong> &mdash; The LLM is the CPU. 14-opcode ISA. GBNF grammar = MMU. Runs on a Pi 5.</li>
-          </ol>
-        </div>
-      </div>
-    </section>
+  <main class="listing" id="experiments">
 
-    <section id="projects" class="projects">
-      <div class="container">
+    <p class="sectionlabel">2026</p>
 
-        <div class="layer-label">Start here &mdash; try in 30 seconds</div>
+    <a class="row" href="https://github.com/EvolvingAgentsLabs/sleep-harness">
+      <span class="rowhead">
+        <span class="name">sleep-harness</span>
+        <span class="badge results">Results</span>
+      </span>
+      <span>
+        <p class="question">What if you could catch a poisoned memory by watching which concepts light up inside the model?</p>
+        <p class="note">An interpretability firewall for agent memory. Reads the residual stream through a Jacobian lens to flag injected instructions that are lexically identical to benign text, and to scan third-party adapters for trojans before they mount.</p>
+      </span>
+      <span class="meta">Jul 2026 <span class="arrow" aria-hidden="true">→</span></span>
+    </a>
 
-        <article class="project">
-          <div class="project-header">
-            <h2><a href="https://github.com/EvolvingAgentsLabs/skillos_plugin">skillos_plugin</a></h2>
-            <span class="tag">Claude Code plugin</span>
-          </div>
-          <p>Install in Claude Code, type <code>/skillos</code> with a goal. It decomposes the task, creates specialized agents as markdown, executes them, and consolidates learnings into memory. The fastest way to explore SkillOS concepts.</p>
-          <pre><code><span class="prompt">$</span> /plugin install skillos-plugin
+    <a class="row" href="https://github.com/EvolvingAgentsLabs/evolving-robot">
+      <span class="rowhead">
+        <span class="name">evolving-robot</span>
+        <span class="badge prototype">Prototype</span>
+      </span>
+      <span>
+        <p class="question">What if a robot that missed a fallen patient could rewrite its own care protocol overnight?</p>
+        <p class="note">Florence patrols a hospital ward, fails to check a patient standing outside her lamp radius, and revises the skill that caused it. The rewrite survives only if it outscores the protocol it replaced; otherwise it is reverted, with the reason on a durable ledger.</p>
+      </span>
+      <span class="meta">Jul 2026 <span class="arrow" aria-hidden="true">→</span></span>
+    </a>
 
-<span class="prompt">$</span> /skillos "Build a REST API with auth and tests"
-<span class="ok">[OK]</span> agents          3 created &middot; triad decomposition
-<span class="ok">[OK]</span> output          projects/API/output/
+    <a class="row" href="https://github.com/EvolvingAgentsLabs/agentvcs">
+      <span class="rowhead">
+        <span class="name">agentvcs</span>
+        <span class="badge reproducible">Reproducible</span>
+      </span>
+      <span>
+        <p class="question">What if an agent's autonomous evolution could be merged back into your release, like any other branch?</p>
+        <p class="note">Version control where one commit carries code, goal, model pins, trace and sub-agent swarm together. Conflicts between what the agent taught itself at runtime and what your team edited in git are handed to a reconciler over a plain stdin/stdout contract.</p>
+      </span>
+      <span class="meta">Jul 2026 <span class="arrow" aria-hidden="true">→</span></span>
+    </a>
 
-<span class="prompt">$</span> /skillos dream
-<span class="ok">[OK]</span> strategies      3 new &middot; 2 updated</code></pre>
-        </article>
+    <a class="row" href="https://github.com/EvolvingAgentsLabs/qa">
+      <span class="rowhead">
+        <span class="name">qa</span>
+        <span class="badge prototype">Prototype</span>
+      </span>
+      <span>
+        <p class="question">What if your test suite told you what it had quietly stopped checking?</p>
+        <p class="note">Every assertion is fingerprinted and diffed across runs, so a check that silently disappeared surfaces as a finding. Exploratory browser sessions that pass get frozen into deterministic scripts; steps that failed become explicit skips rather than silence.</p>
+      </span>
+      <span class="meta">Jun 2026 <span class="arrow" aria-hidden="true">→</span></span>
+    </a>
 
-        <article class="project">
-          <div class="project-header">
-            <h2><a href="https://github.com/EvolvingAgentsLabs/skillos_systemcontrol_plugin">skillos_systemcontrol_plugin</a></h2>
-            <span class="tag">governance</span>
-          </div>
-          <p>Companion to <code>/skillos</code>. The <code>/sysctl</code> command audits, scores, evolves, and prunes what <code>/skillos</code> built. Security scans, 7-type failure taxonomy, anti-overfitting gate, lifecycle management. Never modifies files directly &mdash; produces proposals for human approval.</p>
-          <pre><code><span class="prompt">$</span> /sysctl "audit and score all agents in Project_webapp"
-<span class="ok">[OK]</span> security        9 checks passed &middot; 0 critical
-<span class="ok">[OK]</span> scores          AgentA: S(0.92) &middot; AgentB: A(0.78)
+    <a class="row" href="https://github.com/EvolvingAgentsLabs/skillos">
+      <span class="rowhead">
+        <span class="name">skillos</span>
+        <span class="badge prototype">Prototype</span>
+      </span>
+      <span>
+        <p class="question">What if the operating system were written entirely in markdown?</p>
+        <p class="note">Skills as programs, traces as logs, consolidation as sleep. Includes a line-op dialect that lets small models patch files by emitting edits instead of rewriting whole documents, measured by an AST-verified benchmark rather than an LLM judge.</p>
+      </span>
+      <span class="meta">Jun 2026 <span class="arrow" aria-hidden="true">→</span></span>
+    </a>
 
-<span class="prompt">$</span> /sysctl "evolve low-scoring agents"
-<span class="ok">[OK]</span> proposals       2 minimal-surface edits &middot; awaiting approval</code></pre>
-        </article>
+    <a class="row" href="https://github.com/EvolvingAgentsLabs/skillos_mini">
+      <span class="rowhead">
+        <span class="name">skillos_mini</span>
+        <span class="badge reproducible">Reproducible</span>
+      </span>
+      <span>
+        <p class="question">What if a small model could not emit invalid syntax, because the decoder refused to let it?</p>
+        <p class="note">Every legal instruction is pre-tokenized into a trie of token IDs, and the sampler's valid-next set is masked at each step. A 350M-parameter model plays Tetris in a browser tab, fully offline. Grammar enforced in the decoder, not requested in the prompt.</p>
+      </span>
+      <span class="meta">May 2026 <span class="arrow" aria-hidden="true">→</span></span>
+    </a>
 
-        <div class="layer-label">Full system &mdash; markdown-defined agent OS</div>
+    <a class="row" href="https://github.com/EvolvingAgentsLabs/skillos_robot">
+      <span class="rowhead">
+        <span class="name">skillos_robot</span>
+        <span class="badge prototype">Prototype</span>
+      </span>
+      <span>
+        <p class="question">What if the robot were just a device driver for a language model?</p>
+        <p class="note">A slow vision-language brain plans at roughly one hertz while a reactive controller drives motors at twenty, over a bytecode link to an ESP32. Firmware, CAD and simulation scenes included.</p>
+      </span>
+      <span class="meta">May 2026 <span class="arrow" aria-hidden="true">→</span></span>
+    </a>
 
-        <article class="project">
-          <div class="project-header">
-            <h2><a href="https://github.com/EvolvingAgentsLabs/skillos">skillos</a></h2>
-            <span class="tag">markdown OS</span>
-          </div>
-          <p>The full SkillOS. Every component &mdash; agents, tools, memory, orchestration &mdash; defined in <code>.md</code> files interpreted by any LLM at runtime. HWM hierarchical planning, 14 token-compression dialects, dream consolidation, self-optimization loop. Runs on Claude, Gemini, Gemma 4, or any OpenAI-compatible endpoint.</p>
-          <pre><code><span class="prompt">$</span> skillos execute: "Run the Operation Echo-Q scenario"
-<span class="ok">[OK]</span> agents          4 created &middot; quantum theorist &rarr; architect
-<span class="ok">[OK]</span> wiki            5 concept pages &middot; LaTeX
-<span class="ok">[OK]</span> code            quantum_cepstrum.py &middot; echo error 0.003s
-
-<span class="prompt">$</span> skillos execute: "Run the Project Aorta scenario"
-<span class="ok">[OK]</span> output          36KB clinical vision + 37KB math framework</code></pre>
-        </article>
-
-        <div class="layer-label">On-device &mdash; same concepts on a phone</div>
-
-        <article class="project">
-          <div class="project-header">
-            <h2><a href="https://github.com/EvolvingAgentsLabs/skillos_mini">skillos_mini</a></h2>
-            <span class="tag">Android &middot; on-device</span>
-          </div>
-          <p>Markdown cartridges guide a 2B local LLM through trade diagnostics. Electrician (IEC 60364), plumber, painter. The LLM picks links and decides which optional checks to run &mdash; all safety rules execute as deterministic TypeScript functions. No internet required. Gemma 4 on-device via LiteRT.</p>
-          <pre><code><span class="prompt">chat:</span> "panel has exposed wiring and no RCD"
-<span class="ok">[OK]</span> route           electricista &rarr; diagnosis_cableado.md
-<span class="ok">[OK]</span> mandatory       electrical.checkWireGauge &rarr; FALLA
-<span class="ok">[OK]</span> adaptive        safety.checkRCD &rarr; PELIGRO
-<span class="ok">[OK]</span> diagnosis       Recableado 4mm&sup2; + diferencial 30mA</code></pre>
-        </article>
-
-        <div class="layer-label">Real world &mdash; embodied cognition for $30</div>
-
-        <article class="project">
-          <div class="project-header">
-            <h2><a href="https://github.com/EvolvingAgentsLabs/skillos_robot">skillos_robot</a></h2>
-            <span class="tag">robot &middot; VLM</span>
-          </div>
-          <p>A 20cm robot driven by a vision language model. Give it a goal &mdash; it sees through the camera, reasons about the scene, and drives to the target. Dual loop: VLM perception at 1&ndash;2 Hz, reactive motor control at 10&ndash;20 Hz. Failed traces get retried in MuJoCo simulation during dream consolidation.</p>
-          <pre><code><span class="prompt">$</span> robot navigate "go to the red cube"
-<span class="ok">[OK]</span> vlm             gemini-3.1-flash-lite &middot; 200ms/frame
-<span class="ok">[OK]</span> navigation      target reached &middot; 12 steps
-
-<span class="prompt">$</span> robot dream
-<span class="ok">[OK]</span> retried         3 failed traces in MuJoCo
-<span class="ok">[OK]</span> strategies      "approach from left" &rarr; confidence 0.85</code></pre>
-        </article>
-
-        <div class="layer-label">Bare metal &mdash; the LLM is the CPU</div>
-
-        <article class="project">
-          <div class="project-header">
-            <h2><a href="https://github.com/EvolvingAgentsLabs/llm_os">llm_os</a></h2>
-            <span class="tag">LLM as CPU &middot; Rust</span>
-          </div>
-          <p>An OS where the LLM is the CPU. 14-opcode ISA enforced by GBNF grammar at decode time &mdash; invalid sequences are physically impossible to emit. In-process inference via FFI to llama.cpp. KV cache as RAM with deterministic paging. WASM-sandboxed cartridges. Boots from SD card on a Raspberry Pi 5 at 8 Hz.</p>
-          <pre><code><span class="prompt">$</span> bash scripts/dev.sh --model qwen2.5-3b-q4.gguf
-<span class="ok">[OK]</span> sampler         in-process FFI &middot; grammar stack loaded
-<span class="ok">[OK]</span> cartridges      6 mounted &middot; system &middot; io &middot; domestic
-
-<span class="prompt">$</span> iod dispatch "plan a weekly menu for a family of 4"
-<span class="ok">[OK]</span> opcodes         call &rarr; result &rarr; call &rarr; halt
-<span class="ok">[OK]</span> trace           14 tokens &middot; 3 syscalls &middot; 1.2s total
-
-<span class="prompt">$</span> bash image/build.sh --model qwen2.5-3b-q4.gguf
-<span class="ok">[OK]</span> image           pi5-sdcard.img &middot; 1.8GB</code></pre>
-        </article>
-
-      </div>
-    </section>
+    <a class="row" href="https://github.com/EvolvingAgentsLabs/evolving-memory">
+      <span class="rowhead">
+        <span class="name">evolving-memory</span>
+        <span class="badge results">Results</span>
+      </span>
+      <span>
+        <p class="question">What if an agent's memory consolidated itself the way sleep consolidates yours?</p>
+        <p class="note">A trajectory engine that chunks execution traces, connects them and curates what survives, so repeated experience raises confidence and failures extract constraints — without one domain's lessons bleeding into another.</p>
+      </span>
+      <span class="meta">Apr 2026 <span class="arrow" aria-hidden="true">→</span></span>
+    </a>
 
   </main>
 
-  <footer>
-    <div class="container">
-      <p>Apache 2.0 &middot; permanently alpha &middot; 2026</p>
-      <p class="footer-links">
-        <a href="https://github.com/EvolvingAgentsLabs">github.com/EvolvingAgentsLabs</a>
-      </p>
-    </div>
+  <footer class="foot">
+    <span>Apache 2.0 · permanently alpha</span>
+    <span><a href="https://github.com/EvolvingAgentsLabs">github.com/EvolvingAgentsLabs</a></span>
   </footer>
+
+</div>
 
 </body>
 </html>
