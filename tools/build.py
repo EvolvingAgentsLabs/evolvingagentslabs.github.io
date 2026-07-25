@@ -73,6 +73,13 @@ body{
 .hero h1 em{font-style:italic;color:var(--accent);}
 .hero p{margin:0;max-width:66ch;color:var(--ink-2);font-size:1.0625rem;line-height:1.65;}
 .hero p + p{margin-top:1rem;}
+.hero .who{
+  margin-top:1.75rem;padding-top:1.25rem;
+  border-top:1px solid var(--rule);
+  font-size:.9375rem;color:var(--ink-3);
+}
+.hero .who a{color:var(--ink-2);text-decoration-thickness:1px;text-underline-offset:2px;}
+.hero .who a:hover{color:var(--accent);}
 
 /* legend */
 .legend{
@@ -192,9 +199,11 @@ body{
 .foot{
   border-top:1px solid var(--rule-strong);
   padding-block:2.5rem 3.5rem;
-  display:flex;justify-content:space-between;gap:1.5rem;flex-wrap:wrap;
+  display:flex;flex-direction:column;gap:.75rem;
   font-family:var(--mono);font-size:.75rem;color:var(--ink-3);
 }
+.foot .by{max-width:62ch;line-height:1.7;color:var(--ink-2);}
+.foot .meta-foot{color:var(--ink-3);}
 .foot a{color:var(--ink-2);text-decoration:none;}
 .foot a:hover{color:var(--accent);}
 @media (prefers-reduced-motion:reduce){*{transition:none !important;animation:none !important;}}
@@ -208,8 +217,12 @@ ICON = ("<link rel=\"icon\" href=\"data:image/svg+xml,<svg xmlns='http://www.w3.
         "viewBox='0 0 32 32'><text y='25' font-size='24'>%E2%97%88</text></svg>\">")
 
 FOOT = """  <footer class="foot">
-    <span>Apache 2.0 · permanently alpha</span>
-    <span><a href="https://github.com/EvolvingAgentsLabs">github.com/EvolvingAgentsLabs</a></span>
+    <span class="by">Ideas, architecture and implementation by
+      <a href="https://github.com/matiasmolinas">Matias Molinas</a> and
+      <a href="https://github.com/ismaelfaro">Ismael Faro</a>.
+      Every experiment here started as a conversation between the two.</span>
+    <span class="meta-foot">Apache 2.0 · permanently alpha ·
+      <a href="https://github.com/EvolvingAgentsLabs">github.com/EvolvingAgentsLabs</a></span>
   </footer>"""
 
 
@@ -275,6 +288,11 @@ def build_index(exps):
     <h1>Experiments in how agents learn, remember, and <em>prove</em> what they know.</h1>
     <p>Agents that modify themselves are easy to build and hard to trust. Everything here attacks the second half of that sentence — versioning an agent's evolution so a human can review it, reading a model's internal workspace to catch a memory it was tricked into keeping, or constraining a small model at the decoder so invalid output is not discouraged but impossible.</p>
     <p>Each experiment is labelled by how much evidence stands behind it — including the ones where the evidence went against us.</p>
+    <p class="who">Everything here comes out of an ongoing conversation between
+      <a href="https://github.com/matiasmolinas">Matias Molinas</a> and
+      <a href="https://github.com/ismaelfaro">Ismael Faro</a> — the ideas, the
+      architecture, and the code. The repositories are where those conversations
+      got tested.</p>
   </section>
 
   <div class="legend" id="method">
