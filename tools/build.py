@@ -106,7 +106,7 @@ body{
   text-transform:uppercase;color:var(--ink-3);margin:0;padding-block:2.25rem 1rem;
 }
 .row{
-  display:grid;grid-template-columns:minmax(11rem,14rem) 1fr auto;
+  display:grid;grid-template-columns:7.5rem minmax(9rem,12rem) 1fr auto;
   gap:.5rem 2rem;align-items:start;
   padding:1.5rem .875rem;margin-inline:-.875rem;
   border-bottom:1px solid var(--rule);
@@ -117,6 +117,15 @@ body{
 .row:hover{background:var(--ground);}
 .row:hover .name{color:var(--accent);}
 .row:hover .arrow{transform:translateX(3px);opacity:1;}
+.thumb{
+  display:block;border:1px solid var(--rule);border-radius:3px;
+  overflow:hidden;background:var(--ground);aspect-ratio:16/9;
+}
+.thumb img{display:block;width:100%;height:100%;object-fit:cover;transition:transform .25s ease;}
+.row:hover .thumb img{transform:scale(1.03);}
+@media (prefers-color-scheme:dark){.thumb img{filter:brightness(.88) saturate(.95);}}
+:root[data-theme="dark"] .thumb img{filter:brightness(.88) saturate(.95);}
+:root[data-theme="light"] .thumb img{filter:none;}
 .rowhead{display:flex;flex-direction:column;gap:.55rem;align-items:flex-start;}
 .name{font-family:var(--mono);font-size:.9375rem;font-weight:500;letter-spacing:-.01em;transition:color .18s;}
 .question{
@@ -133,6 +142,7 @@ body{
 .arrow{opacity:.45;transition:transform .18s ease,opacity .18s ease;}
 @media (max-width:44rem){
   .row{grid-template-columns:1fr;gap:.85rem;padding-block:1.375rem;}
+  .thumb{max-width:none;}
   .rowhead{flex-direction:row;align-items:center;gap:.75rem;flex-wrap:wrap;}
   .meta{order:3;}
 }
@@ -292,7 +302,10 @@ def build_index(exps):
     rows = []
     for e in exps:
         label, _ = BADGES[e["badge"]]
+        thumb = (f'<span class="thumb"><img src="/assets/img/{e["image"]}.jpg" '
+                 f'alt="" aria-hidden="true" loading="lazy"></span>') if e.get("image") else ""
         rows.append(f"""    <a class="row" href="/experiments/{e['slug']}/">
+      {thumb}
       <span class="rowhead">
         <span class="name">{e['name']}</span>
         <span class="badge {e['badge']}">{label}</span>
