@@ -46,6 +46,10 @@
   </figure>
   <article class="article">
     <h2>The architecture was right</h2>
+<p><strong>452 people starred this in 2025.</strong> It had three test functions.
+Both of those facts are the point: the decomposition was compelling enough to
+mark, and nothing in it was pinned to anything that could contradict it.</p>
+
 <p>Eighteen thousand lines of Python across twelve subsystems: a library of
 versioned components, a bus for agent discovery, memory, an evolution loop, and
 a governance layer called Firmware. Backed by MongoDB Atlas.</p>
@@ -70,6 +74,29 @@ discouraged — it has no path through the trie, so the model cannot emit it.</p
 
 <p>Same intention, twelve months and one substrate apart. The code is still on
 the default branch precisely so the two halves can be diffed.</p>
+
+    <h2>What happens to it now</h2>
+<p>It is the umbrella, not a museum.
+<a href="https://github.com/EvolvingAgentsLabs/evolving-agents/blob/main/PLAN.md">Three
+milestones</a>, two of them already resolved — one of those in a direction
+nobody wanted.</p>
+
+<ul>
+<li><strong>Transfer and reframe — done.</strong> Moved into the organisation
+with its stars, forks and inbound links intact, and the README rewritten around
+what it got right and wrong. It had been pointing visitors at two successor
+repositories, one archived and one that returned 404.</li>
+<li><strong>Recover the dual-embedding resolver — done, and it came back
+flat.</strong> Rebuilt without MongoDB and
+<a href="https://github.com/EvolvingAgentsLabs/evolving-memory/blob/main/benchmarks/RESULTS.md">measured</a>:
+identical to plain description-matching on a modern encoder, 80% both ways. The
+next run is the one that matters — a smaller encoder, where the gap it was
+designed to close may still exist.</li>
+<li><strong>A portable definition with a conformance suite — not started.</strong>
+The five projects already share an instruction format character-for-character;
+what they do not share is enforcement. A conformance table would today read
+<em>one of three</em>, and that is the honest number to publish first.</li>
+</ul>
 
     <h2>What it cost</h2>
 <p>Two things did not survive, and only one of them on purpose.</p>
