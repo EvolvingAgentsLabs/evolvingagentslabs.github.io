@@ -445,6 +445,36 @@ change — and an eval-gated freeze with a rollback ledger is a concrete
 answer.</li>
 </ul>
 
+<h2>Where the stakes are: near-bytecode, and a robot</h2>
+
+<p>The first mechanism is easy to read as an elegance argument. It stops being one
+the moment the output moves something.</p>
+
+<p>An LLM driving a robot is already a bytecode generator. In
+<a href="/experiments/skillos-robot/">skillos_robot</a> a vision-language model
+emits intent at roughly one hertz and a reactive controller turns it into
+bytecode on a UDP link to an ESP32 at twenty. The question "can it emit
+garbage?" has a physical answer there. A malformed JSON in a chatbot is a retry.
+A malformed motor command is a robot hitting something.</p>
+
+<p><strong>And the two halves are currently the wrong way round.</strong> The
+robot and <a href="/experiments/token-trie/">token-trie</a> emit the same wire
+format — the opcode regex is character-for-character identical in both, because
+they were one codebase. What diverged is enforcement. token-trie masks the
+sampler so a malformed opcode has no path. The robot asks in the prompt, caps
+generation with stop sequences, and parses with that regex.</p>
+
+<p>So the validated mechanism runs a Tetris demo in a browser tab, and the
+unvalidated one drives motors. It fails, too, and there is a recording: one
+simulator run produced twenty-eight consecutive unparseable opcodes after a
+provider capped stop sequences from fourteen to five. The run degenerated without
+erroring.</p>
+
+<p>Putting the trie behind the robot needs per-token probabilities, which cloud
+APIs do not expose — so it <em>forces</em> a local model. That is not an obstacle
+to route around. It is the position this work already argues for, and it turns
+on-device from a preference into a requirement.</p>
+
 <h2>The limits, stated plainly</h2>
 
 <p>Constrained decoding currently depends on a tokenizer that treats the
