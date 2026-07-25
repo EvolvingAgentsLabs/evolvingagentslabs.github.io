@@ -119,6 +119,9 @@ body{
 :root[data-theme="dark"] .thumb img{filter:brightness(.88) saturate(.95);}
 :root[data-theme="light"] .thumb img{filter:none;}
 .rowhead{display:flex;flex-direction:column;gap:.55rem;align-items:flex-start;}
+/* The origin has no evidence badge — it is not being worked on, and inventing a
+   fourth badge would dilute what the other three mean. */
+.row.origin .rowhead{justify-content:flex-start;}
 .name{font-family:var(--mono);font-size:.9375rem;font-weight:500;letter-spacing:-.01em;transition:color .18s;}
 .question{
   font-family:var(--serif);font-weight:300;
