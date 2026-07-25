@@ -2,7 +2,7 @@
 """Render the Evolving Agents Labs site. Output is committed; this is not a build step."""
 import os, sys, shutil
 sys.path.insert(0, os.path.dirname(os.path.abspath(__file__)))
-from data import EXPERIMENTS, BADGES
+from data import EXPERIMENTS, BADGES, THESIS
 
 OUT = sys.argv[1] if len(sys.argv) > 1 else "site"
 
@@ -173,6 +173,11 @@ body{
   margin:2.75rem 0 1rem;text-wrap:balance;
 }
 .article h2:first-child{margin-top:0;}
+.article .lede{
+  font-family:var(--serif);font-weight:300;
+  font-size:clamp(1.1875rem,2.4vw,1.5rem);line-height:1.4;
+  color:var(--ink);margin-bottom:2rem;
+}
 .article p{margin:0 0 1.15rem;color:var(--ink-2);}
 .article strong{color:var(--ink);font-weight:600;}
 .article em{color:var(--ink);}
@@ -250,6 +255,7 @@ def masthead(prefix):
     <a class="wordmark" href="{prefix}"><span class="mark">◈</span>Evolving Agents Labs</a>
     <nav class="navlinks">
       <a href="{prefix}#experiments">Experiments</a>
+      <a href="{prefix}thesis/">Thesis</a>
       <a href="{prefix}#method">Method</a>
       <a href="https://github.com/EvolvingAgentsLabs">GitHub</a>
     </nav>
@@ -364,6 +370,33 @@ def build_detail(e, prev_e, next_e):
 """
 
 
+def build_thesis():
+    return head(
+        "What we are actually testing — Evolving Agents Labs",
+        "Three mechanisms that kept working across eight experiments, the ones that did not, and where they point.",
+        "/assets/site.css") + f"""
+<div class="wrap narrow">
+
+{masthead("/")}
+  <p class="crumb"><a href="/">Evolving Agents Labs</a><span>/</span>Thesis</p>
+
+  <section class="detail-hero">
+    <h1>What we are actually testing</h1>
+    <p class="question">Not whether an agent can do something — how you would know it did.</p>
+  </section>
+
+  <article class="article">
+{THESIS}  </article>
+
+{FOOT}
+
+</div>
+
+</body>
+</html>
+"""
+
+
 def main():
     exps = sorted(EXPERIMENTS, key=lambda x: x["sort"], reverse=True)
 
@@ -373,6 +406,10 @@ def main():
 
     with open(f"{OUT}/index.html", "w") as f:
         f.write(build_index(exps))
+
+    os.makedirs(f"{OUT}/thesis", exist_ok=True)
+    with open(f"{OUT}/thesis/index.html", "w") as f:
+        f.write(build_thesis())
 
     for i, e in enumerate(exps):
         d = f"{OUT}/experiments/{e['slug']}"

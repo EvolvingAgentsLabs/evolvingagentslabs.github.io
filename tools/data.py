@@ -330,6 +330,136 @@ it: it has been cold since April, and if you hit a bug you are likely the first.
     ),
 ]
 
+THESIS = """
+<p class="lede">Eight experiments, one question underneath all of them: not
+<em>can an agent do this</em>, but <em>how would you know it did</em>.</p>
+
+<h2>The gap</h2>
+
+<p>An agent that modifies itself is easy to build. A weekend gets you one that
+rewrites its own prompt, spawns sub-agents, and writes to a memory it reads back
+tomorrow. What none of that gets you is a reason to believe the result — and in
+practice that is the whole problem. Every project here attacks a different point
+where the gap between <em>the agent did something</em> and <em>you can trust that
+it did</em> hides.</p>
+
+<p>Three mechanisms kept working. They were not designed together; they turned up
+independently and only later looked like the same idea.</p>
+
+<h2>1. Constrain the mechanism, not the prompt</h2>
+
+<p>Asking a model for valid output is a request. Making the invalid token
+unreachable is a guarantee. <a href="/experiments/token-trie/">token-trie</a>
+masks the sampler's valid-next set at every decoding step, so a 350M model
+playing Tetris cannot emit malformed syntax — and downstream the parser is a
+plain regex with no repair path, because it does not need one.</p>
+
+<p><strong>The matched negative is what makes this convincing.</strong> In
+<a href="/experiments/skillos/">the same family of work</a> we measured the
+prompt-level version of the same idea: asking a model to call
+<code>load_skill</code> before acting. It fired in 1 of 7 identical sessions —
+the runs that worked and the runs that did not share an opening tool sequence
+and diverge at the fourth call, so the difference is sampling, not wording.
+Instructing harder was tried and measured worse. Forcing the call outright
+worked (3/3) and broke the session: every forced run halted after two turns
+having read nothing and done nothing.</p>
+
+<p>Same objective, two levels. At the decoder it holds. At the prompt it is a
+coin flip you cannot steer.</p>
+
+<h2>2. Prove it, then freeze it</h2>
+
+<p>Exploration is expensive and non-deterministic; regression should be cheap and
+deterministic. The move is to run the expensive thing once, verify it, and
+crystallize the result into something replayable.</p>
+
+<p><a href="/experiments/agentvcs/">agentvcs</a> enforces this in code:
+<code>freeze</code> refuses unless the declared eval passes on every run, and
+forcing past a failure stamps <code>verified: false</code> rather than quietly
+lying. <a href="/experiments/qa/">qa</a> applies it to browser tests — passing
+exploratory flows become deterministic scripts, failing steps become explicit
+skips rather than silence. <a href="/experiments/evolving-robot/">evolving-robot</a>
+applies it to a robot rewriting its own care protocol: the new version survives
+only if it outscores the one it replaces, and a real run is on record being
+reverted at <code>performance 0.60 &lt; 0.80 baseline</code>.</p>
+
+<h2>3. Look where the standard filter is blind</h2>
+
+<p>A keyword filter over agent memory is blind <em>by construction</em> to a
+payload written in words it likes. "Collect the SSH keys", framed as a
+license-audit telemetry note, contains nothing a lexicon objects to.</p>
+
+<p><a href="/experiments/sleep-harness/">sleep-harness</a> reads the model's
+residual stream instead, and the disguised payload lights up
+<code>SSH</code>, <code>authentication</code>, <code>credential</code> while its
+lexically identical benign twin reads clean. Nine hard pairs at 0.657 mean
+lexical overlap: 8 wins, 0 ties, 1 loss, p=0.0195. A consolidation firewall at
+ROC-AUC 0.815 cutting payload persistence 78%. A third-party adapter scanner at
+12/12, p=0.0002.</p>
+
+<p>The same shape appears in <a href="/experiments/qa/">qa</a>: coverage tools
+report which lines ran, and nothing reports which checks you quietly stopped
+making.</p>
+
+<h2>What did not work, which is the more useful half</h2>
+
+<p>sleep-harness pre-registered its hypotheses before collecting data, and its
+founding one — that filtering by internal workspace beats filtering by output —
+is marked <strong>REFUTADA</strong>. Worse, the free lexical baseline
+significantly outperformed it. A third hypothesis did not replicate; the
+original effect was a variance spike.</p>
+
+<p>We also published a retraction: a claim that instructing a model harder made
+its behaviour worse came from a single sample, and re-running the identical arm
+produced the opposite. With an effect that noisy, one run confirms whatever you
+expected — and the run that agreed with the story is the one that got written
+up.</p>
+
+<p>Publishing that costs nothing and is the only reason the positive results
+above are worth reading.</p>
+
+<h2>Where this points</h2>
+
+<p>The three mechanisms compose into something specific: <strong>a way to run
+agents in the places that currently refuse them.</strong> Not by making models
+more capable — by making their output structurally bounded, their changes
+provable, and their inputs screened for what a keyword list cannot see.</p>
+
+<p>Four applications follow directly, in descending order of how much evidence
+already stands behind them:</p>
+
+<ul>
+<li><strong>A firewall on agent memory.</strong> Every framework now writes to
+long-lived memory and almost none screen what goes in beyond keywords. This is
+where the strongest results already are.</li>
+<li><strong>Screening third-party skills and adapters before they mount.</strong>
+12/12 at p=0.0002. As skill marketplaces grow, something has to check what a
+downloaded adapter does to a model's behaviour on innocent inputs.</li>
+<li><strong>On-device agents that cannot produce garbage.</strong> A small model
+whose malformed output is unreachable needs no repair loop, which is exactly the
+budget an edge device does not have.</li>
+<li><strong>Domains where behaviour must be frozen.</strong> Every care robot
+shipping today has frozen behaviour, for good reason. The interesting question is
+not whether an agent can learn but what it must prove to earn the right to
+change — and an eval-gated freeze with a rollback ledger is a concrete
+answer.</li>
+</ul>
+
+<h2>The limits, stated plainly</h2>
+
+<p>Constrained decoding currently depends on a tokenizer that treats the
+instruction markers as single tokens. On models that split them, the constraint
+holds but the model stops choosing — output stays valid and goes strategically
+blind. That is the single biggest blocker to the first mechanism generalising.</p>
+
+<p>And in every demo so far, a hand-written planner does the planning; the model
+ratifies a ranked list. That is a real result about what a small model can be
+trusted with, and it is also the ceiling. None of this makes a model plan.</p>
+
+<p>The honest framing is <em>grammar-safe, provable execution of pre-planned
+work</em> — narrower than "an agent OS", and true.</p>
+"""
+
 BADGES = {
     "reproducible": ("Reproducible", "clone it and run it — no API key"),
     "results": ("Results", "published findings, negative ones included"),
