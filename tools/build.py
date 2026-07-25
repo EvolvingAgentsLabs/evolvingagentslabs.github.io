@@ -2,7 +2,7 @@
 """Render the Evolving Agents Labs site. Output is committed; this is not a build step."""
 import os, sys, shutil
 sys.path.insert(0, os.path.dirname(os.path.abspath(__file__)))
-from data import EXPERIMENTS, BADGES
+from data import EXPERIMENTS, BADGES, THESIS
 
 OUT = sys.argv[1] if len(sys.argv) > 1 else "site"
 
@@ -73,6 +73,13 @@ body{
 .hero h1 em{font-style:italic;color:var(--accent);}
 .hero p{margin:0;max-width:66ch;color:var(--ink-2);font-size:1.0625rem;line-height:1.65;}
 .hero p + p{margin-top:1rem;}
+.hero .who{
+  margin-top:1.75rem;padding-top:1.25rem;
+  border-top:1px solid var(--rule);
+  font-size:.9375rem;color:var(--ink-3);
+}
+.hero .who a{color:var(--ink-2);text-decoration-thickness:1px;text-underline-offset:2px;}
+.hero .who a:hover{color:var(--accent);}
 
 /* legend */
 .legend{
@@ -166,6 +173,11 @@ body{
   margin:2.75rem 0 1rem;text-wrap:balance;
 }
 .article h2:first-child{margin-top:0;}
+.article .lede{
+  font-family:var(--serif);font-weight:300;
+  font-size:clamp(1.1875rem,2.4vw,1.5rem);line-height:1.4;
+  color:var(--ink);margin-bottom:2rem;
+}
 .article p{margin:0 0 1.15rem;color:var(--ink-2);}
 .article strong{color:var(--ink);font-weight:600;}
 .article em{color:var(--ink);}
@@ -192,9 +204,11 @@ body{
 .foot{
   border-top:1px solid var(--rule-strong);
   padding-block:2.5rem 3.5rem;
-  display:flex;justify-content:space-between;gap:1.5rem;flex-wrap:wrap;
+  display:flex;flex-direction:column;gap:.75rem;
   font-family:var(--mono);font-size:.75rem;color:var(--ink-3);
 }
+.foot .by{max-width:62ch;line-height:1.7;color:var(--ink-2);}
+.foot .meta-foot{color:var(--ink-3);}
 .foot a{color:var(--ink-2);text-decoration:none;}
 .foot a:hover{color:var(--accent);}
 @media (prefers-reduced-motion:reduce){*{transition:none !important;animation:none !important;}}
@@ -208,8 +222,12 @@ ICON = ("<link rel=\"icon\" href=\"data:image/svg+xml,<svg xmlns='http://www.w3.
         "viewBox='0 0 32 32'><text y='25' font-size='24'>%E2%97%88</text></svg>\">")
 
 FOOT = """  <footer class="foot">
-    <span>Apache 2.0 · permanently alpha</span>
-    <span><a href="https://github.com/EvolvingAgentsLabs">github.com/EvolvingAgentsLabs</a></span>
+    <span class="by">Ideas, architecture and implementation by
+      <a href="https://github.com/matiasmolinas">Matias Molinas</a> and
+      <a href="https://github.com/ismaelfaro">Ismael Faro</a>.
+      Every experiment here started as a conversation between the two.</span>
+    <span class="meta-foot">Apache 2.0 · permanently alpha ·
+      <a href="https://github.com/EvolvingAgentsLabs">github.com/EvolvingAgentsLabs</a></span>
   </footer>"""
 
 
@@ -237,6 +255,7 @@ def masthead(prefix):
     <a class="wordmark" href="{prefix}"><span class="mark">◈</span>Evolving Agents Labs</a>
     <nav class="navlinks">
       <a href="{prefix}#experiments">Experiments</a>
+      <a href="{prefix}thesis/">Thesis</a>
       <a href="{prefix}#method">Method</a>
       <a href="https://github.com/EvolvingAgentsLabs">GitHub</a>
     </nav>
@@ -275,6 +294,11 @@ def build_index(exps):
     <h1>Experiments in how agents learn, remember, and <em>prove</em> what they know.</h1>
     <p>Agents that modify themselves are easy to build and hard to trust. Everything here attacks the second half of that sentence — versioning an agent's evolution so a human can review it, reading a model's internal workspace to catch a memory it was tricked into keeping, or constraining a small model at the decoder so invalid output is not discouraged but impossible.</p>
     <p>Each experiment is labelled by how much evidence stands behind it — including the ones where the evidence went against us.</p>
+    <p class="who">Everything here comes out of an ongoing conversation between
+      <a href="https://github.com/matiasmolinas">Matias Molinas</a> and
+      <a href="https://github.com/ismaelfaro">Ismael Faro</a> — the ideas, the
+      architecture, and the code. The repositories are where those conversations
+      got tested.</p>
   </section>
 
   <div class="legend" id="method">
@@ -346,6 +370,33 @@ def build_detail(e, prev_e, next_e):
 """
 
 
+def build_thesis():
+    return head(
+        "What we are actually testing — Evolving Agents Labs",
+        "Three mechanisms that kept working across eight experiments, the ones that did not, and where they point.",
+        "/assets/site.css") + f"""
+<div class="wrap narrow">
+
+{masthead("/")}
+  <p class="crumb"><a href="/">Evolving Agents Labs</a><span>/</span>Thesis</p>
+
+  <section class="detail-hero">
+    <h1>What we are actually testing</h1>
+    <p class="question">Not whether an agent can do something — how you would know it did.</p>
+  </section>
+
+  <article class="article">
+{THESIS}  </article>
+
+{FOOT}
+
+</div>
+
+</body>
+</html>
+"""
+
+
 def main():
     exps = sorted(EXPERIMENTS, key=lambda x: x["sort"], reverse=True)
 
@@ -355,6 +406,10 @@ def main():
 
     with open(f"{OUT}/index.html", "w") as f:
         f.write(build_index(exps))
+
+    os.makedirs(f"{OUT}/thesis", exist_ok=True)
+    with open(f"{OUT}/thesis/index.html", "w") as f:
+        f.write(build_thesis())
 
     for i, e in enumerate(exps):
         d = f"{OUT}/experiments/{e['slug']}"

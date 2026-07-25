@@ -65,6 +65,13 @@ body{
 .hero h1 em{font-style:italic;color:var(--accent);}
 .hero p{margin:0;max-width:66ch;color:var(--ink-2);font-size:1.0625rem;line-height:1.65;}
 .hero p + p{margin-top:1rem;}
+.hero .who{
+  margin-top:1.75rem;padding-top:1.25rem;
+  border-top:1px solid var(--rule);
+  font-size:.9375rem;color:var(--ink-3);
+}
+.hero .who a{color:var(--ink-2);text-decoration-thickness:1px;text-underline-offset:2px;}
+.hero .who a:hover{color:var(--accent);}
 
 /* legend */
 .legend{
@@ -158,6 +165,11 @@ body{
   margin:2.75rem 0 1rem;text-wrap:balance;
 }
 .article h2:first-child{margin-top:0;}
+.article .lede{
+  font-family:var(--serif);font-weight:300;
+  font-size:clamp(1.1875rem,2.4vw,1.5rem);line-height:1.4;
+  color:var(--ink);margin-bottom:2rem;
+}
 .article p{margin:0 0 1.15rem;color:var(--ink-2);}
 .article strong{color:var(--ink);font-weight:600;}
 .article em{color:var(--ink);}
@@ -184,9 +196,11 @@ body{
 .foot{
   border-top:1px solid var(--rule-strong);
   padding-block:2.5rem 3.5rem;
-  display:flex;justify-content:space-between;gap:1.5rem;flex-wrap:wrap;
+  display:flex;flex-direction:column;gap:.75rem;
   font-family:var(--mono);font-size:.75rem;color:var(--ink-3);
 }
+.foot .by{max-width:62ch;line-height:1.7;color:var(--ink-2);}
+.foot .meta-foot{color:var(--ink-3);}
 .foot a{color:var(--ink-2);text-decoration:none;}
 .foot a:hover{color:var(--accent);}
 @media (prefers-reduced-motion:reduce){*{transition:none !important;animation:none !important;}}
