@@ -349,11 +349,7 @@ def build_index(exps):
 
   <main class="listing" id="experiments">
 
-    <p class="sectionlabel">2026</p>
-
-{chr(10).join(rows)}
-
-    <p class="sectionlabel">Where this came from</p>
+    <p class="sectionlabel">Where all of it started</p>
 
     <a class="row origin" href="/experiments/{ORIGIN['slug']}/">
       <span class="thumb"><img src="/assets/img/{ORIGIN['image']}.jpg" alt="" aria-hidden="true" loading="lazy"></span>
@@ -366,6 +362,11 @@ def build_index(exps):
       </span>
       <span class="meta">{ORIGIN['date']} <span class="arrow" aria-hidden="true">→</span></span>
     </a>
+
+    <p class="sectionlabel">What came out of it — 2026</p>
+
+{chr(10).join(rows)}
+
 
   </main>
 
