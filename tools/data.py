@@ -334,6 +334,18 @@ THESIS = """
 <p class="lede">Eight experiments, one question underneath all of them: not
 <em>can an agent do this</em>, but <em>how would you know it did</em>.</p>
 
+<h2>Where it starts</h2>
+
+<p>In 2025 this became the
+<a href="/experiments/evolving-agents/">Evolving Agents Toolkit</a>: eighteen
+thousand lines describing five subsystems — a library of versioned components, a
+bus for agent discovery, memory, an evolution loop, and a governance layer.</p>
+
+<p>It had three test functions. The architecture was written down and never
+pinned to anything that could contradict it, and every one of its five
+subsystems was independently rebuilt over the following year on a substrate that
+could be tested. That accident is why the experiments below look like a plan.</p>
+
 <h2>The gap</h2>
 
 <p>An agent that modifies itself is easy to build. A weekend gets you one that
@@ -489,6 +501,64 @@ trusted with, and it is also the ceiling. None of this makes a model plan.</p>
 <p>The honest framing is <em>grammar-safe, provable execution of pre-planned
 work</em> — narrower than "an agent OS", and true.</p>
 """
+
+
+# The repository everything came out of. Deliberately not an experiment: it is
+# not active work, and giving it an evidence badge would either overstate it or
+# dilute what the three badges mean. It gets its own section instead.
+ORIGIN = dict(
+    slug="evolving-agents", name="evolving-agents",
+    image="evolving-agents",
+    image_alt="One empty outline, drawn but never filled, becoming five solid shapes",
+    date="2025", repo="https://github.com/EvolvingAgentsLabs/evolving-agents",
+    question="What if the decomposition was right and the substrate was wrong?",
+    blurb="The Evolving Agents Toolkit. Eighteen thousand lines describing five subsystems, "
+          "and three test functions. Each subsystem was independently rebuilt over the "
+          "following year on something that could be tested — this is the map of where they "
+          "went, and what it cost.",
+    sections=[
+        ("The architecture was right", """
+<p>Eighteen thousand lines of Python across twelve subsystems: a library of
+versioned components, a bus for agent discovery, memory, an evolution loop, and
+a governance layer called Firmware. Backed by MongoDB Atlas.</p>
+
+<p><strong>It had three test functions.</strong></p>
+
+<p>That number is the whole story. This was not a product that failed; it was an
+architecture that was written down and never pinned to anything that could
+contradict it. The decomposition was right — right enough that every piece got
+independently re-derived over the following year, mostly without noticing.</p>"""),
+        ("The proof is in its own source", """
+<p><code>evolving_agents/firmware/firmware.py</code> sets a governance string:</p>
+
+<pre><code>You are an AI agent operating under strict governance rules:
+...
+- Never use dangerous imports (os, subprocess, etc.)</code></pre>
+
+<p>That is governance by <em>asking</em>. In
+<a href="/experiments/token-trie/">token-trie</a>, the forbidden token is not
+discouraged — it has no path through the trie, so the model cannot emit it.</p>
+
+<p>Same intention, twelve months and one substrate apart. The code is still on
+the default branch precisely so the two halves can be diffed.</p>"""),
+        ("What it cost", """
+<p>Two things did not survive, and only one of them on purpose.</p>
+
+<p><strong>The agent bus was dropped deliberately.</strong> A thousand lines of
+registry and runtime routing, welded to MongoDB, solving a problem MCP is now
+eating. Nothing replaces it: an agent that needs to discover another at runtime
+has no answer here today.</p>
+
+<p><strong>The dual-embedding resolver was lost by accident.</strong> Every
+component was indexed twice — once for what it is, once for what it is for — and
+tasks resolved against the second. It has since been
+<a href="https://github.com/EvolvingAgentsLabs/evolving-memory/tree/main/src/evolving_memory/resolver">recovered</a>,
+and measured: on a small corpus with a modern embedding model it performs
+<em>identically</em> to plain description-matching. The idea may have been
+overtaken by the encoders. That is the current state, with a number attached
+rather than an assumption.</p>"""),
+    ],
+)
 
 BADGES = {
     "reproducible": ("Reproducible", "clone it and run it — no API key"),

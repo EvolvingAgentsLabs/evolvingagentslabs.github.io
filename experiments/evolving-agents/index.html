@@ -1,0 +1,104 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>evolving-agents — Evolving Agents Labs</title>
+<meta name="description" content="The Evolving Agents Toolkit. Eighteen thousand lines describing five subsystems, and three test functions. Each subsystem was independently rebuilt over the following year on something that could be tested — this is the map of where they went, and what it cost.">
+<meta property="og:title" content="evolving-agents — Evolving Agents Labs">
+<meta property="og:description" content="The Evolving Agents Toolkit. Eighteen thousand lines describing five subsystems, and three test functions. Each subsystem was independently rebuilt over the following year on something that could be tested — this is the map of where they went, and what it cost.">
+<meta property="og:type" content="website">
+<link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'><text y='25' font-size='24'>%E2%97%88</text></svg>">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Newsreader:ital,opsz,wght@0,6..72,300;0,6..72,400;1,6..72,300&family=IBM+Plex+Mono:wght@400;500&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="/assets/site.css">
+</head>
+<body>
+
+<div class="wrap narrow">
+
+  <header class="masthead">
+    <a class="wordmark" href="/"><span class="mark">◈</span>Evolving Agents Labs</a>
+    <nav class="navlinks">
+      <a href="/#experiments">Experiments</a>
+      <a href="/thesis/">Thesis</a>
+      <a href="/#method">Method</a>
+      <a href="https://github.com/EvolvingAgentsLabs">GitHub</a>
+    </nav>
+  </header>
+
+  <p class="crumb"><a href="/">Evolving Agents Labs</a><span>/</span><a href="/#experiments">Experiments</a><span>/</span>evolving-agents</p>
+
+  <section class="detail-hero">
+    <h1>evolving-agents</h1>
+    <p class="question">What if the decomposition was right and the substrate was wrong?</p>
+    <div class="hero-meta">
+      <span class="when">2025</span>
+    </div>
+    <div class="ctas">
+      <a class="cta primary" href="https://github.com/EvolvingAgentsLabs/evolving-agents">GitHub <span aria-hidden="true">→</span></a>
+    </div>
+  </section>
+
+  <figure class="hero-figure">
+    <img src="/assets/img/evolving-agents.jpg" alt="One empty outline, drawn but never filled, becoming five solid shapes" loading="lazy">
+  </figure>
+  <article class="article">
+    <h2>The architecture was right</h2>
+<p>Eighteen thousand lines of Python across twelve subsystems: a library of
+versioned components, a bus for agent discovery, memory, an evolution loop, and
+a governance layer called Firmware. Backed by MongoDB Atlas.</p>
+
+<p><strong>It had three test functions.</strong></p>
+
+<p>That number is the whole story. This was not a product that failed; it was an
+architecture that was written down and never pinned to anything that could
+contradict it. The decomposition was right — right enough that every piece got
+independently re-derived over the following year, mostly without noticing.</p>
+
+    <h2>The proof is in its own source</h2>
+<p><code>evolving_agents/firmware/firmware.py</code> sets a governance string:</p>
+
+<pre><code>You are an AI agent operating under strict governance rules:
+...
+- Never use dangerous imports (os, subprocess, etc.)</code></pre>
+
+<p>That is governance by <em>asking</em>. In
+<a href="/experiments/token-trie/">token-trie</a>, the forbidden token is not
+discouraged — it has no path through the trie, so the model cannot emit it.</p>
+
+<p>Same intention, twelve months and one substrate apart. The code is still on
+the default branch precisely so the two halves can be diffed.</p>
+
+    <h2>What it cost</h2>
+<p>Two things did not survive, and only one of them on purpose.</p>
+
+<p><strong>The agent bus was dropped deliberately.</strong> A thousand lines of
+registry and runtime routing, welded to MongoDB, solving a problem MCP is now
+eating. Nothing replaces it: an agent that needs to discover another at runtime
+has no answer here today.</p>
+
+<p><strong>The dual-embedding resolver was lost by accident.</strong> Every
+component was indexed twice — once for what it is, once for what it is for — and
+tasks resolved against the second. It has since been
+<a href="https://github.com/EvolvingAgentsLabs/evolving-memory/tree/main/src/evolving_memory/resolver">recovered</a>,
+and measured: on a small corpus with a modern embedding model it performs
+<em>identically</em> to plain description-matching. The idea may have been
+overtaken by the encoders. That is the current state, with a number attached
+rather than an assumption.</p>
+  </article>
+
+  <footer class="foot">
+    <span class="by">Ideas, architecture and implementation by
+      <a href="https://github.com/matiasmolinas">Matias Molinas</a> and
+      <a href="https://github.com/ismaelfaro">Ismael Faro</a>.
+      Every experiment here started as a conversation between the two.</span>
+    <span class="meta-foot">Apache 2.0 · permanently alpha ·
+      <a href="https://github.com/EvolvingAgentsLabs">github.com/EvolvingAgentsLabs</a></span>
+  </footer>
+
+</div>
+
+</body>
+</html>

@@ -2,7 +2,7 @@
 """Render the Evolving Agents Labs site. Output is committed; this is not a build step."""
 import os, sys, shutil
 sys.path.insert(0, os.path.dirname(os.path.abspath(__file__)))
-from data import EXPERIMENTS, BADGES, THESIS
+from data import EXPERIMENTS, ORIGIN, BADGES, THESIS
 
 OUT = sys.argv[1] if len(sys.argv) > 1 else "site"
 
@@ -127,6 +127,9 @@ body{
 :root[data-theme="dark"] .thumb img{filter:brightness(.88) saturate(.95);}
 :root[data-theme="light"] .thumb img{filter:none;}
 .rowhead{display:flex;flex-direction:column;gap:.55rem;align-items:flex-start;}
+/* The origin has no evidence badge — it is not being worked on, and inventing a
+   fourth badge would dilute what the other three mean. */
+.row.origin .rowhead{justify-content:flex-start;}
 .name{font-family:var(--mono);font-size:.9375rem;font-weight:500;letter-spacing:-.01em;transition:color .18s;}
 .question{
   font-family:var(--serif);font-weight:300;
@@ -350,6 +353,20 @@ def build_index(exps):
 
 {chr(10).join(rows)}
 
+    <p class="sectionlabel">Where this came from</p>
+
+    <a class="row origin" href="/experiments/{ORIGIN['slug']}/">
+      <span class="thumb"><img src="/assets/img/{ORIGIN['image']}.jpg" alt="" aria-hidden="true" loading="lazy"></span>
+      <span class="rowhead">
+        <span class="name">{ORIGIN['name']}</span>
+      </span>
+      <span>
+        <p class="question">{ORIGIN['question']}</p>
+        <p class="note">{ORIGIN['blurb']}</p>
+      </span>
+      <span class="meta">{ORIGIN['date']} <span class="arrow" aria-hidden="true">→</span></span>
+    </a>
+
   </main>
 
 {FOOT}
@@ -362,7 +379,7 @@ def build_index(exps):
 
 
 def build_detail(e, prev_e, next_e):
-    label, _ = BADGES[e["badge"]]
+    label = BADGES[e["badge"]][0] if e.get("badge") else None
     ctas = [f'<a class="cta primary" href="{e["repo"]}">GitHub <span aria-hidden="true">→</span></a>']
     if e.get("demo"):
         ctas.insert(0, f'<a class="cta" href="{e["demo"]}">Demo <span aria-hidden="true">→</span></a>')
@@ -370,6 +387,7 @@ def build_detail(e, prev_e, next_e):
     body = "\n".join(
         f"    <h2>{title}</h2>{content.rstrip()}\n" for title, content in e["sections"])
 
+    badge_html = f'<span class="badge {e["badge"]}">{label}</span>\n      ' if label else ""
     figure = ""
     if e.get("image"):
         figure = (f'  <figure class="hero-figure">\n'
@@ -395,8 +413,7 @@ def build_detail(e, prev_e, next_e):
     <h1>{e['name']}</h1>
     <p class="question">{e['question']}</p>
     <div class="hero-meta">
-      <span class="badge {e['badge']}">{label}</span>
-      <span class="when">{e['date']}</span>
+      {badge_html}<span class="when">{e['date']}</span>
     </div>
     <div class="ctas">
       {chr(10).join("      " + c for c in ctas).strip()}
@@ -456,6 +473,11 @@ def main():
     os.makedirs(f"{OUT}/thesis", exist_ok=True)
     with open(f"{OUT}/thesis/index.html", "w") as f:
         f.write(build_thesis())
+
+    d = f"{OUT}/experiments/{ORIGIN['slug']}"
+    os.makedirs(d, exist_ok=True)
+    with open(f"{d}/index.html", "w") as f:
+        f.write(build_detail(ORIGIN, None, None))
 
     for i, e in enumerate(exps):
         d = f"{OUT}/experiments/{e['slug']}"
