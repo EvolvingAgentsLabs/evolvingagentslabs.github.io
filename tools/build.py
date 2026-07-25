@@ -167,6 +167,31 @@ body{
 .cta.primary{border-color:var(--accent);color:var(--accent);}
 
 .article{padding-block:2.5rem 3rem;}
+.hero-figure{
+  margin:2rem 0 0;border:1px solid var(--rule);border-radius:4px;
+  overflow:hidden;background:var(--ground);
+}
+.hero-figure img{display:block;width:100%;height:auto;}
+.hero .mark{
+  display:block;width:clamp(3.5rem,7vw,4.75rem);height:auto;
+  margin:0 0 1.75rem -.35rem;mix-blend-mode:multiply;
+}
+/* In dark mode the figures stay on their paper ground rather than being
+   inverted. Inverting would drag the indigo through olive and shift the amber
+   that means "signal detected" in sleep-harness — the accents carry meaning
+   here. A light plate on a dark page reads as a printed figure, which suits a
+   site set in Newsreader. Dimmed slightly so it does not glare. */
+@media (prefers-color-scheme:dark){
+  .hero-figure{border-color:var(--rule-strong);}
+  .hero-figure img,.hero .mark{filter:brightness(.88) saturate(.95);}
+  .hero .mark{mix-blend-mode:normal;}
+}
+:root[data-theme="dark"] .hero-figure{border-color:var(--rule-strong);}
+:root[data-theme="dark"] .hero-figure img,
+:root[data-theme="dark"] .hero .mark{filter:brightness(.88) saturate(.95);}
+:root[data-theme="dark"] .hero .mark{mix-blend-mode:normal;}
+:root[data-theme="light"] .hero-figure img,
+:root[data-theme="light"] .hero .mark{filter:none;}
 .article h2{
   font-family:var(--serif);font-weight:400;
   font-size:clamp(1.375rem,2.6vw,1.75rem);line-height:1.25;letter-spacing:-.012em;
@@ -291,6 +316,7 @@ def build_index(exps):
 
 {masthead("/")}
   <section class="hero">
+    <img class="mark" src="/assets/img/logo.jpg" alt="" aria-hidden="true">
     <h1>Experiments in how agents learn, remember, and <em>prove</em> what they know.</h1>
     <p>Agents that modify themselves are easy to build and hard to trust. Everything here attacks the second half of that sentence — versioning an agent's evolution so a human can review it, reading a model's internal workspace to catch a memory it was tricked into keeping, or constraining a small model at the decoder so invalid output is not discouraged but impossible.</p>
     <p>Each experiment is labelled by how much evidence stands behind it — including the ones where the evidence went against us.</p>
@@ -331,6 +357,12 @@ def build_detail(e, prev_e, next_e):
     body = "\n".join(
         f"    <h2>{title}</h2>{content.rstrip()}\n" for title, content in e["sections"])
 
+    figure = ""
+    if e.get("image"):
+        figure = (f'  <figure class="hero-figure">\n'
+                  f'    <img src="/assets/img/{e["image"]}.jpg" alt="{e.get("image_alt","")}" loading="lazy">\n'
+                  f'  </figure>')
+
     nav = []
     if prev_e:
         nav.append(f'<a href="/experiments/{prev_e["slug"]}/">← {prev_e["name"]}</a>')
@@ -358,6 +390,7 @@ def build_detail(e, prev_e, next_e):
     </div>
   </section>
 
+{figure}
   <article class="article">
 {body}  </article>
 
