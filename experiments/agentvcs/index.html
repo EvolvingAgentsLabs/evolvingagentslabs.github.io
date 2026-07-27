@@ -39,6 +39,7 @@
     </div>
     <div class="ctas">
       <a class="cta primary" href="https://github.com/EvolvingAgentsLabs/agentvcs">GitHub <span aria-hidden="true">→</span></a>
+      <a class="cta" href="/agentvcs/demos/">See the demos <span aria-hidden="true">→</span></a>
     </div>
   </section>
 
@@ -46,6 +47,11 @@
     <img src="/assets/img/agentvcs.jpg" alt="Two branches diverge and merge, sealed once the eval passes" loading="lazy">
   </figure>
   <article class="article">
+    <p class="lede">The goal: make an agent's run-time evolution first-class and trustworthy —
+    <strong>capture</strong> every iteration (code + goal + models + trace + swarm) as one
+    commit, <strong>prove &amp; freeze</strong> what works into a deterministic recipe,
+    <strong>reconcile</strong> it back into your git releases, and <strong>measure</strong>
+    whether the self-modification is actually improving.</p>
     <h2>Two timelines, one file</h2>
 <p>An agent in production rewrites its own skill and spawns a sub-agent to help. Meanwhile
 your team edits that same skill in git. Both changes are correct. Neither knows about the
@@ -71,15 +77,42 @@ the other end. Conflicting hunks are pre-resolved toward whichever side has the 
 <p><code>freeze</code> turns a proven run into a deterministic recipe you can replay. It
 refuses unless the declared eval passes on every run, and <code>--force</code> past a failure
 stamps <code>verified: false</code> rather than quietly lying. "Crystallized" means "proven",
-enforced in code rather than in the README.</p>
+enforced in code rather than in the README. A <code>rollback</code> restores the full prior
+state — code, goal, models and trace together — and records <em>why</em> in a durable ledger.</p>
+
+    <h2>Does the evolution actually work?</h2>
+<p>Because agentvcs keeps the whole lineage — every variant as a commit with an eval score —
+it can measure something a code VCS can't: whether a self-modification loop is genuinely
+improving, or merely changing. Each of these is an exact, standard-library computation over
+the commit graph, not a heuristic:</p>
+<ul>
+  <li><code>price</code> — the <strong>Price equation</strong> splits a quality change into
+    <em>selection</em> (choosing between branches) and <em>transmission</em> (editing within a
+    lineage), and flags the <strong>Eigen error catastrophe</strong> when editing degrades
+    faster than selection recovers.</li>
+  <li><code>health</code> — <strong>critical slowing down</strong> (a collapse warning before
+    the mean score even moves) plus <strong>Muller's ratchet</strong> load on a branch left
+    unmerged too long.</li>
+  <li><code>infobits</code> — how many <strong>bits</strong> your context actually buys
+    (Kelly / channel capacity): the compression headroom.</li>
+  <li><code>contain</code> — a branching-process test <code>R₀ = n·p</code> for whether a
+    poisoned shared memory will spread across a fleet or die out on its own.</li>
+</ul>
+<p>Two runnable walkthroughs make the point without any math on screen: five
+<a href="/agentvcs/demos/business-cases.html">plain-English business cases</a> (a support bot
+that quietly gets worse every week, a fork nobody merged, wasted context, a poisoned memory),
+and the <a href="/agentvcs/demos/evolution-diagnostics.html">technical companion</a> where
+every claim is asserted against <code>--json</code>. Both run on real evaluations —
+<a href="/agentvcs/demos/">see the demos</a>.</p>
 
     <h2>What's proven</h2>
-<p><strong>190 tests pass in 2.9 seconds.</strong> CI runs the matrix across Python
-3.10–3.13 plus an end-to-end smoke test that executes the demo and asserts a scorecard ≥5/6.
-Packaged on PyPI with zero runtime dependencies.</p>
+<p><strong>212 tests pass across Python 3.10–3.13.</strong> CI runs the full version matrix
+plus an end-to-end smoke test that executes the agent-loop demo and asserts a scorecard ≥5/6.
+Pure standard library, zero runtime dependencies; install from source (not on PyPI yet).</p>
 <pre><code>git clone https://github.com/EvolvingAgentsLabs/agentvcs
 cd agentvcs &amp;&amp; pip install -e .
-bash examples/eve-evolve-merge/demo.sh   # offline, no API key, seconds</code></pre>
+bash examples/business-cases/run.sh      # plain-English demos, offline, seconds
+bash examples/eve-evolve-merge/demo.sh   # the reconcile, offline, no API key</code></pre>
 <p>That demo forks a RefundBot into a runtime line and a design-time line and merges them,
 producing a marker-free skill containing both rule sets and a swarm containing both
 sub-agents.</p>
