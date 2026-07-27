@@ -57,10 +57,23 @@
 your team edits that same skill in git. Both changes are correct. Neither knows about the
 other. Today one of them is thrown away, usually the agent's, because there is nowhere to put
 it.</p>
-<p>agentvcs gives it somewhere. A commit is not a tree of files — it is code <em>plus</em> the
-goal, the model pins, the session trace, and the sub-agent swarm, versioned together. Which
-means the runtime line and the design-time line are both branches, and the question becomes a
-merge.</p>
+<p>agentvcs gives it somewhere. A commit is not a tree of files — it is an atomic snapshot of
+four dimensions at once, plus the sub-agent swarm:</p>
+<ul>
+  <li><code>code</code> — the files as usual: tools, scripts, markdown skills.</li>
+  <li><code>goal</code> — the intent or directive the agent was pursuing.</li>
+  <li><code>models</code> — which LLM ran, with which params (temperature, …).</li>
+  <li><code>trace</code> — the chain of thought, tool calls and real results that <em>caused</em>
+    the change.</li>
+</ul>
+<p>Which means the runtime line and the design-time line are both branches, and the question
+becomes a merge. Every commit also carries a <strong>state</strong>:
+<code>fluid</code> while the agent is still searching probabilistically (high temperature, code
+and goals mutating between iterations), <code>crystallized</code> once it has been proven and
+frozen — models pinned to temperature 0, the iteration compiled into a replayable recipe that
+is cheap, stable and deterministic. And <code>diff</code> tells you <em>which dimension</em>
+moved: a goal redirect and a code change are distinguishable events, not one opaque text
+diff.</p>
 
     <h2>The reconcile contract</h2>
 <p>Merging two prose goals or two session traces is not a job for a line-differ. So agentvcs
@@ -104,6 +117,22 @@ that quietly gets worse every week, a fork nobody merged, wasted context, a pois
 and the <a href="/agentvcs/demos/evolution-diagnostics.html">technical companion</a> where
 every claim is asserted against <code>--json</code>. Both run on real evaluations —
 <a href="/agentvcs/demos/">see the demos</a>.</p>
+
+    <h2>Nothing to install around it</h2>
+<p>The whole thing is <strong>pure Python standard library, zero runtime dependencies</strong> —
+deliberate, for auditability and drop-in integration. It doesn't ask you to instrument your
+code either: traces are captured passively from what the runtime already writes (local session
+files, events) through built-in providers for <code>claude-code</code>, <code>qwen-code</code>,
+<code>anthropic-managed</code>, <code>vercel-eve</code> and <code>odyssey</code>. Secrets are
+<code>[REDACTED]</code> by default.</p>
+<p>Every command accepts <code>--json</code> and emits one parseable object with stable error
+codes, so an agent recovers programmatically instead of parsing English — and an MCP server
+ships with it (<code>claude mcp add agentvcs -- agentvcs-mcp</code>), so Claude or Cursor can
+version the agent autonomously. Two layers are opt-in and off by default: an
+<strong>Ed25519 Soul</strong> (<code>init --with-soul</code>) that signs every commit and mints
+a Soulbound Token on each verified <code>freeze</code> — a CV of what the agent has actually
+proven, reputation that can't be cloned — and a corporate layer
+(<code>init --corporate</code>) with a signed audit log and human approvals.</p>
 
     <h2>What's proven</h2>
 <p><strong>212 tests pass across Python 3.10–3.13.</strong> CI runs the full version matrix
