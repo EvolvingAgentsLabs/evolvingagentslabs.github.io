@@ -44,59 +44,23 @@
     <div><span class="badge reproducible">Reproducible</span> clone it and run it — no API key</div>
     <div><span class="badge results">Results</span> published findings, negative ones included</div>
     <div><span class="badge prototype">Prototype</span> runs, but needs setup or has no eval yet</div>
+    <div><span class="badge moved">Moved</span> the code lives on inside evolving-agents</div>
+    <div><span class="badge archived">Archived</span> readable, not maintained</div>
   </div>
 
   <main class="listing" id="experiments">
 
-    <p class="sectionlabel">Where all of it started</p>
+    <p class="sectionlabel">What we are building</p>
 
     <a class="row origin" href="/experiments/evolving-agents/">
       <span class="thumb"><img src="/assets/img/evolving-agents.jpg" alt="" aria-hidden="true" loading="lazy"></span>
       <span class="rowhead">
         <span class="name">evolving-agents</span>
-      </span>
-      <span>
-        <p class="question">What if the decomposition was right and the substrate was wrong?</p>
-        <p class="note">The Evolving Agents Toolkit. Eighteen thousand lines describing five subsystems, and three test functions. Each subsystem was independently rebuilt over the following year on something that could be tested — this is the map of where they went, and what it cost.</p>
-      </span>
-      <span class="meta">2025 <span class="arrow" aria-hidden="true">→</span></span>
-    </a>
-
-    <p class="sectionlabel">What came out of it — 2026</p>
-
-    <a class="row" href="/experiments/agentvcs/">
-      <span class="thumb"><img src="/assets/img/agentvcs.jpg" alt="" aria-hidden="true" loading="lazy"></span>
-      <span class="rowhead">
-        <span class="name">agentvcs</span>
         <span class="badge reproducible">Reproducible</span>
       </span>
       <span>
-        <p class="question">What if an agent's autonomous evolution could be merged back into your release, like any other branch?</p>
-        <p class="note">Version control where one commit carries code, goal, model pins, trace and sub-agent swarm together, and conflicts are handed to a reconciler over a plain stdin/stdout contract.</p>
-      </span>
-      <span class="meta">Jul 2026 <span class="arrow" aria-hidden="true">→</span></span>
-    </a>
-    <a class="row" href="/experiments/sleep-harness/">
-      <span class="thumb"><img src="/assets/img/sleep-harness.jpg" alt="" aria-hidden="true" loading="lazy"></span>
-      <span class="rowhead">
-        <span class="name">sleep-harness</span>
-        <span class="badge results">Results</span>
-      </span>
-      <span>
-        <p class="question">What if you could catch a poisoned memory by watching which concepts light up inside the model?</p>
-        <p class="note">An interpretability firewall for agent memory. Reads the residual stream through a Jacobian lens to flag injected instructions that are lexically identical to benign text, and to scan third-party adapters for trojans before they mount.</p>
-      </span>
-      <span class="meta">Jul 2026 <span class="arrow" aria-hidden="true">→</span></span>
-    </a>
-    <a class="row" href="/experiments/evolving-robot/">
-      <span class="thumb"><img src="/assets/img/evolving-robot.jpg" alt="" aria-hidden="true" loading="lazy"></span>
-      <span class="rowhead">
-        <span class="name">evolving-robot</span>
-        <span class="badge prototype">Prototype</span>
-      </span>
-      <span>
-        <p class="question">What if a robot that missed a fallen patient could rewrite its own care protocol overnight?</p>
-        <p class="note">Florence patrols a hospital ward, fails to check a patient standing outside her lamp radius, and revises the skill that caused it. The rewrite survives only if it outscores the protocol it replaced.</p>
+        <p class="question">The agent loop is solved. What happens after you fork a session is not.</p>
+        <p class="note">A plugin for the Claude Agent SDK. Fork branches a session and nothing rejoins the branches — no merge, no diff between two sessions, nothing that refuses to promote an agent whose eval regressed. This began in 2025 as eighteen thousand lines with three test functions; ten thousand of them were deleted the day the SDK made them unnecessary.</p>
       </span>
       <span class="meta">Jul 2026 <span class="arrow" aria-hidden="true">→</span></span>
     </a>
@@ -112,23 +76,83 @@
       </span>
       <span class="meta">Jun 2026 <span class="arrow" aria-hidden="true">→</span></span>
     </a>
-    <a class="row" href="/experiments/qa/">
-      <span class="thumb"><img src="/assets/img/qa.jpg" alt="" aria-hidden="true" loading="lazy"></span>
+
+    <p class="sectionlabel">Folded into evolving-agents — the code moved, the write-ups stay</p>
+
+    <a class="row" href="/experiments/agentvcs/">
+      <span class="thumb"><img src="/assets/img/agentvcs.jpg" alt="" aria-hidden="true" loading="lazy"></span>
       <span class="rowhead">
-        <span class="name">qa</span>
-        <span class="badge prototype">Prototype</span>
+        <span class="name">agentvcs</span>
+        <span class="badge reproducible">Reproducible</span>
+        <span class="badge moved">Moved</span>
       </span>
       <span>
-        <p class="question">What if your test suite told you what it had quietly stopped checking?</p>
-        <p class="note">Every assertion is fingerprinted and diffed across runs, so a check that silently disappeared surfaces as a finding. Passing exploratory sessions get frozen into deterministic scripts.</p>
+        <p class="question">What if an agent's autonomous evolution could be merged back into your release, like any other branch?</p>
+        <p class="note">Version control where one commit carries code, goal, model pins, trace and sub-agent swarm together, and conflicts are handed to a reconciler over a plain stdin/stdout contract. Now the engine under the evolving-agents plugin, at <code>packages/agentvcs</code>.</p>
       </span>
-      <span class="meta">Jun 2026 <span class="arrow" aria-hidden="true">→</span></span>
+      <span class="meta">Jul 2026 <span class="arrow" aria-hidden="true">→</span></span>
+    </a>
+    <a class="row" href="/experiments/evolving-robot/">
+      <span class="thumb"><img src="/assets/img/evolving-robot.jpg" alt="" aria-hidden="true" loading="lazy"></span>
+      <span class="rowhead">
+        <span class="name">evolving-robot</span>
+        <span class="badge prototype">Prototype</span>
+        <span class="badge moved">Moved</span>
+      </span>
+      <span>
+        <p class="question">What if a robot that missed a fallen patient could rewrite its own care protocol overnight?</p>
+        <p class="note">Florence patrols a hospital ward, fails to check a patient standing outside her lamp radius, and revises the skill that caused it. The rewrite survives only if it outscores the protocol it replaced.</p>
+      </span>
+      <span class="meta">Jul 2026 <span class="arrow" aria-hidden="true">→</span></span>
+    </a>
+    <a class="row" href="/experiments/evolving-memory/">
+      <span class="thumb"><img src="/assets/img/evolving-memory.jpg" alt="" aria-hidden="true" loading="lazy"></span>
+      <span class="rowhead">
+        <span class="name">evolving-memory</span>
+        <span class="badge results">Results</span>
+        <span class="badge moved">Moved</span>
+      </span>
+      <span>
+        <p class="question">What if an agent's memory consolidated itself the way sleep consolidates yours?</p>
+        <p class="note">A trajectory engine that chunks execution traces, connects them and curates what survives. Its headline idea — indexing a component by what it is <em>for</em> as well as what it is — was rebuilt and measured at 80% either way. No advantage, published anyway.</p>
+      </span>
+      <span class="meta">Apr 2026 <span class="arrow" aria-hidden="true">→</span></span>
+    </a>
+
+    <p class="sectionlabel">Archived — readable, not maintained</p>
+
+    <a class="row" href="/experiments/token-trie/">
+      <span class="thumb"><img src="/assets/img/token-trie.jpg" alt="" aria-hidden="true" loading="lazy"></span>
+      <span class="rowhead">
+        <span class="name">token-trie</span>
+        <span class="badge reproducible">Reproducible</span>
+        <span class="badge archived">Archived</span>
+      </span>
+      <span>
+        <p class="question">What if a small model could not emit invalid syntax, because the decoder refused to let it?</p>
+        <p class="note">Every legal instruction is pre-tokenized into a trie of token IDs and the sampler's valid-next set is masked at each step. A 350M-parameter model plays Tetris in a browser tab, fully offline. Masking logits needs the sampler, which an API-backed SDK does not hand you — which is why this one could not follow the others.</p>
+      </span>
+      <span class="meta">May 2026 <span class="arrow" aria-hidden="true">→</span></span>
+    </a>
+    <a class="row" href="/experiments/sleep-harness/">
+      <span class="thumb"><img src="/assets/img/sleep-harness.jpg" alt="" aria-hidden="true" loading="lazy"></span>
+      <span class="rowhead">
+        <span class="name">sleep-harness</span>
+        <span class="badge results">Results</span>
+        <span class="badge archived">Archived</span>
+      </span>
+      <span>
+        <p class="question">What if you could catch a poisoned memory by watching which concepts light up inside the model?</p>
+        <p class="note">An interpretability firewall for agent memory. Reads the residual stream through a Jacobian lens to flag injected instructions that are lexically identical to benign text, and to scan third-party adapters for trojans before they mount. Needs the weights, so it stayed where it is.</p>
+      </span>
+      <span class="meta">Jul 2026 <span class="arrow" aria-hidden="true">→</span></span>
     </a>
     <a class="row" href="/experiments/skillos-robot/">
       <span class="thumb"><img src="/assets/img/skillos-robot.jpg" alt="" aria-hidden="true" loading="lazy"></span>
       <span class="rowhead">
         <span class="name">skillos_robot</span>
         <span class="badge prototype">Prototype</span>
+        <span class="badge archived">Archived</span>
       </span>
       <span>
         <p class="question">What if the robot were just a device driver for a language model?</p>
@@ -136,31 +160,19 @@
       </span>
       <span class="meta">May 2026 <span class="arrow" aria-hidden="true">→</span></span>
     </a>
-    <a class="row" href="/experiments/token-trie/">
-      <span class="thumb"><img src="/assets/img/token-trie.jpg" alt="" aria-hidden="true" loading="lazy"></span>
+    <a class="row" href="/experiments/qa/">
+      <span class="thumb"><img src="/assets/img/qa.jpg" alt="" aria-hidden="true" loading="lazy"></span>
       <span class="rowhead">
-        <span class="name">token-trie</span>
-        <span class="badge reproducible">Reproducible</span>
+        <span class="name">qa</span>
+        <span class="badge prototype">Prototype</span>
+        <span class="badge archived">Archived</span>
       </span>
       <span>
-        <p class="question">What if a small model could not emit invalid syntax, because the decoder refused to let it?</p>
-        <p class="note">Every legal instruction is pre-tokenized into a trie of token IDs and the sampler's valid-next set is masked at each step. A 350M-parameter model plays Tetris in a browser tab, fully offline.</p>
+        <p class="question">What if your test suite told you what it had quietly stopped checking?</p>
+        <p class="note">Every assertion is fingerprinted and diffed across runs, so a check that silently disappeared surfaces as a finding. Passing exploratory sessions get frozen into deterministic scripts.</p>
       </span>
-      <span class="meta">May 2026 <span class="arrow" aria-hidden="true">→</span></span>
+      <span class="meta">Jun 2026 <span class="arrow" aria-hidden="true">→</span></span>
     </a>
-    <a class="row" href="/experiments/evolving-memory/">
-      <span class="thumb"><img src="/assets/img/evolving-memory.jpg" alt="" aria-hidden="true" loading="lazy"></span>
-      <span class="rowhead">
-        <span class="name">evolving-memory</span>
-        <span class="badge results">Results</span>
-      </span>
-      <span>
-        <p class="question">What if an agent's memory consolidated itself the way sleep consolidates yours?</p>
-        <p class="note">A trajectory engine that chunks execution traces, connects them and curates what survives — so repeated experience raises confidence and failures extract constraints.</p>
-      </span>
-      <span class="meta">Apr 2026 <span class="arrow" aria-hidden="true">→</span></span>
-    </a>
-
 
   </main>
 

@@ -90,6 +90,11 @@ body{
 .badge.reproducible{color:var(--accent);}
 .badge.results{color:var(--signal);}
 .badge.prototype{color:var(--ink-3);}
+/* Two end-states, kept distinct on purpose: code that moved is not code that
+   stopped. One archive badge for both would read as a portfolio that was
+   abandoned rather than one that was consolidated. */
+.badge.moved{color:var(--accent);border-style:dashed;}
+.badge.archived{color:var(--ink-3);border-style:dashed;opacity:.85;}
 
 /* index listing */
 .listing{padding-block:1rem 4rem;}
