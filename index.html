@@ -3,10 +3,10 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<title>Evolving Agents Labs — Experiments in how agents learn, remember, and prove what they know</title>
-<meta name="description" content="Open experiments in agent memory, self-modification, interpretability and constrained execution. Each one labelled by how much evidence stands behind it.">
-<meta property="og:title" content="Evolving Agents Labs — Experiments in how agents learn, remember, and prove what they know">
-<meta property="og:description" content="Open experiments in agent memory, self-modification, interpretability and constrained execution. Each one labelled by how much evidence stands behind it.">
+<title>ai-os — an agent-based operating system · Evolving Agents Labs</title>
+<meta name="description" content="Flows above the turn, an intelligent canvas, and layered memory — built on a vendored QM base. The design is public before the code exists.">
+<meta property="og:title" content="ai-os — an agent-based operating system">
+<meta property="og:description" content="Flows above the turn, an intelligent canvas, and layered memory — built on a vendored QM base. The design is public before the code exists.">
 <meta property="og:type" content="website">
 <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'><text y='25' font-size='24'>%E2%97%88</text></svg>">
 <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -21,167 +21,121 @@
   <header class="masthead">
     <a class="wordmark" href="/"><span class="mark">◈</span>Evolving Agents Labs</a>
     <nav class="navlinks">
-      <a href="/#experiments">Experiments</a>
-      <a href="/thesis/">Thesis</a>
-      <a href="/#method">Method</a>
-      <a href="https://github.com/EvolvingAgentsLabs">GitHub</a>
+      <a href="/#pillars">Pillars</a>
+      <a href="/#status">Status</a>
+      <a href="/archive/">Archive</a>
+      <a href="https://github.com/EvolvingAgentsLabs/ai-os">GitHub</a>
     </nav>
   </header>
 
   <section class="hero">
-    <img class="mark" src="/assets/img/logo.jpg" alt="" aria-hidden="true">
-    <h1>Experiments in how agents learn, remember, and <em>prove</em> what they know.</h1>
-    <p>Agents that modify themselves are easy to build and hard to trust. Everything here attacks the second half of that sentence — versioning an agent's evolution so a human can review it, reading a model's internal workspace to catch a memory it was tricked into keeping, or constraining a small model at the decoder so invalid output is not discouraged but impossible.</p>
-    <p>Each experiment is labelled by how much evidence stands behind it — including the ones where the evidence went against us.</p>
-    <p class="who">Everything here comes out of an ongoing conversation between
-      <a href="https://github.com/matiasmolinas">Matias Molinas</a> and
-      <a href="https://github.com/ismaelfaro">Ismael Faro</a> — the ideas, the
-      architecture, and the code. The repositories are where those conversations
-      got tested.</p>
+    <p class="eyebrow">The organisation's only active project</p>
+    <h1><span class="proj">ai-os</span> — an agent&#8209;based <em>operating system</em>.</h1>
+    <p>Agents today are applications. This is the argument that they should be an
+      operating system — and that the difference is not branding, but three
+      abstractions nobody has built yet.</p>
+    <p>An OS earns the name when it owns how work survives interruption, how state
+      is addressed, and how a person perceives and steers the whole machine.
+      <a href="https://github.com/yc-software/qm">QM</a> already solves the hard
+      part underneath: a real multi-tenant harness with scoped identity,
+      permissions, sandboxes and audit. ai-os is the layer above it.</p>
+    <p class="ctas">
+      <a class="cta primary" href="https://github.com/EvolvingAgentsLabs/ai-os/tree/main/doc">Read the design →</a>
+      <a class="cta" href="https://github.com/EvolvingAgentsLabs/ai-os">Repository</a>
+    </p>
   </section>
 
-  <div class="legend" id="method">
-    <div><span class="badge reproducible">Reproducible</span> clone it and run it — no API key</div>
-    <div><span class="badge results">Results</span> published findings, negative ones included</div>
-    <div><span class="badge prototype">Prototype</span> runs, but needs setup or has no eval yet</div>
-    <div><span class="badge moved">Moved</span> the code lives on inside evolving-agents</div>
-    <div><span class="badge archived">Archived</span> readable, not maintained</div>
-  </div>
+  <section class="gap">
+    <p class="sectionlabel">Four questions today's agents cannot answer</p>
+    <ol class="qlist">
+      <li><b>What is this agent working on?</b> A list of sessions. A session is a
+        conversation, not a unit of work — no declared goal, no success condition,
+        nothing that survives compaction.</li>
+      <li><b>What does it know, and why?</b> A file. One flat namespace per scope,
+        capped, dropping the oldest fact when it overflows.</li>
+      <li><b>What is it looking at?</b> A chat log — the right metaphor for a
+        conversation, the wrong one for work spanning weeks.</li>
+      <li><b>Can I branch this and rejoin it?</b> You can fork. Nothing records
+        that it forked, so nothing can ever diff or merge it.</li>
+    </ol>
+  </section>
 
-  <main class="listing" id="experiments">
+  <section id="pillars">
+    <p class="sectionlabel">Four pillars</p>
+    <div class="pillars">
+      <article>
+        <h2>ai-flows</h2>
+        <p class="question">What if the unit of work outlived the conversation?</p>
+        <p class="note">A flow is a declared, persisted, resumable object with a
+          goal, a shape, a state and a lineage. It records where it forked from at
+          its first commit, so two attempts can be compared. The turn becomes an
+          implementation detail.</p>
+      </article>
+      <article>
+        <h2>ai-ui</h2>
+        <p class="question">What if the interface were the state, not the transcript?</p>
+        <p class="note">A spatial, live canvas composed by the system from the
+          flow's state — and re-composed as it changes. The user overrides the
+          arrangement; the override wins from then on.</p>
+      </article>
+      <article>
+        <h2>ai-storage</h2>
+        <p class="question">What if memory had an address space?</p>
+        <p class="note">Four levels — system, user, project, flow — with different
+          lifetimes. Flow memory is expected to die. Promotion between levels is
+          explicit, recorded and reversible.</p>
+      </article>
+      <article>
+        <h2>ai-base</h2>
+        <p class="question">What if we did not rebuild the part that works?</p>
+        <p class="note">QM, vendored as a subtree and pulled weekly. Identity,
+          scopes, sandboxes, policy, audit and six model harnesses. We did not
+          write it and we are not rewriting it.</p>
+      </article>
+    </div>
+  </section>
 
-    <p class="sectionlabel">What we are building</p>
+  <section id="status" class="status">
+    <p class="sectionlabel">Where this actually is</p>
+    <p><b>Design stage.</b> <code>ai-base</code> is vendored and runs. The other
+      three pillars are specified in <code>doc/</code> and <b>not yet
+      implemented</b>. Nothing on this page describes running software unless it
+      says so.</p>
+    <p>Publishing a design before the code is deliberate. The predecessor of this
+      project shipped eighteen thousand lines describing five subsystems and three
+      test functions — an architecture written down and never pinned to anything
+      that could contradict it. So each pillar here ships with <b>the measurement
+      that would show it is not worth building</b>, written before the code: that
+      a flow completes work a plain session loses, that four memory levels
+      retrieve better than one flat file, that a canvas finds state faster than a
+      transcript.</p>
+    <p>The memory claim has already come back <em>flat</em> once, on a closely
+      related experiment — 80% either way. That result is why the burden of proof
+      sits on the new axis and not on the baseline.</p>
+    <p class="ctas">
+      <a class="cta" href="https://github.com/EvolvingAgentsLabs/ai-os/blob/main/doc/08-roadmap.md">Roadmap</a>
+      <a class="cta" href="https://github.com/EvolvingAgentsLabs/ai-os/tree/main/doc/adr">Decisions</a>
+    </p>
+  </section>
 
-    <a class="row origin" href="/experiments/evolving-agents/">
-      <span class="thumb"><img src="/assets/img/evolving-agents.jpg" alt="" aria-hidden="true" loading="lazy"></span>
-      <span class="rowhead">
-        <span class="name">evolving-agents</span>
-        <span class="badge reproducible">Reproducible</span>
-      </span>
-      <span>
-        <p class="question">The agent loop is solved. What happens after you fork a session is not.</p>
-        <p class="note">A plugin for the Claude Agent SDK. Fork branches a session and nothing rejoins the branches — no merge, no diff between two sessions, nothing that refuses to promote an agent whose eval regressed. This began in 2025 as eighteen thousand lines with three test functions; ten thousand of them were deleted the day the SDK made them unnecessary.</p>
-      </span>
-      <span class="meta">Jul 2026 <span class="arrow" aria-hidden="true">→</span></span>
-    </a>
-    <a class="row" href="/experiments/skillos/">
-      <span class="thumb"><img src="/assets/img/skillos.jpg" alt="" aria-hidden="true" loading="lazy"></span>
-      <span class="rowhead">
-        <span class="name">skillos</span>
-        <span class="badge prototype">Prototype</span>
-      </span>
-      <span>
-        <p class="question">What if the operating system were written entirely in markdown?</p>
-        <p class="note">Skills as programs, traces as logs, consolidation as sleep — plus a line-op dialect that lets small models patch files by emitting edits instead of rewriting whole documents.</p>
-      </span>
-      <span class="meta">Jun 2026 <span class="arrow" aria-hidden="true">→</span></span>
-    </a>
-
-    <p class="sectionlabel">Folded into evolving-agents — the code moved, the write-ups stay</p>
-
-    <a class="row" href="/experiments/agentvcs/">
-      <span class="thumb"><img src="/assets/img/agentvcs.jpg" alt="" aria-hidden="true" loading="lazy"></span>
-      <span class="rowhead">
-        <span class="name">agentvcs</span>
-        <span class="badge reproducible">Reproducible</span>
-        <span class="badge moved">Moved</span>
-      </span>
-      <span>
-        <p class="question">What if an agent's autonomous evolution could be merged back into your release, like any other branch?</p>
-        <p class="note">Version control where one commit carries code, goal, model pins, trace and sub-agent swarm together, and conflicts are handed to a reconciler over a plain stdin/stdout contract. Now the engine under the evolving-agents plugin, at <code>packages/agentvcs</code>.</p>
-      </span>
-      <span class="meta">Jul 2026 <span class="arrow" aria-hidden="true">→</span></span>
-    </a>
-    <a class="row" href="/experiments/evolving-robot/">
-      <span class="thumb"><img src="/assets/img/evolving-robot.jpg" alt="" aria-hidden="true" loading="lazy"></span>
-      <span class="rowhead">
-        <span class="name">evolving-robot</span>
-        <span class="badge prototype">Prototype</span>
-        <span class="badge moved">Moved</span>
-      </span>
-      <span>
-        <p class="question">What if a robot that missed a fallen patient could rewrite its own care protocol overnight?</p>
-        <p class="note">Florence patrols a hospital ward, fails to check a patient standing outside her lamp radius, and revises the skill that caused it. The rewrite survives only if it outscores the protocol it replaced.</p>
-      </span>
-      <span class="meta">Jul 2026 <span class="arrow" aria-hidden="true">→</span></span>
-    </a>
-    <a class="row" href="/experiments/evolving-memory/">
-      <span class="thumb"><img src="/assets/img/evolving-memory.jpg" alt="" aria-hidden="true" loading="lazy"></span>
-      <span class="rowhead">
-        <span class="name">evolving-memory</span>
-        <span class="badge results">Results</span>
-        <span class="badge moved">Moved</span>
-      </span>
-      <span>
-        <p class="question">What if an agent's memory consolidated itself the way sleep consolidates yours?</p>
-        <p class="note">A trajectory engine that chunks execution traces, connects them and curates what survives. Its headline idea — indexing a component by what it is <em>for</em> as well as what it is — was rebuilt and measured at 80% either way. No advantage, published anyway.</p>
-      </span>
-      <span class="meta">Apr 2026 <span class="arrow" aria-hidden="true">→</span></span>
-    </a>
-
-    <p class="sectionlabel">Archived — readable, not maintained</p>
-
-    <a class="row" href="/experiments/token-trie/">
-      <span class="thumb"><img src="/assets/img/token-trie.jpg" alt="" aria-hidden="true" loading="lazy"></span>
-      <span class="rowhead">
-        <span class="name">token-trie</span>
-        <span class="badge reproducible">Reproducible</span>
-        <span class="badge archived">Archived</span>
-      </span>
-      <span>
-        <p class="question">What if a small model could not emit invalid syntax, because the decoder refused to let it?</p>
-        <p class="note">Every legal instruction is pre-tokenized into a trie of token IDs and the sampler's valid-next set is masked at each step. A 350M-parameter model plays Tetris in a browser tab, fully offline. Masking logits needs the sampler, which an API-backed SDK does not hand you — which is why this one could not follow the others.</p>
-      </span>
-      <span class="meta">May 2026 <span class="arrow" aria-hidden="true">→</span></span>
-    </a>
-    <a class="row" href="/experiments/sleep-harness/">
-      <span class="thumb"><img src="/assets/img/sleep-harness.jpg" alt="" aria-hidden="true" loading="lazy"></span>
-      <span class="rowhead">
-        <span class="name">sleep-harness</span>
-        <span class="badge results">Results</span>
-        <span class="badge archived">Archived</span>
-      </span>
-      <span>
-        <p class="question">What if you could catch a poisoned memory by watching which concepts light up inside the model?</p>
-        <p class="note">An interpretability firewall for agent memory. Reads the residual stream through a Jacobian lens to flag injected instructions that are lexically identical to benign text, and to scan third-party adapters for trojans before they mount. Needs the weights, so it stayed where it is.</p>
-      </span>
-      <span class="meta">Jul 2026 <span class="arrow" aria-hidden="true">→</span></span>
-    </a>
-    <a class="row" href="/experiments/skillos-robot/">
-      <span class="thumb"><img src="/assets/img/skillos-robot.jpg" alt="" aria-hidden="true" loading="lazy"></span>
-      <span class="rowhead">
-        <span class="name">skillos_robot</span>
-        <span class="badge prototype">Prototype</span>
-        <span class="badge archived">Archived</span>
-      </span>
-      <span>
-        <p class="question">What if the robot were just a device driver for a language model?</p>
-        <p class="note">A slow vision-language brain plans at roughly one hertz while a reactive controller drives motors at twenty, over a bytecode link to an ESP32.</p>
-      </span>
-      <span class="meta">May 2026 <span class="arrow" aria-hidden="true">→</span></span>
-    </a>
-    <a class="row" href="/experiments/qa/">
-      <span class="thumb"><img src="/assets/img/qa.jpg" alt="" aria-hidden="true" loading="lazy"></span>
-      <span class="rowhead">
-        <span class="name">qa</span>
-        <span class="badge prototype">Prototype</span>
-        <span class="badge archived">Archived</span>
-      </span>
-      <span>
-        <p class="question">What if your test suite told you what it had quietly stopped checking?</p>
-        <p class="note">Every assertion is fingerprinted and diffed across runs, so a check that silently disappeared surfaces as a finding. Passing exploratory sessions get frozen into deterministic scripts.</p>
-      </span>
-      <span class="meta">Jun 2026 <span class="arrow" aria-hidden="true">→</span></span>
-    </a>
-
-  </main>
+  <a class="archive-link" href="/archive/">
+    <span class="rowhead"><span class="name">Archive</span></span>
+    <span>
+      <p class="question">Twenty-six frozen experiments, 2025&#8202;–&#8202;2026.</p>
+      <p class="note">Agent memory, self-modification, interpretability and
+        constrained decoding — each labelled by how much evidence stood behind it,
+        including the ones where the evidence went against us. Kept because they
+        are still true, not because they are maintained.</p>
+    </span>
+    <span class="meta"><span class="arrow" aria-hidden="true">→</span></span>
+  </a>
 
   <footer class="foot">
     <span class="by">Ideas, architecture and implementation by
       <a href="https://github.com/matiasmolinas">Matias Molinas</a> and
       <a href="https://github.com/ismaelfaro">Ismael Faro</a>.
-      Every experiment here started as a conversation between the two.</span>
-    <span class="meta-foot">Apache 2.0 · permanently alpha ·
+      Everything here started as a conversation between the two.</span>
+    <span class="meta-foot">Apache 2.0 · <code>ai-base</code> MIT · permanently alpha ·
       <a href="https://github.com/EvolvingAgentsLabs">github.com/EvolvingAgentsLabs</a></span>
   </footer>
 

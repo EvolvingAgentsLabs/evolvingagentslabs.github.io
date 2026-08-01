@@ -2,21 +2,29 @@
 
 Source for **[evolvingagentslabs.github.io](https://evolvingagentslabs.github.io)**.
 
-> Experiments in how agents learn, remember, and prove what they know.
+> ai-os — an agent-based operating system.
+
+The site leads with **[ai-os](https://github.com/EvolvingAgentsLabs/ai-os)**, the
+organisation's only active project. Everything else is frozen and lives under
+`/archive/`.
 
 ## Structure
 
 ```
-index.html                      the experiment index
-experiments/<slug>/index.html   one detail page per experiment
+index.html                      ai-os — the home
+archive/index.html              the frozen experiments, 2025-2026
+experiments/<slug>/index.html   one detail page per frozen experiment
 assets/site.css                 all styles, hand-written
 tools/{data,build}.py           optional generator (see below)
 ```
 
-Navigation mirrors [labs.google/code](https://labs.google/code): **the index does not
-link to GitHub.** Cards link to a detail page; the repository appears there as a CTA
-next to the demo, if there is one. That way a visitor reads what a thing is and what
-is actually established about it before landing in a source tree.
+Navigation mirrors [labs.google/code](https://labs.google/code): a visitor reads what
+a thing is, and what is actually established about it, before landing in a source
+tree. That still holds for `/archive/` — cards link to a detail page and the
+repository appears there as a CTA.
+
+**The home is the exception, on purpose.** ai-os has no demo and no results yet; its
+design documents *are* the artifact, so the home links straight to `doc/`.
 
 Deployment is GitHub Pages on the default branch — push to `main` and it is live.
 There is no build step and nothing is templated; Jekyll passes the HTML through

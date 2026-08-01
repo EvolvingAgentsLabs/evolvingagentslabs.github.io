@@ -1,6 +1,6 @@
 # GitHub Pages Configuration
 title: Evolving Agents Labs
-description: Experiments in how agents learn, remember, and prove what they know.
+description: ai-os — an agent-based operating system. Flows above the turn, an intelligent canvas, and layered memory.
 url: "https://evolvingagentslabs.github.io"
 baseurl: ""
 
