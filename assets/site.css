@@ -4,6 +4,8 @@
   --ink:#15171B; --ink-2:#4A4F58; --ink-3:#767C86;
   --rule:#DEDEDA; --rule-strong:#C4C4BF;
   --accent:#3E52A3; --signal:#8A5C10;
+  --p-flows:#B0523C; --p-ui:#C8873A; --p-storage:#6E7C3C; --p-base:#3E52A3;
+  --s1:#B0523C; --s2:#C8873A; --s3:#6E7C3C; --s4:#2F7A72; --s5:#3E52A3; --s6:#6B4A94;
   --serif:"Newsreader",Georgia,"Times New Roman",serif;
   --mono:"IBM Plex Mono",ui-monospace,SFMono-Regular,Menlo,monospace;
   --sans:-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,Helvetica,Arial,sans-serif;
@@ -15,6 +17,8 @@
     --ink:#E8E8E4; --ink-2:#A8ADB6; --ink-3:#767C86;
     --rule:#262A30; --rule-strong:#363B43;
     --accent:#8B9BE0; --signal:#D9A441;
+  --p-flows:#CE6B52; --p-ui:#D9A441; --p-storage:#8B9B55; --p-base:#8B9BE0;
+  --s1:#CE6B52; --s2:#D9A441; --s3:#8B9B55; --s4:#3E9A90; --s5:#8B9BE0; --s6:#9B7ACB;
   }
 }
 :root[data-theme="dark"]{
@@ -22,12 +26,16 @@
   --ink:#E8E8E4; --ink-2:#A8ADB6; --ink-3:#767C86;
   --rule:#262A30; --rule-strong:#363B43;
   --accent:#8B9BE0; --signal:#D9A441;
+  --p-flows:#CE6B52; --p-ui:#D9A441; --p-storage:#8B9B55; --p-base:#8B9BE0;
+  --s1:#CE6B52; --s2:#D9A441; --s3:#8B9B55; --s4:#3E9A90; --s5:#8B9BE0; --s6:#9B7ACB;
 }
 :root[data-theme="light"]{
   --paper:#F5F5F2; --ground:#FFFFFF;
   --ink:#15171B; --ink-2:#4A4F58; --ink-3:#767C86;
   --rule:#DEDEDA; --rule-strong:#C4C4BF;
   --accent:#3E52A3; --signal:#8A5C10;
+  --p-flows:#B0523C; --p-ui:#C8873A; --p-storage:#6E7C3C; --p-base:#3E52A3;
+  --s1:#B0523C; --s2:#C8873A; --s3:#6E7C3C; --s4:#2F7A72; --s5:#3E52A3; --s6:#6B4A94;
 }
 *{box-sizing:border-box;}
 html{-webkit-text-size-adjust:100%;}
@@ -315,4 +323,60 @@ body{
 @media(max-width:38rem){
   .archive-link{grid-template-columns:1fr;gap:.75rem;}
   .archive-link .meta{display:none;}
+}
+
+/* ---- identity: four pillars ------------------------------------------- */
+
+/* base link colour, per the identity doc (accent, signal on hover).
+   Without this the browser's default :visited purple lands on the dark
+   background at ~2:1 contrast. Component-scoped rules below stay more
+   specific and are unaffected. */
+a{color:var(--accent);}
+a:hover{color:var(--signal);}
+
+.wordmark{display:inline-flex;align-items:center;}
+.wordmark .mark{
+  display:block;width:1.55em;height:1.36em;margin-right:.5em;
+  flex:none;overflow:visible;
+}
+.wordmark .mark rect{transition:fill .2s;}
+
+/* the six-colour stripe — a 3px rule, never a background */
+.stripe{display:flex;height:3px;margin-bottom:2px;}
+.stripe span{flex:1;}
+.stripe span:nth-child(1){background:var(--s1);}
+.stripe span:nth-child(2){background:var(--s2);}
+.stripe span:nth-child(3){background:var(--s3);}
+.stripe span:nth-child(4){background:var(--s4);}
+.stripe span:nth-child(5){background:var(--s5);}
+.stripe span:nth-child(6){background:var(--s6);}
+.masthead{border-bottom:0;}
+
+/* hero mark + pillar legend */
+.hero-mark{
+  display:grid;grid-template-columns:1fr auto;gap:3rem;align-items:center;
+}
+.hero-mark .markfig{display:flex;flex-direction:column;align-items:center;gap:1.1rem;}
+.hero-mark .markfig svg{width:clamp(9rem,17vw,13.5rem);height:auto;overflow:visible;}
+.hero-mark .legend-pillars{
+  display:grid;grid-template-columns:auto auto;gap:.4rem .95rem;
+  font-family:var(--mono);font-size:.6875rem;
+}
+.pf{color:var(--p-flows);} .pu{color:var(--p-ui);}
+.ps{color:var(--p-storage);} .pb{color:var(--p-base);}
+
+/* pillar cards carry their own colour */
+.pillars article{border-top:2px solid transparent;}
+.pillars article:nth-child(1){border-top-color:var(--p-flows);}
+.pillars article:nth-child(2){border-top-color:var(--p-ui);}
+.pillars article:nth-child(3){border-top-color:var(--p-storage);}
+.pillars article:nth-child(4){border-top-color:var(--p-base);}
+.pillars article:nth-child(1) h2{color:var(--p-flows);}
+.pillars article:nth-child(2) h2{color:var(--p-ui);}
+.pillars article:nth-child(3) h2{color:var(--p-storage);}
+.pillars article:nth-child(4) h2{color:var(--p-base);}
+
+@media(max-width:52rem){
+  .hero-mark{grid-template-columns:1fr;}
+  .hero-mark .markfig{align-items:flex-start;}
 }
