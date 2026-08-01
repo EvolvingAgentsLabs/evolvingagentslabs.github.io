@@ -8,7 +8,7 @@
 <meta property="og:title" content="ai-os — an agent-based operating system">
 <meta property="og:description" content="Flows above the turn, an intelligent canvas, and layered memory — built on a vendored QM base. The design is public before the code exists.">
 <meta property="og:type" content="website">
-<link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'><text y='25' font-size='24'>%E2%97%88</text></svg>">
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 96 84'%3E%3Crect x='12' y='32' width='12' height='52' rx='6' fill='%23B0523C' transform='rotate(-10 48 84)'/%3E%3Crect x='32' y='18' width='12' height='66' rx='6' fill='%23C8873A' transform='rotate(-3.5 48 84)'/%3E%3Crect x='52' y='18' width='12' height='66' rx='6' fill='%236E7C3C' transform='rotate(3.5 48 84)'/%3E%3Crect x='72' y='32' width='12' height='52' rx='6' fill='%233E52A3' transform='rotate(10 48 84)'/%3E%3C/svg%3E">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Newsreader:ital,opsz,wght@0,6..72,300;0,6..72,400;1,6..72,300&family=IBM+Plex+Mono:wght@400;500&display=swap" rel="stylesheet">
@@ -19,7 +19,7 @@
 <div class="wrap">
 
   <header class="masthead">
-    <a class="wordmark" href="/"><span class="mark">◈</span>Evolving Agents Labs</a>
+    <a class="wordmark" href="/"><svg class="mark" viewBox="0 0 96 84" aria-hidden="true"><rect x="12" y="32" width="12" height="52" rx="6" fill="var(--p-flows)" transform="rotate(-10 48 84)"/><rect x="32" y="18" width="12" height="66" rx="6" fill="var(--p-ui)" transform="rotate(-3.5 48 84)"/><rect x="52" y="18" width="12" height="66" rx="6" fill="var(--p-storage)" transform="rotate(3.5 48 84)"/><rect x="72" y="32" width="12" height="52" rx="6" fill="var(--p-base)" transform="rotate(10 48 84)"/></svg>Evolving Agents Labs</a>
     <nav class="navlinks">
       <a href="/#pillars">Pillars</a>
       <a href="/#status">Status</a>
@@ -28,21 +28,39 @@
     </nav>
   </header>
 
+  <div class="stripe" aria-hidden="true"><span></span><span></span><span></span><span></span><span></span><span></span></div>
+
   <section class="hero">
-    <p class="eyebrow">The organisation's only active project</p>
-    <h1><span class="proj">ai-os</span> — an agent&#8209;based <em>operating system</em>.</h1>
-    <p>Agents today are applications. This is the argument that they should be an
-      operating system — and that the difference is not branding, but three
-      abstractions nobody has built yet.</p>
-    <p>An OS earns the name when it owns how work survives interruption, how state
-      is addressed, and how a person perceives and steers the whole machine.
-      <a href="https://github.com/yc-software/qm">QM</a> already solves the hard
-      part underneath: a real multi-tenant harness with scoped identity,
-      permissions, sandboxes and audit. ai-os is the layer above it.</p>
-    <p class="ctas">
-      <a class="cta primary" href="https://github.com/EvolvingAgentsLabs/ai-os/tree/main/doc">Read the design →</a>
-      <a class="cta" href="https://github.com/EvolvingAgentsLabs/ai-os">Repository</a>
-    </p>
+    <div class="hero-mark">
+      <div>
+        <p class="eyebrow">The organisation's only active project</p>
+        <h1><span class="proj">ai-os</span> — an agent&#8209;based <em>operating system</em>.</h1>
+        <p>Agents today are applications. This is the argument that they should be an
+          operating system — and that the difference is not branding, but three
+          abstractions nobody has built yet.</p>
+        <p>An OS earns the name when it owns how work survives interruption, how state
+          is addressed, and how a person perceives and steers the whole machine.
+          <a href="https://github.com/yc-software/qm">QM</a> already solves the hard
+          part underneath: a real multi-tenant harness with scoped identity,
+          permissions, sandboxes and audit. ai-os is the layer above it.</p>
+        <p class="ctas">
+          <a class="cta primary" href="https://github.com/EvolvingAgentsLabs/ai-os/tree/main/doc">Read the design →</a>
+          <a class="cta" href="https://github.com/EvolvingAgentsLabs/ai-os">Repository</a>
+        </p>
+      </div>
+      <figure class="markfig">
+        <svg viewBox="0 0 96 84" role="img" aria-label="Four pillars: ai-flows, ai-ui, ai-storage, ai-base">
+          <rect x="12" y="32" width="12" height="52" rx="6" fill="var(--p-flows)" transform="rotate(-10 48 84)"/>
+          <rect x="32" y="18" width="12" height="66" rx="6" fill="var(--p-ui)" transform="rotate(-3.5 48 84)"/>
+          <rect x="52" y="18" width="12" height="66" rx="6" fill="var(--p-storage)" transform="rotate(3.5 48 84)"/>
+          <rect x="72" y="32" width="12" height="52" rx="6" fill="var(--p-base)" transform="rotate(10 48 84)"/>
+        </svg>
+        <figcaption class="legend-pillars">
+          <span class="pf">ai-flows</span><span class="pu">ai-ui</span>
+          <span class="ps">ai-storage</span><span class="pb">ai-base</span>
+        </figcaption>
+      </figure>
+    </div>
   </section>
 
   <section class="gap">
