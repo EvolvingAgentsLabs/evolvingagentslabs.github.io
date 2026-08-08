@@ -380,3 +380,15 @@ a:hover{color:var(--signal);}
   .hero-mark{grid-template-columns:1fr;}
   .hero-mark .markfig{align-items:flex-start;}
 }
+
+/* A screenshot of the running system. Bordered and captioned so it reads as
+   evidence rather than decoration — the status section claims software runs, and
+   this is what that claim looks like. */
+.status .shot { margin: 28px 0; }
+.status .shot img {
+  width: 100%; height: auto; display: block;
+  border: 1px solid rgba(255, 255, 255, 0.08); border-radius: 10px;
+}
+.status .shot figcaption {
+  margin-top: 10px; font-size: 0.85rem; line-height: 1.5; opacity: 0.62;
+}

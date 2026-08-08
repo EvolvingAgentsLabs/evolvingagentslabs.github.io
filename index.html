@@ -4,9 +4,9 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>ai-os — an agent-based operating system · Evolving Agents Labs</title>
-<meta name="description" content="Flows above the turn, an intelligent canvas, and layered memory — built on a vendored QM base. The design is public before the code exists.">
+<meta name="description" content="Flows above the turn, agents and sub-agents as markdown, and an instrument that can tell you it measured nothing. Two pillars run; two are still design.">
 <meta property="og:title" content="ai-os — an agent-based operating system">
-<meta property="og:description" content="Flows above the turn, an intelligent canvas, and layered memory — built on a vendored QM base. The design is public before the code exists.">
+<meta property="og:description" content="Flows above the turn, agents and sub-agents as markdown, and an instrument that can tell you it measured nothing. Two pillars run; two are still design.">
 <meta property="og:type" content="website">
 <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 96 84'%3E%3Crect x='12' y='32' width='12' height='52' rx='6' fill='%23B0523C' transform='rotate(-10 48 84)'/%3E%3Crect x='32' y='18' width='12' height='66' rx='6' fill='%23C8873A' transform='rotate(-3.5 48 84)'/%3E%3Crect x='52' y='18' width='12' height='66' rx='6' fill='%236E7C3C' transform='rotate(3.5 48 84)'/%3E%3Crect x='72' y='32' width='12' height='52' rx='6' fill='%233E52A3' transform='rotate(10 48 84)'/%3E%3C/svg%3E">
 <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -44,8 +44,9 @@
           part underneath: a real multi-tenant harness with scoped identity,
           permissions, sandboxes and audit. ai-os is the layer above it.</p>
         <p class="ctas">
-          <a class="cta primary" href="https://github.com/EvolvingAgentsLabs/ai-os/tree/main/doc">Read the design →</a>
+          <a class="cta primary" href="https://github.com/EvolvingAgentsLabs/ai-os/blob/main/doc/manual.md">Run it →</a>
           <a class="cta" href="https://github.com/EvolvingAgentsLabs/ai-os">Repository</a>
+          <a class="cta" href="https://github.com/EvolvingAgentsLabs/ai-os/tree/main/doc">The design</a>
         </p>
       </div>
       <figure class="markfig">
@@ -84,10 +85,11 @@
       <article>
         <h2>ai-flows</h2>
         <p class="question">What if the unit of work outlived the conversation?</p>
-        <p class="note">A flow is a declared, persisted, resumable object with a
-          goal, a shape, a state and a lineage. It records where it forked from at
-          its first commit, so two attempts can be compared. The turn becomes an
-          implementation detail.</p>
+        <p class="note"><b>Runs.</b> A flow is a declared, persisted, resumable
+          object with a goal, a shape, a state and a lineage. Agents and their
+          sub-agents are markdown files; a declared tree executes as real work. A
+          flow started by one process is finished by another, after a restart and
+          after context compaction.</p>
       </article>
       <article>
         <h2>ai-ui</h2>
@@ -115,25 +117,41 @@
 
   <section id="status" class="status">
     <p class="sectionlabel">Where this actually is</p>
-    <p><b>Design stage.</b> <code>ai-base</code> is vendored and runs. The other
-      three pillars are specified in <code>doc/</code> and <b>not yet
-      implemented</b>. Nothing on this page describes running software unless it
-      says so.</p>
-    <p>Publishing a design before the code is deliberate. The predecessor of this
-      project shipped eighteen thousand lines describing five subsystems and three
-      test functions — an architecture written down and never pinned to anything
-      that could contradict it. So each pillar here ships with <b>the measurement
-      that would show it is not worth building</b>, written before the code: that
-      a flow completes work a plain session loses, that four memory levels
-      retrieve better than one flat file, that a canvas finds state faster than a
-      transcript.</p>
-    <p>The memory claim has already come back <em>flat</em> once, on a closely
-      related experiment — 80% either way. That result is why the burden of proof
-      sits on the new axis and not on the baseline.</p>
-    <p class="ctas">
-      <a class="cta" href="https://github.com/EvolvingAgentsLabs/ai-os/blob/main/doc/08-roadmap.md">Roadmap</a>
-      <a class="cta" href="https://github.com/EvolvingAgentsLabs/ai-os/tree/main/doc/adr">Decisions</a>
-    </p>
+    <p><b>Two pillars run.</b> <code>ai-base</code> is vendored and runs.
+      <b><code>ai-flows</code> runs</b> — the flow engine, a signed HTTP API,
+      multi-agent composition from markdown-declared trees, and the measurement
+      harness below. 235 tests. <code>ai-ui</code> and <code>ai-storage</code> are
+      still specified and <b>not implemented</b>; the screenshot below is served by
+      <code>ai-flows</code>, not by a canvas. Nothing on this page describes
+      running software unless it says so.</p>
+
+    <figure class="shot">
+      <img src="/assets/img/ai-os-system.jpg" alt="Every scope level, its members and the agents each defines" loading="lazy">
+      <figcaption>Organisation, projects, groups and individuals — with each scope's
+        roster and its agent tree. From a live instance.</figcaption>
+    </figure>
+
+    <p>Each pillar ships with <b>the measurement that would show it is not worth
+      building</b>, written before the code. Two have now come back and neither
+      flattered us. A flow <em>does</em> survive what a plain session loses — proven
+      by starting one in one process and finishing it in another, on two harnesses.
+      And the question of whether adding a reviewer to an agent tree helps came back
+      <em>unmeasurable</em>: across four attempts the producer was already correct,
+      so a review stage had nothing to add.</p>
+
+    <p>That second result is the one worth reading. It is the shape of Google's
+      <a href="https://arxiv.org/abs/2507.15743">g-AMIE study</a>, where physician
+      oversight of an agent improved 6.7% of cases and <b>reduced quality in
+      21.7%</b> — oversight adding least where the output was already strong. Our
+      first run appeared to reproduce it, reporting a reviewer that damaged a correct
+      answer. <b>It was an artefact of a check that scored “The answer is 24.” as
+      wrong</b>, and retracting it invalidated four other numbers. All of it is
+      written up rather than deleted, because a finding that was wrong and the reason
+      it looked right is the most useful record we can keep.</p>
+
+    <p>The predecessor of this project shipped eighteen thousand lines describing
+      five subsystems and three test functions — an architecture written down and
+      never pinned to anything that could contradict it. This is the correction.</p>
   </section>
 
   <a class="archive-link" href="/archive/">
