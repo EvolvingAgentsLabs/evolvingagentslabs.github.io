@@ -1,0 +1,738 @@
+<!doctype html><html lang="en"><meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>ai-os — the desk</title>
+<style>
+:root{
+  --desk:#8f8f93; --face:#d8d4cc; --paper:#fbfaf7; --ink:#16181a; --dim:#5f646b;
+  --lite:rgba(255,255,255,.75); --dark:rgba(0,0,0,.38);
+  --sans:"Geneva","Verdana","DejaVu Sans",system-ui,sans-serif;
+  --mono:"Monaco","Menlo",ui-monospace,"Courier New",monospace;
+}
+*{box-sizing:border-box}
+code{font-family:var(--mono);font-size:12px}
+.dim,.muted{color:var(--dim)}
+.warn{color:#8a5a00}
+.err{color:#94271b}
+.ok{color:#2c6b2c}
+
+html,body{min-height:100%}
+body{margin:0;color:var(--ink);font:14px/1.55 var(--sans)}
+
+/* The 50% dither the desktop was in 1991, drawn as a 2px checkerboard. */
+.deskbg{
+  background:var(--desk);
+  background-image:
+    linear-gradient(45deg,rgba(0,0,0,.07) 25%,transparent 25%,transparent 75%,rgba(0,0,0,.07) 75%),
+    linear-gradient(45deg,rgba(0,0,0,.07) 25%,transparent 25%,transparent 75%,rgba(0,0,0,.07) 75%);
+  background-size:4px 4px; background-position:0 0,2px 2px;
+}
+
+/* A window: title bar, border, hard shadow. The unit of "one thing ends here". */
+.win{background:var(--face);border:1px solid #000;box-shadow:3px 3px 0 rgba(0,0,0,.4)}
+.win .bar{display:flex;align-items:center;gap:8px;padding:4px 7px;border-bottom:1px solid #000;
+  background:var(--face);
+  background-image:repeating-linear-gradient(180deg,rgba(0,0,0,.42) 0 1px,transparent 1px 3px);}
+.win .bar h1,.win .bar h2{font-size:13px;margin:0;font-weight:700;letter-spacing:.02em;
+  background:var(--face);padding:1px 12px;white-space:nowrap}
+.win .bar .count{font-weight:400;color:var(--dim)}
+.win .box{width:11px;height:11px;flex:0 0 11px;background:var(--face);border:1px solid #000;
+  box-shadow:inset 1px 1px 0 var(--lite),inset -1px -1px 0 var(--dark)}
+.win .box.zoom{margin-left:auto}
+.win-body{padding:14px 16px 16px;background:var(--paper)}
+/* Recessed: a container that holds things, rather than a thing. */
+.win.tray .win-body{background:#cfcbc2;
+  box-shadow:inset 2px 2px 0 var(--dark),inset -2px -2px 0 var(--lite);padding:12px}
+
+/* The cube: the unit of kind and state. */
+.cube{display:inline-block;width:13px;height:13px;flex:0 0 13px;background:var(--c);
+  border:1px solid rgba(0,0,0,.55);
+  box-shadow:inset 1.5px 1.5px 0 rgba(255,255,255,.5),inset -1.5px -1.5px 0 rgba(0,0,0,.3);
+  vertical-align:-2px;margin-right:6px}
+.cube.sm{width:9px;height:9px;flex-basis:9px;vertical-align:0;margin-right:5px}
+.cube.lg{width:17px;height:17px;flex-basis:17px;vertical-align:-3px}
+.strip{display:inline-flex;align-items:center}
+.strip .cube{margin-right:3px}
+
+/* A page with a folded corner, in two boxes and a triangle. */
+.doc-icon{position:relative;width:16px;height:20px;flex:0 0 16px;background:#fff;border:1px solid #000;
+  box-shadow:1px 1px 0 rgba(0,0,0,.2)}
+.doc-icon::before{content:"";position:absolute;right:-1px;top:-1px;border-width:0 7px 7px 0;
+  border-style:solid;border-color:transparent #b9b4a8 transparent transparent}
+.doc-icon::after{content:"";position:absolute;left:3px;top:8px;width:9px;height:1px;color:#b9b4a8;
+  box-shadow:0 0 0 0 currentColor,0 3px 0 currentColor,0 6px 0 currentColor;background:currentColor}
+
+.menubar{background:var(--paper);border-bottom:1px solid #000;
+  padding:5px 14px;display:flex;gap:14px;align-items:center;flex-wrap:wrap;font-size:12px;
+  box-shadow:0 1px 0 rgba(255,255,255,.6) inset}
+.menubar .apple{font-weight:700;letter-spacing:.04em}
+.menubar .sep{color:#a9a49a}
+.menubar .right{margin-left:auto;font-family:var(--mono);font-size:11px;color:var(--dim)}
+
+.key{display:flex;gap:34px;flex-wrap:wrap;font-size:12px}
+.key ul{list-style:none;margin:6px 0 0;padding:0}
+.key li{display:flex;align-items:center;padding:1px 0}
+.key strong{font-size:12px}
+
+body{overflow:hidden}
+.desk{position:relative;width:100vw;height:calc(100vh - 30px);overflow:auto}
+.desk.hasdrawer .surface{padding-bottom:160px}
+.surface{position:relative;width:2400px;height:1600px}
+
+/* A document on the desk. Same folded-corner idea as the explorer, at object size. */
+.docnode{position:absolute;width:260px;background:var(--paper);border:1px solid #000;
+  box-shadow:3px 3px 0 rgba(0,0,0,.35);user-select:none;touch-action:none}
+.docnode.dragging{box-shadow:6px 6px 0 rgba(0,0,0,.35);z-index:50}
+.docnode.over{outline:2px dashed #2f6fb5;outline-offset:2px}
+.docnode .dbar{display:flex;align-items:center;gap:6px;padding:3px 6px;border-bottom:1px solid #000;
+  background:var(--face);cursor:grab;
+  background-image:repeating-linear-gradient(180deg,rgba(0,0,0,.42) 0 1px,transparent 1px 3px)}
+.docnode .dbar .t{font-size:12px;font-weight:700;background:var(--face);padding:1px 8px;
+  white-space:nowrap;overflow:hidden;text-overflow:ellipsis;max-width:170px}
+.docnode .body{padding:8px 9px 10px}
+.docnode .goal{font-size:12px;color:#3b3f44;margin:0 0 6px;
+  display:-webkit-box;-webkit-line-clamp:2;-webkit-box-orient:vertical;overflow:hidden}
+.docnode .meta{font-size:11px;color:var(--dim);display:flex;align-items:center;gap:6px;flex-wrap:wrap}
+
+/* The stack: cubes resting on the document, offset so the pile reads as a pile. */
+.stack{min-height:26px;margin-top:8px;padding:4px;border:1px dashed #c6c1b7;
+  display:flex;flex-wrap:wrap;gap:3px;align-items:center}
+.stack.empty::before{content:"drop an agent here";font-size:10px;color:#a9a49a}
+
+/* An agent cube, at object size: big enough to grab, still a cube. */
+.acube{position:absolute;display:flex;align-items:center;gap:5px;padding:3px 7px 3px 4px;
+  background:var(--face);border:1px solid #000;box-shadow:2px 2px 0 rgba(0,0,0,.3);
+  font-size:11px;cursor:grab;user-select:none;touch-action:none;white-space:nowrap;z-index:20}
+.acube.dragging{box-shadow:5px 5px 0 rgba(0,0,0,.3);z-index:60;cursor:grabbing}
+.acube.instack{position:static;box-shadow:1px 1px 0 rgba(0,0,0,.3);padding:2px 6px 2px 3px}
+.acube .blk{width:12px;height:12px;background:var(--c);border:1px solid rgba(0,0,0,.55);
+  box-shadow:inset 1.5px 1.5px 0 rgba(255,255,255,.5),inset -1.5px -1.5px 0 rgba(0,0,0,.3)}
+.acube.missing{opacity:.55;cursor:not-allowed}
+.acube.missing .n{text-decoration:line-through}
+/* Running: the one animation on the desk, because "is it moving" is the question. */
+.acube.busy{animation:pulse 1.1s ease-in-out infinite}
+@keyframes pulse{0%,100%{box-shadow:2px 2px 0 rgba(0,0,0,.3)}50%{box-shadow:2px 2px 0 rgba(224,160,32,.9)}}
+
+.shelf{position:absolute;left:0;top:0;bottom:0;width:150px;padding:26px 8px 8px;
+  background:rgba(0,0,0,.06);border-right:1px solid rgba(0,0,0,.25)}
+.shelf h3{position:absolute;top:6px;left:8px;margin:0;font-size:10px;letter-spacing:.1em;
+  text-transform:uppercase;color:#3b3f44}
+
+/* One column on the right, so the panel and the key stack instead of landing on
+   top of each other. They were separately fixed -- panel to the top, key to the
+   bottom -- which is fine on a tall window and overlaps on a short one. */
+.rail{position:fixed;right:14px;top:44px;bottom:14px;width:290px;z-index:200;
+  display:flex;flex-direction:column;gap:12px;overflow:auto;pointer-events:none}
+.rail>*{pointer-events:auto;flex:0 0 auto}
+.rail .spacer{flex:1 1 auto;min-height:0}
+.panel{width:100%}
+.panel .win-body{padding:10px 12px;font-size:12px}
+.panel h4{margin:0 0 4px;font-size:12px}
+.panel .act{display:flex;gap:6px;margin-top:8px;flex-wrap:wrap}
+button{font:inherit;font-size:11px;padding:2px 9px;background:var(--face);border:1px solid #000;
+  box-shadow:inset 1px 1px 0 var(--lite),inset -1px -1px 0 var(--dark);cursor:pointer}
+button:active{box-shadow:inset -1px -1px 0 var(--lite),inset 1px 1px 0 var(--dark)}
+button[disabled]{opacity:.5;cursor:default}
+.steps{list-style:none;margin:6px 0 0;padding:0}
+.steps li{display:flex;gap:5px;align-items:baseline;padding:1px 0;font-size:11px}
+.note{margin-top:8px;padding:6px 8px;border:1px solid #c6c1b7;background:#f0ece4;font-size:11px}
+.note.warn{border-left:4px solid #e0a020}
+.note.alert{border-left:4px solid #b03a2e;background:#f7ebe8;color:#7d2419}
+
+/* Tabs: state and trace answer different questions about the same document. */
+.tabs{display:flex;gap:4px;margin:8px 0 0}
+.tabs button{font-size:10px;padding:1px 8px}
+.tabs button[aria-selected="true"]{box-shadow:inset -1px -1px 0 var(--lite),inset 1px 1px 0 var(--dark);font-weight:700}
+.tr{margin-top:8px}
+.tr .st{border-top:1px solid #e4dfd6;padding:5px 0}
+.tr .hd{display:flex;gap:5px;align-items:baseline}
+.tr .res{margin:4px 0 0 16px;padding:4px 6px;background:#f0ece4;border:1px solid #ded9d0;
+  white-space:pre-wrap;font-size:10px;max-height:96px;overflow:auto}
+.tr .att{margin:3px 0 0 16px;font-size:10px;color:var(--dim);font-family:var(--mono)}
+.tr .flag{margin:4px 0 0 16px;font-size:10px;color:#7d2419}
+
+/* The memory drawer. Hatched, because none of it is built. */
+.drawer{position:fixed;left:0;bottom:0;right:318px;height:150px;
+  border-top:2px solid #000;background:#cfcbc2;
+  background-image:repeating-linear-gradient(45deg,rgba(0,0,0,.05) 0 6px,transparent 6px 12px);
+  padding:22px 12px 12px;overflow-x:auto;display:flex;gap:10px;align-items:flex-start}
+.drawer h3{position:absolute;top:4px;left:12px;margin:0;font-size:10px;letter-spacing:.1em;
+  text-transform:uppercase;color:#3b3f44}
+/* Beside the title, not opposite it: the right edge is where the fixed rail
+   lands, and the one marking that must never be hidden was hidden there. */
+.drawer .stamp{position:absolute;top:4px;left:74px;font-size:10px;color:#7d2419;font-weight:700;
+  letter-spacing:.06em;text-transform:uppercase;border:1px solid #7d2419;padding:0 5px}
+.card{flex:0 0 210px;background:var(--paper);border:1px dashed #7d2419;padding:6px 8px;font-size:10px;
+  box-shadow:2px 2px 0 rgba(0,0,0,.15)}
+.card .lv{display:flex;align-items:center;gap:5px;font-weight:700;margin-bottom:3px}
+.card .bd{white-space:pre-wrap;max-height:64px;overflow:hidden;color:#3b3f44}
+.card .from{margin-top:4px;color:var(--dim);font-family:var(--mono);font-size:9px}
+.levels{display:flex;gap:10px;font-size:10px;margin-left:auto;align-items:flex-start;flex:0 0 auto}
+.levels div{display:flex;align-items:center;gap:4px}
+select{font:inherit;font-size:11px}
+.sim{background:#7d2419;color:#fbfaf7;padding:1px 8px;font-size:10px;font-weight:700;
+  letter-spacing:.06em;text-transform:uppercase}
+.toast{position:fixed;left:50%;transform:translateX(-50%);bottom:18px;z-index:300;
+  background:var(--paper);border:1px solid #000;box-shadow:3px 3px 0 rgba(0,0,0,.4);
+  padding:7px 14px;font-size:12px;display:none}
+</style>
+<div class="menubar">
+  <span class="apple">ai-os</span>
+  <span class="sim">Simulated — no core, no model, nothing stored</span><span class="dim">reloading starts over</span>
+  <span class="sep">|</span>
+  <label>Scope <select id="scope"><option value="group:web-project-demo" selected>group:web-project-demo</option></select></label>
+  <span class="sep">|</span>
+  <span>2 document(s) · 6 agent(s) · 3 person(s)</span>
+  <button id="reload">Refresh</button>
+  <span class="right">harness simulated · <span id="stamp">1970-01-01T00:00:00.000Z</span></span>
+</div>
+<div class="desk deskbg hasdrawer">
+  <div class="surface" id="surface">
+    <div class="shelf"><h3>Agents</h3></div>
+  </div>
+  <div class="drawer" id="drawer"></div>
+</div>
+<div class="rail">
+  <div class="win panel" id="panel" style="display:none">
+    <div class="bar"><span class="box"></span><h2>Selected</h2><span class="box zoom"></span></div>
+    <div class="win-body"></div>
+  </div>
+  <div class="spacer"></div>
+  <div class="win panel" id="key">
+    <div class="bar"><span class="box"></span><h2>Key</h2><span class="box zoom"></span></div>
+    <div class="win-body"><div class="key">
+    <div><strong>Agents</strong><ul><li><span class="cube" style="--c:#e0a020"></span><span>agent</span></li><li><span class="cube" style="--c:#c98f2e"></span><span>subagent</span></li><li><span class="cube" style="--c:#b03a2e"></span><span>declared, no file</span></li><li><span class="cube" style="--c:#5a5f66"></span><span>person</span></li></ul></div>
+    <div><strong>Steps</strong><ul><li><span class="cube" style="--c:#3f8f3f"></span><span>done</span></li><li><span class="cube" style="--c:#e0a020"></span><span>running</span></li><li><span class="cube" style="--c:#b9b4a8"></span><span>pending / waiting / draft</span></li><li><span class="cube" style="--c:#b03a2e"></span><span>failed / blocked</span></li><li><span class="cube" style="--c:#7a7469"></span><span>abandoned</span></li></ul></div>
+  </div></div>
+  </div>
+</div>
+<div class="toast" id="toast"></div>
+<script>window.__DESK__ = {"scopeId":"group:web-project-demo","docs":[{"id":"flow-ledger","title":"Ledger currency rewrite","goal":"rewrite the ledger so every amount carries its currency","state":"waiting","updatedAt":0,"done":2,"total":3,"steps":[{"index":0,"state":"done","agent":"SchemaAgent","intent":"Call your `delegate` tool with agent=\"SchemaAgent\". The task: rewrite the ledger so every amount carries its currency","result":"The ledger table needs a currency column, decimal precision twelve scale two, backfilled from settlement records and indexed alongside merchant identifier.","attempts":[{"n":1,"state":"done","runId":"run-0a7f3c210","error":null,"digest":"schemaag000","source":"run.reply"}]},{"index":1,"state":"done","agent":"MigrationAgent","intent":"Call your `delegate` tool with agent=\"MigrationAgent\". The task: rewrite the ledger so every amount carries its currency","result":"Rewrote /root/workspace/ledger.txt to ledger_with_currency.txt. Every amount now carries its USD prefix; column spacing preserved exactly.","attempts":[{"n":1,"state":"done","runId":"run-1a7f3c210","error":null,"digest":"migratio001","source":"run.reply"}]},{"index":2,"state":"pending","agent":"ReviewAgent","intent":"Call your `delegate` tool with agent=\"ReviewAgent\". The task: rewrite the ledger so every amount carries its currency","result":null,"attempts":[]}],"trace":{"movement":"not enough to say","movementTone":"muted","detail":"0 observation(s)","ignoredCount":0,"steps":[{"index":0,"state":"done","agent":"SchemaAgent","result":"The ledger table needs a currency column, decimal precision twelve scale two, backfilled from settlement records and indexed alongside merchant identifier.","attempts":[{"n":1,"state":"done","runId":"run-0a7f3c210","digest":null,"source":null,"error":null}]},{"index":1,"state":"done","agent":"MigrationAgent","result":"Rewrote /root/workspace/ledger.txt to ledger_with_currency.txt. Every amount now carries its USD prefix; column spacing preserved exactly.","attempts":[{"n":1,"state":"done","runId":"run-1a7f3c210","digest":null,"source":null,"error":null}]},{"index":2,"state":"pending","agent":"ReviewAgent","result":null,"attempts":[]}]}},{"id":"flow-duplicates","title":"Duplicate ledger rows","goal":"find and report duplicate rows in the ledger","state":"draft","updatedAt":0,"done":0,"total":1,"steps":[{"index":0,"state":"pending","agent":"DataQualityAgent","intent":"Call your `delegate` tool with agent=\"DataQualityAgent\". The task: rewrite the ledger so every amount carries its currency","result":null,"attempts":[]}],"trace":{"movement":"not enough to say","movementTone":"muted","detail":"0 observation(s)","ignoredCount":0,"steps":[{"index":0,"state":"pending","agent":"DataQualityAgent","result":null,"attempts":[]}]}}],"agents":[{"name":"LedgerLead","description":"Owns the ledger rewrite. Splits work and routes it to the specialists.","tools":["read","write","execute"],"child":false,"missing":false},{"name":"SchemaAgent","description":"Designs and checks the ledger schema.","tools":["read","write"],"child":true,"missing":false},{"name":"MigrationAgent","description":"Writes and dry-runs migrations.","tools":["read","write","execute"],"child":true,"missing":false},{"name":"ReviewAgent","description":"Reviews a change against the ledger invariants.","tools":["read"],"child":true,"missing":false},{"name":"DataQualityAgent","description":"Checks the ledger for drift and duplicates.","tools":["read","execute"],"child":false,"missing":false},{"name":"AnomalyScanner","description":"Declared in a subagents list. No file behind it.","tools":[],"child":true,"missing":true}],"layout":{"scopeId":"group:web-project-demo","docs":{"flow-ledger":{"x":178,"y":24,"pinned":false},"flow-duplicates":{"x":466,"y":24,"pinned":false}},"cubes":{"LedgerLead":{"x":14,"y":24,"pinned":false,"onDoc":null,"slot":0},"SchemaAgent":{"x":0,"y":0,"pinned":false,"onDoc":"flow-ledger","slot":0},"MigrationAgent":{"x":0,"y":0,"pinned":false,"onDoc":"flow-ledger","slot":1},"ReviewAgent":{"x":0,"y":0,"pinned":false,"onDoc":"flow-ledger","slot":2},"DataQualityAgent":{"x":0,"y":0,"pinned":false,"onDoc":"flow-duplicates","slot":0},"AnomalyScanner":{"x":14,"y":54,"pinned":false,"onDoc":null,"slot":0}}},"notes":[],"memoryLevels":[{"level":"system","color":"#6b4fa8","note":"the org's own; read-only everywhere below"},{"level":"user","color":"#3f8f3f","note":"one person's, across every project they are in"},{"level":"project","color":"#2f6fb5","note":"the scope's; what a team knows"},{"level":"flow","color":"#c8781b","note":"one flow's working notes — expected to die with it"}],"busy":{},"stateColors":{"done":"#3f8f3f","running":"#e0a020","pending":"#b9b4a8","failed":"#b03a2e","blocked":"#b03a2e","waiting":"#b9b4a8","abandoned":"#7a7469","draft":"#b9b4a8"},"agentColor":"#e0a020","subagentColor":"#c98f2e","missingColor":"#b03a2e"};</script>
+<script>
+(() => {
+  // The whole backend, in memory. Shapes match the real API exactly; where they
+  // drift, the demo lies about the product, which is the one thing it may not do.
+  const S = window.__DESK__;
+  const world = {
+    docs: JSON.parse(JSON.stringify(S.docs)),
+    agents: JSON.parse(JSON.stringify(S.agents)),
+    notes: JSON.parse(JSON.stringify(S.notes || [])),
+    layout: JSON.parse(JSON.stringify(S.layout)),
+  };
+
+  const agentOf = (intent) => {
+    const m = /agent="([^"]+)"/.exec(intent);
+    return m ? m[1] : null;
+  };
+
+  // Canned replies, so advancing produces movement without a model. Keyed by
+  // agent because a reply that ignores which agent produced it cannot show the
+  // one finding worth showing -- a step that carried nothing forward.
+  const REPLIES = {
+    SchemaAgent:
+      'The ledger table needs a currency column, decimal precision twelve scale two, ' +
+      'backfilled from settlement records and indexed alongside merchant identifier.',
+    MigrationAgent:
+      'Rewrote /root/workspace/ledger.txt to ledger_with_currency.txt. Every amount ' +
+      'now carries its USD prefix; column spacing preserved exactly.',
+    ReviewAgent:
+      "Looks fine to me.",
+    DataQualityAgent:
+      'Scanned 4,182 rows. Found 3 duplicate pairs sharing a settlement id, all on 2025-01-05.',
+    LedgerLead:
+      'Split the goal and routed each piece. Schema first, then migration, then review.',
+  };
+
+  const digestFor = (agent, n) => (agent || 'step').toLowerCase().slice(0, 8) + '00' + n;
+
+  // The real instruments live in ai-flows and cannot be imported into a static
+  // page. These are the same RULES, restated: below two observations say so, a
+  // repeat is drift, otherwise progressing. Kept tiny on purpose -- the demo
+  // must not become a second implementation of the measurement.
+  const traceOf = (steps) => {
+    const digests = [];
+    for (const s of steps) for (const a of (s.attempts || [])) if (a.digest) digests.push(a.digest);
+    let movement = 'not enough to say', tone = 'muted';
+    let detail = digests.length + ' observation(s)';
+    if (digests.length >= 2) {
+      detail = digests.length + ' observations · δ ≤ 14.6%';
+      const repeats = digests.some((d, i) => i > 0 && d === digests[i - 1]);
+      movement = repeats ? 'drift — repeating itself' : 'progressing';
+      tone = repeats ? 'warn' : 'ok';
+    }
+    // "Used nothing it was given": the distinctive words of the previous result
+    // that appear in this one. Same shape as contribution.ts, same threshold.
+    const words = (t) => new Set(String(t || '').toLowerCase().match(/[a-z]{4,}/g) || []);
+    const out = steps.map((s) => ({ ...s, agent: agentOf(s.intent), attempts: s.attempts || [] }));
+    let ignoredCount = 0;
+    const settled = out.filter((s) => s.state === 'done' && s.result);
+    for (let i = 1; i < settled.length; i += 1) {
+      const prior = words(settled[i - 1].result);
+      if (prior.size < 12) continue;
+      const mine = words(settled[i].result);
+      const carried = [...prior].filter((w) => mine.has(w)).length / prior.size;
+      if (carried === 0) {
+        settled[i].ignoredInput = { carried: 0, inputTokens: prior.size };
+        ignoredCount += 1;
+      }
+    }
+    return { movement, movementTone: tone, detail, steps: out, ignoredCount };
+  };
+
+  const noteFor = (doc) => {
+    const carried = doc.trace.steps.filter((s) => !s.ignoredInput && s.result);
+    return {
+      id: 'note-' + doc.id,
+      level: 'flow',
+      title: doc.title,
+      body:
+        'Goal: ' + doc.goal + '\n\n' +
+        carried.map((s) => (s.agent || 'step') + ': ' + String(s.result).slice(0, 160)).join('\n') +
+        (carried.length < doc.trace.steps.length
+          ? '\n\n(' + (doc.trace.steps.length - carried.length) + ' step(s) carried nothing forward and were dropped.)'
+          : ''),
+      from: [doc.id],
+    };
+  };
+
+  const recompute = () => {
+    for (const d of world.docs) {
+      d.trace = traceOf(d.steps);
+      d.done = d.steps.filter((s) => s.state === 'done').length;
+      d.total = d.steps.length;
+      if (d.total && d.done === d.total && d.state !== 'done') d.state = 'waiting';
+    }
+    world.notes = world.docs.filter((d) => d.state === 'done').map(noteFor);
+  };
+
+  const stateBody = () => {
+    recompute();
+    const busy = {};
+    for (const d of world.docs) {
+      for (const s of d.steps) if (s.state === 'running' && agentOf(s.intent)) busy[agentOf(s.intent)] = true;
+    }
+    return { at: Date.now(), docs: world.docs, agents: world.agents, layout: world.layout, notes: world.notes, busy };
+  };
+
+  const findDoc = (id) => world.docs.find((d) => d.id === id);
+
+  const json = (body, status) =>
+    new Response(JSON.stringify(body), {
+      status: status || 200,
+      headers: { 'content-type': 'application/json' },
+    });
+
+  const real = window.fetch.bind(window);
+  window.fetch = async (input, init) => {
+    const url = typeof input === 'string' ? input : (input && input.url) || '';
+    // Anything not one of the desk's own three endpoints goes to the network,
+    // so this shim cannot silently swallow a call somebody adds later.
+    if (!/^\/(state|layout|assign|unassign|advance)/.test(url)) return real(input, init);
+    const body = init && init.body ? JSON.parse(init.body) : {};
+
+    if (url.indexOf('/state') === 0) return json(stateBody());
+
+    if (url.indexOf('/layout') === 0) {
+      world.layout = body.layout;
+      return json({ ok: true });
+    }
+
+    if (url.indexOf('/assign') === 0) {
+      const doc = findDoc(body.flowId);
+      const agent = world.agents.find((a) => a.name === body.agent);
+      if (!doc) return json({ error: 'no such flow in this scope' }, 404);
+      if (!agent || agent.missing) return json({ error: 'no agent file for "' + body.agent + '"' }, 400);
+      const index = doc.steps.reduce((m, s) => Math.max(m, s.index + 1), 0);
+      doc.steps.push({
+        index,
+        state: 'pending',
+        intent: 'Call your delegate tool with agent="' + body.agent + '". The task: ' + doc.goal,
+        result: null,
+        attempts: [],
+      });
+      if (doc.state === 'done') doc.state = 'waiting';
+      return json({ ok: true, stepIndex: index, flowTitle: doc.title });
+    }
+
+    if (url.indexOf('/unassign') === 0) {
+      const doc = findDoc(body.flowId);
+      if (!doc) return json({ error: 'no such flow in this scope' }, 404);
+      const mine = doc.steps.filter((s) => agentOf(s.intent) === body.agent);
+      if (!mine.length) return json({ ok: true, removed: 0, kept: [], note: 'no step was queued for this agent' });
+      const kept = [];
+      let removed = 0;
+      for (const s of mine) {
+        // The rule the product enforces: an attempt is history.
+        if (s.state !== 'pending' || (s.attempts || []).length) {
+          kept.push('step ' + s.index + ' (' + s.state + ')');
+          continue;
+        }
+        doc.steps.splice(doc.steps.indexOf(s), 1);
+        removed += 1;
+      }
+      return json({
+        ok: true,
+        removed,
+        kept,
+        ...(kept.length
+          ? { note: kept.join(', ') + ' already started and cannot be removed — an attempt is history' }
+          : {}),
+      });
+    }
+
+    if (url.indexOf('/advance') === 0) {
+      const doc = findDoc(body.flowId);
+      if (!doc) return json({ error: 'no such flow' }, 404);
+      const next = doc.steps.find((s) => s.state === 'pending');
+      if (!next) {
+        doc.state = 'done';
+        return json({ ok: true, outcome: 'complete' });
+      }
+      const agent = agentOf(next.intent);
+      next.state = 'running';
+      next.attempts = [{ n: 1, state: 'running', runId: 'run-' + next.index + 'a7f3c210', error: null, digest: null, source: null }];
+      // A delay, so "running" is a state a person can see rather than a frame.
+      setTimeout(() => {
+        next.state = 'done';
+        next.result = REPLIES[agent] || ('Step ' + next.index + ' completed.');
+        next.attempts = [{
+          n: 1, state: 'done', runId: 'run-' + next.index + 'a7f3c210', error: null,
+          digest: digestFor(agent, next.index), source: 'run.reply',
+        }];
+        if (doc.steps.every((s) => s.state === 'done')) doc.state = 'waiting';
+      }, 1600);
+      return json({ ok: true, outcome: 'advanced' });
+    }
+
+    return json({ error: 'not found' }, 404);
+  };
+
+  recompute();
+})();
+</script>
+<script>
+(() => {
+  const S = window.__DESK__;
+  const surface = document.getElementById('surface');
+  const toast = document.getElementById('toast');
+  let layout = S.layout;
+  let selected = null;
+
+  const say = (msg, ms) => {
+    toast.textContent = msg; toast.style.display = 'block';
+    clearTimeout(say._t); say._t = setTimeout(() => { toast.style.display = 'none'; }, ms || 2600);
+  };
+
+  const post = async (path, body) => {
+    const r = await fetch(path, {
+      method: 'POST', headers: { 'content-type': 'application/json' }, body: JSON.stringify(body)
+    });
+    const j = await r.json().catch(() => ({}));
+    if (!r.ok) throw new Error(j.error || ('HTTP ' + r.status));
+    return j;
+  };
+
+  const saveLayout = () => {
+    // Fire and forget: a failed layout save must never block a drag, and the
+    // next successful one carries the whole layout anyway.
+    fetch('/layout', { method: 'PUT', headers: { 'content-type': 'application/json' },
+      body: JSON.stringify({ scopeId: S.scopeId, layout }) }).catch(() => {});
+  };
+
+  // ---- drag ---------------------------------------------------------------
+  // Pointer events rather than HTML5 drag-and-drop: DnD cannot show the object
+  // moving under the finger on touch, and "the cube moves" is the whole point.
+  let drag = null;
+
+  const startDrag = (el, kind, id, ev) => {
+    if (el.classList.contains('missing')) { say('This agent is declared with no file behind it.'); return; }
+    const r = el.getBoundingClientRect();
+    const sr = surface.getBoundingClientRect();
+    drag = { el, kind, id, dx: ev.clientX - r.left, dy: ev.clientY - r.top, sr, moved: false };
+    el.classList.add('dragging');
+    el.setPointerCapture(ev.pointerId);
+    if (kind === 'cube') { el.classList.remove('instack'); surface.appendChild(el); el.style.position = 'absolute'; }
+    ev.preventDefault();
+  };
+
+  const moveDrag = (ev) => {
+    if (!drag) return;
+    drag.moved = true;
+    const x = ev.clientX - drag.sr.left - drag.dx + surface.parentElement.scrollLeft;
+    const y = ev.clientY - drag.sr.top - drag.dy + surface.parentElement.scrollTop;
+    drag.el.style.left = Math.max(0, x) + 'px';
+    drag.el.style.top = Math.max(0, y) + 'px';
+    if (drag.kind === 'cube') {
+      const over = docUnder(ev.clientX, ev.clientY);
+      document.querySelectorAll('.docnode.over').forEach((d) => d.classList.remove('over'));
+      if (over) over.classList.add('over');
+    }
+  };
+
+  const docUnder = (cx, cy) => {
+    for (const d of document.querySelectorAll('.docnode')) {
+      const r = d.getBoundingClientRect();
+      if (cx >= r.left && cx <= r.right && cy >= r.top && cy <= r.bottom) return d;
+    }
+    return null;
+  };
+
+  const endDrag = async (ev) => {
+    if (!drag) return;
+    const d = drag; drag = null;
+    d.el.classList.remove('dragging');
+    document.querySelectorAll('.docnode.over').forEach((x) => x.classList.remove('over'));
+    if (!d.moved) { select(d.kind, d.id); return; }
+
+    const x = parseInt(d.el.style.left, 10) || 0;
+    const y = parseInt(d.el.style.top, 10) || 0;
+
+    if (d.kind === 'doc') {
+      layout.docs[d.id] = { x, y, pinned: true };
+      saveLayout();
+      return;
+    }
+    const onto = docUnder(ev.clientX, ev.clientY);
+    if (!onto) {
+      const was = layout.cubes[d.id] || { slot: 0, onDoc: null };
+      const cameFrom = was.onDoc;
+      layout.cubes[d.id] = { x, y, pinned: true, onDoc: null, slot: was.slot };
+      saveLayout(); render();
+      if (!cameFrom) return;
+      // Taking a cube off a document is the inverse of dropping one on, so it
+      // has to undo the same thing. Leaving the step queued would show the agent
+      // as idle while its work sat ready to run.
+      try {
+        const res = await post('/unassign', { scopeId: S.scopeId, flowId: cameFrom, agent: d.id });
+        if (res.kept && res.kept.length) {
+          // Something already started. The cube goes back, because the picture
+          // must not claim an agent was taken off work it is doing.
+          layout.cubes[d.id] = { x, y, pinned: true, onDoc: cameFrom, slot: was.slot };
+          saveLayout();
+          say(res.note, 6000);
+        } else if (res.removed) {
+          say('Removed ' + res.removed + ' queued step(s) for ' + d.id + '.', 4000);
+        }
+        await refresh();
+      } catch (e) {
+        layout.cubes[d.id] = { x, y, pinned: true, onDoc: cameFrom, slot: was.slot };
+        saveLayout(); render();
+        say('Could not remove the step: ' + e.message, 5000);
+      }
+      return;
+    }
+    const flowId = onto.dataset.id;
+    const occupied = Object.values(layout.cubes).filter((c) => c.onDoc === flowId);
+    const slot = occupied.length ? Math.max.apply(null, occupied.map((c) => c.slot)) + 1 : 0;
+    layout.cubes[d.id] = { x, y, pinned: true, onDoc: flowId, slot };
+    saveLayout(); render();
+    try {
+      const res = await post('/assign', { scopeId: S.scopeId, flowId, agent: d.id });
+      say('Step ' + res.stepIndex + ' added: ' + d.id + ' on "' + res.flowTitle + '". Not run yet.', 4200);
+      await refresh();
+    } catch (e) {
+      say('Could not add the step: ' + e.message, 5000);
+    }
+  };
+
+  window.addEventListener('pointermove', moveDrag);
+  window.addEventListener('pointerup', endDrag);
+  window.addEventListener('pointercancel', endDrag);
+
+  // ---- selection panel ----------------------------------------------------
+  const select = (kind, id) => { selected = { kind, id }; renderPanel(); };
+
+  // Which face of a document is showing. State answers "where is this"; trace
+  // answers "what happened" -- two questions, and a panel that answers both at
+  // once answers neither.
+  let tab = 'state';
+
+  const traceHtml = (doc) => {
+    const t = doc.trace || { steps: [], movement: '', detail: '', ignoredCount: 0, movementTone: 'muted' };
+    return '<div class="' + (t.movementTone === 'ok' ? 'ok' : t.movementTone === 'warn' ? 'warn' : 'dim') + '">' +
+      escape_(t.movement) + '</div><div class="dim">' + escape_(t.detail) + '</div>' +
+      (t.ignoredCount
+        ? '<div class="note alert"><strong>' + t.ignoredCount + ' step(s) used nothing they were given.</strong> ' +
+          'Each ran, settled and reported. None carried a distinctive word out of its predecessor.</div>'
+        : '') +
+      '<div class="tr">' + t.steps.map((s) =>
+        '<div class="st"><div class="hd">' +
+        '<span class="cube sm" style="--c:' + (S.stateColors[s.state] || '#b9b4a8') + '"></span>' +
+        '<span class="dim">' + s.index + '</span><strong>' + escape_(s.agent || 'step') + '</strong>' +
+        '</div>' +
+        (s.result ? '<div class="res">' + escape_(s.result) + '</div>' : '') +
+        (s.attempts.length
+          ? s.attempts.map((a) => '<div class="att">attempt ' + a.n + ' · ' +
+              (a.runId ? escape_(a.runId.slice(0, 8)) : 'no run') + ' · ' +
+              (a.digest ? escape_(a.digest) + ' ' + escape_(a.source || '') : 'no observation') +
+              (a.error ? ' · <span class="err">' + escape_(a.error.slice(0, 120)) + '</span>' : '') +
+              '</div>').join('')
+          : '<div class="att">never attempted</div>') +
+        (s.ignoredInput
+          ? '<div class="flag">carried ' + Math.round(s.ignoredInput.carried * 100) + '% of ' +
+            s.ignoredInput.inputTokens + ' distinctive tokens it was handed</div>'
+          : '') +
+        '</div>').join('') + '</div>';
+  };
+
+  const renderPanel = () => {
+    const p = document.getElementById('panel');
+    if (!selected) { p.style.display = 'none'; return; }
+    p.style.display = 'block';
+    if (selected.kind === 'doc') {
+      const doc = S.docs.find((d) => d.id === selected.id);
+      if (!doc) { selected = null; p.style.display = 'none'; return; }
+      const next = doc.steps.find((s) => s.state === 'pending' || s.state === 'running');
+      if (tab === 'trace') {
+        p.querySelector('.win-body').innerHTML =
+          '<h4>' + escape_(doc.title) + '</h4>' +
+          '<div class="tabs"><button id="tab-state">State</button>' +
+          '<button id="tab-trace" aria-selected="true">Trace</button></div>' +
+          traceHtml(doc);
+        p.querySelector('#tab-state').onclick = () => { tab = 'state'; renderPanel(); };
+        return;
+      }
+      p.querySelector('.win-body').innerHTML =
+        '<h4>' + escape_(doc.title) + '</h4>' +
+        '<div class="tabs"><button id="tab-state" aria-selected="true">State</button>' +
+        '<button id="tab-trace">Trace</button></div>' +
+        '<div class="dim">' + escape_(doc.state) + ' · ' + doc.done + '/' + doc.total + ' steps done</div>' +
+        '<p style="margin:6px 0 0">' + escape_(doc.goal) + '</p>' +
+        '<ul class="steps">' + doc.steps.map((s) =>
+          '<li><span class="cube sm" style="--c:' + (S.stateColors[s.state] || '#b9b4a8') + '"></span>' +
+          '<span class="dim">' + s.index + '</span> ' + escape_(s.agent || s.intent.slice(0, 60)) + '</li>').join('') +
+        '</ul>' +
+        (next
+          ? '<div class="note warn">Next: <strong>' + escape_(next.agent || 'step ' + next.index) + '</strong>. ' +
+            'Advancing spends a model call.</div><div class="act"><button id="adv">Advance one step</button></div>'
+          // Every step is settled but the flow has not been told. Without this
+          // the desk can run a flow to its last step and never close it: it sits
+          // at waiting, 3/3 done, with no control that would finish it.
+          : doc.state !== 'done' && doc.state !== 'abandoned'
+            ? '<div class="note">Every step is settled. The flow is still <strong>' + escape_(doc.state) +
+              '</strong> because nothing has closed it. This spends nothing — there is no step left to run.</div>' +
+              '<div class="act"><button id="adv">Mark the flow finished</button></div>'
+            : '<div class="note">Nothing left to do.</div>');
+      p.querySelector('#tab-trace').onclick = () => { tab = 'trace'; renderPanel(); };
+      const b = p.querySelector('#adv');
+      if (b) {
+        const label = b.textContent;
+        b.onclick = async () => {
+          b.disabled = true; b.textContent = 'Working…';
+          try { const r = await post('/advance', { flowId: doc.id }); say('Step ' + r.outcome + '.'); await refresh(); }
+          catch (e) { say('Advance failed: ' + e.message, 5000); b.disabled = false; b.textContent = label; }
+        };
+      }
+    } else {
+      const a = S.agents.find((x) => x.name === selected.id);
+      if (!a) { selected = null; p.style.display = 'none'; return; }
+      p.querySelector('.win-body').innerHTML =
+        '<h4>' + escape_(a.name) + '</h4>' +
+        '<div class="dim">' + a.tools.map(escape_).join(' ') + '</div>' +
+        '<p style="margin:6px 0 0">' + escape_(a.description) + '</p>' +
+        (a.missing ? '<div class="note warn">Declared in a subagents list with no file behind it. A declared name is a claim; a file is a fact.</div>'
+                   : '<div class="note">Drag this onto a document to give it a step in that flow.</div>');
+    }
+  };
+
+  const escape_ = (s) => String(s == null ? '' : s).replace(/[&<>"']/g,
+    (c) => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;' }[c]));
+
+  // ---- render -------------------------------------------------------------
+  function render() {
+    surface.querySelectorAll('.docnode,.acube').forEach((n) => n.remove());
+
+    for (const doc of S.docs) {
+      const p = layout.docs[doc.id] || { x: 200, y: 40 };
+      const el = document.createElement('div');
+      el.className = 'docnode'; el.dataset.id = doc.id;
+      el.style.left = p.x + 'px'; el.style.top = p.y + 'px';
+      const strip = doc.steps.map((s) =>
+        '<span class="cube" style="--c:' + (S.stateColors[s.state] || '#b9b4a8') + '"></span>').join('');
+      el.innerHTML =
+        '<div class="dbar"><span class="box"></span><span class="t">' + escape_(doc.title) + '</span></div>' +
+        '<div class="body"><p class="goal">' + escape_(doc.goal) + '</p>' +
+        '<div class="meta"><span class="strip">' + strip + '</span>' +
+        '<span>' + doc.done + '/' + doc.total + '</span><span>' + escape_(doc.state) + '</span></div>' +
+        '<div class="stack" data-stack="' + escape_(doc.id) + '"></div></div>';
+      el.querySelector('.dbar').addEventListener('pointerdown', (ev) => startDrag(el, 'doc', doc.id, ev));
+      el.addEventListener('pointerdown', (ev) => { if (!drag) select('doc', doc.id); });
+      surface.appendChild(el);
+    }
+
+    for (const a of S.agents) {
+      const c = layout.cubes[a.name] || { x: 20, y: 40, onDoc: null, slot: 0 };
+      const el = document.createElement('div');
+      el.className = 'acube' + (a.missing ? ' missing' : '') + (S.busy[a.name] ? ' busy' : '');
+      el.dataset.id = a.name;
+      const color = a.missing ? S.missingColor : (a.child ? S.subagentColor : S.agentColor);
+      el.innerHTML = '<span class="blk" style="--c:' + color + '"></span><span class="n">' + escape_(a.name) + '</span>';
+      el.addEventListener('pointerdown', (ev) => startDrag(el, 'cube', a.name, ev));
+      const host = c.onDoc ? surface.querySelector('[data-stack="' + CSS.escape(c.onDoc) + '"]') : null;
+      if (host) { el.classList.add('instack'); host.appendChild(el); }
+      else { el.style.left = c.x + 'px'; el.style.top = c.y + 'px'; surface.appendChild(el); }
+    }
+
+    for (const s of surface.querySelectorAll('.stack')) {
+      s.classList.toggle('empty', s.children.length === 0);
+    }
+    renderDrawer();
+    renderPanel();
+  }
+
+  // The memory drawer. Every card is dashed and the drawer is hatched, because
+  // ai-storage does not exist and none of this is stored -- the notes are
+  // recomputed from the traces on every read. A surface that draws a sketch the
+  // same way it draws measured state teaches its reader to trust both equally.
+  function renderDrawer() {
+    const d = document.getElementById('drawer');
+    if (!d) return;
+    const notes = S.notes || [];
+    d.innerHTML =
+      '<h3>Memory</h3><span class="stamp">Not built — this is the spec</span>' +
+      (notes.length
+        ? notes.map((n) => {
+            const lv = (S.memoryLevels || []).find((x) => x.level === n.level) || { color: '#b9b4a8' };
+            return '<div class="card"><div class="lv"><span class="cube sm" style="--c:' + lv.color + '"></span>' +
+              escape_(n.level) + '</div><div class="bd"><strong>' + escape_(n.title) + '</strong>\n' +
+              escape_(n.body) + '</div><div class="from">from ' +
+              n.from.map((f) => escape_(f.slice(0, 8))).join(', ') + '</div></div>';
+          }).join('')
+        : '<div class="card" style="border-style:dashed"><div class="bd">' +
+          'Nothing consolidated yet. A note is proposed from a flow once it finishes — ' +
+          'keeping the steps that carried something forward and dropping the ones that did not.' +
+          '</div></div>') +
+      '<div class="levels">' + (S.memoryLevels || []).map((l) =>
+        '<div><span class="cube sm" style="--c:' + l.color + '"></span>' + escape_(l.level) + '</div>').join('') +
+      '</div>';
+  }
+
+  async function refresh() {
+    const r = await fetch('/state?scope=' + encodeURIComponent(S.scopeId));
+    if (!r.ok) return;
+    const next = await r.json();
+    S.docs = next.docs; S.agents = next.agents; S.busy = next.busy; S.notes = next.notes;
+    layout = next.layout;
+    document.getElementById('stamp').textContent = new Date(next.at).toISOString();
+    render();
+  }
+
+  document.getElementById('scope').addEventListener('change', (e) => {
+    location.search = '?scope=' + encodeURIComponent(e.target.value);
+  });
+  document.getElementById('reload').addEventListener('click', () => refresh());
+
+  render();
+  // A document can be addressed directly: ?select=<flowId>. Sharing "look at
+  // this one" should be a link rather than an instruction to find it, and it is
+  // the only way a screenshot can show the panel.
+  const q = new URLSearchParams(location.search);
+  const wanted = q.get('select');
+  if (q.get('tab') === 'trace') tab = 'trace';
+  if (wanted && S.docs.some((d) => d.id === wanted)) select('doc', wanted);
+  // Live, but on a leash: a desk that re-fetches every second spends nothing on
+  // the model and everything on the reader's attention. Five seconds is slower
+  // than a step and faster than a person wondering.
+  setInterval(() => { if (!drag) refresh(); }, 5000);
+})();
+</script>
+</html>
