@@ -94,9 +94,10 @@
       <article>
         <h2>ai-ui</h2>
         <p class="question">What if the interface were the state, not the transcript?</p>
-        <p class="note">A spatial, live canvas composed by the system from the
-          flow's state — and re-composed as it changes. The user overrides the
-          arrangement; the override wins from then on.</p>
+        <p class="note"><b>Runs.</b> A desk: flows are documents, agents are cubes
+          that stack on them. Drag a cube onto a document and that agent gets a
+          step in that flow. The system composes the arrangement from the flow's
+          state and never re-arranges what you moved.</p>
       </article>
       <article>
         <h2>ai-storage</h2>
@@ -117,14 +118,26 @@
 
   <section id="status" class="status">
     <p class="sectionlabel">Where this actually is</p>
-    <p><b>Two pillars run.</b> <code>ai-base</code> is vendored and runs.
+    <p><b>Three pillars run.</b> <code>ai-base</code> is vendored and runs.
       <b><code>ai-flows</code> runs</b> — the flow engine, a signed HTTP API,
       multi-agent composition from markdown-declared trees, and the measurement
-      harness below. 247 tests of our own, on top of the 3,768 <code>ai-base</code>
-      carries from upstream. <code>ai-ui</code> and <code>ai-storage</code> are
-      still specified and <b>not implemented</b>; the screenshot below is served by
-      <code>ai-flows</code>, not by a canvas. Nothing on this page describes
-      running software unless it says so.</p>
+      harness below. <b><code>ai-ui</code> runs</b> — the desk pictured here.
+      315 tests of our own, on top of the 3,768 <code>ai-base</code> carries from
+      upstream. <code>ai-storage</code> is still specified and <b>not
+      implemented</b>. Nothing on this page describes running software unless it
+      says so.</p>
+
+    <figure class="shot">
+      <img src="/assets/img/ai-os-desk.jpg" alt="A desk: two flows as documents, with agent cubes stacked on them" loading="lazy">
+      <figcaption>The canvas. A document is a flow; a cube is an agent; a cube
+        resting on a document means that agent has work in that flow. Dropping one
+        there is not a view change — it appends a real step, the same instruction
+        composing an agent tree would have written. Positions persist per scope,
+        and the system never re-arranges what you moved.
+        <b>What this does not establish is whether it helps.</b> Its own
+        falsification is a stopwatch — a person, a three-day-old flow they did not
+        run, desk against transcript — and that has not been run.</figcaption>
+    </figure>
 
     <figure class="shot">
       <img src="/assets/img/ai-os-system.jpg" alt="Every scope level, its members and the agents each defines" loading="lazy">
