@@ -44,9 +44,9 @@
           part underneath: a real multi-tenant harness with scoped identity,
           permissions, sandboxes and audit. ai-os is the layer above it.</p>
         <p class="ctas">
-          <a class="cta primary" href="https://github.com/EvolvingAgentsLabs/ai-os/blob/main/doc/manual.md">Run it →</a>
+          <a class="cta primary" href="/demo/">Try the desk →</a>
+          <a class="cta" href="https://github.com/EvolvingAgentsLabs/ai-os/blob/main/doc/manual.md">Run it for real</a>
           <a class="cta" href="https://github.com/EvolvingAgentsLabs/ai-os">Repository</a>
-          <a class="cta" href="https://github.com/EvolvingAgentsLabs/ai-os/tree/main/doc">The design</a>
         </p>
       </div>
       <figure class="markfig">
@@ -129,11 +129,19 @@
 
     <figure class="shot">
       <img src="/assets/img/ai-os-desk.jpg" alt="A desk: two flows as documents, with agent cubes stacked on them" loading="lazy">
-      <figcaption>The canvas. A document is a flow; a cube is an agent; a cube
-        resting on a document means that agent has work in that flow. Dropping one
-        there is not a view change — it appends a real step, the same instruction
-        composing an agent tree would have written. Positions persist per scope,
-        and the system never re-arranges what you moved.
+      <figcaption><b><a href="/demo/">Open the desk and use it →</a></b> — the real
+        interface with a fake backend behind it, so nothing is installed and nothing
+        is spent. Drag an agent cube onto a document and it gets a step; press
+        Advance and watch the step run; open the Trace face and see what each agent
+        actually returned. Try dropping <code>ReviewAgent</code> on the ledger flow:
+        it answers "Looks fine to me", the flow reports 3/3 done and green — and the
+        trace flags that the step <b>carried nothing forward</b>. That is the finding
+        the whole system exists to make visible.
+        <br><br>A document is a flow; a cube is an agent; a cube resting on a
+        document means that agent has work in that flow. Dropping one there is not a
+        view change — it appends a real step, the same instruction composing an agent
+        tree would have written. Positions persist per scope, and the system never
+        re-arranges what you moved.
         <b>What this does not establish is whether it helps.</b> Its own
         falsification is a stopwatch — a person, a three-day-old flow they did not
         run, desk against transcript — and that has not been run.</figcaption>
