@@ -122,14 +122,14 @@
       <b><code>ai-flows</code> runs</b> — the flow engine, a signed HTTP API,
       multi-agent composition from markdown-declared trees, and the measurement
       harness below. <b><code>ai-ui</code> runs</b> — the desk pictured here.
-      390 tests of our own, on top of the 3,768 <code>ai-base</code> carries from
+      402 tests of our own, on top of the 3,768 <code>ai-base</code> carries from
       upstream. <code>ai-storage</code> is still specified and <b>not
       implemented</b>. Nothing on this page describes running software unless it
       says so.</p>
 
     <figure class="shot">
-      <img src="/assets/img/ai-os-desk.jpg" alt="A desk: two flows as documents, with agent cubes stacked on them" loading="lazy">
-      <figcaption><b><a href="/demo/">Open the desk and use it →</a></b> — the real
+      <img src="/assets/img/ai-os-desk.jpg" alt="A desk: two flows as documents with agent cubes stacked on them, and a panel showing a flow digest, a menu of proposed actions with their cost, and an answer read out of the flow's trace" loading="lazy">
+      <figcaption><b><a href="/demo/">Open the desk and use it →</a></b> — press <b>Play</b> and it walks itself through the whole vocabulary, or take over at any point: a real gesture stops the tour where it stands. Every beat is the real client receiving the events a hand produces, never a recording, so if the desk breaks the tour breaks. It is the real
         interface with a fake backend behind it, so nothing is installed and nothing
         is spent. Drag an agent cube onto a document and it gets a step; press
         Advance and watch the step run; open the Trace face and see what each agent
@@ -142,6 +142,16 @@
         view change — it appends a real step, the same instruction composing an agent
         tree would have written. Positions persist per scope, and the system never
         re-arranges what you moved.
+        <br><br>The panel on the right is the part a GUI could not have done. The
+        <b>digest</b> states how many attempts it stands for and over what window,
+        because a flow changes faster than anyone looks at it and a summary that
+        drops an attempt reads exactly like a clean one. The <b>menu</b> is derived
+        from this flow's state rather than fixed, and every entry carries the
+        evidence that produced it and says whether pressing it spends. The
+        <b>answer</b> is read out of the trace and never the goal — the goal is what
+        somebody meant to happen, and it reads like an answer even when the work was
+        never done. Asking with no evidence recorded costs nothing: it says so
+        instead of buying a turn to tell you there is nothing there.
         <b>What this does not establish is whether it helps.</b> Its own
         falsification is a stopwatch — a person, a three-day-old flow they did not
         run, desk against transcript — and that has not been run.</figcaption>
