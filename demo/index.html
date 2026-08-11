@@ -174,6 +174,66 @@ select{font:inherit;font-size:11px}
 .toast{position:fixed;left:50%;transform:translateX(-50%);bottom:18px;z-index:300;
   background:var(--paper);border:1px solid #000;box-shadow:3px 3px 0 rgba(0,0,0,.4);
   padding:7px 14px;font-size:12px;display:none}
+
+/* The digest: what this flow is, from across the room. Recessed, because it is
+   a container for the whole rather than one more thing on the list. */
+.digest{margin-top:8px;padding:6px 8px;background:#cfcbc2;
+  box-shadow:inset 2px 2px 0 var(--dark),inset -2px -2px 0 var(--lite)}
+.digest .dh{font-size:12px;font-weight:700;line-height:1.35}
+.digest .dc{font-size:10px;color:#3b3f44;margin-top:2px}
+.digest .flag{font-size:10px;color:#7d2419;margin-top:3px}
+
+/* The menu. A raised button per proposal, the cost beside it, the evidence
+   under it -- never a bare verb. */
+.menu{margin-top:10px;border-top:1px solid #ded9d0;padding-top:8px}
+.menu .mh{font-size:10px;letter-spacing:.1em;text-transform:uppercase;color:#3b3f44;margin-bottom:5px}
+.menu .mi{margin-bottom:7px}
+.menu .ml{font-size:11px;padding:2px 8px;max-width:100%;text-align:left;white-space:normal}
+.menu .mc{font-size:9px;margin-left:6px;padding:1px 5px;letter-spacing:.04em;text-transform:uppercase}
+.menu .mc.spends{background:#f6e6c8;color:#7a4a00;border:1px solid #e0a020}
+.menu .mc.free{background:#e6efe6;color:#2c6b2c;border:1px solid #9cc09c}
+.menu .mw{font-size:10px;color:var(--dim);margin-top:3px;line-height:1.4}
+/* A model's suggestion is marked as one. It sits beside proposals that are not. */
+.menu .mi.model{border-left:3px solid #6b4fa8;padding-left:6px}
+.menu .mi.model .ml::after{content:" · proposed by a model";font-size:9px;color:#6b4fa8}
+
+/* Ask. The selection is the noun, so the field only needs the verb. */
+.ask{margin-top:10px;border-top:1px solid #ded9d0;padding-top:8px}
+.ask input{font:inherit;font-size:11px;width:100%;padding:3px 6px;border:1px solid #000;
+  background:var(--paper);box-shadow:inset 1px 1px 0 var(--dark)}
+.ask button{font-size:11px;padding:2px 10px;margin-top:5px}
+.ask .answer{margin-top:6px;padding:6px 8px;background:#f0ece4;border:1px solid #ded9d0;
+  font-size:11px;white-space:pre-wrap;line-height:1.45}
+
+/* ---- Motion that carries information -----------------------------------
+   Every rule here answers a question. None of it is decoration, and the test
+   in desk.test.ts asserts the load-bearing one.
+
+   The load-bearing one: **what the system proposed settles into place; what you
+   pinned never moves.** That is the hardest rule in layout.ts and today it is
+   invisible -- you cannot see that your arrangement is safe, you can only fail
+   to notice it being destroyed. Motion teaches it without a legend: a proposed
+   document slides to where the system put it, a pinned one has no transition at
+   all and therefore cannot be seen to move. */
+.docnode{transition:left .22s cubic-bezier(.2,.7,.3,1),top .22s cubic-bezier(.2,.7,.3,1)}
+.docnode.pinned,.acube.pinned{transition:none}
+.docnode.dragging,.acube.dragging{transition:none}
+
+/* A step that finished did something. The pulse travels the cube rather than
+   recolouring it in place, so "what did this produce" is answerable by looking. */
+@keyframes settled{0%{box-shadow:0 0 0 0 rgba(63,143,63,.55)}100%{box-shadow:0 0 0 9px rgba(63,143,63,0)}}
+.cube.justdone{animation:settled .7s ease-out 1}
+
+/* Opening the trace grows it out of the document, so you never lose track of
+   what you are inside of. The Mac's zoom rectangle, for the same reason. */
+@keyframes fromdoc{from{transform:scale(.94);opacity:.25}to{transform:none;opacity:1}}
+.tr{animation:fromdoc .18s ease-out 1}
+
+@media (prefers-reduced-motion: reduce){
+  .docnode{transition:none}
+  .cube.justdone{animation:none}
+  .tr{animation:none}
+}
 </style>
 <div class="menubar">
   <span class="apple">ai-os</span>
@@ -206,7 +266,7 @@ select{font:inherit;font-size:11px}
   </div>
 </div>
 <div class="toast" id="toast"></div>
-<script>window.__DESK__ = {"scopeId":"group:web-project-demo","docs":[{"id":"flow-ledger","title":"Ledger currency rewrite","goal":"rewrite the ledger so every amount carries its currency","state":"waiting","updatedAt":0,"done":2,"total":3,"steps":[{"index":0,"state":"done","agent":"SchemaAgent","intent":"Call your `delegate` tool with agent=\"SchemaAgent\". The task: rewrite the ledger so every amount carries its currency","result":"The ledger table needs a currency column, decimal precision twelve scale two, backfilled from settlement records and indexed alongside merchant identifier.","attempts":[{"n":1,"state":"done","runId":"run-0a7f3c210","error":null,"digest":"schemaag000","source":"run.reply"}]},{"index":1,"state":"done","agent":"MigrationAgent","intent":"Call your `delegate` tool with agent=\"MigrationAgent\". The task: rewrite the ledger so every amount carries its currency","result":"Rewrote /root/workspace/ledger.txt to ledger_with_currency.txt. Every amount now carries its USD prefix; column spacing preserved exactly.","attempts":[{"n":1,"state":"done","runId":"run-1a7f3c210","error":null,"digest":"migratio001","source":"run.reply"}]},{"index":2,"state":"pending","agent":"ReviewAgent","intent":"Call your `delegate` tool with agent=\"ReviewAgent\". The task: rewrite the ledger so every amount carries its currency","result":null,"attempts":[]}],"trace":{"movement":"not enough to say","movementTone":"muted","detail":"0 observation(s)","ignoredCount":0,"steps":[{"index":0,"state":"done","agent":"SchemaAgent","result":"The ledger table needs a currency column, decimal precision twelve scale two, backfilled from settlement records and indexed alongside merchant identifier.","attempts":[{"n":1,"state":"done","runId":"run-0a7f3c210","digest":null,"source":null,"error":null}]},{"index":1,"state":"done","agent":"MigrationAgent","result":"Rewrote /root/workspace/ledger.txt to ledger_with_currency.txt. Every amount now carries its USD prefix; column spacing preserved exactly.","attempts":[{"n":1,"state":"done","runId":"run-1a7f3c210","digest":null,"source":null,"error":null}]},{"index":2,"state":"pending","agent":"ReviewAgent","result":null,"attempts":[]}]}},{"id":"flow-duplicates","title":"Duplicate ledger rows","goal":"find and report duplicate rows in the ledger","state":"draft","updatedAt":0,"done":0,"total":1,"steps":[{"index":0,"state":"pending","agent":"DataQualityAgent","intent":"Call your `delegate` tool with agent=\"DataQualityAgent\". The task: rewrite the ledger so every amount carries its currency","result":null,"attempts":[]}],"trace":{"movement":"not enough to say","movementTone":"muted","detail":"0 observation(s)","ignoredCount":0,"steps":[{"index":0,"state":"pending","agent":"DataQualityAgent","result":null,"attempts":[]}]}}],"agents":[{"name":"LedgerLead","description":"Owns the ledger rewrite. Splits work and routes it to the specialists.","tools":["read","write","execute"],"child":false,"missing":false},{"name":"SchemaAgent","description":"Designs and checks the ledger schema.","tools":["read","write"],"child":true,"missing":false},{"name":"MigrationAgent","description":"Writes and dry-runs migrations.","tools":["read","write","execute"],"child":true,"missing":false},{"name":"ReviewAgent","description":"Reviews a change against the ledger invariants.","tools":["read"],"child":true,"missing":false},{"name":"DataQualityAgent","description":"Checks the ledger for drift and duplicates.","tools":["read","execute"],"child":false,"missing":false},{"name":"AnomalyScanner","description":"Declared in a subagents list. No file behind it.","tools":[],"child":true,"missing":true}],"layout":{"scopeId":"group:web-project-demo","docs":{"flow-ledger":{"x":178,"y":24,"pinned":false},"flow-duplicates":{"x":466,"y":24,"pinned":false}},"cubes":{"LedgerLead":{"x":14,"y":24,"pinned":false,"onDoc":null,"slot":0},"SchemaAgent":{"x":0,"y":0,"pinned":false,"onDoc":"flow-ledger","slot":0},"MigrationAgent":{"x":0,"y":0,"pinned":false,"onDoc":"flow-ledger","slot":1},"ReviewAgent":{"x":0,"y":0,"pinned":false,"onDoc":"flow-ledger","slot":2},"DataQualityAgent":{"x":0,"y":0,"pinned":false,"onDoc":"flow-duplicates","slot":0},"AnomalyScanner":{"x":14,"y":54,"pinned":false,"onDoc":null,"slot":0}}},"notes":[],"memoryLevels":[{"level":"system","color":"#6b4fa8","note":"the org's own; read-only everywhere below"},{"level":"user","color":"#3f8f3f","note":"one person's, across every project they are in"},{"level":"project","color":"#2f6fb5","note":"the scope's; what a team knows"},{"level":"flow","color":"#c8781b","note":"one flow's working notes — expected to die with it"}],"busy":{},"stateColors":{"done":"#3f8f3f","running":"#e0a020","pending":"#b9b4a8","failed":"#b03a2e","blocked":"#b03a2e","waiting":"#b9b4a8","abandoned":"#7a7469","draft":"#b9b4a8"},"agentColor":"#e0a020","subagentColor":"#c98f2e","missingColor":"#b03a2e"};</script>
+<script>window.__DESK__ = {"scopeId":"group:web-project-demo","docs":[{"id":"flow-ledger","title":"Ledger currency rewrite","goal":"rewrite the ledger so every amount carries its currency","state":"waiting","updatedAt":0,"done":2,"total":3,"steps":[{"index":0,"state":"done","agent":"SchemaAgent","intent":"Call your `delegate` tool with agent=\"SchemaAgent\". The task: rewrite the ledger so every amount carries its currency","result":"The ledger table needs a currency column, decimal precision twelve scale two, backfilled from settlement records and indexed alongside merchant identifier.","attempts":[{"n":1,"state":"done","runId":"run-0a7f3c210","error":null,"digest":"schemaag000","source":"run.reply"}]},{"index":1,"state":"done","agent":"MigrationAgent","intent":"Call your `delegate` tool with agent=\"MigrationAgent\". The task: rewrite the ledger so every amount carries its currency","result":"Rewrote /root/workspace/ledger.txt to ledger_with_currency.txt. Every amount now carries its USD prefix; column spacing preserved exactly.","attempts":[{"n":1,"state":"done","runId":"run-1a7f3c210","error":null,"digest":"migratio001","source":"run.reply"}]},{"index":2,"state":"pending","agent":"ReviewAgent","intent":"Call your `delegate` tool with agent=\"ReviewAgent\". The task: rewrite the ledger so every amount carries its currency","result":null,"attempts":[]}],"trace":{"movement":"not enough to say","movementTone":"muted","detail":"0 observation(s)","ignoredCount":0,"steps":[{"index":0,"state":"done","agent":"SchemaAgent","result":"The ledger table needs a currency column, decimal precision twelve scale two, backfilled from settlement records and indexed alongside merchant identifier.","attempts":[{"n":1,"state":"done","runId":"run-0a7f3c210","digest":null,"source":null,"error":null}]},{"index":1,"state":"done","agent":"MigrationAgent","result":"Rewrote /root/workspace/ledger.txt to ledger_with_currency.txt. Every amount now carries its USD prefix; column spacing preserved exactly.","attempts":[{"n":1,"state":"done","runId":"run-1a7f3c210","digest":null,"source":null,"error":null}]},{"index":2,"state":"pending","agent":"ReviewAgent","result":null,"attempts":[]}]},"digest":{"level":"step","subject":"flow-ledger","headline":"Ledger currency rewrite — 2 attempt(s) across 3 step(s), 2 done, waiting","covering":"state as of 20370 days ago","attemptsRepresented":2,"landedOn":"waiting","flags":[],"children":[{"level":"step","subject":"flow-ledger#0","headline":"SchemaAgent — one attempt, done","covering":"state as of 20370 days ago","attemptsRepresented":1,"landedOn":"done","flags":[],"children":[]},{"level":"step","subject":"flow-ledger#1","headline":"MigrationAgent — one attempt, done","covering":"state as of 20370 days ago","attemptsRepresented":1,"landedOn":"done","flags":[],"children":[]},{"level":"step","subject":"flow-ledger#2","headline":"ReviewAgent — not started","covering":"state as of 20370 days ago","attemptsRepresented":0,"landedOn":"pending","flags":[],"children":[]}]},"actions":[{"id":"advance","label":"Run step 2 — ReviewAgent","why":"It is the next pending step with an agent. This starts a real run.","spends":true,"route":"/advance","step":2,"source":"state"},{"id":"ask","label":"Ask about this flow","why":"Ledger currency rewrite — 2 attempt(s) across 3 step(s), 2 done, waiting. The question is answered from the trace, not from the goal text.","spends":true,"route":"/ask","source":"state"}]},{"id":"flow-duplicates","title":"Duplicate ledger rows","goal":"find and report duplicate rows in the ledger","state":"draft","updatedAt":0,"done":0,"total":1,"steps":[{"index":0,"state":"pending","agent":"DataQualityAgent","intent":"Call your `delegate` tool with agent=\"DataQualityAgent\". The task: rewrite the ledger so every amount carries its currency","result":null,"attempts":[]}],"trace":{"movement":"not enough to say","movementTone":"muted","detail":"0 observation(s)","ignoredCount":0,"steps":[{"index":0,"state":"pending","agent":"DataQualityAgent","result":null,"attempts":[]}]},"digest":{"level":"step","subject":"flow-duplicates","headline":"Duplicate ledger rows — nothing has run","covering":"state as of 20370 days ago","attemptsRepresented":0,"landedOn":"draft","flags":[],"children":[{"level":"step","subject":"flow-duplicates#0","headline":"DataQualityAgent — not started","covering":"state as of 20370 days ago","attemptsRepresented":0,"landedOn":"pending","flags":[],"children":[]}]},"actions":[{"id":"advance","label":"Run step 0 — DataQualityAgent","why":"It is the next pending step with an agent. This starts a real run.","spends":true,"route":"/advance","step":0,"source":"state"},{"id":"ask","label":"Ask about this flow","why":"Duplicate ledger rows — nothing has run. The question is answered from the trace, not from the goal text.","spends":true,"route":"/ask","source":"state"}]}],"agents":[{"name":"LedgerLead","description":"Owns the ledger rewrite. Splits work and routes it to the specialists.","tools":["read","write","execute"],"child":false,"missing":false},{"name":"SchemaAgent","description":"Designs and checks the ledger schema.","tools":["read","write"],"child":true,"missing":false},{"name":"MigrationAgent","description":"Writes and dry-runs migrations.","tools":["read","write","execute"],"child":true,"missing":false},{"name":"ReviewAgent","description":"Reviews a change against the ledger invariants.","tools":["read"],"child":true,"missing":false},{"name":"DataQualityAgent","description":"Checks the ledger for drift and duplicates.","tools":["read","execute"],"child":false,"missing":false},{"name":"AnomalyScanner","description":"Declared in a subagents list. No file behind it.","tools":[],"child":true,"missing":true}],"layout":{"scopeId":"group:web-project-demo","docs":{"flow-ledger":{"x":178,"y":24,"pinned":false},"flow-duplicates":{"x":466,"y":24,"pinned":false}},"cubes":{"LedgerLead":{"x":14,"y":24,"pinned":false,"onDoc":null,"slot":0},"SchemaAgent":{"x":0,"y":0,"pinned":false,"onDoc":"flow-ledger","slot":0},"MigrationAgent":{"x":0,"y":0,"pinned":false,"onDoc":"flow-ledger","slot":1},"ReviewAgent":{"x":0,"y":0,"pinned":false,"onDoc":"flow-ledger","slot":2},"DataQualityAgent":{"x":0,"y":0,"pinned":false,"onDoc":"flow-duplicates","slot":0},"AnomalyScanner":{"x":14,"y":54,"pinned":false,"onDoc":null,"slot":0}}},"notes":[],"memoryLevels":[{"level":"system","color":"#6b4fa8","note":"the org's own; read-only everywhere below"},{"level":"user","color":"#3f8f3f","note":"one person's, across every project they are in"},{"level":"project","color":"#2f6fb5","note":"the scope's; what a team knows"},{"level":"flow","color":"#c8781b","note":"one flow's working notes — expected to die with it"}],"busy":{},"stateColors":{"done":"#3f8f3f","running":"#e0a020","pending":"#b9b4a8","failed":"#b03a2e","blocked":"#b03a2e","waiting":"#b9b4a8","abandoned":"#7a7469","draft":"#b9b4a8"},"agentColor":"#e0a020","subagentColor":"#c98f2e","missingColor":"#b03a2e"};</script>
 <script>
 (() => {
   // The whole backend, in memory. Shapes match the real API exactly; where they
@@ -300,6 +360,20 @@ select{font:inherit;font-size:11px}
       d.done = d.steps.filter((s) => s.state === 'done').length;
       d.total = d.steps.length;
       if (d.total && d.done === d.total && d.state !== 'done') d.state = 'waiting';
+
+      // The digest and the menu were built by the real modules at build time
+      // (scripts/build-demo.ts). They are NOT recomputed here, and a second
+      // in-page implementation of them is exactly what this file exists to
+      // avoid -- the demo is the real client, not a second product.
+      //
+      // So when the state they describe moves, they are dropped rather than
+      // shown stale. That is projection.ts's rule applied literally: a
+      // projection is shown against the state it describes, or it is not shown.
+      // The panel renders without them, which is the degradation the desk is
+      // designed to survive anyway.
+      const sig = d.state + ':' + d.steps.map((s) => s.index + s.state).join(',');
+      if (d._sig === undefined) d._sig = sig;
+      else if (d._sig !== sig) { d._sig = sig; d.digest = null; d.actions = []; }
     }
     world.notes = world.docs.filter((d) => d.state === 'done').map(noteFor);
   };
@@ -326,7 +400,7 @@ select{font:inherit;font-size:11px}
     const url = typeof input === 'string' ? input : (input && input.url) || '';
     // Anything not one of the desk's own three endpoints goes to the network,
     // so this shim cannot silently swallow a call somebody adds later.
-    if (!/^\/(state|layout|assign|unassign|advance)/.test(url)) return real(input, init);
+    if (!/^\/(state|layout|assign|unassign|advance|fork|ask)/.test(url)) return real(input, init);
     const body = init && init.body ? JSON.parse(init.body) : {};
 
     if (url.indexOf('/state') === 0) return json(stateBody());
@@ -401,6 +475,52 @@ select{font:inherit;font-size:11px}
         if (doc.steps.every((s) => s.state === 'done')) doc.state = 'waiting';
       }, 1600);
       return json({ ok: true, outcome: 'advanced' });
+    }
+
+    if (url.indexOf('/fork') === 0) {
+      const doc = findDoc(body.flowId);
+      if (!doc) return json({ error: 'no such flow' }, 404);
+      const at = Math.max(0, Number(body.atStep) || 0);
+      // Copies records, spends nothing, and does not run -- the same contract
+      // the real route has. The copy keeps steps 0..at and drops their results,
+      // because the fork's history is its own, not its ancestor's.
+      const copy = {
+        id: doc.id + '-fork-' + (world.docs.length + 1),
+        title: doc.title + ' (fork at ' + at + ')',
+        goal: doc.goal,
+        state: 'draft',
+        updatedAt: Date.now(),
+        steps: doc.steps.slice(0, at + 1).map((s) => ({
+          index: s.index, state: 'pending', intent: s.intent, result: null, attempts: [],
+        })),
+      };
+      world.docs.push(copy);
+      world.layout.docs[copy.id] = {
+        x: (world.layout.docs[doc.id] || { x: 200 }).x + 40,
+        y: (world.layout.docs[doc.id] || { y: 40 }).y + 300,
+        pinned: false,
+      };
+      return json({ ok: true, id: copy.id, title: copy.title });
+    }
+
+    if (url.indexOf('/ask') === 0) {
+      const doc = findDoc(body.flowId);
+      if (!doc) return json({ error: 'no such flow' }, 404);
+      // The demo has no model. Rather than fake an answer -- which would teach
+      // the reader that this surface can do something it cannot prove here --
+      // it says what it would have done and what it would have read.
+      const evidence = doc.steps.reduce(
+        (n, s) => n + (s.attempts || []).length + (s.result ? 1 : 0), 0);
+      return json({
+        ok: true,
+        spent: false,
+        evidence: evidence,
+        answer: evidence === 0
+          ? 'Nothing has run in this flow, so there is nothing in the trace to answer from.'
+          : 'The demo has no model behind it. Against a real core this question would be answered from '
+            + evidence + ' piece(s) of recorded evidence -- attempts, errors and observations -- and never '
+            + 'from the goal text.',
+      });
     }
 
     return json({ error: 'not found' }, 404);
@@ -574,6 +694,82 @@ select{font:inherit;font-size:11px}
         '</div>').join('') + '</div>';
   };
 
+  /**
+   * Wire the proposed menu.
+   *
+   * Each action names the route it takes, so this is a dispatch table rather
+   * than a branch per label -- a menu whose behaviour is decided by matching
+   * strings drifts from the module that produced it on the first rename.
+   *
+   * A model-proposed action has a null route and is rendered disabled. It is a
+   * suggestion to press something, never a licence to spend.
+   */
+  const wireActions = (p, doc) => {
+    p.querySelectorAll('.ml[data-act]').forEach((b) => {
+      const a = doc.actions[Number(b.dataset.act)];
+      if (!a || !a.route) return;
+      b.onclick = async () => {
+        const was = b.textContent;
+        b.disabled = true; b.textContent = 'Working…';
+        try {
+          if (a.route === '/fork') {
+            // Fork copies records. It spends nothing, and the copy does not run
+            // until somebody advances it -- its own click, its own stated cost.
+            const at = Math.max(0, (a.step == null ? doc.steps.length : a.step) - 1);
+            const r = await post('/fork', { flowId: doc.id, atStep: at });
+            say('Forked at step ' + at + '. The original keeps its history; the fork is yours to change.', 5000);
+            void r;
+          } else if (a.route === '/advance') {
+            await post('/advance', { flowId: doc.id });
+            say('Advanced.');
+          } else if (a.route === '/ask') {
+            const q = p.querySelector('#q');
+            if (q) { q.value = a.label; q.focus(); }
+            b.disabled = false; b.textContent = was;
+            return;
+          } else {
+            b.disabled = false; b.textContent = was;
+            return;
+          }
+          await refresh();
+        } catch (e) {
+          say('That did not work: ' + e.message, 5000);
+          b.disabled = false; b.textContent = was;
+        }
+      };
+    });
+  };
+
+  /**
+   * Wire the question box.
+   *
+   * The answer reports whether a turn was bought. A surface that spends quietly
+   * teaches the person using it to stop counting, which is the habit this whole
+   * repository is trying to keep.
+   */
+  const wireAsk = (p, doc) => {
+    const q = p.querySelector('#q');
+    const go = p.querySelector('#qgo');
+    const out = p.querySelector('#qa');
+    if (!q || !go || !out) return;
+    const ask = async () => {
+      const question = (q.value || '').trim();
+      if (!question) return;
+      go.disabled = true; out.innerHTML = '<div class="dim">Reading the trace…</div>';
+      try {
+        const r = await post('/ask', { flowId: doc.id, question });
+        out.innerHTML = '<div class="answer">' + escape_(r.answer) + '</div>' +
+          '<div class="dim">' + (r.spent ? 'Cost: one model call' : 'Answered without a model call') +
+          ' · ' + r.evidence + ' piece(s) of evidence in the trace</div>';
+      } catch (e) {
+        out.innerHTML = '<div class="err">' + escape_(e.message) + '</div>';
+      }
+      go.disabled = false;
+    };
+    go.onclick = ask;
+    q.onkeydown = (ev) => { if (ev.key === 'Enter') ask(); };
+  };
+
   const renderPanel = () => {
     const p = document.getElementById('panel');
     if (!selected) { p.style.display = 'none'; return; }
@@ -596,6 +792,16 @@ select{font:inherit;font-size:11px}
         '<div class="tabs"><button id="tab-state" aria-selected="true">State</button>' +
         '<button id="tab-trace">Trace</button></div>' +
         '<div class="dim">' + escape_(doc.state) + ' · ' + doc.done + '/' + doc.total + ' steps done</div>' +
+        // Semantic zoom, at the top because it is the answer to the question the
+        // desk exists for. It states how many attempts it stands for and what
+        // window it covers -- a projection that says neither invites the reader
+        // to read a trend out of noise (doc/04, the sampling argument).
+        (doc.digest
+          ? '<div class="digest"><div class="dh">' + escape_(doc.digest.headline) + '</div>' +
+            '<div class="dc">' + escape_(doc.digest.covering) + '</div>' +
+            doc.digest.flags.map((f) => '<div class="flag">' + escape_(f) + '</div>').join('') +
+            '</div>'
+          : '') +
         '<p style="margin:6px 0 0">' + escape_(doc.goal) + '</p>' +
         '<ul class="steps">' + doc.steps.map((s) =>
           '<li><span class="cube sm" style="--c:' + (S.stateColors[s.state] || '#b9b4a8') + '"></span>' +
@@ -611,8 +817,30 @@ select{font:inherit;font-size:11px}
             ? '<div class="note">Every step is settled. The flow is still <strong>' + escape_(doc.state) +
               '</strong> because nothing has closed it. This spends nothing — there is no step left to run.</div>' +
               '<div class="act"><button id="adv">Mark the flow finished</button></div>'
-            : '<div class="note">Nothing left to do.</div>');
+            : '<div class="note">Nothing left to do.</div>') +
+        // The menu that reveals itself. Every entry carries the evidence that
+        // produced it and says whether pressing it spends -- an action offered
+        // without a reason is a guess the reader has to audit.
+        ((doc.actions || []).length
+          ? '<div class="menu"><div class="mh">What people do here</div>' +
+            doc.actions.map((a, i) =>
+              '<div class="mi' + (a.source === 'model' ? ' model' : '') + '">' +
+              '<button class="ml" data-act="' + i + '"' + (a.route ? '' : ' disabled') + '>' +
+              escape_(a.label) + '</button>' +
+              '<span class="mc ' + (a.spends ? 'spends' : 'free') + '">' +
+              (a.spends ? 'spends a model call' : 'free') + '</span>' +
+              '<div class="mw">' + escape_(a.why) + '</div></div>').join('') +
+            '</div>'
+          : '') +
+        // Deixis: the selection is the noun, so the question can be three words.
+        '<div class="ask"><input id="q" placeholder="Ask about this flow — e.g. why did it stop?" ' +
+        'aria-label="Ask about this flow">' +
+        '<button id="qgo">Ask</button>' +
+        '<div class="dim" style="margin-top:4px">Answered from the trace, not the goal. Spends a model call.</div>' +
+        '<div id="qa"></div></div>';
       p.querySelector('#tab-trace').onclick = () => { tab = 'trace'; renderPanel(); };
+      wireActions(p, doc);
+      wireAsk(p, doc);
       const b = p.querySelector('#adv');
       if (b) {
         const label = b.textContent;
@@ -644,7 +872,11 @@ select{font:inherit;font-size:11px}
     for (const doc of S.docs) {
       const p = layout.docs[doc.id] || { x: 200, y: 40 };
       const el = document.createElement('div');
-      el.className = 'docnode'; el.dataset.id = doc.id;
+      // The pinned class is not styling -- it removes the transition. A document the
+      // person placed must not animate, because an object that slides after you
+      // let go of it reads as the system having moved it.
+      el.className = 'docnode' + (p.pinned ? ' pinned' : '');
+      el.dataset.id = doc.id;
       el.style.left = p.x + 'px'; el.style.top = p.y + 'px';
       const strip = doc.steps.map((s) =>
         '<span class="cube" style="--c:' + (S.stateColors[s.state] || '#b9b4a8') + '"></span>').join('');
