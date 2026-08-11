@@ -149,6 +149,18 @@ body{overflow:hidden}
   display:-webkit-box;-webkit-line-clamp:2;-webkit-box-orient:vertical;overflow:hidden}
 .docnode .meta{font-size:11px;color:var(--dim);display:flex;align-items:center;gap:6px;flex-wrap:wrap}
 
+/* A step's numbers, as a shape.
+   Bars in whole pixels on the same grid as everything else, and never without
+   the caption underneath: a chart with no scale invites the reader to see a
+   trend in noise, which is the failure doc/04 spends a section on. The caption
+   carries the peak, so a flatline cannot be mistaken for a small signal. */
+.spark{display:flex;align-items:flex-end;gap:1px;background:#fff;border:1px solid #cfcbc2;
+  padding:2px;overflow:hidden}
+.spark i{display:block;background:#3f6f8f;flex:0 0 auto;min-height:1px}
+.spark.dead i{background:#b03a2e}
+.sparkcap{font:10px/1.3 var(--mono);color:var(--dim);margin-top:2px}
+.sparkcap b{color:#7d2419;font-weight:700}
+
 /* The stack: cubes resting on the document, offset so the pile reads as a pile. */
 .stack{min-height:26px;margin-top:8px;padding:4px;border:1px dashed #c6c1b7;
   display:flex;flex-wrap:wrap;gap:3px;align-items:center}
@@ -415,9 +427,9 @@ select{font:inherit;font-size:11px}
   <span class="apple">ai-os</span>
   <span class="sim">Simulated — no core, no model, nothing stored</span><span class="dim">reloading starts over</span>
   <span class="sep">|</span>
-  <label>Scope <select id="scope"><option value="group:web-project-demo" selected>group:web-project-demo</option></select></label>
+  <label>Scope <select id="scope"><option value="group:web-project-demo" selected>group:web-project-demo</option><option value="group:signal-lab">group:signal-lab</option></select></label>
   <span class="sep">|</span>
-  <span>2 document(s) · 6 agent(s) · 3 person(s)</span>
+  <span id="counts">2 document(s) · 6 agent(s) · 3 person(s)</span>
   <button id="reload">Refresh</button>
   <span class="right">harness simulated · <span id="stamp">1970-01-01T00:00:00.000Z</span></span>
 </div>
@@ -442,12 +454,39 @@ select{font:inherit;font-size:11px}
   </div>
 </div>
 <div class="toast" id="toast"></div>
-<script>window.__DESK__ = {"scopeId":"group:web-project-demo","docs":[{"id":"flow-ledger","title":"Ledger currency rewrite","goal":"rewrite the ledger so every amount carries its currency","state":"waiting","updatedAt":1759845200000,"done":2,"total":3,"steps":[{"index":0,"state":"done","agent":"SchemaAgent","intent":"Call your `delegate` tool with agent=\"SchemaAgent\". The task: rewrite the ledger so every amount carries its currency","result":"The ledger table needs a currency column, decimal precision twelve scale two, backfilled from settlement records and indexed alongside merchant identifier.","attempts":[{"n":1,"state":"done","runId":"run-0a7f3c210","error":null,"digest":"schemaag000","source":"run.reply"}]},{"index":1,"state":"done","agent":"MigrationAgent","intent":"Call your `delegate` tool with agent=\"MigrationAgent\". The task: rewrite the ledger so every amount carries its currency","result":"Rewrote /root/workspace/ledger.txt to ledger_with_currency.txt. Every amount now carries its USD prefix; column spacing preserved exactly.","attempts":[{"n":1,"state":"done","runId":"run-1a7f3c210","error":null,"digest":"migratio001","source":"run.reply"}]},{"index":2,"state":"pending","agent":"ReviewAgent","intent":"Call your `delegate` tool with agent=\"ReviewAgent\". The task: rewrite the ledger so every amount carries its currency","result":null,"attempts":[]}],"trace":{"movement":"not enough to say","movementTone":"muted","detail":"0 observation(s)","ignoredCount":0,"steps":[{"index":0,"state":"done","agent":"SchemaAgent","result":"The ledger table needs a currency column, decimal precision twelve scale two, backfilled from settlement records and indexed alongside merchant identifier.","attempts":[{"n":1,"state":"done","runId":"run-0a7f3c210","digest":null,"source":null,"error":null}]},{"index":1,"state":"done","agent":"MigrationAgent","result":"Rewrote /root/workspace/ledger.txt to ledger_with_currency.txt. Every amount now carries its USD prefix; column spacing preserved exactly.","attempts":[{"n":1,"state":"done","runId":"run-1a7f3c210","digest":null,"source":null,"error":null}]},{"index":2,"state":"pending","agent":"ReviewAgent","result":null,"attempts":[]}]},"digest":{"level":"step","subject":"flow-ledger","headline":"Ledger currency rewrite — 2 attempt(s) across 3 step(s), 2 done, waiting","covering":"state as of 43 hours ago","attemptsRepresented":2,"landedOn":"waiting","flags":[],"children":[{"level":"step","subject":"flow-ledger#0","headline":"SchemaAgent — one attempt, done","covering":"state as of 43 hours ago","attemptsRepresented":1,"landedOn":"done","flags":[],"children":[]},{"level":"step","subject":"flow-ledger#1","headline":"MigrationAgent — one attempt, done","covering":"state as of 43 hours ago","attemptsRepresented":1,"landedOn":"done","flags":[],"children":[]},{"level":"step","subject":"flow-ledger#2","headline":"ReviewAgent — not started","covering":"state as of 43 hours ago","attemptsRepresented":0,"landedOn":"pending","flags":[],"children":[]}]},"actions":[{"id":"advance","label":"Run step 2 — ReviewAgent","why":"It is the next pending step with an agent. This starts a real run.","spends":true,"route":"/advance","step":2,"source":"state"},{"id":"ask","label":"Ask about this flow","why":"Ledger currency rewrite — 2 attempt(s) across 3 step(s), 2 done, waiting. The question is answered from the trace, not from the goal text.","spends":true,"route":"/ask","source":"state"}]},{"id":"flow-duplicates","title":"Duplicate ledger rows","goal":"find and report duplicate rows in the ledger","state":"draft","updatedAt":1759985600000,"done":0,"total":1,"steps":[{"index":0,"state":"pending","agent":"DataQualityAgent","intent":"Call your `delegate` tool with agent=\"DataQualityAgent\". The task: rewrite the ledger so every amount carries its currency","result":null,"attempts":[]}],"trace":{"movement":"not enough to say","movementTone":"muted","detail":"0 observation(s)","ignoredCount":0,"steps":[{"index":0,"state":"pending","agent":"DataQualityAgent","result":null,"attempts":[]}]},"digest":{"level":"step","subject":"flow-duplicates","headline":"Duplicate ledger rows — nothing has run","covering":"state as of 4 hours ago","attemptsRepresented":0,"landedOn":"draft","flags":[],"children":[{"level":"step","subject":"flow-duplicates#0","headline":"DataQualityAgent — not started","covering":"state as of 4 hours ago","attemptsRepresented":0,"landedOn":"pending","flags":[],"children":[]}]},"actions":[{"id":"advance","label":"Run step 0 — DataQualityAgent","why":"It is the next pending step with an agent. This starts a real run.","spends":true,"route":"/advance","step":0,"source":"state"},{"id":"ask","label":"Ask about this flow","why":"Duplicate ledger rows — nothing has run. The question is answered from the trace, not from the goal text.","spends":true,"route":"/ask","source":"state"}]}],"agents":[{"name":"LedgerLead","description":"Owns the ledger rewrite. Splits work and routes it to the specialists.","tools":["read","write","execute"],"child":false,"missing":false},{"name":"SchemaAgent","description":"Designs and checks the ledger schema.","tools":["read","write"],"child":true,"missing":false},{"name":"MigrationAgent","description":"Writes and dry-runs migrations.","tools":["read","write","execute"],"child":true,"missing":false},{"name":"ReviewAgent","description":"Reviews a change against the ledger invariants.","tools":["read"],"child":true,"missing":false},{"name":"DataQualityAgent","description":"Checks the ledger for drift and duplicates.","tools":["read","execute"],"child":false,"missing":false},{"name":"AnomalyScanner","description":"Declared in a subagents list. No file behind it.","tools":[],"child":true,"missing":true}],"layout":{"scopeId":"group:web-project-demo","docs":{"flow-ledger":{"x":178,"y":24,"pinned":false},"flow-duplicates":{"x":466,"y":24,"pinned":false}},"cubes":{"LedgerLead":{"x":14,"y":24,"pinned":false,"onDoc":null,"slot":0},"SchemaAgent":{"x":0,"y":0,"pinned":false,"onDoc":"flow-ledger","slot":0},"MigrationAgent":{"x":0,"y":0,"pinned":false,"onDoc":"flow-ledger","slot":1},"ReviewAgent":{"x":0,"y":0,"pinned":false,"onDoc":"flow-ledger","slot":2},"DataQualityAgent":{"x":0,"y":0,"pinned":false,"onDoc":"flow-duplicates","slot":0},"AnomalyScanner":{"x":14,"y":54,"pinned":false,"onDoc":null,"slot":0}}},"notes":[],"memoryLevels":[{"level":"system","color":"#6b4fa8","note":"the org's own; read-only everywhere below"},{"level":"user","color":"#3f8f3f","note":"one person's, across every project they are in"},{"level":"project","color":"#2f6fb5","note":"the scope's; what a team knows"},{"level":"flow","color":"#c8781b","note":"one flow's working notes — expected to die with it"}],"busy":{},"stateColors":{"done":"#3f8f3f","running":"#e0a020","pending":"#b9b4a8","failed":"#b03a2e","blocked":"#b03a2e","waiting":"#b9b4a8","abandoned":"#7a7469","draft":"#b9b4a8"},"agentColor":"#e0a020","subagentColor":"#c98f2e","missingColor":"#b03a2e"};</script>
+<script>window.__WORLDS__ = {"group:signal-lab":{"docs":[{"id":"flow-tone-yesterday","title":"Tone hunt — yesterday's chain","goal":"find the 5 Hz component hidden under the mains hum","state":"waiting","updatedAt":1759906400000,"done":6,"total":6,"steps":[{"index":0,"state":"done","agent":"SampleAgent","intent":"Call your `delegate` tool with agent=\"SampleAgent\". The task: find the 5 Hz component hidden under the mains hum","result":"Read 64 samples at 64 Hz off sensor-7. Peak amplitude 1.26.","attempts":[{"n":1,"state":"done","runId":"run-flow-tone-yesterday-0","error":null,"digest":"s6209","source":"run.reply"}],"series":[0,0.808,0.375,1.255,1.064,0.192,0.596,-0.341,-1.024,-0.537,-1.193,-0.904,-0.006,-0.267,0.641,1.17,0.527,1.178,0.675,-0.347,0.05,-0.89,-1.236,-0.517,-1.039,-0.289,0.537,0.191,1.127,1.197,0.391,0.795,0.035,-0.819,-0.431,-1.172,-1.099,-0.205,-0.587,0.344,1.056,0.46,1.249,0.92,-0.044,0.293,-0.656,-1.124,-0.582,-1.181,-0.608,0.284,-0.033,0.884,1.263,0.51,0.983,0.372,-0.573,-0.209,-1.109,-1.199,-0.36,-0.869],"contribution":{"carried":1,"inputTokens":64,"note":"output moved 1.000× its input across 64 samples"}},{"index":1,"state":"done","agent":"NotchAgent","intent":"Call your `delegate` tool with agent=\"NotchAgent\". The task: find the 5 Hz component hidden under the mains hum","result":"Notched the 23 Hz mains hum. Two poles at r=0.97; 64 samples returned.","attempts":[{"n":1,"state":"done","runId":"run-flow-tone-yesterday-1","error":null,"digest":"s5981","source":"run.reply"}],"series":[0,0.808,0.405,1.279,1.075,0.27,0.56,-0.336,-0.974,-0.663,-1.167,-0.895,-0.146,-0.156,0.625,1.093,0.719,1.104,0.663,-0.166,-0.134,-0.852,-1.14,-0.771,-0.911,-0.279,0.331,0.438,1.056,1.107,0.682,0.608,0.045,-0.607,-0.73,-1.068,-1.016,-0.517,-0.355,0.317,0.85,0.8,1.104,0.853,0.284,0.006,-0.602,-0.928,-0.957,-0.994,-0.566,-0.037,0.298,0.795,1.093,0.903,0.754,0.353,-0.26,-0.575,-0.995,-1.05,-0.762,-0.598],"contribution":{"carried":1.0305,"inputTokens":64,"note":"output moved 1.030× its input across 64 samples"}},{"index":2,"state":"done","agent":"QuantiseAgent","intent":"Call your `delegate` tool with agent=\"QuantiseAgent\". The task: find the 5 Hz component hidden under the mains hum","result":"Converted 64 samples to fixed point at 32767 counts per unit. Range respected, nothing clipped.","attempts":[{"n":1,"state":"done","runId":"run-flow-tone-yesterday-2","error":null,"digest":"s5981","source":"run.reply"}],"series":[0,0.808,0.405,1.279,1.075,0.27,0.56,-0.336,-0.974,-0.663,-1.167,-0.895,-0.146,-0.156,0.625,1.093,0.719,1.104,0.662,-0.166,-0.134,-0.852,-1.14,-0.771,-0.911,-0.279,0.331,0.438,1.056,1.107,0.682,0.608,0.045,-0.607,-0.73,-1.068,-1.016,-0.517,-0.355,0.317,0.85,0.8,1.104,0.853,0.284,0.006,-0.602,-0.928,-0.957,-0.994,-0.566,-0.037,0.297,0.795,1.093,0.903,0.754,0.353,-0.26,-0.575,-0.994,-1.05,-0.762,-0.598],"contribution":{"carried":1,"inputTokens":64,"note":"output moved 1.000× its input across 64 samples"}},{"index":3,"state":"done","agent":"WindowAgent","intent":"Call your `delegate` tool with agent=\"WindowAgent\". The task: find the 5 Hz component hidden under the mains hum","result":"Hann window applied across 64 samples. Leakage traded for a wider main lobe.","attempts":[{"n":1,"state":"done","runId":"run-flow-tone-yesterday-3","error":null,"digest":"s3605","source":"run.reply"}],"series":[0,0.002,0.004,0.028,0.042,0.016,0.049,-0.039,-0.147,-0.125,-0.267,-0.243,-0.046,-0.057,0.258,0.506,0.368,0.621,0.405,-0.11,-0.095,-0.639,-0.903,-0.64,-0.789,-0.251,0.307,0.416,1.024,1.089,0.678,0.608,0.045,-0.604,-0.719,-1.036,-0.966,-0.479,-0.319,0.274,0.706,0.634,0.828,0.602,0.187,0.004,-0.338,-0.475,-0.443,-0.411,-0.206,-0.012,0.081,0.182,0.206,0.136,0.088,0.031,-0.016,-0.023,-0.022,-0.01,-0.002,0],"contribution":{"carried":0.6076,"inputTokens":64,"note":"output moved 0.608× its input across 64 samples"}},{"index":4,"state":"done","agent":"Radix2Agent","intent":"Call your `delegate` tool with agent=\"Radix2Agent\". The task: find the 5 Hz component hidden under the mains hum","result":"Radix-2 transform, 64 points: bit-reversal, 6 stages, 192 butterflies.","attempts":[{"n":1,"state":"done","runId":"run-flow-tone-yesterday-4","error":null,"digest":"s637","source":"run.reply"}],"series":[0,0,0.001,0.003,0.26,0.507,0.26,0.003,0.001,0.001,0,0,0,0,0,0,0.002,0.011,0.011,0.003,0.002,0.005,0.049,0.093,0.049,0.008,0.013,0.007,0.001,0,0,0],"contribution":{"carried":0.2459,"inputTokens":64,"note":"output moved 0.246× its input across 64 samples"}},{"index":5,"state":"done","agent":"PeakAgent","intent":"Call your `delegate` tool with agent=\"PeakAgent\". The task: find the 5 Hz component hidden under the mains hum","result":"Strongest component: bin 5 (5.0 Hz), magnitude 0.51.","attempts":[{"n":1,"state":"done","runId":"run-flow-tone-yesterday-5","error":null,"digest":"s637","source":"run.reply"}],"series":[0,0,0.001,0.003,0.26,0.507,0.26,0.003,0.001,0.001,0,0,0,0,0,0,0.002,0.011,0.011,0.003,0.002,0.005,0.049,0.093,0.049,0.008,0.013,0.007,0.001,0,0,0],"contribution":{"carried":0.2459,"inputTokens":64,"note":"output moved 0.246× its input across 64 samples"}}],"trace":{"movement":"not enough to say","movementTone":"muted","detail":"0 observation(s)","ignoredCount":0,"steps":[{"index":0,"state":"done","agent":"SampleAgent","result":"Read 64 samples at 64 Hz off sensor-7. Peak amplitude 1.26.","attempts":[{"n":1,"state":"done","runId":"run-flow-tone-yesterday-0","digest":null,"source":null,"error":null}],"series":[0,0.808,0.375,1.255,1.064,0.192,0.596,-0.341,-1.024,-0.537,-1.193,-0.904,-0.006,-0.267,0.641,1.17,0.527,1.178,0.675,-0.347,0.05,-0.89,-1.236,-0.517,-1.039,-0.289,0.537,0.191,1.127,1.197,0.391,0.795,0.035,-0.819,-0.431,-1.172,-1.099,-0.205,-0.587,0.344,1.056,0.46,1.249,0.92,-0.044,0.293,-0.656,-1.124,-0.582,-1.181,-0.608,0.284,-0.033,0.884,1.263,0.51,0.983,0.372,-0.573,-0.209,-1.109,-1.199,-0.36,-0.869]},{"index":1,"state":"done","agent":"NotchAgent","result":"Notched the 23 Hz mains hum. Two poles at r=0.97; 64 samples returned.","attempts":[{"n":1,"state":"done","runId":"run-flow-tone-yesterday-1","digest":null,"source":null,"error":null}],"series":[0,0.808,0.405,1.279,1.075,0.27,0.56,-0.336,-0.974,-0.663,-1.167,-0.895,-0.146,-0.156,0.625,1.093,0.719,1.104,0.663,-0.166,-0.134,-0.852,-1.14,-0.771,-0.911,-0.279,0.331,0.438,1.056,1.107,0.682,0.608,0.045,-0.607,-0.73,-1.068,-1.016,-0.517,-0.355,0.317,0.85,0.8,1.104,0.853,0.284,0.006,-0.602,-0.928,-0.957,-0.994,-0.566,-0.037,0.298,0.795,1.093,0.903,0.754,0.353,-0.26,-0.575,-0.995,-1.05,-0.762,-0.598]},{"index":2,"state":"done","agent":"QuantiseAgent","result":"Converted 64 samples to fixed point at 32767 counts per unit. Range respected, nothing clipped.","attempts":[{"n":1,"state":"done","runId":"run-flow-tone-yesterday-2","digest":null,"source":null,"error":null}],"series":[0,0.808,0.405,1.279,1.075,0.27,0.56,-0.336,-0.974,-0.663,-1.167,-0.895,-0.146,-0.156,0.625,1.093,0.719,1.104,0.662,-0.166,-0.134,-0.852,-1.14,-0.771,-0.911,-0.279,0.331,0.438,1.056,1.107,0.682,0.608,0.045,-0.607,-0.73,-1.068,-1.016,-0.517,-0.355,0.317,0.85,0.8,1.104,0.853,0.284,0.006,-0.602,-0.928,-0.957,-0.994,-0.566,-0.037,0.297,0.795,1.093,0.903,0.754,0.353,-0.26,-0.575,-0.994,-1.05,-0.762,-0.598]},{"index":3,"state":"done","agent":"WindowAgent","result":"Hann window applied across 64 samples. Leakage traded for a wider main lobe.","attempts":[{"n":1,"state":"done","runId":"run-flow-tone-yesterday-3","digest":null,"source":null,"error":null}],"series":[0,0.002,0.004,0.028,0.042,0.016,0.049,-0.039,-0.147,-0.125,-0.267,-0.243,-0.046,-0.057,0.258,0.506,0.368,0.621,0.405,-0.11,-0.095,-0.639,-0.903,-0.64,-0.789,-0.251,0.307,0.416,1.024,1.089,0.678,0.608,0.045,-0.604,-0.719,-1.036,-0.966,-0.479,-0.319,0.274,0.706,0.634,0.828,0.602,0.187,0.004,-0.338,-0.475,-0.443,-0.411,-0.206,-0.012,0.081,0.182,0.206,0.136,0.088,0.031,-0.016,-0.023,-0.022,-0.01,-0.002,0]},{"index":4,"state":"done","agent":"Radix2Agent","result":"Radix-2 transform, 64 points: bit-reversal, 6 stages, 192 butterflies.","attempts":[{"n":1,"state":"done","runId":"run-flow-tone-yesterday-4","digest":null,"source":null,"error":null}],"series":[0,0,0.001,0.003,0.26,0.507,0.26,0.003,0.001,0.001,0,0,0,0,0,0,0.002,0.011,0.011,0.003,0.002,0.005,0.049,0.093,0.049,0.008,0.013,0.007,0.001,0,0,0]},{"index":5,"state":"done","agent":"PeakAgent","result":"Strongest component: bin 5 (5.0 Hz), magnitude 0.51.","attempts":[{"n":1,"state":"done","runId":"run-flow-tone-yesterday-5","digest":null,"source":null,"error":null}],"series":[0,0,0.001,0.003,0.26,0.507,0.26,0.003,0.001,0.001,0,0,0,0,0,0,0.002,0.011,0.011,0.003,0.002,0.005,0.049,0.093,0.049,0.008,0.013,0.007,0.001,0,0,0]}]},"digest":{"level":"step","subject":"flow-tone-yesterday","headline":"Tone hunt — yesterday's chain — 6 attempt(s) across 6 step(s), 6 done, waiting","covering":"state as of 26 hours ago","attemptsRepresented":6,"landedOn":"waiting","flags":[],"children":[{"level":"step","subject":"flow-tone-yesterday#0","headline":"SampleAgent — one attempt, done","covering":"state as of 26 hours ago","attemptsRepresented":1,"landedOn":"done","flags":[],"children":[]},{"level":"step","subject":"flow-tone-yesterday#1","headline":"NotchAgent — one attempt, done","covering":"state as of 26 hours ago","attemptsRepresented":1,"landedOn":"done","flags":[],"children":[]},{"level":"step","subject":"flow-tone-yesterday#2","headline":"QuantiseAgent — one attempt, done","covering":"state as of 26 hours ago","attemptsRepresented":1,"landedOn":"done","flags":[],"children":[]},{"level":"step","subject":"flow-tone-yesterday#3","headline":"WindowAgent — one attempt, done","covering":"state as of 26 hours ago","attemptsRepresented":1,"landedOn":"done","flags":[],"children":[]},{"level":"step","subject":"flow-tone-yesterday#4","headline":"Radix2Agent — one attempt, done","covering":"state as of 26 hours ago","attemptsRepresented":1,"landedOn":"done","flags":[],"children":[]},{"level":"step","subject":"flow-tone-yesterday#5","headline":"PeakAgent — one attempt, done","covering":"state as of 26 hours ago","attemptsRepresented":1,"landedOn":"done","flags":[],"children":[]}]},"actions":[{"id":"ask","label":"Ask about this flow","why":"Tone hunt — yesterday's chain — 6 attempt(s) across 6 step(s), 6 done, waiting. The question is answered from the trace, not from the goal text.","spends":true,"route":"/ask","source":"state"}]},{"id":"flow-tone-tonight","title":"Tone hunt — tonight's chain","goal":"find the 5 Hz component hidden under the mains hum","state":"waiting","updatedAt":1759997600000,"done":5,"total":6,"steps":[{"index":0,"state":"done","agent":"SampleAgent","intent":"Call your `delegate` tool with agent=\"SampleAgent\". The task: find the 5 Hz component hidden under the mains hum","result":"Read 64 samples at 64 Hz off sensor-7. Peak amplitude 1.26.","attempts":[{"n":1,"state":"done","runId":"run-flow-tone-tonight-0","error":null,"digest":"s6209","source":"run.reply"}],"series":[0,0.808,0.375,1.255,1.064,0.192,0.596,-0.341,-1.024,-0.537,-1.193,-0.904,-0.006,-0.267,0.641,1.17,0.527,1.178,0.675,-0.347,0.05,-0.89,-1.236,-0.517,-1.039,-0.289,0.537,0.191,1.127,1.197,0.391,0.795,0.035,-0.819,-0.431,-1.172,-1.099,-0.205,-0.587,0.344,1.056,0.46,1.249,0.92,-0.044,0.293,-0.656,-1.124,-0.582,-1.181,-0.608,0.284,-0.033,0.884,1.263,0.51,0.983,0.372,-0.573,-0.209,-1.109,-1.199,-0.36,-0.869],"contribution":{"carried":1,"inputTokens":64,"note":"output moved 1.000× its input across 64 samples"}},{"index":1,"state":"done","agent":"NotchAgent","intent":"Call your `delegate` tool with agent=\"NotchAgent\". The task: find the 5 Hz component hidden under the mains hum","result":"Notched the 23 Hz mains hum. Two poles at r=0.97; 64 samples returned.","attempts":[{"n":1,"state":"done","runId":"run-flow-tone-tonight-1","error":null,"digest":"s5981","source":"run.reply"}],"series":[0,0.808,0.405,1.279,1.075,0.27,0.56,-0.336,-0.974,-0.663,-1.167,-0.895,-0.146,-0.156,0.625,1.093,0.719,1.104,0.663,-0.166,-0.134,-0.852,-1.14,-0.771,-0.911,-0.279,0.331,0.438,1.056,1.107,0.682,0.608,0.045,-0.607,-0.73,-1.068,-1.016,-0.517,-0.355,0.317,0.85,0.8,1.104,0.853,0.284,0.006,-0.602,-0.928,-0.957,-0.994,-0.566,-0.037,0.298,0.795,1.093,0.903,0.754,0.353,-0.26,-0.575,-0.995,-1.05,-0.762,-0.598],"contribution":{"carried":1.0305,"inputTokens":64,"note":"output moved 1.030× its input across 64 samples"}},{"index":2,"state":"done","agent":"QuantiseAgent","intent":"Call your `delegate` tool with agent=\"QuantiseAgent\". The task: find the 5 Hz component hidden under the mains hum","result":"Converted 64 samples to fixed point at 0.5 counts per unit. Range respected, nothing clipped.","attempts":[{"n":1,"state":"done","runId":"run-flow-tone-tonight-2","error":null,"digest":"s0","source":"run.reply"}],"series":[0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0],"contribution":{"carried":0,"inputTokens":64,"note":"its output does not move when its input does — Δout/Δin = 0.0000 across 64 samples"}},{"index":3,"state":"done","agent":"WindowAgent","intent":"Call your `delegate` tool with agent=\"WindowAgent\". The task: find the 5 Hz component hidden under the mains hum","result":"Hann window applied across 64 samples. Leakage traded for a wider main lobe.","attempts":[{"n":1,"state":"done","runId":"run-flow-tone-tonight-3","error":null,"digest":"s0","source":"run.reply"}],"series":[0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0],"contribution":{"carried":0.6076,"inputTokens":64,"note":"output moved 0.608× its input across 64 samples"}},{"index":4,"state":"done","agent":"Radix2Agent","intent":"Call your `delegate` tool with agent=\"Radix2Agent\". The task: find the 5 Hz component hidden under the mains hum","result":"Radix-2 transform, 64 points: bit-reversal, 6 stages, 192 butterflies.","attempts":[{"n":1,"state":"done","runId":"run-flow-tone-tonight-4","error":null,"digest":"s0","source":"run.reply"}],"series":[0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0],"contribution":{"carried":0.25,"inputTokens":64,"note":"output moved 0.250× its input across 64 samples"}},{"index":5,"state":"pending","agent":"PeakAgent","intent":"Call your `delegate` tool with agent=\"PeakAgent\". The task: find the 5 Hz component hidden under the mains hum","result":null,"attempts":[]}],"trace":{"movement":"not enough to say","movementTone":"muted","detail":"0 observation(s)","ignoredCount":1,"steps":[{"index":0,"state":"done","agent":"SampleAgent","result":"Read 64 samples at 64 Hz off sensor-7. Peak amplitude 1.26.","attempts":[{"n":1,"state":"done","runId":"run-flow-tone-tonight-0","digest":null,"source":null,"error":null}],"series":[0,0.808,0.375,1.255,1.064,0.192,0.596,-0.341,-1.024,-0.537,-1.193,-0.904,-0.006,-0.267,0.641,1.17,0.527,1.178,0.675,-0.347,0.05,-0.89,-1.236,-0.517,-1.039,-0.289,0.537,0.191,1.127,1.197,0.391,0.795,0.035,-0.819,-0.431,-1.172,-1.099,-0.205,-0.587,0.344,1.056,0.46,1.249,0.92,-0.044,0.293,-0.656,-1.124,-0.582,-1.181,-0.608,0.284,-0.033,0.884,1.263,0.51,0.983,0.372,-0.573,-0.209,-1.109,-1.199,-0.36,-0.869]},{"index":1,"state":"done","agent":"NotchAgent","result":"Notched the 23 Hz mains hum. Two poles at r=0.97; 64 samples returned.","attempts":[{"n":1,"state":"done","runId":"run-flow-tone-tonight-1","digest":null,"source":null,"error":null}],"series":[0,0.808,0.405,1.279,1.075,0.27,0.56,-0.336,-0.974,-0.663,-1.167,-0.895,-0.146,-0.156,0.625,1.093,0.719,1.104,0.663,-0.166,-0.134,-0.852,-1.14,-0.771,-0.911,-0.279,0.331,0.438,1.056,1.107,0.682,0.608,0.045,-0.607,-0.73,-1.068,-1.016,-0.517,-0.355,0.317,0.85,0.8,1.104,0.853,0.284,0.006,-0.602,-0.928,-0.957,-0.994,-0.566,-0.037,0.298,0.795,1.093,0.903,0.754,0.353,-0.26,-0.575,-0.995,-1.05,-0.762,-0.598]},{"index":2,"state":"done","agent":"QuantiseAgent","result":"Converted 64 samples to fixed point at 0.5 counts per unit. Range respected, nothing clipped.","attempts":[{"n":1,"state":"done","runId":"run-flow-tone-tonight-2","digest":null,"source":null,"error":null}],"series":[0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0],"ignoredInput":{"carried":0,"inputTokens":64,"note":"its output does not move when its input does — Δout/Δin = 0.0000 across 64 samples"}},{"index":3,"state":"done","agent":"WindowAgent","result":"Hann window applied across 64 samples. Leakage traded for a wider main lobe.","attempts":[{"n":1,"state":"done","runId":"run-flow-tone-tonight-3","digest":null,"source":null,"error":null}],"series":[0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0]},{"index":4,"state":"done","agent":"Radix2Agent","result":"Radix-2 transform, 64 points: bit-reversal, 6 stages, 192 butterflies.","attempts":[{"n":1,"state":"done","runId":"run-flow-tone-tonight-4","digest":null,"source":null,"error":null}],"series":[0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0]},{"index":5,"state":"pending","agent":"PeakAgent","result":null,"attempts":[]}]},"digest":{"level":"step","subject":"flow-tone-tonight","headline":"Tone hunt — tonight's chain — 5 attempt(s) across 6 step(s), 5 done, waiting","covering":"state as of 40 minutes ago","attemptsRepresented":5,"landedOn":"waiting","flags":["1 step(s) used nothing they were given"],"children":[{"level":"step","subject":"flow-tone-tonight#0","headline":"SampleAgent — one attempt, done","covering":"state as of 40 minutes ago","attemptsRepresented":1,"landedOn":"done","flags":[],"children":[]},{"level":"step","subject":"flow-tone-tonight#1","headline":"NotchAgent — one attempt, done","covering":"state as of 40 minutes ago","attemptsRepresented":1,"landedOn":"done","flags":[],"children":[]},{"level":"step","subject":"flow-tone-tonight#2","headline":"QuantiseAgent — one attempt, done","covering":"state as of 40 minutes ago","attemptsRepresented":1,"landedOn":"done","flags":["used nothing it was given (0 of 64 tokens carried)"],"children":[]},{"level":"step","subject":"flow-tone-tonight#3","headline":"WindowAgent — one attempt, done","covering":"state as of 40 minutes ago","attemptsRepresented":1,"landedOn":"done","flags":[],"children":[]},{"level":"step","subject":"flow-tone-tonight#4","headline":"Radix2Agent — one attempt, done","covering":"state as of 40 minutes ago","attemptsRepresented":1,"landedOn":"done","flags":[],"children":[]},{"level":"step","subject":"flow-tone-tonight#5","headline":"PeakAgent — not started","covering":"state as of 40 minutes ago","attemptsRepresented":0,"landedOn":"pending","flags":[],"children":[]}]},"actions":[{"id":"handoff-2","label":"Step 2 used nothing it was given","why":"its output does not move when its input does — Δout/Δin = 0.0000 across 64 samples. The handoff is broken, so what this step produced did not come from what preceded it.","spends":false,"route":"/ask","step":2,"source":"state"},{"id":"advance","label":"Run step 5 — PeakAgent","why":"It is the next pending step with an agent. This starts a real run.","spends":true,"route":"/advance","step":5,"source":"state"},{"id":"ask","label":"Ask about this flow","why":"Tone hunt — tonight's chain — 5 attempt(s) across 6 step(s), 5 done, waiting. The question is answered from the trace, not from the goal text.","spends":true,"route":"/ask","source":"state"}]}],"agents":[{"name":"ChainLead","description":"Owns the measurement chain. Splits it and routes each stage.","tools":["read","write","execute"],"child":false,"missing":false},{"name":"SampleAgent","description":"Pulls a window of samples off the sensor.","tools":["read"],"child":true,"missing":false},{"name":"NotchAgent","description":"Removes mains hum with a two-pole notch.","tools":["read","execute"],"child":true,"missing":false},{"name":"WindowAgent","description":"Applies the window function before the transform.","tools":["read"],"child":true,"missing":false},{"name":"QuantiseAgent","description":"Converts the window to fixed point for the DSP core.","tools":["read","execute"],"child":true,"missing":false},{"name":"Radix2Agent","description":"Runs the radix-2 transform over the windowed samples.","tools":["read","execute"],"child":true,"missing":false},{"name":"PeakAgent","description":"Reports the strongest component and its bin.","tools":["read"],"child":true,"missing":false},{"name":"CalibrationAgent","description":"Declared in a subagents list. No file behind it.","tools":[],"child":true,"missing":true}],"layout":{"scopeId":"group:signal-lab","docs":{"flow-tone-yesterday":{"x":178,"y":24,"pinned":false},"flow-tone-tonight":{"x":466,"y":24,"pinned":false}},"cubes":{"ChainLead":{"x":14,"y":24,"pinned":false,"onDoc":null,"slot":0},"SampleAgent":{"x":0,"y":0,"pinned":false,"onDoc":"flow-tone-yesterday","slot":0},"NotchAgent":{"x":0,"y":0,"pinned":false,"onDoc":"flow-tone-yesterday","slot":1},"WindowAgent":{"x":0,"y":0,"pinned":false,"onDoc":"flow-tone-yesterday","slot":2},"QuantiseAgent":{"x":0,"y":0,"pinned":false,"onDoc":"flow-tone-yesterday","slot":3},"Radix2Agent":{"x":0,"y":0,"pinned":false,"onDoc":"flow-tone-yesterday","slot":4},"PeakAgent":{"x":0,"y":0,"pinned":false,"onDoc":"flow-tone-yesterday","slot":5},"CalibrationAgent":{"x":14,"y":54,"pinned":false,"onDoc":null,"slot":0}}},"notes":[]}};
+window.__DESK__ = {"scopeId":"group:web-project-demo","docs":[{"id":"flow-ledger","title":"Ledger currency rewrite","goal":"rewrite the ledger so every amount carries its currency","state":"waiting","updatedAt":1759845200000,"done":2,"total":3,"steps":[{"index":0,"state":"done","agent":"SchemaAgent","intent":"Call your `delegate` tool with agent=\"SchemaAgent\". The task: rewrite the ledger so every amount carries its currency","result":"The ledger table needs a currency column, decimal precision twelve scale two, backfilled from settlement records and indexed alongside merchant identifier.","attempts":[{"n":1,"state":"done","runId":"run-0a7f3c210","error":null,"digest":"schemaag000","source":"run.reply"}]},{"index":1,"state":"done","agent":"MigrationAgent","intent":"Call your `delegate` tool with agent=\"MigrationAgent\". The task: rewrite the ledger so every amount carries its currency","result":"Rewrote /root/workspace/ledger.txt to ledger_with_currency.txt. Every amount now carries its USD prefix; column spacing preserved exactly.","attempts":[{"n":1,"state":"done","runId":"run-1a7f3c210","error":null,"digest":"migratio001","source":"run.reply"}]},{"index":2,"state":"pending","agent":"ReviewAgent","intent":"Call your `delegate` tool with agent=\"ReviewAgent\". The task: rewrite the ledger so every amount carries its currency","result":null,"attempts":[]}],"trace":{"movement":"not enough to say","movementTone":"muted","detail":"0 observation(s)","ignoredCount":0,"steps":[{"index":0,"state":"done","agent":"SchemaAgent","result":"The ledger table needs a currency column, decimal precision twelve scale two, backfilled from settlement records and indexed alongside merchant identifier.","attempts":[{"n":1,"state":"done","runId":"run-0a7f3c210","digest":null,"source":null,"error":null}]},{"index":1,"state":"done","agent":"MigrationAgent","result":"Rewrote /root/workspace/ledger.txt to ledger_with_currency.txt. Every amount now carries its USD prefix; column spacing preserved exactly.","attempts":[{"n":1,"state":"done","runId":"run-1a7f3c210","digest":null,"source":null,"error":null}]},{"index":2,"state":"pending","agent":"ReviewAgent","result":null,"attempts":[]}]},"digest":{"level":"step","subject":"flow-ledger","headline":"Ledger currency rewrite — 2 attempt(s) across 3 step(s), 2 done, waiting","covering":"state as of 43 hours ago","attemptsRepresented":2,"landedOn":"waiting","flags":[],"children":[{"level":"step","subject":"flow-ledger#0","headline":"SchemaAgent — one attempt, done","covering":"state as of 43 hours ago","attemptsRepresented":1,"landedOn":"done","flags":[],"children":[]},{"level":"step","subject":"flow-ledger#1","headline":"MigrationAgent — one attempt, done","covering":"state as of 43 hours ago","attemptsRepresented":1,"landedOn":"done","flags":[],"children":[]},{"level":"step","subject":"flow-ledger#2","headline":"ReviewAgent — not started","covering":"state as of 43 hours ago","attemptsRepresented":0,"landedOn":"pending","flags":[],"children":[]}]},"actions":[{"id":"advance","label":"Run step 2 — ReviewAgent","why":"It is the next pending step with an agent. This starts a real run.","spends":true,"route":"/advance","step":2,"source":"state"},{"id":"ask","label":"Ask about this flow","why":"Ledger currency rewrite — 2 attempt(s) across 3 step(s), 2 done, waiting. The question is answered from the trace, not from the goal text.","spends":true,"route":"/ask","source":"state"}]},{"id":"flow-duplicates","title":"Duplicate ledger rows","goal":"find and report duplicate rows in the ledger","state":"draft","updatedAt":1759985600000,"done":0,"total":1,"steps":[{"index":0,"state":"pending","agent":"DataQualityAgent","intent":"Call your `delegate` tool with agent=\"DataQualityAgent\". The task: rewrite the ledger so every amount carries its currency","result":null,"attempts":[]}],"trace":{"movement":"not enough to say","movementTone":"muted","detail":"0 observation(s)","ignoredCount":0,"steps":[{"index":0,"state":"pending","agent":"DataQualityAgent","result":null,"attempts":[]}]},"digest":{"level":"step","subject":"flow-duplicates","headline":"Duplicate ledger rows — nothing has run","covering":"state as of 4 hours ago","attemptsRepresented":0,"landedOn":"draft","flags":[],"children":[{"level":"step","subject":"flow-duplicates#0","headline":"DataQualityAgent — not started","covering":"state as of 4 hours ago","attemptsRepresented":0,"landedOn":"pending","flags":[],"children":[]}]},"actions":[{"id":"advance","label":"Run step 0 — DataQualityAgent","why":"It is the next pending step with an agent. This starts a real run.","spends":true,"route":"/advance","step":0,"source":"state"},{"id":"ask","label":"Ask about this flow","why":"Duplicate ledger rows — nothing has run. The question is answered from the trace, not from the goal text.","spends":true,"route":"/ask","source":"state"}]}],"agents":[{"name":"LedgerLead","description":"Owns the ledger rewrite. Splits work and routes it to the specialists.","tools":["read","write","execute"],"child":false,"missing":false},{"name":"SchemaAgent","description":"Designs and checks the ledger schema.","tools":["read","write"],"child":true,"missing":false},{"name":"MigrationAgent","description":"Writes and dry-runs migrations.","tools":["read","write","execute"],"child":true,"missing":false},{"name":"ReviewAgent","description":"Reviews a change against the ledger invariants.","tools":["read"],"child":true,"missing":false},{"name":"DataQualityAgent","description":"Checks the ledger for drift and duplicates.","tools":["read","execute"],"child":false,"missing":false},{"name":"AnomalyScanner","description":"Declared in a subagents list. No file behind it.","tools":[],"child":true,"missing":true}],"layout":{"scopeId":"group:web-project-demo","docs":{"flow-ledger":{"x":178,"y":24,"pinned":false},"flow-duplicates":{"x":466,"y":24,"pinned":false}},"cubes":{"LedgerLead":{"x":14,"y":24,"pinned":false,"onDoc":null,"slot":0},"SchemaAgent":{"x":0,"y":0,"pinned":false,"onDoc":"flow-ledger","slot":0},"MigrationAgent":{"x":0,"y":0,"pinned":false,"onDoc":"flow-ledger","slot":1},"ReviewAgent":{"x":0,"y":0,"pinned":false,"onDoc":"flow-ledger","slot":2},"DataQualityAgent":{"x":0,"y":0,"pinned":false,"onDoc":"flow-duplicates","slot":0},"AnomalyScanner":{"x":14,"y":54,"pinned":false,"onDoc":null,"slot":0}}},"notes":[],"memoryLevels":[{"level":"system","color":"#6b4fa8","note":"the org's own; read-only everywhere below"},{"level":"user","color":"#3f8f3f","note":"one person's, across every project they are in"},{"level":"project","color":"#2f6fb5","note":"the scope's; what a team knows"},{"level":"flow","color":"#c8781b","note":"one flow's working notes — expected to die with it"}],"busy":{},"stateColors":{"done":"#3f8f3f","running":"#e0a020","pending":"#b9b4a8","failed":"#b03a2e","blocked":"#b03a2e","waiting":"#b9b4a8","abandoned":"#7a7469","draft":"#b9b4a8"},"agentColor":"#e0a020","subagentColor":"#c98f2e","missingColor":"#b03a2e"};</script>
 <script>
 (() => {
   // The whole backend, in memory. Shapes match the real API exactly; where they
   // drift, the demo lies about the product, which is the one thing it may not do.
   const S = window.__DESK__;
+
+  /**
+   * Which scope this page is showing.
+   *
+   * The demo is one static file and the scope selector navigates rather than
+   * fetches, so every scope's starting world is embedded and the shim picks one
+   * by query string. Anything else would mean the second scope is a second page,
+   * which is a second copy of the desk, which is the thing this file exists to
+   * refuse.
+   */
+  const worlds = window.__WORLDS__ || {};
+  const wanted = new URLSearchParams(location.search).get('scope');
+  if (wanted && worlds[wanted]) {
+    const w = worlds[wanted];
+    S.scopeId = wanted;
+    S.docs = w.docs; S.agents = w.agents; S.layout = w.layout; S.notes = w.notes || [];
+    const sel = document.getElementById('scope');
+    if (sel) sel.value = wanted;
+    // By id. Counting spans found the banner instead and wrote the new counts
+    // beside the old ones, so the chrome stated two different sizes for one desk.
+    const count = document.getElementById('counts');
+    if (count) count.textContent =
+      S.docs.length + ' document(s) · ' + S.agents.length + ' agent(s) · ' +
+      (count.textContent.match(/(\d+) person/) || [0, '0'])[1] + ' person(s)';
+  }
+
   const world = {
     docs: JSON.parse(JSON.stringify(S.docs)),
     agents: JSON.parse(JSON.stringify(S.agents)),
@@ -476,6 +515,12 @@ select{font:inherit;font-size:11px}
       'Scanned 4,182 rows. Found 3 duplicate pairs sharing a settlement id, all on 2025-01-05.',
     LedgerLead:
       'Split the goal and routed each piece. Schema first, then migration, then review.',
+    // The signal lab. PeakAgent is left pending on the broken chain so the
+    // answer arrives while somebody is watching: confident, precise, and about
+    // a spectrum that is entirely zeros.
+    PeakAgent: 'Strongest component: bin 0 (0.0 Hz), magnitude 0.00.',
+    QuantiseAgent: 'Converted 64 samples to fixed point at 0.5 counts per unit. Range respected, nothing clipped.',
+    ChainLead: 'Split the measurement chain and routed each stage in order.',
   };
 
   const digestFor = (agent, n) => (agent || 'step').toLowerCase().slice(0, 8) + '00' + n;
@@ -497,10 +542,28 @@ select{font:inherit;font-size:11px}
     }
     // "Used nothing it was given": the distinctive words of the previous result
     // that appear in this one. Same shape as contribution.ts, same threshold.
+    //
+    // And the same precedence as trace.ts: a step whose runner measured its own
+    // handoff is not handed to the word counter at all. Without this clause the
+    // shim silently un-flagged every measured step on the first poll -- the
+    // signal lab's broken stage was flagged in the page the server rendered and
+    // unflagged five seconds later, which is exactly the drift this file exists
+    // to make impossible. Found by reading the client's state, not the code.
     const words = (t) => new Set(String(t || '').toLowerCase().match(/[a-z]{4,}/g) || []);
     const out = steps.map((s) => ({ ...s, agent: agentOf(s.intent), attempts: s.attempts || [] }));
     let ignoredCount = 0;
-    const settled = out.filter((s) => s.state === 'done' && s.result);
+    for (const s of out) {
+      if (!s.contribution) continue;
+      if (s.contribution.carried === 0) {
+        s.ignoredInput = {
+          carried: 0,
+          inputTokens: s.contribution.inputTokens,
+          note: s.contribution.note,
+        };
+        ignoredCount += 1;
+      }
+    }
+    const settled = out.filter((s) => s.state === 'done' && s.result && !s.contribution);
     for (let i = 1; i < settled.length; i += 1) {
       const prior = words(settled[i - 1].result);
       if (prior.size < 12) continue;
@@ -1180,9 +1243,15 @@ function creatureKey(name, flowId) { return flowId ? name + '@' + flowId : name;
               (a.error ? ' · <span class="err">' + escape_(a.error.slice(0, 120)) + '</span>' : '') +
               '</div>').join('')
           : '<div class="att">never attempted</div>') +
+        (s.series ? '<div style="margin:4px 0 0 16px">' + spark(s.series, 226, 22) + '</div>' : '') +
+        // The flag names the instrument that produced it. It used to claim it had
+        // counted distinctive tokens whatever had actually been measured, which
+        // is a lie the moment a step's output is numbers.
         (s.ignoredInput
-          ? '<div class="flag">carried ' + Math.round(s.ignoredInput.carried * 100) + '% of ' +
-            s.ignoredInput.inputTokens + ' distinctive tokens it was handed</div>'
+          ? '<div class="flag">' + (s.ignoredInput.note
+              ? escape_(s.ignoredInput.note)
+              : 'carried ' + Math.round(s.ignoredInput.carried * 100) + '% of ' +
+                s.ignoredInput.inputTokens + ' distinctive tokens it was handed') + '</div>'
           : '') +
         '</div>').join('') + '</div>';
   };
@@ -1309,6 +1378,8 @@ function creatureKey(name, flowId) { return flowId ? name + '@' + flowId : name;
             '</div>'
           : '') +
         '<p style="margin:6px 0 0">' + escape_(doc.goal) + '</p>' +
+        (lastSeries(doc) ? '<div style="margin-top:8px">' +
+          spark(lastSeries(doc).series, 250, 30) + '</div>' : '') +
         '<ul class="steps">' + doc.steps.map((s) =>
           '<li><span class="cube sm" style="--c:' + (S.stateColors[s.state] || '#b9b4a8') + '"></span>' +
           '<span class="dim">' + s.index + '</span> ' + escape_(s.agent || s.intent.slice(0, 60)) + '</li>').join('') +
@@ -1344,7 +1415,11 @@ function creatureKey(name, flowId) { return flowId ? name + '@' + flowId : name;
         '<button id="qgo">Ask</button>' +
         '<div class="dim" style="margin-top:4px">Answered from the trace, not the goal. Spends a model call.</div>' +
         '<div id="qa"></div></div>';
-      p.querySelector('#tab-trace').onclick = () => { tab = 'trace'; renderPanel(); };
+      p.querySelector('#tab-trace').onclick = () => {
+        tab = 'trace';
+        renderPanel();
+        replayHandovers(doc);
+      };
       wireActions(p, doc);
       wireAsk(p, doc);
       const b = p.querySelector('#adv');
@@ -1416,6 +1491,42 @@ function creatureKey(name, flowId) { return flowId ? name + '@' + flowId : name;
     .replace(/\*\*(.+?)\*\*/g, '$1')
     .replace(/\`([^\`]+)\`/g, '$1')
     .replace(/(^|\s)__(.+?)__(?=\s|$)/g, '$1$2');
+
+  /**
+   * A step's numbers, drawn.
+   *
+   * Deliberately dumb: bars, one per sample, scaled to the largest absolute
+   * value in the series, in whole pixels. It is not a plotting library and must
+   * not become one -- what it is for is the single question a sentence cannot
+   * answer, which is whether the numbers are still there. A stage that says
+   * "64 samples returned, nothing clipped" and a stage that returned 64 zeros
+   * write the same report.
+   *
+   * The caption is not decoration. A bar chart normalised to its own maximum
+   * looks identical at 1.3 units and at 0.0001, so the peak is printed next to
+   * it, and a series that is all zeros says so in words.
+   */
+  const spark = (xs, w, h) => {
+    if (!xs || !xs.length) return '';
+    let max = 0;
+    for (const v of xs) max = Math.max(max, Math.abs(v));
+    const bw = Math.max(1, Math.floor((w - xs.length) / xs.length));
+    const dead = max === 0;
+    const bars = xs.map((v) => {
+      const px = dead ? 1 : Math.max(1, Math.round((Math.abs(v) / max) * h));
+      return '<i style="width:' + bw + 'px;height:' + px + 'px"></i>';
+    }).join('');
+    return '<div class="spark' + (dead ? ' dead' : '') + '" style="height:' + (h + 6) + 'px">' +
+      bars + '</div><div class="sparkcap">' + xs.length + ' values · peak ' +
+      (dead ? '<b>0.00 — nothing here</b>' : max.toFixed(2)) + '</div>';
+  };
+
+  /** The last thing this flow produced numbers for, if anything did. */
+  const lastSeries = (doc) => {
+    let out = null;
+    for (const s of (doc.steps || [])) if (s.series && s.series.length) out = s;
+    return out;
+  };
 
   const escape_ = (s) => String(s == null ? '' : s).replace(/[&<>"']/g,
     (c) => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;' }[c]));
@@ -1595,6 +1706,21 @@ function creatureKey(name, flowId) { return flowId ? name + '@' + flowId : name;
     setTimeout(() => p.remove(), 1000);
   };
 
+  /**
+   * Replay every handoff in a flow, in order.
+   *
+   * The packet only draws on a transition, so a flow that was already finished
+   * when the page opened never shows the one thing worth seeing. Opening the
+   * Trace face asks for the history of this flow, and this is that history as
+   * motion: each result travelling to the next agent, and the one that did not
+   * arrive falling in front of you. Nothing runs, nothing is spent -- it is the
+   * same recorded verdicts the list below it prints.
+   */
+  const replayHandovers = (doc) => {
+    const settled = (doc.steps || []).filter((s) => s.state === 'done');
+    settled.forEach((s, i) => setTimeout(() => drawHandover(doc, s.index), i * 420));
+  };
+
   // What each step was last time the desk looked, so a settle can be noticed
   // rather than polled for. Only transitions draw.
   const stepWas = {};
@@ -1656,7 +1782,7 @@ function creatureKey(name, flowId) { return flowId ? name + '@' + flowId : name;
         el.innerHTML =
           '<div class="dbar"><span class="box"></span><span class="t"></span></div>' +
           '<div class="body"><p class="goal"></p><div class="meta"></div>' +
-          '<div class="stack"></div></div>';
+          '<div class="chart"></div><div class="stack"></div></div>';
         el.querySelector('.stack').dataset.stack = doc.id;
         el.querySelector('.dbar').addEventListener('pointerdown', (ev) => startDrag(el, 'doc', doc.id, ev));
         el.addEventListener('pointerdown', () => { if (!drag) select('doc', doc.id); });
@@ -1675,6 +1801,13 @@ function creatureKey(name, flowId) { return flowId ? name + '@' + flowId : name;
         '<span class="strip">' + doc.steps.map((s) =>
           '<span class="cube" style="--c:' + (S.stateColors[s.state] || '#b9b4a8') + '"></span>').join('') +
         '</span><span>' + doc.done + '/' + doc.total + '</span><span>' + escape_(doc.state) + '</span>';
+      // What this flow is carrying right now, on the document itself. Two flows
+      // whose strips are both green and whose shapes are a waveform and a
+      // flatline are two different outcomes, and the desk should not need to be
+      // asked which is which.
+      const ls = lastSeries(doc);
+      const chart = el.querySelector('.chart');
+      chart.innerHTML = ls ? spark(ls.series, 236, 26) : '';
       if (!drag || drag.el !== el) {
         el.style.left = p.x + 'px'; el.style.top = p.y + 'px';
       }
