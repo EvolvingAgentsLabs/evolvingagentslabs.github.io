@@ -122,7 +122,7 @@
       <b><code>ai-flows</code> runs</b> — the flow engine, a signed HTTP API,
       multi-agent composition from markdown-declared trees, and the measurement
       harness below. <b><code>ai-ui</code> runs</b> — the desk pictured here.
-      438 tests of our own, on top of the 3,768 <code>ai-base</code> carries from
+      453 tests of our own, on top of the 3,768 <code>ai-base</code> carries from
       upstream. <code>ai-storage</code> is still specified and <b>not
       implemented</b>. Nothing on this page describes running software unless it
       says so.</p>
@@ -146,7 +146,17 @@
         <b>the agent answers for itself</b>, in the first person, out of its own
         record. When a step finishes, watch the result travel to the next agent:
         it arrives as a green square, or it falls short and drops on the floor in
-        red, which is that flow's own trace saying the step carried nothing. Wake its optional brain and a
+        red, which is that flow's own trace saying the step carried nothing.
+        <br><br><b>Then switch the scope to <code>group:signal-lab</code></b> — the
+        same desk, on numbers. Two flows hunt a 5 Hz tone under a mains hum, with
+        the same six agents and the same six steps, and both are green from end
+        to end. One found the tone at bin 5; the other lost it at step 2, to a
+        fixed-point conversion with the scale entered wrong, and answers
+        <i>"strongest component: bin 0, magnitude 0.00"</i> with exactly the same
+        confidence. Nothing in the interface knows what a Fourier transform is:
+        the same digest, the same trace and the same "carried nothing forward"
+        flag find it, and the evidence is a flatline you can see from across the
+        room. Wake its optional brain and a
         small language model loads into your own browser to answer freely, with
         everything it invents marked in red against the trace it was given.
         <br><br>A document is a flow; a cube is an agent; a cube resting on a
