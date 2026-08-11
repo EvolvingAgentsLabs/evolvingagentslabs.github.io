@@ -73,6 +73,62 @@ body{margin:0;color:var(--ink);font:14px/1.55 var(--sans)}
 .key li{display:flex;align-items:center;padding:1px 0}
 .key strong{font-size:12px}
 
+/* display:block matters: inside a chip it is a flex item and blockified for
+   free, but the system agent stands on its own and an inline span cannot take a
+   width -- which collapsed it to a bar with legs. */
+.crt{position:relative;display:block;flex:0 0 auto;
+  width:calc(16px * var(--u,1));height:calc(16px * var(--u,1));
+  background:var(--c,#e0a020);border:1px solid rgba(0,0,0,.6);
+  box-shadow:inset calc(2px * var(--u,1)) calc(2px * var(--u,1)) 0 rgba(255,255,255,.45),
+             inset calc(-2px * var(--u,1)) calc(-2px * var(--u,1)) 0 rgba(0,0,0,.28)}
+.crt .eye{position:absolute;top:calc(5px * var(--u,1));
+  width:calc(2px * var(--u,1));height:calc(4px * var(--u,1));background:#16181a;
+  transform:translate(var(--ex,0px),var(--ey,0px));
+  animation:blink 5.4s steps(1,end) infinite;animation-delay:var(--bd,0s)}
+.crt .eye.l{left:calc(4px * var(--u,1))}
+.crt .eye.r{right:calc(4px * var(--u,1))}
+.crt .leg{position:absolute;top:calc(16px * var(--u,1));
+  width:calc(2px * var(--u,1));height:calc(3px * var(--u,1));
+  background:var(--c,#e0a020);border:1px solid rgba(0,0,0,.6);border-top:0}
+.crt .leg:nth-of-type(1){left:calc(1px * var(--u,1))}
+.crt .leg:nth-of-type(2){left:calc(5px * var(--u,1))}
+.crt .leg:nth-of-type(3){left:calc(9px * var(--u,1))}
+.crt .leg:nth-of-type(4){left:calc(13px * var(--u,1))}
+@keyframes blink{0%,97%{height:calc(4px * var(--u,1))}98%,100%{height:1px}}
+@keyframes think{from{height:calc(4px * var(--u,1))}to{height:calc(2px * var(--u,1))}}
+@keyframes stepleg{from{height:calc(3px * var(--u,1))}to{height:calc(1px * var(--u,1))}}
+/* Working: the eyes narrow, out of step with each other, and it rocks. */
+.crt.busy .eye{animation:think .5s steps(2,end) infinite}
+.crt.busy .eye.r{animation-delay:.25s}
+/* Walking: the legs alternate. Whole pixels, two frames -- a sprite that eases
+   is from a different decade than everything else on this desk. */
+.crt.walking .leg{animation:stepleg .3s steps(2,end) infinite}
+.crt.walking .leg:nth-of-type(2n){animation-delay:.15s}
+/* Declared with no file behind it: eyes shut. It is not idle, it is not there. */
+.crt.blind .eye{height:1px;top:calc(7px * var(--u,1));animation:none}
+/* Asleep on the shelf: shut eyes and one snoring pixel-letter. Nothing has asked
+   it for anything, and a picture that draws that as alert is padding. */
+.crt.asleep .eye{height:1px;top:calc(7px * var(--u,1));animation:none}
+.crt .zzz{position:absolute;right:calc(-4px * var(--u,1));top:calc(-6px * var(--u,1));
+  font:700 calc(6px * var(--u,1))/1 var(--mono);color:#3b3f44;opacity:0;
+  animation:snore 3.2s steps(4,end) infinite}
+@keyframes snore{0%{opacity:0;transform:translateY(2px)}
+  30%{opacity:.85}70%{opacity:.5}100%{opacity:0;transform:translateY(-6px)}}
+/* Landing after a drag: it takes the impact rather than arriving weightless. */
+@keyframes land{0%{transform:scale(1.18,.78)}60%{transform:scale(.94,1.08)}100%{transform:scale(1)}}
+.crt.landed{animation:land .26s steps(4,end)}
+/* The result travelling from one step to the next: the packet the whole trace
+   face argues about, drawn. When it arrives, the next agent caught something.
+   When it falls, it did not. */
+.pkt{position:fixed;z-index:395;width:5px;height:5px;background:#3f8f3f;
+  border:1px solid rgba(0,0,0,.6);pointer-events:none;
+  transition:transform .62s steps(16),opacity .2s}
+.pkt.dropped{background:#b03a2e;transition:transform .5s cubic-bezier(.4,0,1,1),opacity .5s}
+@media (prefers-reduced-motion: reduce){
+  .crt .eye,.crt.walking .leg,.crt.busy .eye,.crt .zzz,.crt.landed{animation:none}
+  .pkt{transition:none}
+}
+
 body{overflow:hidden}
 .desk{position:relative;width:100vw;height:calc(100vh - 30px);overflow:auto}
 .desk.hasdrawer .surface{padding-bottom:160px}
@@ -104,37 +160,17 @@ body{overflow:hidden}
   font-size:11px;cursor:grab;user-select:none;touch-action:none;white-space:nowrap;z-index:20}
 .acube.dragging{box-shadow:5px 5px 0 rgba(0,0,0,.3);z-index:60;cursor:grabbing}
 .acube.instack{position:static;box-shadow:1px 1px 0 rgba(0,0,0,.3);padding:2px 6px 2px 3px}
-/* The body. Same colour and outline the cube always had, plus the two things a
-   reader keeps asking a static picture and not getting: eyes, so "is this one
-   working" is answerable at a glance, and legs, because a thing that moves
-   between documents by itself has to look like a thing that could. Both are
-   drawn in the notation's own pixels -- nothing here is an illustration. */
-.acube .blk{position:relative;width:15px;height:15px;background:var(--c);border:1px solid rgba(0,0,0,.55);
-  box-shadow:inset 1.5px 1.5px 0 rgba(255,255,255,.5),inset -1.5px -1.5px 0 rgba(0,0,0,.3)}
-.acube .blk i{position:absolute;top:5px;width:2px;height:4px;background:#16181a;
-  animation:blink 5.4s steps(1,end) infinite;animation-delay:var(--bd,0s)}
-.acube .blk i.l{left:3px} .acube .blk i.r{left:8px}
-/* Legs, carved out of the body's bottom edge in the chip's own colour: two
-   notches make three legs, and nothing overflows the chip. */
-.acube .blk::before,.acube .blk::after{content:"";position:absolute;bottom:-1px;width:3px;height:4px;
-  background:var(--face);border:1px solid rgba(0,0,0,.4);border-bottom:0}
-.acube .blk::before{left:2px} .acube .blk::after{right:2px}
-@keyframes blink{0%,97%{height:4px;top:5px}98%,100%{height:1px;top:7px}}
-@keyframes step2{from{height:4px}to{height:2px}}
-.acube.walking .blk::before{animation:step2 .3s steps(2,end) infinite}
-.acube.walking .blk::after{animation:step2 .3s steps(2,end) infinite reverse}
+/* The body is CREATURE_CSS, shared with every other creature on this desk --
+   there is exactly one sprite now, at one size or twice it. What is left here is
+   only how a creature sits inside the chip that carries its name. */
+.acube{padding-bottom:6px}
+.acube .blk{--u:1}
 .acube.missing{opacity:.55;cursor:not-allowed}
 .acube.missing .n{text-decoration:line-through}
-/* Declared with no file behind it: the eyes are shut. It is not idle, it is
-   not there -- and the picture should not offer it as a thing that could work. */
-.acube.missing .blk i{height:1px;top:7px;animation:none}
-/* Running: the one animation on the desk, because "is it moving" is the
-   question. The eyes narrow while it thinks, out of step with each other. */
+/* Running: the chip pulses too, because the body alone is 16 pixels wide and
+   "something is happening here" has to be readable from across the desk. */
 .acube.busy{animation:pulse 1.1s ease-in-out infinite}
-.acube.busy .blk i{animation:think .5s steps(2,end) infinite}
-.acube.busy .blk i.r{animation-delay:.25s}
 @keyframes pulse{0%,100%{box-shadow:2px 2px 0 rgba(0,0,0,.3)}50%{box-shadow:2px 2px 0 rgba(224,160,32,.9)}}
-@keyframes think{from{height:4px;top:5px}to{height:2px;top:6px}}
 /* What it is doing, on the agent rather than in a panel somebody has to open. */
 .acube .doing{font-size:9px;color:#7a5200;background:#f7e9c9;border:1px solid #d8bd7a;padding:0 3px}
 /* How many steps this one instance holds in the document it is standing on. */
@@ -287,33 +323,19 @@ select{font:inherit;font-size:11px}
   background:#16181a;clip-path:polygon(0 0,0 14px,4px 10px,7px 16px,10px 14px,7px 9px,12px 9px)}
 @media (prefers-reduced-motion: reduce){ .tourhand{transition:none} }
 
-/* Cubi: the agent cube at 2x, in AGENT_COLOR, with the same outline and the same
-   inset light/dark as every .cube on the surface. */
-.cubi{position:fixed;z-index:390;width:26px;height:32px;pointer-events:auto;cursor:pointer;
+/* Cubi is not a character standing next to the agents: it is the same creature
+   ([creatures.ts](creatures.ts)) at --u:2, in the same amber, blinking with the
+   same keyframes and watching the pointer through the same code. The only thing
+   this file styles is where it stands and the double outline that says which one
+   of them speaks for the system. */
+.cubi{position:fixed;z-index:390;pointer-events:auto;cursor:pointer;
   transition:left .55s steps(14),top .55s steps(14)}
-.cubi .body{position:relative;width:26px;height:26px;background:var(--cubi,#e0a020);
-  border:1px solid #000;
-  box-shadow:inset 2px 2px 0 rgba(255,255,255,.5),inset -2px -2px 0 rgba(0,0,0,.3)}
-.cubi .eye{position:absolute;top:9px;width:4px;height:6px;background:#16181a;
-  transform-origin:50% 50%}
-.cubi .eye.l{left:6px} .cubi .eye.r{left:15px}
-.cubi.blink .eye{height:1px;top:12px}
-.cubi .legs{position:absolute;left:2px;top:26px;display:flex;gap:3px}
-.cubi .legs i{display:block;width:4px;height:6px;background:var(--cubi,#e0a020);
-  border:1px solid #000;border-top:0}
-.cubi.sitting .legs{display:none}
-.cubi.walking .legs i{animation:cubistep .34s steps(2,end) infinite}
-.cubi.walking .legs i:nth-child(2n){animation-delay:.17s}
-.cubi.walking .body{animation:cubibob .34s steps(2,end) infinite}
-@keyframes cubistep{from{height:6px}to{height:3px}}
-@keyframes cubibob{from{transform:translateY(0)}to{transform:translateY(-1px)}}
+.cubi .crt{--u:2;outline:1px solid #000;outline-offset:2px}
+.cubi.sitting .crt .leg{display:none}
 /* Alert: the outline goes to the colour a missing agent is drawn in, so the
    warning is in the palette the reader already learned. */
-.cubi.alert .body{animation:cubialert .28s steps(1,end) 6}
+.cubi.alert .crt{animation:cubialert .28s steps(1,end) 6}
 @keyframes cubialert{from{box-shadow:0 0 0 2px #b03a2e}to{box-shadow:none}}
-.cubi.thinking .eye{animation:cubithink .5s steps(2,end) infinite}
-.cubi.thinking .eye.r{animation-delay:.25s}
-@keyframes cubithink{from{height:6px;top:9px}to{height:2px;top:11px}}
 
 /* The balloon. A window, because on this desk every bounded thing is one. */
 .cubisay{position:fixed;z-index:391;width:288px;max-width:calc(100vw - 28px);
@@ -345,6 +367,25 @@ select{font:inherit;font-size:11px}
 /* Beside the sprite there is no honest tail to draw. */
 .cubisay.notail::after,.cubisay.notail::before{display:none}
 
+/* The agent's own balloon. Narrower and plainer than Cubi's, because it is not
+   the system talking: it is one agent answering for itself, and the difference
+   should be visible before either of them is read. */
+.crtsay{position:fixed;z-index:389;width:252px;max-width:calc(100vw - 28px);
+  background:var(--paper);border:1px solid #000;box-shadow:3px 3px 0 rgba(0,0,0,.4);
+  padding:7px 9px 8px;display:none;font-size:11px;line-height:1.42}
+.crtsay.on{display:block}
+.crtsay .who{font:700 10px/1 var(--mono);letter-spacing:.04em;color:#3b3f44;
+  margin:0 0 4px;text-transform:uppercase}
+.crtsay .said{margin:0}
+.crtsay .why{margin:5px 0 0;font-size:10px;color:var(--dim);border-top:1px dotted #b9b4a8;padding-top:4px}
+.crtsay.alert{border-left:4px solid #b03a2e}
+.crtsay.alert .said{color:#7d2419}
+.crtsay .ans{margin-top:6px;font-size:11px;white-space:pre-wrap;border-top:1px solid #cfcbc2;padding-top:5px}
+.crtsay .ung{margin-top:5px;font-size:10px;color:#7d2419;border:1px solid #b03a2e;padding:3px 5px}
+.crtsay .src{margin-top:5px;font-size:10px;color:var(--dim)}
+.crtsay details pre{margin:4px 0 0;font-family:var(--mono);font-size:10px;white-space:pre-wrap;
+  max-height:110px;overflow:auto;background:#fff;border:1px solid #cfcbc2;padding:4px}
+
 /* The brain: everything about it states its price before it is pressed, which is
    the rule the action menu lives under. */
 .cubisay .brain{margin:7px -10px -9px;padding:7px 10px;border-top:1px solid #000;background:#efece5}
@@ -364,7 +405,7 @@ select{font:inherit;font-size:11px}
 
 @media (prefers-reduced-motion: reduce){
   .cubi{transition:none}
-  .cubi.walking .legs i,.cubi.walking .body,.cubi.alert .body,.cubi.thinking .eye{animation:none}
+  .cubi.alert .crt{animation:none}
 }
 /* Under 720px the rail and the drawer already own the screen. Cubi keeps its
    corner and stops walking to things it would cover. */
@@ -847,6 +888,39 @@ select{font:inherit;font-size:11px}
 </script>
 <script>(() => {
 
+/** The body, identical for every creature on the desk. One string, one species. */
+var CREATURE_BODY = '<i class="eye l"></i><i class="eye r"></i>' +
+  '<b class="leg"></b><b class="leg"></b><b class="leg"></b><b class="leg"></b>';
+
+/**
+ * The handover to draw when a step settles: who passed to whom, and whether
+ * anything survived the trip.
+ *
+ * Whether it carried is read off the trace's own finding (the receiving step's
+ * ignoredInput), never recomputed here. This is the one number the desk exists
+ * to surface, so a second implementation of it would be the worst possible
+ * place to have one.
+ *
+ * Returns null when there is no pair to draw -- a first step has nobody to have
+ * received from, and a step with no predecessor result carries nothing anybody
+ * could have handed it.
+ */
+function handoverOf(doc, stepIndex) {
+  if (!doc || !doc.steps) return null;
+  var to = null, prev = null;
+  for (var i = 0; i < doc.steps.length; i++) {
+    var s = doc.steps[i];
+    if (s.index === stepIndex) { to = s; break; }
+    if (s.state === 'done' && s.result) prev = s;
+  }
+  if (!to || !prev || !to.agent || !prev.agent) return null;
+  var carried = true;
+  var tsteps = (doc.trace && doc.trace.steps) || [];
+  for (var j = 0; j < tsteps.length; j++)
+    if (tsteps[j].index === to.index && tsteps[j].ignoredInput) carried = false;
+  return { from: prev.agent, to: to.agent, carried: carried };
+}
+
 /**
  * One entry per document this agent has work in: { flowId, steps }.
  *
@@ -887,6 +961,10 @@ function agentDoing(docs, name, flowId) {
 function creatureKey(name, flowId) { return flowId ? name + '@' + flowId : name; }
 
   const S = window.__DESK__;
+  // Published so the mascot builds its body from the same string rather than
+  // from a copy of it. One sprite, one definition, one species -- the copy is
+  // how the desk ended up with a character standing next to a row of chips.
+  window.__CRT__ = CREATURE_BODY;
   const surface = document.getElementById('surface');
   const toast = document.getElementById('toast');
   let layout = S.layout;
@@ -933,6 +1011,7 @@ function creatureKey(name, flowId) { return flowId ? name + '@' + flowId : name;
     drag = {
       el, kind, id, sr, moved: false,
       dx: ev.clientX - r.left, dy: ev.clientY - r.top,
+      x0: ev.clientX, y0: ev.clientY,
       flow: kind === 'cube' && at > 0 ? key.slice(at + 1) : null,
     };
     el.classList.add('dragging');
@@ -943,7 +1022,15 @@ function creatureKey(name, flowId) { return flowId ? name + '@' + flowId : name;
 
   const moveDrag = (ev) => {
     if (!drag) return;
-    drag.moved = true;
+    // A hand that presses a mouse button moves a pixel or two doing it. Treating
+    // the first of those as a drag meant clicking an agent that was already on a
+    // document dropped it there again -- a real write, a real step appended, from
+    // what the person performed as a click. Four pixels is the difference between
+    // a gesture and a tremor. Found by clicking, not by reading.
+    if (!drag.moved) {
+      if (Math.abs(ev.clientX - drag.x0) + Math.abs(ev.clientY - drag.y0) < 4) return;
+      drag.moved = true;
+    }
     const x = ev.clientX - drag.sr.left - drag.dx + surface.parentElement.scrollLeft;
     const y = ev.clientY - drag.sr.top - drag.dy + surface.parentElement.scrollTop;
     drag.el.style.left = Math.max(0, x) + 'px';
@@ -967,6 +1054,13 @@ function creatureKey(name, flowId) { return flowId ? name + '@' + flowId : name;
     if (!drag) return;
     const d = drag; drag = null;
     d.el.classList.remove('dragging');
+    const body = d.el.querySelector && d.el.querySelector('.crt');
+    if (body) {
+      // It takes the impact. An object that arrives weightless was never moved.
+      body.classList.add('landed');
+      setTimeout(() => body.classList.remove('landed'), 300);
+      wake(body);
+    }
     document.querySelectorAll('.docnode.over').forEach((x) => x.classList.remove('over'));
     if (!d.moved) { select(d.kind, d.id); return; }
 
@@ -1344,7 +1438,8 @@ function creatureKey(name, flowId) { return flowId ? name + '@' + flowId : name;
     el.dataset.key = key;
     el.dataset.id = a.name;
     const color = a.missing ? S.missingColor : (a.child ? S.subagentColor : S.agentColor);
-    el.innerHTML = '<span class="blk" style="--c:' + color + '"><i class="l"></i><i class="r"></i></span>' +
+    el.innerHTML = '<span class="blk crt' + (a.missing ? ' blind' : '') + '" style="--c:' + color + '">' +
+      CREATURE_BODY + '</span>' +
       '<span class="n">' + escape_(a.name) + '</span>' +
       '<span class="doing"></span><span class="mult"></span>';
     // Out of phase, or a shelf of creatures blinks in unison and reads as a row
@@ -1368,6 +1463,130 @@ function creatureKey(name, flowId) { return flowId ? name + '@' + flowId : name;
       el.style.transform = 'translate(' + (b.left - a.left) + 'px,' + (b.top - a.top) + 'px)';
     });
     setTimeout(() => el.remove(), 460);
+  };
+
+  // ---- the eyes -----------------------------------------------------------
+  /**
+   * Every creature looks at the pointer.
+   *
+   * Six lines, and it is the single largest change in how alive the desk feels:
+   * a room of things that track you is a room of things, and a row of sprites
+   * staring through you is a row of icons. The offset is rounded to a whole grid
+   * unit, so the pupil moves in pixels like everything else here rather than
+   * sliding a fraction of one.
+   */
+  let look = null, aiming = false, lastLook = 0;
+
+  const aim = () => {
+    aiming = false;
+    if (!look) return;
+    for (const b of document.querySelectorAll('.crt')) {
+      const r = b.getBoundingClientRect();
+      if (!r.width || r.bottom < 0 || r.top > window.innerHeight) continue;
+      const dx = look.x - (r.left + r.width / 2);
+      const dy = look.y - (r.top + r.height / 2);
+      const m = Math.sqrt(dx * dx + dy * dy) || 1;
+      const u = parseFloat(getComputedStyle(b).getPropertyValue('--u')) || 1;
+      b.style.setProperty('--ex', Math.round(dx / m) * u + 'px');
+      b.style.setProperty('--ey', Math.round(dy / m) * u + 'px');
+      // Something came close: whatever was dozing there is awake now.
+      if (Math.abs(dx) < 110 && Math.abs(dy) < 90) wake(b);
+    }
+  };
+
+  window.addEventListener('pointermove', (ev) => {
+    look = { x: ev.clientX, y: ev.clientY };
+    lastLook = Date.now();
+    if (!aiming) { aiming = true; requestAnimationFrame(aim); }
+  }, { passive: true });
+
+  // ---- sleep --------------------------------------------------------------
+  /**
+   * An agent nobody has asked for anything falls asleep on the shelf.
+   *
+   * It is not decoration: "nothing is asking for this one" is a real state of
+   * the system that the desk had no way of showing, and a shelf of alert little
+   * faces implies six agents waiting on you when in fact none of them is waiting
+   * for anything. They wake when the pointer comes near, when they are dragged,
+   * and the moment they are given work.
+   */
+  const wake = (node) => {
+    const b = node.classList && node.classList.contains('crt') ? node : node.querySelector('.crt');
+    if (!b) return;
+    b.dataset.woke = String(Date.now());
+    if (!b.classList.contains('asleep')) return;
+    b.classList.remove('asleep');
+    const z = b.querySelector('.zzz');
+    if (z) z.remove();
+  };
+
+  setInterval(() => {
+    const now = Date.now();
+    for (const el of surface.querySelectorAll('.acube:not(.instack):not(.merging)')) {
+      const b = el.querySelector('.crt');
+      if (!b || el.classList.contains('missing') || b.classList.contains('asleep')) continue;
+      if (now - Number(b.dataset.woke || 0) < 40000) continue;
+      b.classList.add('asleep');
+      const z = document.createElement('span');
+      z.className = 'zzz';
+      z.textContent = 'z';
+      b.appendChild(z);
+    }
+  }, 5000);
+
+  // ---- the handover -------------------------------------------------------
+  /**
+   * Draw the result travelling from the step that produced it to the step that
+   * received it — and draw it **falling** when the trace says the receiver
+   * carried nothing forward.
+   *
+   * This is the finding the whole trace face exists for, and until now it was a
+   * sentence in a panel two clicks away. A green square that arrives and a red
+   * one that drops on the floor is the same fact, in the place people are
+   * already looking. The verdict is read off the trace's own ignoredInput,
+   * which ai-flows computed; nothing here measures anything.
+   */
+  const creatureBox = (agent, flowId) => {
+    const el = cubeAt(cubeKey(agent, flowId)) ||
+      document.querySelector('.acube:not(.merging)[data-id="' + CSS.escape(agent) + '"]');
+    const b = el && el.querySelector('.crt');
+    return b ? b.getBoundingClientRect() : null;
+  };
+
+  const drawHandover = (doc, stepIndex) => {
+    const h = handoverOf(doc, stepIndex);
+    if (!h) return;
+    const a = creatureBox(h.from, doc.id), b = creatureBox(h.to, doc.id);
+    if (!a || !b) return;
+    const p = document.createElement('div');
+    p.className = 'pkt' + (h.carried ? '' : ' dropped');
+    p.style.left = a.right + 'px';
+    p.style.top = (a.top + 4) + 'px';
+    document.body.appendChild(p);
+    requestAnimationFrame(() => {
+      if (h.carried) {
+        p.style.transform = 'translate(' + (b.left - a.right - 5) + 'px,' + (b.top - a.top) + 'px)';
+      } else {
+        // Short of the receiver, and down. It was handed over and not taken.
+        p.style.transform = 'translate(' + Math.round((b.left - a.right) / 2) + 'px,64px)';
+        p.style.opacity = '0';
+      }
+    });
+    setTimeout(() => p.remove(), 1000);
+  };
+
+  // What each step was last time the desk looked, so a settle can be noticed
+  // rather than polled for. Only transitions draw.
+  const stepWas = {};
+  const noticeSettled = () => {
+    for (const d of S.docs) {
+      for (const s of (d.steps || [])) {
+        const k = d.id + '#' + s.index;
+        const was = stepWas[k];
+        stepWas[k] = s.state;
+        if (painted && was && was !== 'done' && s.state === 'done') drawHandover(d, s.index);
+      }
+    }
   };
 
   // ---- render -------------------------------------------------------------
@@ -1396,6 +1615,7 @@ function creatureKey(name, flowId) { return flowId ? name + '@' + flowId : name;
       s.classList.toggle('empty', s.children.length === 0);
 
     if (painted) walkEverythingThatMoved(was);
+    noticeSettled();
     painted = true;
     renderDrawer();
     renderPanel();
@@ -1488,6 +1708,8 @@ function creatureKey(name, flowId) { return flowId ? name + '@' + flowId : name;
 
       const doing = doingOf(w.a.name, w.flowId);
       el.classList.toggle('busy', !!doing);
+      el.querySelector('.crt').classList.toggle('busy', !!doing);
+      if (doing) wake(el);
       el.querySelector('.doing').textContent = doing ? 'step ' + doing.step.index + ' · running' : '';
       el.querySelector('.mult').textContent = w.steps > 1 ? '×' + w.steps : '';
     }
@@ -1513,12 +1735,18 @@ function creatureKey(name, flowId) { return flowId ? name + '@' + flowId : name;
       const now = el.getBoundingClientRect();
       const dx = before.left - now.left, dy = before.top - now.top;
       if (Math.abs(dx) < 1 && Math.abs(dy) < 1) continue;
-      el.classList.remove('moving', 'walking');
+      const body = el.querySelector('.crt');
+      el.classList.remove('moving');
+      if (body) body.classList.remove('walking');
       el.style.transform = 'translate(' + dx + 'px,' + dy + 'px)';
       requestAnimationFrame(() => {
-        el.classList.add('moving', 'walking');
+        el.classList.add('moving');
+        if (body) { body.classList.add('walking'); wake(body); }
         el.style.transform = '';
-        setTimeout(() => { el.classList.remove('moving', 'walking'); }, 480);
+        setTimeout(() => {
+          el.classList.remove('moving');
+          if (body) body.classList.remove('walking');
+        }, 480);
       });
     }
   }
@@ -1542,10 +1770,18 @@ function creatureKey(name, flowId) { return flowId ? name + '@' + flowId : name;
     const name = el.dataset.id;
     const c = layout.cubes[name] || { x: 20, y: 40 };
     const d = drift[name] || { dx: 0, dy: 0 };
-    const step = (n) => n + Math.round((Math.random() - 0.5) * 22);
-    const nx = Math.min(Math.max(c.x + d.dx + (Math.random() < 0.5 ? -6 : 6), 8), 120) - c.x;
-    const ny = Math.min(Math.max(step(c.y + d.dy), 30), 1400) - c.y;
-    drift[name] = { dx: nx, dy: ny };
+    const nx = Math.min(Math.max(c.x + d.dx + (Math.random() < 0.5 ? -6 : 6), 8), 120);
+    const ny = Math.min(Math.max(c.y + d.dy + Math.round((Math.random() - 0.5) * 22), 30), 1400);
+    // Not on top of each other. Two creatures wandering into the same spot read
+    // as one creature with a rendering fault, and the shelf did exactly that
+    // within a minute of being left alone.
+    for (const other of free) {
+      if (other === el) continue;
+      const o = layout.cubes[other.dataset.id] || { x: 0, y: 0 };
+      const od = drift[other.dataset.id] || { dx: 0, dy: 0 };
+      if (Math.abs(o.x + od.dx - nx) < 96 && Math.abs(o.y + od.dy - ny) < 26) return;
+    }
+    drift[name] = { dx: nx - c.x, dy: ny - c.y };
     render();
   }, 5200);
 
@@ -1782,6 +2018,138 @@ function cubiRemarks(state, ctx) {
 }
 
 /**
+ * What an agent answers when it is asked about itself.
+ *
+ * Cubi is the desk's own agent, not a narrator standing outside the system: when
+ * you click an agent, Cubi walks over and asks, and **the agent answers in its
+ * own balloon, in the first person**. That is not a flourish — delegation is the
+ * mechanic this whole product is about, and a companion that summarised the
+ * others would have been one more surface reading their trace for them.
+ *
+ * Every line is that agent's own record. The best one it can say is the
+ * confession: an agent that ran, settled, and carried nothing forward says so
+ * itself, which is a very different thing from a panel saying it about them.
+ */
+function agentSays(state, name) {
+  var docs = (state && state.docs) || [], agents = (state && state.agents) || [];
+  var a = null;
+  for (var i = 0; i < agents.length; i++) if (agents[i].name === name) a = agents[i];
+  if (!a) return null;
+  var clip = function (s, n) {
+    s = String(s == null ? '' : s).replace(/\s+/g, ' ').trim();
+    return s.length > n ? s.slice(0, n - 1) + '…' : s;
+  };
+  var pack = function (tone, en, enWhy, es, esWhy) {
+    return { id: 'agent:' + name, tone: tone, who: name,
+      en: { say: en, why: enWhy }, es: { say: es, why: esWhy } };
+  };
+
+  if (a.missing) {
+    return pack('alert',
+      'There is no file behind me. Somebody wrote my name in a subagents list and stopped there.',
+      'declared, no file — I cannot take a step',
+      'No hay ningún archivo detrás mío. Alguien escribió mi nombre en una lista de subagents y ahí quedó.',
+      'declarado, sin archivo — no puedo tomar un paso');
+  }
+
+  var running = null, ignored = null, last = null, attempts = 0, pending = 0, flows = 0;
+  for (var d = 0; d < docs.length; d++) {
+    var doc = docs[d], mine = 0;
+    for (var s = 0; s < (doc.steps || []).length; s++) {
+      var st = doc.steps[s];
+      if (st.agent !== name) continue;
+      mine += 1;
+      attempts += (st.attempts || []).length;
+      if (st.state === 'running') running = { doc: doc, step: st };
+      if (st.state === 'pending') pending += 1;
+      if (st.result) last = { doc: doc, step: st };
+    }
+    if (mine) flows += 1;
+    var tsteps = (doc.trace && doc.trace.steps) || [];
+    for (var t = 0; t < tsteps.length; t++)
+      if (tsteps[t].agent === name && tsteps[t].ignoredInput)
+        ignored = { doc: doc, step: tsteps[t] };
+  }
+
+  if (running) {
+    return pack('ok',
+      'I am on step ' + running.step.index + ' of "' + running.doc.title + '" right now.',
+      'running · ' + attempts + ' attempt(s) on my record',
+      'Estoy en el paso ' + running.step.index + ' de "' + running.doc.title + '" ahora mismo.',
+      'corriendo · ' + attempts + ' intento(s) en mi historial');
+  }
+  if (ignored) {
+    var tok = ignored.step.ignoredInput ? ignored.step.ignoredInput.inputTokens : 0;
+    return pack('alert',
+      'I ran in "' + ignored.doc.title + '" and I answered "' +
+        clip(ignored.step.result, 60) + '". The trace says I carried nothing out of the step before mine.',
+      'carried 0% of ' + tok + ' distinctive tokens I was handed',
+      'Corrí en "' + ignored.doc.title + '" y respondí "' +
+        clip(ignored.step.result, 60) + '". El trace dice que no llevé nada del paso anterior al mío.',
+      'arrastré 0% de los ' + tok + ' tokens distintivos que recibí');
+  }
+  if (last) {
+    return pack('idle',
+      'In "' + last.doc.title + '" I answered: ' + clip(last.step.result, 110),
+      attempts + ' attempt(s) across ' + flows + ' document(s)',
+      'En "' + last.doc.title + '" respondí: ' + clip(last.step.result, 110),
+      attempts + ' intento(s) en ' + flows + ' documento(s)');
+  }
+  if (pending) {
+    return pack('warn',
+      'I have work waiting and I have not run. What you can read about me is the goal, not anything I did.',
+      pending + ' step(s) pending, 0 attempts',
+      'Tengo trabajo esperando y no corrí. Lo que se puede leer de mí es el goal, no algo que haya hecho.',
+      pending + ' paso(s) pendientes, 0 intentos');
+  }
+  return pack('idle',
+    'Nothing has asked me for anything. Drop me on a document and I will have a step.',
+    'no steps anywhere — that is why I was asleep',
+    'Nadie me pidió nada. Soltame sobre un documento y voy a tener un paso.',
+    'sin pasos en ningún lado — por eso estaba dormido');
+}
+
+/**
+ * The fact sheet for one agent, when a model is answering for it.
+ *
+ * Same contract as the flow's: everything it may say, and the string its answer
+ * is checked against. Its own steps only — an agent speaking for the whole desk
+ * would be the summariser this design refuses to build.
+ */
+function cubiAgentFacts(state, name) {
+  var docs = (state && state.docs) || [], agents = (state && state.agents) || [];
+  var a = null;
+  for (var i = 0; i < agents.length; i++) if (agents[i].name === name) a = agents[i];
+  if (!a) return 'There is no agent called ' + name + ' on this desk.';
+  var clip = function (s, n) {
+    s = String(s == null ? '' : s).replace(/\s+/g, ' ').trim();
+    return s.length > n ? s.slice(0, n - 1) + '…' : s;
+  };
+  var L = ['AGENT: ' + a.name];
+  L.push('TOOLS: ' + ((a.tools || []).join(', ') || 'none declared'));
+  if (a.missing) L.push('FLAG: declared in a subagents list with no file behind it.');
+  var any = false;
+  for (var d = 0; d < docs.length; d++) {
+    var doc = docs[d];
+    for (var s = 0; s < (doc.steps || []).length; s++) {
+      var st = doc.steps[s];
+      if (st.agent !== name) continue;
+      any = true;
+      L.push('STEP ' + st.index + ' in "' + doc.title + '": ' + st.state + ', ' +
+        ((st.attempts || []).length ? (st.attempts || []).length + ' attempt(s)' : 'never attempted') +
+        '. ' + (st.result ? 'I answered: ' + clip(st.result, 160) : 'No result recorded.'));
+    }
+    var tsteps = (doc.trace && doc.trace.steps) || [];
+    for (var t = 0; t < tsteps.length; t++)
+      if (tsteps[t].agent === name && tsteps[t].ignoredInput)
+        L.push('FLAG: step ' + tsteps[t].index + ' carried 0% of the ' +
+          tsteps[t].ignoredInput.inputTokens + ' distinctive tokens it was handed.');
+  }
+  if (!any) L.push('NO STEPS: nothing has asked this agent for anything.');
+  return L.join('\n');
+}
+
+/**
  * The fact sheet.
  *
  * Everything a model is allowed to speak from, and the string cubiUngrounded
@@ -1860,8 +2228,7 @@ function cubiUngrounded(answer, facts) {
   wrap.className = 'cubi';
   wrap.setAttribute('role', 'img');
   wrap.setAttribute('aria-label', "Cubi, the desk's agent cube");
-  wrap.innerHTML = '<div class="body"><span class="eye l"></span><span class="eye r"></span></div>' +
-    '<div class="legs"><i></i><i></i><i></i><i></i></div>';
+  wrap.innerHTML = '<span class="crt" style="--c:#e0a020">' + (window.__CRT__ || '') + '</span>';
   document.body.appendChild(wrap);
 
   const bubble = document.createElement('div');
@@ -1870,6 +2237,13 @@ function cubiUngrounded(answer, facts) {
   bubble.setAttribute('aria-live', 'polite');
   document.body.appendChild(bubble);
 
+  // The agent's balloon: one on the page, moved to whoever is answering.
+  const theirs = document.createElement('div');
+  theirs.className = 'crtsay';
+  theirs.setAttribute('role', 'status');
+  document.body.appendChild(theirs);
+
+  let talkingTo = null;   // the agent Cubi is currently asking
   let lang = (navigator.language || 'en').slice(0, 2) === 'es' ? 'es' : 'en';
   let seen = [];          // remark ids already said, so Cubi does not repeat itself
   let here = { x: 0, y: 0 };
@@ -1961,11 +2335,13 @@ function cubiUngrounded(answer, facts) {
     bubble.style.setProperty('--tail', tail + 'px');
   };
 
+  const body = () => wrap.querySelector('.crt');
+
   const walkTo = (x, y) => {
-    wrap.classList.add('walking');
+    body().classList.add('walking');
     place(x, y);
     clearTimeout(walkTo._t);
-    walkTo._t = setTimeout(() => wrap.classList.remove('walking'), 580);
+    walkTo._t = setTimeout(() => body().classList.remove('walking'), 580);
   };
 
   /**
@@ -2034,6 +2410,9 @@ function cubiUngrounded(answer, facts) {
       wrap.classList.add('alert');
       setTimeout(() => wrap.classList.remove('alert'), 1800);
     }
+    // It looks at whoever it is talking to while it talks.
+    body().classList.add('busy');
+    setTimeout(() => body().classList.remove('busy'), 700);
     if (seen.indexOf(remark.id) < 0) seen.push(remark.id);
     // A companion that never forgets has nothing left to say by the third
     // minute. Forget the oldest half once it has said eight things.
@@ -2041,7 +2420,48 @@ function cubiUngrounded(answer, facts) {
     wire();
   };
 
-  const hush = () => { bubble.classList.remove('on'); };
+  const hush = () => {
+    bubble.classList.remove('on');
+    theirs.classList.remove('on');
+    talkingTo = null;
+  };
+
+  /**
+   * Cubi walks over and asks; the agent answers for itself.
+   *
+   * The two balloons are deliberately different objects. Cubi says what it did
+   * — "I asked X" — and X says what X did, in the first person, out of its own
+   * record. A single balloon summarising both would have made Cubi a narrator
+   * of other agents, which is the thing this desk is trying not to build.
+   */
+  const askAgent = (name) => {
+    const el = document.querySelector('.acube:not(.merging)[data-id="' + CSS.escape(name) + '"]');
+    if (!el) return;
+    talkingTo = name;
+    const r = el.getBoundingClientRect();
+    walkTo(r.left - 46, r.top - 10);
+    const line = agentSays(S, name);
+    setTimeout(() => {
+      if (talkingTo !== name || !line) return;
+      const t = line[lang] || line.en;
+      theirs.className = 'crtsay on' + (line.tone === 'alert' ? ' alert' : '');
+      theirs.innerHTML = '<p class="who"></p><p class="said"></p><p class="why"></p>';
+      theirs.querySelector('.who').textContent = name +
+        (lang === 'es' ? ' responde' : ' answers');
+      theirs.querySelector('.said').textContent = t.say;
+      theirs.querySelector('.why').textContent = t.why;
+      placeTheirs(el);
+    }, 620);
+  };
+
+  const placeTheirs = (el) => {
+    const r = el.getBoundingClientRect();
+    const w = theirs.offsetWidth || 252, h = theirs.offsetHeight || 80;
+    const x = Math.min(Math.max(r.left + 24, 8), Math.max(8, window.innerWidth - 330 - w));
+    const y = Math.min(Math.max(r.bottom + 10, 44), Math.max(44, window.innerHeight - 166 - h));
+    theirs.style.left = x + 'px';
+    theirs.style.top = y + 'px';
+  };
 
   /**
    * React to something that happened.
@@ -2142,7 +2562,7 @@ function cubiUngrounded(answer, facts) {
     const prog = bubble.querySelector('#cubiprog');
     const btn = bubble.querySelector('#cubiwake');
     if (btn) btn.disabled = true;
-    wrap.classList.add('thinking');
+    body().classList.add('busy');
     const show = (pct, text) => {
       if (!prog) return;
       prog.innerHTML = '<div class="bar"><i style="width:' + Math.round(pct * 100) + '%"></i></div>' +
@@ -2157,11 +2577,11 @@ function cubiUngrounded(answer, facts) {
         initProgressCallback: (r) => show(r.progress || 0, r.text || ''),
       });
       brainMeta = pick;
-      wrap.classList.remove('thinking');
+      body().classList.remove('busy');
       say(lastRemark);
     } catch (e) {
       brain = null;
-      wrap.classList.remove('thinking');
+      body().classList.remove('busy');
       if (prog) prog.innerHTML = '<div class="cost">' +
         (lang === 'es' ? 'No se pudo cargar el modelo: ' : 'The model would not load: ') +
         String(e && e.message || e) + '</div>';
@@ -2186,7 +2606,7 @@ function cubiUngrounded(answer, facts) {
     const docId = sitting || (S.docs[0] && S.docs[0].id);
     const facts = cubiFacts(S, docId);
     out.textContent = lang === 'es' ? 'Pensando…' : 'Thinking…';
-    wrap.classList.add('thinking');
+    body().classList.add('busy');
     const sys = lang === 'es'
       ? 'Sos Cubi, un cubo que vive en un escritorio de agentes. Respondé en español, en dos oraciones como mucho. ' +
         'Usá SOLO los HECHOS de abajo. No inventes números, nombres ni resultados. Si el dato no está en los HECHOS, ' +
@@ -2222,7 +2642,7 @@ function cubiUngrounded(answer, facts) {
     } catch (e) {
       out.textContent = (lang === 'es' ? 'Se cayó: ' : 'It fell over: ') + String(e && e.message || e);
     }
-    wrap.classList.remove('thinking');
+    body().classList.remove('busy');
   };
 
   // ---- watching the desk ----------------------------------------------------
@@ -2240,19 +2660,31 @@ function cubiUngrounded(answer, facts) {
     const d = downAt; downAt = null;
     if (Math.abs(ev.clientX - d.x) + Math.abs(ev.clientY - d.y) > 6) return; // a drag
     react('select-agent', { agentName: d.name });
+    askAgent(d.name);
   });
 
   document.addEventListener('pointerdown', (ev) => {
     if (!ev.isTrusted) return;                       // the tour drives itself; let it
     armIdle();
     if (bubble.contains(ev.target) || wrap.contains(ev.target)) return;
-    const doc = ev.target.closest && ev.target.closest('.docnode');
-    if (doc) { sitOn(doc.dataset.id); setTimeout(() => react('select-doc', { docId: doc.dataset.id }), 420); return; }
+    // The agent first, then the document under it. Every creature with work is
+    // standing *inside* a document, so asking about the document first meant an
+    // agent on a desk could never be clicked as an agent -- the one gesture the
+    // whole conversation depends on. Found by clicking ReviewAgent and being
+    // told about the ledger flow.
+    //
     // A cube is answered on release, not on press: pressing one is how a drag
     // starts, and a companion that starts talking about an agent the moment you
     // pick it up is talking over the gesture it is meant to explain.
     const cube = ev.target.closest && ev.target.closest('.acube');
     if (cube) { downAt = { x: ev.clientX, y: ev.clientY, name: cube.dataset.id }; return; }
+    const doc = ev.target.closest && ev.target.closest('.docnode');
+    if (doc) {
+      talkingTo = null; theirs.classList.remove('on');
+      sitOn(doc.dataset.id);
+      setTimeout(() => react('select-doc', { docId: doc.dataset.id }), 420);
+      return;
+    }
     if (ev.target.id === 'tab-trace' && sitting) {
       setTimeout(() => react('trace', { docId: sitting }), 60);
     }
@@ -2279,13 +2711,6 @@ function cubiUngrounded(answer, facts) {
   window.addEventListener('resize', follow);
   const scroller = document.querySelector('.desk');
   if (scroller) scroller.addEventListener('scroll', follow, { passive: true });
-
-  // Blink. Two frames, at an interval that is not a rhythm.
-  setInterval(() => {
-    if (wrap.classList.contains('thinking')) return;
-    wrap.classList.add('blink');
-    setTimeout(() => wrap.classList.remove('blink'), 130);
-  }, 4200);
 
   const f = fence();
   place(f.x1 - 40, f.y1 - 40);
