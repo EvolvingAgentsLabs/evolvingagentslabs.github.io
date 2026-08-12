@@ -104,7 +104,11 @@
         <p class="question">What if memory had an address space?</p>
         <p class="note">Four levels — system, user, project, flow — with different
           lifetimes. Flow memory is expected to die. Promotion between levels is
-          explicit, recorded and reversible.</p>
+          explicit, recorded and reversible. The first piece of it runs: a project
+          knowledge base an <b>8,000-token window can navigate</b>. A flat file of
+          the same material stops fitting at 16 units; the index is still at 4,523
+          of 8,000 tokens at 2,000 notes — and where it does run out, at ~15,000,
+          is written down rather than left to be discovered.</p>
       </article>
       <article>
         <h2>ai-base</h2>
@@ -122,8 +126,12 @@
       <b><code>ai-flows</code> runs</b> — the flow engine, a signed HTTP API,
       multi-agent composition from markdown-declared trees, and the measurement
       harness below. <b><code>ai-ui</code> runs</b> — the desk pictured here.
-      453 tests of our own, on top of the 3,768 <code>ai-base</code> carries from
-      upstream. <code>ai-storage</code> is still specified and <b>not
+      487 tests of our own, on top of the 3,768 <code>ai-base</code> carries from
+      upstream. Memory is now <b>agents rather than a store</b> — an archivist that
+      decides what one unit of a document is, an indexer that writes one note per
+      unit against an index that has to keep fitting, a reconciler, a librarian and
+      a coverage auditor, all of them markdown files. Every decision is an agent;
+      every mechanic is code. The rest of <code>ai-storage</code> is still specified and <b>not
       implemented</b>. Nothing on this page describes running software unless it
       says so.</p>
 
@@ -156,7 +164,13 @@
         confidence. Nothing in the interface knows what a Fourier transform is:
         the same digest, the same trace and the same "carried nothing forward"
         flag find it, and the evidence is a flatline you can see from across the
-        room. Wake its optional brain and a
+        room.
+        <br><br>On the right, <b>Documents</b> — the surfaces that change while
+        you are looking at them. Four kinds, and the two marks that matter: a dot
+        when something is writing to it with nobody waiting, and whether you may
+        write back. A flow being run by agents is read-only and alive; the project
+        chat is yours; the log of what the agents said is a record and nobody
+        types into it. Read-only is a property of the document, not of the panel. Wake its optional brain and a
         small language model loads into your own browser to answer freely, with
         everything it invents marked in red against the trace it was given.
         <br><br>A document is a flow; a cube is an agent; a cube resting on a
