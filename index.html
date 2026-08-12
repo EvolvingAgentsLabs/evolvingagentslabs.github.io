@@ -126,7 +126,7 @@
       <b><code>ai-flows</code> runs</b> — the flow engine, a signed HTTP API,
       multi-agent composition from markdown-declared trees, and the measurement
       harness below. <b><code>ai-ui</code> runs</b> — the desk pictured here.
-      487 tests of our own, on top of the 3,768 <code>ai-base</code> carries from
+      499 tests of our own, on top of the 3,768 <code>ai-base</code> carries from
       upstream. Memory is now <b>agents rather than a store</b> — an archivist that
       decides what one unit of a document is, an indexer that writes one note per
       unit against an index that has to keep fitting, a reconciler, a librarian and
@@ -165,6 +165,14 @@
         the same digest, the same trace and the same "carried nothing forward"
         flag find it, and the evidence is a flatline you can see from across the
         room.
+        <br><br>And a third, <code>group:memory-lab</code>: the memory agents
+        turning a heap of notes into a knowledge base a small window can
+        navigate. Two flows index the same material with the same five agents
+        and both are green — but one contains a note that <b>claims 663
+        characters of a passage that is 1,105</b>, so following its range lands
+        on different words and the hash meant to prove otherwise is of text
+        nobody can find. It looks exactly like the others, which is why the
+        check is code and not a prompt.
         <br><br>On the right, <b>Documents</b> — the surfaces that change while
         you are looking at them. Four kinds, and the two marks that matter: a dot
         when something is writing to it with nobody waiting, and whether you may
