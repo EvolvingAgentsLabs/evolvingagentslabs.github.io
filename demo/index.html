@@ -333,6 +333,14 @@ select{font:inherit;font-size:11px}
   .tr{animation:none}
 }
 
+.newform { position:absolute; top:34px; left:12px; width:420px; z-index:60; }
+.newform .win-body { padding:10px 12px 12px; }
+.newform label { display:block; margin:0 0 8px; font-size:12px; }
+.newform input { display:block; width:100%; margin-top:3px; box-sizing:border-box;
+  font:inherit; font-size:12px; padding:3px 5px; border:1px solid #808080;
+  border-top-color:#404040; border-left-color:#404040; background:#fff; }
+.newform .row { display:flex; gap:8px; margin-top:10px; }
+
 /* Above the memory drawer, which is 150px tall: a control that covers the
    thing it is describing is not a control. */
 .tourbar{position:fixed;left:14px;bottom:174px;z-index:400;display:flex;align-items:center;gap:10px;
@@ -441,8 +449,17 @@ select{font:inherit;font-size:11px}
   <label>Scope <select id="scope"><option value="group:web-project-demo" selected>group:web-project-demo</option><option value="group:signal-lab">group:signal-lab</option><option value="group:memory-lab">group:memory-lab</option><option value="group:cochlea-lab">group:cochlea-lab</option></select></label>
   <span class="sep">|</span>
   <span id="counts">2 document(s) · 6 agent(s) · 3 person(s)</span>
+  <button id="newdoc">New document</button>
   <button id="reload">Refresh</button>
   <span class="right">harness simulated · <span id="stamp">1970-01-01T00:00:00.000Z</span></span>
+</div>
+<div class="win newform" id="newform" style="display:none">
+  <div class="bar"><span class="box"></span><h2>New document</h2><span class="box zoom"></span></div>
+  <div class="win-body">
+    <label>Name <input id="newtitle" type="text" placeholder="Passive membrane"></label>
+    <label>What would make it done? <input id="newgoal" type="text" placeholder="every required gate green, and frozen only if they are"></label>
+    <div class="row"><button id="newcreate">Create</button><button id="newcancel">Cancel</button></div>
+  </div>
 </div>
 <div class="desk deskbg hasdrawer">
   <div class="surface" id="surface">
@@ -670,7 +687,7 @@ window.__DESK__ = {"scopeId":"group:web-project-demo","channels":[{"id":"flow-le
     const url = typeof input === 'string' ? input : (input && input.url) || '';
     // Anything not one of the desk's own three endpoints goes to the network,
     // so this shim cannot silently swallow a call somebody adds later.
-    if (!/^\/(state|layout|assign|unassign|advance|fork|ask)/.test(url)) return real(input, init);
+    if (!/^\/(state|layout|flow|assign|unassign|advance|fork|ask)/.test(url)) return real(input, init);
     const body = init && init.body ? JSON.parse(init.body) : {};
 
     if (url.indexOf('/state') === 0) return json(stateBody());
@@ -678,6 +695,40 @@ window.__DESK__ = {"scopeId":"group:web-project-demo","channels":[{"id":"flow-le
     if (url.indexOf('/layout') === 0) {
       world.layout = body.layout;
       return json({ ok: true });
+    }
+
+    if (url.indexOf('/flow') === 0) {
+      // Creating a document, in the page.
+      //
+      // Implemented here and not only against a server for the reason the
+      // whole demo exists: if the desk grows a gesture the simulated backend
+      // does not have, the demo ships a button that works in production and
+      // throws in the browser -- and it looks right until somebody presses it.
+      // The FlowsClient interface declares createFlow so the compiler asks for
+      // this implementation too, rather than leaving it to be remembered.
+      if (!body.scopeId || !body.title || !body.goal) {
+        return json({ error: 'scopeId, title and goal are required' }, 400);
+      }
+      if (!body.actorId) {
+        return json({ error: 'actorId is required — a flow records the principal it acts for' }, 400);
+      }
+      // A counter, not a hash of the title: two documents may legitimately
+      // share a name, and an id derived from the name would silently collide.
+      var id = 'flow-new-' + (world.docs.length + 1);
+      world.docs.push({
+        id: id,
+        title: body.title,
+        goal: body.goal,
+        // draft, not waiting: nothing is queued yet, and a document that claims
+        // to be waiting for work nobody assigned is the kind of picture that
+        // renders cleanly and is wrong.
+        state: 'draft',
+        updatedAt: DEMO_AT,
+        done: 0,
+        total: 0,
+        steps: [],
+      });
+      return json({ ok: true, flowId: id, title: body.title });
     }
 
     if (url.indexOf('/assign') === 0) {
@@ -2111,6 +2162,48 @@ function creatureKey(name, flowId) { return flowId ? name + '@' + flowId : name;
     location.search = '?scope=' + encodeURIComponent(e.target.value);
   });
   document.getElementById('reload').addEventListener('click', () => refresh());
+
+  // Create a document. The gesture the desk was missing: every other action
+  // here operates on work that already exists, so starting a project meant
+  // leaving the interface.
+  //
+  // An inline form and not window.prompt, for two reasons. A modal dialog is
+  // the wrong idiom for a surface built on direct manipulation -- it takes the
+  // desk away to ask about it. And a native prompt blocks the page's event loop
+  // entirely, which makes the gesture untestable by anything driving a browser,
+  // including the check that it works at all.
+  var newForm = document.getElementById('newform');
+  var newTitle = document.getElementById('newtitle');
+  var newGoal = document.getElementById('newgoal');
+
+  function closeNew() { newForm.style.display = 'none'; newTitle.value = ''; newGoal.value = ''; }
+
+  document.getElementById('newdoc').addEventListener('click', function () {
+    var open = newForm.style.display !== 'none';
+    if (open) { closeNew(); return; }
+    newForm.style.display = 'block';
+    newTitle.focus();
+  });
+  document.getElementById('newcancel').addEventListener('click', closeNew);
+
+  document.getElementById('newcreate').addEventListener('click', async () => {
+    var title = (newTitle.value || '').trim();
+    var goal = (newGoal.value || '').trim();
+    // The goal is required and is NOT defaulted from the title. A document whose
+    // goal restates its name says nothing about what done means, which is the
+    // first thing doc/03 says a flow exists to supply.
+    if (!title || !goal) { say('A document needs a name and a goal.'); return; }
+    try {
+      var r = await post('/flow', {
+        scopeId: S.scopeId, actorId: S.people && S.people[0] ? S.people[0] : 'you',
+        title: title, goal: goal
+      });
+      closeNew();
+      say('Created "' + (r.title || title) + '". Drop an agent on it to give it a step.');
+      await refresh();
+      if (r.flowId) select(r.flowId);
+    } catch (e) { say('Could not create it: ' + e.message); }
+  });
 
   render();
   // A document can be addressed directly: ?select=<flowId>. Sharing "look at
