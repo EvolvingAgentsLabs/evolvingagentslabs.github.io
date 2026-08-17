@@ -1,0 +1,323 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>COCLEA-SR — a hypothesis, falsified and then repaired · Evolving Agents Labs</title>
+<meta name="description" content="A 1995 biophysics hypothesis taken end to end on ai-os: posed as mathematics, simulated, found to rest on a wrong model, repaired against a pre-registered condition — and turned into gated, falsifiable statements about ear disease.">
+<meta property="og:title" content="COCLEA-SR — a hypothesis, falsified and then repaired">
+<meta property="og:description" content="A 1995 biophysics hypothesis taken end to end on ai-os: posed as mathematics, simulated, found to rest on a wrong model, repaired against a pre-registered condition — and turned into gated, falsifiable statements about ear disease.">
+<meta property="og:type" content="article">
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 96 84'%3E%3Crect x='12' y='32' width='12' height='52' rx='6' fill='%23B0523C' transform='rotate(-10 48 84)'/%3E%3Crect x='32' y='18' width='12' height='66' rx='6' fill='%23C8873A' transform='rotate(-3.5 48 84)'/%3E%3Crect x='52' y='18' width='12' height='66' rx='6' fill='%236E7C3C' transform='rotate(3.5 48 84)'/%3E%3Crect x='72' y='32' width='12' height='52' rx='6' fill='%233E52A3' transform='rotate(10 48 84)'/%3E%3C/svg%3E">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Newsreader:ital,opsz,wght@0,6..72,300;0,6..72,400;1,6..72,300&family=IBM+Plex+Mono:wght@400;500&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="/assets/site.css">
+<style>
+  /* Scoped to this page: site.css has no table rules, and a results page that
+     cannot show a table would have to paraphrase its own numbers. */
+  .article table{width:100%;border-collapse:collapse;margin:1.6rem 0;font-size:.86rem;
+    font-family:"IBM Plex Mono",ui-monospace,monospace;display:block;overflow-x:auto;}
+  .article th,.article td{text-align:left;padding:.42rem .6rem;border-bottom:1px solid var(--rule,#ddd6cc);white-space:nowrap;}
+  .article th{font-weight:500;opacity:.7;font-size:.78rem;letter-spacing:.02em;}
+  .article td:first-child,.article th:first-child{white-space:normal;}
+  .article .moved{font-weight:600;}
+  .article .quiet{opacity:.35;}
+  .caveat{border-left:3px solid var(--p-flows,#B0523C);padding:.1rem 0 .1rem 1.1rem;margin:1.6rem 0;}
+</style>
+</head>
+<body>
+
+<div class="wrap narrow">
+
+  <header class="masthead">
+    <a class="wordmark" href="/"><svg class="mark" viewBox="0 0 96 84" aria-hidden="true"><rect x="12" y="32" width="12" height="52" rx="6" fill="var(--p-flows)" transform="rotate(-10 48 84)"/><rect x="32" y="18" width="12" height="66" rx="6" fill="var(--p-ui)" transform="rotate(-3.5 48 84)"/><rect x="52" y="18" width="12" height="66" rx="6" fill="var(--p-storage)" transform="rotate(3.5 48 84)"/><rect x="72" y="32" width="12" height="52" rx="6" fill="var(--p-base)" transform="rotate(10 48 84)"/></svg>Evolving Agents Labs</a>
+    <nav class="navlinks">
+      <a href="/">ai-os</a>
+      <a href="/thesis/">Thesis</a>
+      <a href="/archive/">Archive</a>
+      <a href="https://github.com/EvolvingAgentsLabs/ai-os/tree/main/projects/coclea-sr">Repository</a>
+    </nav>
+  </header>
+
+  <div class="stripe" aria-hidden="true"><span></span><span></span><span></span><span></span><span></span><span></span></div>
+
+  <p class="crumb"><a href="/">Evolving Agents Labs</a><span>/</span>COCLEA-SR</p>
+
+  <section class="detail-hero">
+    <h1>A hypothesis from 1995, and the system that told its author he was wrong</h1>
+    <p class="question">The workload that makes ai-os real — and the one place where
+      the wrongness is the recorded output rather than a story told afterwards.</p>
+  </section>
+
+  <article class="article">
+
+<p class="lede">A biophysics hypothesis carried for thirty years was taken end to
+end on this system: posed as mathematics, simulated, <b>found to rest on a wrong
+model</b>, repaired against a condition registered before the repair, measured,
+bounded — and then turned into falsifiable statements about ear disease and its
+treatment. <b>26 gates, 125 checks, all green.</b></p>
+
+<p>The claim being tested here is not that agents did science. It is narrower and
+it is checkable: that a system with <b>independently generated truth</b> and
+<b>eval-gated promotion</b> can carry a real research question through the stage
+where the question's own author was wrong.</p>
+
+<h2>The question</h2>
+
+<p>Near the threshold of hearing, the mechanical signal is extraordinarily small —
+too small, sometimes, to trip the detector that turns motion into a nerve impulse.
+Normally noise makes that worse. In a nonlinear system with a threshold it can do
+the opposite: add a little and the combination of signal plus noise occasionally
+crosses; if those crossings stay correlated with the signal's phase, information
+that was invisible becomes detectable. Add more and it drowns. Detection against
+noise therefore has an <em>interior optimum</em>. This is
+<b>stochastic resonance</b>, and the 1995 question was whether the ear uses it.</p>
+
+<h2>Why the answer had to be hostile</h2>
+
+<p>Handing an old hypothesis to a language model and receiving a beautiful graph
+confirming it teaches nothing. Models are extraordinarily good at internally
+coherent stories. What was needed was a system capable of saying <em>your code is
+wrong</em>, or worse, <em>your model is wrong</em>.</p>
+
+<p>The mechanism is one directory rule:</p>
+
+<p><b><code>truth/</code> must not import <code>src/</code>.</b></p>
+
+<p>Closed forms in sympy and mpmath live in <code>truth/</code>. The solver lives
+in <code>src/</code>. A gate compares one against the other, so the value a gate
+checks against <b>cannot be produced by the code under test</b>. Four words of
+policy, and the load-bearing structure of the entire project — because they are
+what makes a green gate mean something other than self-consistency.</p>
+
+<table>
+<thead><tr><th>gate</th><th>checked against</th><th>measured</th></tr></thead>
+<tbody>
+<tr><td>uniform eigenvalues</td><td><code>ω_n = (2n−1)πc/2L</code></td><td>9.28e-6</td></tr>
+<tr><td>exponential profile</td><td>roots of <code>tan βL = −2β/α</code></td><td>2.31e-6</td></tr>
+<tr><td>stochastic variance</td><td>the Lyapunov solution</td><td>within sampling error</td></tr>
+<tr><td>the SR optimum, 0-D</td><td>Rice's crossing rate, <code>σ_opt = θ/2</code></td><td>9.5%</td></tr>
+<tr><td>transmission line</td><td><code>P = sin(k(1−x))/sin(k)</code></td><td>7.3e-7, order 2.00</td></tr>
+<tr><td>power balance</td><td>influx at the stapes = dissipation</td><td>residual 4.3e-8</td></tr>
+</tbody>
+</table>
+
+<p>None of those is negotiable through language. <b>Conservation of energy does not
+care how persuasive an agent is.</b></p>
+
+<h2>And then it said the model was wrong</h2>
+
+<p>The first operator was close to the original 1995 idea: a graded string, the
+membrane's own tension carrying the wave. Elegant. Several low-level gates passed
+on it. And the traveling wave died before reaching the place the same model said
+it should peak — measured, the response fell <b>twenty-eight orders of
+magnitude</b> before arriving.</p>
+
+<p>The cause was a sign no parameter choice can move. In a string the membrane
+impedance sits in the <em>numerator</em> of the local wavenumber, so the wave is
+blocked exactly where the membrane is stiff — which is where it has to enter. A
+fluid transmission line puts the same impedance in the <em>denominator</em>, and
+then the signs come out right for the physical reason: propagating basal to the
+characteristic place, wavelength collapsing at it, evanescent apical to it.
+Békésy's peak as a consequence rather than an input.</p>
+
+<p>Three things about how that went, and each is now a rule.
+<b>The acceptance condition was written before the replacement was built.</b>
+<b>The redesigns were counted</b> — three model changes in one session, each moving
+the instrument closer to the answer it wanted; the third is where you stop and
+record the falsification rather than take a fourth. And the alternative is what the
+rule exists to prevent: had the inverted wave been found <em>after</em> the
+stochastic layer was built on top of it, every number above it would have been
+void.</p>
+
+<h2>Only then, the result</h2>
+
+<p><b>Stochastic resonance is there, and it is where the theory says.</b> Three
+drive frequencies, eight positions, noise swept at each: SNR against noise shows an
+interior maximum whose 95% interval clears both ends of the grid —
+<b>24 curves of 24</b>. The optimum sits at <b>11.6% of the parameter-free
+prediction <code>σ_opt = θ/2</code></b>, which is half a grid spacing: matched to
+the instrument's resolution. Every free quantity cancels out of that prediction, so
+there is nothing left to tune into agreement.</p>
+
+<p>The two boundaries are worth more than the result. Bridging to auditory-nerve
+physiology, the regime is reachable <b>only up to a characteristic frequency of
+about 1 kHz</b>. And the passive membrane's sharpness is <code>Q</code> 2.2–2.7,
+where a living cochlea is far more selective — a gap reported rather than tuned
+away, and the quantitative argument for the active layer.</p>
+
+<p>So the hypothesis did not come back as <em>"it was right"</em>. It came back as
+<em>"here is the regime where the mechanism survives, and here is where this model
+says it should not"</em>. A boundary is another experiment.</p>
+
+<h2>The part nobody was aiming at: a therapeutic surface</h2>
+
+<p>The string had two knobs — the membrane's own tension and mass. <b>No
+intervention reaches either.</b> The transmission line put the <em>fluid</em> inside
+the operator: scala geometry, entrained mass, viscous loss. Fluid is precisely what
+a diuretic or an osmotic agent acts on. The active layer added the distance to the
+Hopf bifurcation, which salicylate and furosemide already move in humans,
+reversibly, today. The threshold detector added a synaptic threshold.</p>
+
+<p>A falsified model was replaced by one with a <b>therapeutic surface</b>. The
+falsification bought the section.</p>
+
+<p>The rule is that a pathology is a transform on parameters the model already has
+and nothing else — no new term, no new equation, no fitted constant. A lesion with
+every default <em>is</em> a healthy cochlea, so a lesion is literally the diff.
+Read the table by its <b>zeros</b>: what identifies a lesion is not the column that
+moved but the five that did not.</p>
+
+<table>
+<thead><tr><th>lesion</th><th>knob</th><th>place map</th><th>Q</th><th>sensitivity</th><th>compression</th><th>knee</th><th>optimal noise</th><th>self-oscillates</th></tr></thead>
+<tbody>
+<tr><td>healthy</td><td>—</td><td>1.000</td><td>1.000</td><td>0 dB</td><td>0.365</td><td>0.0028</td><td>0.500</td><td>no</td></tr>
+<tr><td>conductive</td><td>drive</td><td class="quiet">1.000</td><td class="quiet">1.000</td><td class="moved">−20.0 dB</td><td class="quiet">0.365</td><td class="quiet">0.0028</td><td class="quiet">0.500</td><td class="quiet">no</td></tr>
+<tr><td>outer hair cell loss</td><td>μ<sub>H</sub></td><td class="quiet">1.000</td><td class="quiet">1.000</td><td class="quiet">0 dB</td><td class="moved">0.811</td><td class="moved">0.354</td><td class="quiet">0.500</td><td class="quiet">no</td></tr>
+<tr><td>prestin block</td><td>μ<sub>H</sub></td><td class="quiet">1.000</td><td class="quiet">1.000</td><td class="quiet">0 dB</td><td class="moved">0.638</td><td class="moved">0.089</td><td class="quiet">0.500</td><td class="quiet">no</td></tr>
+<tr><td>endolymphatic hydrops</td><td>β, S, M</td><td class="moved">1.117</td><td class="moved">1.056</td><td class="moved">−3.9 dB</td><td class="quiet">0.365</td><td class="quiet">0.0028</td><td class="quiet">0.500</td><td class="quiet">no</td></tr>
+<tr><td>synaptopathy</td><td>θ</td><td class="quiet">1.000</td><td class="quiet">1.000</td><td class="quiet">0 dB</td><td class="quiet">0.365</td><td class="quiet">0.0028</td><td class="moved">0.900</td><td class="quiet">no</td></tr>
+<tr><td>past the bifurcation</td><td>μ<sub>H</sub> &gt; 0</td><td class="quiet">1.000</td><td class="quiet">1.000</td><td class="quiet">0 dB</td><td>—</td><td>—</td><td class="quiet">0.500</td><td class="moved">yes</td></tr>
+</tbody>
+</table>
+
+<p><b>The discrimination is itself gated</b>, and the interesting part is the two
+checks that make the first one mean anything. Six distinct signatures of seven. A
+lesion that changes nothing reproduces the reference to <code>0.0</code> in every
+component — without that, "these differ" could be solver drift. And <b>no single
+observable separates the catalogue</b>: the best column has 3 distinct values out
+of 7, so the pattern is load-bearing rather than decorative. Probed rather than
+assumed — de-lesion the hydrops and it collapses onto healthy and the gate goes
+red.</p>
+
+<p>The one collision is <b>asserted, not excluded</b>. Hair-cell loss and prestin
+block share a sign pattern because they are one axis at two depths, and no
+single-instant measurement separates two points on one axis. A gate that quietly
+dropped the pair would pass equally well on a model that had collapsed all seven
+lesions onto one knob — which is the failure the gate exists to catch.</p>
+
+<h3>What the model then says about treatment</h3>
+
+<p>Four directions, each with a falsifier and each with a normative <em>"what the
+model cannot say"</em> field: without that field, the direction does not publish.
+The cheapest needs no new therapy at all. Gain and the compression knee move with
+<b>different powers of the same parameter</b> — <code>|μ|⁻¹</code> against
+<code>|μ|^(3/2)</code> — so a tenfold retreat from criticality costs 20 dB of
+threshold but moves the knee <b>31.6×</b>. The knee is 1.5× more sensitive in log
+terms, and the input/output slope of a distortion-product emission is a standard
+clinic measurement. The model says an ototoxicity monitoring protocol should watch
+the slope, not the audiogram. That is a claim a clinician can attack with data that
+already exists.</p>
+
+<p>And the hazard, which is the clearest reason a <em>mechanism</em> was worth
+building: every amplifier-restoring therapy pushes the system toward the
+bifurcation, and past it the oscillator runs with no input at all — spontaneous
+emission, and the tonal tinnitus that sometimes accompanies it.</p>
+
+<p><b>The target is a point the treatment must approach and must not cross, and the
+failure mode on the far side is a symptom, not an absence of benefit.</b> A model
+fitted to outcomes could not say that, because the failure lives on the far side of
+a boundary the data would not contain.</p>
+
+<h2>Who did what</h2>
+
+<p>Eight roles, separated on purpose: a Deriver producing independent analytic
+references, a Builder implementing solvers, a Math Verifier and a Statistical
+Verifier attacking from different directions, Explorers sweeping, a Literature role
+comparing against physiology, a Synthesizer, and an Auditor on provenance. If the
+same code generates a result and verifies it, what is being measured is
+self-consistency.</p>
+
+<p>But the division of labour that actually mattered was not agent against agent.
+<b>Agents were good</b> at deriving closed forms, writing solvers, sweeping
+parameters, and diagnosing numerical causes — a boundary treatment that fails to
+halve a control volume at a free end is exactly what a model catches quickly and a
+person misses at 2am. <b>Agents were repeatedly bad</b> at noticing that a gate
+could not fail, that a benchmark's baseline already sat at the ceiling, or that a
+redesign had become result-seeking. Every one of nine instrument failures was
+caught by <em>running</em> something and distrusting the number, never by an agent
+reading its own design.</p>
+
+<p><b>The human contribution no arrangement of agents replaced</b> was refusing the
+plausible result: stopping when the plots looked physiological but the wave ran the
+wrong way, and deciding that a falsification was the output rather than a
+setback.</p>
+
+<h2>What this does not show</h2>
+
+<div class="caveat">
+
+<p><b>The cochlea has not been shown to use stochastic resonance.</b> A
+computational model cannot establish that. What the experiment shows is that the
+mechanism survives inside this model, reproduces the pre-registered signature, and
+generates predictions comparable with physiology.</p>
+
+<p><b>No claim here has been compared against patient data.</b> The treatment
+section is a set of model-derived hypotheses. The healthy operating point is a
+posit with no derivation, two of the seven lesions are parameterised by hand, and
+the model already disagrees with the clinic in at least one place we could find —
+it <em>sharpens</em> tuning under hydrops where Ménière's broadens it. All three
+are written into the project rather than footnoted.</p>
+
+<p><b>The usual argument for gates is weaker than we assumed, and we found that out
+ourselves.</b> A companion project tested whether a frontier model can catch
+fabricated and subtly defective physics results. It caught <em>all</em> of them —
+twelve blatant fabrications and nine subtle numerical defects — naming causes at
+the level of <em>"the boundary treatment at the free end fails to halve the control
+volume"</em>. So "the model cannot tell" is <b>not</b> why gates exist. What
+survives is narrower: a model can <em>judge</em> a task but cannot <em>generate</em>
+one with a known answer, because you cannot create truth by asserting it — and a
+judge that is right every time still hands you no ledger, no freeze and no
+reproduction command.</p>
+
+<p><b>Our own ratio experiment has not yet paid for verification.</b> Measuring
+whether more verifying agents and fewer exploring ones buys correctness, every
+completed 5-explorer flow answered correctly. If that holds across arms, the honest
+reading is that verification bought nothing <em>on that task</em> — a legitimate
+null about the task's difficulty for the model in use, and a result published
+against ourselves.</p>
+
+</div>
+
+<h2>The artefact is executable</h2>
+
+<p>Every accepted run records its parameters, seed, code state and dependency
+hashes. Artefact transitions go into an append-only hash-chained ledger. Figures
+carry their run id, result hash and commit <b>in the PNG's own metadata</b>. Run
+directories are content-addressed, so a re-run with different numbers cannot
+overwrite an attested one.</p>
+
+<p>This does not solve the replication crisis. It points at a different question:</p>
+
+<p><b>What if reproducibility were a property of the instrument rather than a
+promise made after the experiment?</b></p>
+
+<p>Today the final artefact of science is a paper, and the code, seeds, rejected
+models and intermediate decisions live somewhere else if they survive at all. For
+computational science there is no reason that has to remain true. The artefact can
+be executable — hypothesis, assumptions, derivations, implementation, <em>the
+implementations that were rejected</em>, the gates, the raw runs, the seeds, the
+provenance chain, and the exact path by which a claim became accepted. A reviewer
+would not only read the conclusion. They could rebuild it.</p>
+
+<p class="ctas">
+  <a class="cta primary" href="https://github.com/EvolvingAgentsLabs/ai-os/blob/main/doc/18-from-a-hypothesis-to-a-therapeutic-surface.md">The full write-up →</a>
+  <a class="cta" href="https://github.com/EvolvingAgentsLabs/ai-os/blob/main/projects/coclea-sr/PATHOLOGIES.md">Pathologies</a>
+  <a class="cta" href="https://github.com/EvolvingAgentsLabs/ai-os/tree/main/projects/coclea-sr">Repository</a>
+</p>
+
+  </article>
+
+  <footer class="foot">
+    <span class="by">Ideas, architecture and implementation by
+      <a href="https://github.com/matiasmolinas">Matias Molinas</a> and
+      <a href="https://github.com/ismaelfaro">Ismael Faro</a>.</span>
+    <span class="meta-foot">Apache 2.0 · permanently alpha ·
+      <a href="https://github.com/EvolvingAgentsLabs">github.com/EvolvingAgentsLabs</a></span>
+  </footer>
+
+</div>
+
+</body>
+</html>
