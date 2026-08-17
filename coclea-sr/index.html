@@ -271,12 +271,22 @@ one with a known answer, because you cannot create truth by asserting it — and
 judge that is right every time still hands you no ledger, no freeze and no
 reproduction command.</p>
 
-<p><b>Our own ratio experiment has not yet paid for verification.</b> Measuring
-whether more verifying agents and fewer exploring ones buys correctness, every
-completed 5-explorer flow answered correctly. If that holds across arms, the honest
-reading is that verification bought nothing <em>on that task</em> — a legitimate
-null about the task's difficulty for the model in use, and a result published
-against ourselves.</p>
+<p><b>Our own ratio experiment came back null.</b> Ten flows, forty agent claims,
+three different mixes of exploring and verifying agents: <b>100% accurate in every
+arm, zero corrections, 0% dissent per verifier</b>. Verification bought nothing
+because nothing was ever wrong — the entire spread across every agent was 0.034
+against a tolerance of 0.25.</p>
+
+<p>The task was built so that reasoning from the code's own docstrings gives the
+wrong answer and measuring gives the right one. Forty out of forty <em>measured</em>.
+Mildly encouraging about the model; fatal for the experiment. The baseline sat at
+the ceiling, so every arm tied — and a tie reads as a result.</p>
+
+<p>The rule that would have caught it is written in this repository's own
+contributor guide: <em>check headroom before building the treatment, never after</em>.
+One cheap control flow, run before the other nine were bought, would have said so.
+<b>Writing a rule down is not the same as applying it</b>, and that is the most
+useful thing the experiment produced.</p>
 
 </div>
 
