@@ -58,11 +58,10 @@
           <a class="cta" href="/verify/">Check the numbers yourself</a>
           <a class="cta" href="https://github.com/EvolvingAgentsLabs/ai-os">Repository</a>
         </p>
-        <p class="note">The first is <b>the demo</b>: the real client, with a
-          simulated backend so nothing is installed and nothing is spent. It opens on
-          <b>coclea-sr</b> — every box an agent, the lines between them the handoffs,
-          and the dot on a line the thing that actually moved. The orchestration is
-          simulated; the numbers those project scopes show are read out of the
+        <p class="note">The first is <b>the demo</b>. Horizontal is time and the
+          right edge is now; each rope is one flow of work, and where it sits is which
+          agent is holding it. It starts with you asking and — if it finished — comes
+          back to you. The orchestration is simulated; the numbers come from the
           projects' own artifacts. The second link is not a demo at all — it is the
           evidence, with real artifacts re-derived in your own browser. Use the first
           to see what this is. Use the second when you want to stop taking our word
@@ -210,85 +209,37 @@
         true — the digest counts a step that used nothing it was given, the menu
         offers it as somewhere to look, and the trace names what caught it. That
         panel is the answer to "how do you inspect this, and how do you interfere".</p>
-      <figcaption><b><a href="/demo/">Open the desk and use it →</a></b> — press <b>Play</b> and it walks itself through the whole vocabulary, or take over at any point: a real gesture stops the tour where it stands. Every beat is the real client receiving the events a hand produces, never a recording, so if the desk breaks the tour breaks. It is the real
-        interface with a fake backend behind it, so nothing is installed and nothing
-        is spent.
-        <br><br><b>Everything on it is an agent, and the flows of information are
-        the thing you see.</b> A flow is a path through the agents; each line is a
-        handoff and the dot travelling it is what moved. Click the line and you get
-        the address the observation was recorded at. A hop nobody recorded is drawn
-        thin, grey and dashed and carries no dot at all — because <i>did not run</i>
-        is not <i>passed</i>, and a picture that draws them alike has thrown away the
+      <figcaption><b><a href="/demo/">Open the demo and use it →</a></b> — press <b>Play</b>
+        and it walks itself through the whole vocabulary by operating the real controls,
+        or take over at any point: a real gesture stops it where it stands. Nothing there
+        is a recording, so if the surface breaks the tour breaks.
+        <br><br><b>Horizontal is time, and the right edge is now.</b> Each rope is one
+        flow of work; where it sits is which agent is holding it. A rope starts with you
+        asking for it, dips through the agents, and — if it finished — comes back to you.
+        A rope that stops against a bar is a thought nobody ever received. Drag left to
+        go back, scroll to zoom.
+        <br><br><b>Hue is which thread. Texture is what happened.</b> A hop that carried
+        is lit. One that arrived and was used by nobody goes dark from where it landed.
+        One still waiting on a verdict frays. And one nobody recorded is <b>not drawn at
+        all</b> — you see the background through it, because <i>did not run</i> is not
+        <i>passed</i>, and a picture that draws them alike has thrown away the
         distinction this whole project is about.
-        <br><br>One panel inspects whatever you select, in two positions. <b>Read
-        it</b> gives you the object's real fields. <b>Ask an agent</b> hands it to
-        <code>INSPECTOR</code> — an agent like any other, with one tool: read. Drag
-        that cube onto a flow and it reads it; the sentence it comes back with
-        <b>carries the address it read</b>, one click away. When it has nothing to
-        read it is required to say <i>unknown</i> rather than guess, and the desk
-        draws that differently from an answer. That is the argument of this whole
-        site, as a thing you can do with a mouse.
-        <br><br>It opens on <b>coclea-sr</b>: two chains, the same six agents, the
-        same six steps, both green — and one of them wrong in every number it
-        reports. Nothing in either trace separates them. A gate does, declared before
-        the run. The second scope is <b>hemo-verified</b>, where no closed form
-        exists, so the judge itself goes on trial: the oracle panel scores 0.9056
-        against a kill threshold written down in advance, while six of its seven
-        members are near a coin flip alone.
-        <br><br>The agents are alive on it now: each one is a creature that blinks
-        while it waits, narrows its eyes while it runs, and says which step it is
-        on. Give an agent work in a second document and it <b>splits in two</b>;
-        take the work away and the extra one walks back into the first. And a
-        companion, <b>Cubi</b> — the same creature at twice the size — watches
-        what you touch, walks over to whichever agent you clicked, and asks it;
-        <b>the agent answers for itself</b>, in the first person, out of its own
-        record. When a step finishes, watch the result travel to the next agent:
-        it arrives as a green square, or it falls short and drops on the floor in
-        red, which is that flow's own trace saying the step carried nothing.
-        <br><br><b>Then switch the scope to <code>group:signal-lab</code></b> — the
-        same desk, on numbers. Two flows hunt a 5 Hz tone under a mains hum, with
-        the same six agents and the same six steps, and both are green from end
-        to end. One found the tone at bin 5; the other lost it at step 2, to a
-        fixed-point conversion with the scale entered wrong, and answers
-        <i>"strongest component: bin 0, magnitude 0.00"</i> with exactly the same
-        confidence. Nothing in the interface knows what a Fourier transform is:
-        the same digest, the same trace and the same "carried nothing forward"
-        flag find it, and the evidence is a flatline you can see from across the
-        room.
-        <br><br>And a third, <code>group:memory-lab</code>: the memory agents
-        turning a heap of notes into a knowledge base a small window can
-        navigate. Two flows index the same material with the same five agents
-        and both are green — but one contains a note that <b>claims 663
-        characters of a passage that is 1,105</b>, so following its range lands
-        on different words and the hash meant to prove otherwise is of text
-        nobody can find. It looks exactly like the others, which is why the
-        check is code and not a prompt.
-        <br><br>On the right, <b>Documents</b> — the surfaces that change while
-        you are looking at them. Four kinds, and the two marks that matter: a dot
-        when something is writing to it with nobody waiting, and whether you may
-        write back. A flow being run by agents is read-only and alive; the project
-        chat is yours; the log of what the agents said is a record and nobody
-        types into it. Read-only is a property of the document, not of the panel. Wake its optional brain and a
-        small language model loads into your own browser to answer freely, with
-        everything it invents marked in red against the trace it was given.
-        <br><br>A document is a flow; a cube is an agent; a cube resting on a
-        document means that agent has work in that flow. Dropping one there is not a
-        view change — it appends a real step, the same instruction composing an agent
-        tree would have written. Positions persist per scope, and the system never
-        re-arranges what you moved.
-        <br><br>The panel on the right is the part a GUI could not have done. The
-        <b>digest</b> states how many attempts it stands for and over what window,
-        because a flow changes faster than anyone looks at it and a summary that
-        drops an attempt reads exactly like a clean one. The <b>menu</b> is derived
-        from this flow's state rather than fixed, and every entry carries the
-        evidence that produced it and says whether pressing it spends. The
-        <b>answer</b> is read out of the trace and never the goal — the goal is what
-        somebody meant to happen, and it reads like an answer even when the work was
-        never done. Asking with no evidence recorded costs nothing: it says so
-        instead of buying a turn to tell you there is nothing there.
-        <b>What this does not establish is whether it helps.</b> Its own
-        falsification is a stopwatch — a person, a three-day-old flow they did not
-        run, desk against transcript — and that has not been run.</figcaption>
+        <br><br><b>Everything that moves is a measurement.</b> Exactly one thing animates
+        on its own: a step that is open right now. When none is, nothing on the page
+        moves — a still surface is a true statement, and it is the only thing that makes
+        the moving one worth believing.
+        <br><br>Zooming out does not shrink the picture, it <b>aggregates</b>: below a
+        threshold a thread stops being drawn step by step and becomes one band that says
+        what it stands for — <i>6 steps · 58m</i>. A viewer sampling at one rate cannot
+        faithfully observe change faster than half of it, and a surface that pretends
+        otherwise invites you to find structure in aliasing.
+        <br><br>Four scopes, all real. <b>coclea-sr</b>: two chains, the same six agents,
+        the same six steps — and thirty hours apart, which no earlier surface could have
+        told you. One came home; the other stops at a gate declared before the run that
+        measured 2.592e-4 against a tolerance of 1.0e-4. <b>hemo-verified</b>: no closed
+        form exists, so the judge itself goes on trial at 0.9056 against a kill threshold
+        written down first. And two scopes that each carry a flow which reports cleanly
+        and is wrong.</figcaption>
     </figure>
 
     <figure class="shot">
