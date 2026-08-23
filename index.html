@@ -59,10 +59,14 @@
           <a class="cta" href="https://github.com/EvolvingAgentsLabs/ai-os">Repository</a>
         </p>
         <p class="note">The first is <b>the demo</b>: the real client, with a
-          simulated backend so nothing is installed and nothing is spent. The second
-          is not a demo at all — it is the evidence, with real artifacts re-derived
-          in your own browser. Use the first to see what this is. Use the second when
-          you want to stop taking our word for it.</p>
+          simulated backend so nothing is installed and nothing is spent. It opens on
+          <b>coclea-sr</b> — every box an agent, the lines between them the handoffs,
+          and the dot on a line the thing that actually moved. The orchestration is
+          simulated; the numbers those project scopes show are read out of the
+          projects' own artifacts. The second link is not a demo at all — it is the
+          evidence, with real artifacts re-derived in your own browser. Use the first
+          to see what this is. Use the second when you want to stop taking our word
+          for it.</p>
       </div>
       <figure class="markfig">
         <svg viewBox="0 0 96 84" role="img" aria-label="Four pillars: ai-flows, ai-ui, ai-storage, ai-base">
@@ -208,12 +212,29 @@
         panel is the answer to "how do you inspect this, and how do you interfere".</p>
       <figcaption><b><a href="/demo/">Open the desk and use it →</a></b> — press <b>Play</b> and it walks itself through the whole vocabulary, or take over at any point: a real gesture stops the tour where it stands. Every beat is the real client receiving the events a hand produces, never a recording, so if the desk breaks the tour breaks. It is the real
         interface with a fake backend behind it, so nothing is installed and nothing
-        is spent. Drag an agent cube onto a document and it gets a step; press
-        Advance and watch the step run; open the Trace face and see what each agent
-        actually returned. Try dropping <code>ReviewAgent</code> on the ledger flow:
-        it answers "Looks fine to me", the flow reports 3/3 done and green — and the
-        trace flags that the step <b>carried nothing forward</b>. That is the finding
-        the whole system exists to make visible.
+        is spent.
+        <br><br><b>Everything on it is an agent, and the flows of information are
+        the thing you see.</b> A flow is a path through the agents; each line is a
+        handoff and the dot travelling it is what moved. Click the line and you get
+        the address the observation was recorded at. A hop nobody recorded is drawn
+        thin, grey and dashed and carries no dot at all — because <i>did not run</i>
+        is not <i>passed</i>, and a picture that draws them alike has thrown away the
+        distinction this whole project is about.
+        <br><br>One panel inspects whatever you select, in two positions. <b>Read
+        it</b> gives you the object's real fields. <b>Ask an agent</b> hands it to
+        <code>INSPECTOR</code> — an agent like any other, with one tool: read. Drag
+        that cube onto a flow and it reads it; the sentence it comes back with
+        <b>carries the address it read</b>, one click away. When it has nothing to
+        read it is required to say <i>unknown</i> rather than guess, and the desk
+        draws that differently from an answer. That is the argument of this whole
+        site, as a thing you can do with a mouse.
+        <br><br>It opens on <b>coclea-sr</b>: two chains, the same six agents, the
+        same six steps, both green — and one of them wrong in every number it
+        reports. Nothing in either trace separates them. A gate does, declared before
+        the run. The second scope is <b>hemo-verified</b>, where no closed form
+        exists, so the judge itself goes on trial: the oracle panel scores 0.9056
+        against a kill threshold written down in advance, while six of its seven
+        members are near a coin flip alone.
         <br><br>The agents are alive on it now: each one is a creature that blinks
         while it waits, narrows its eyes while it runs, and says which step it is
         on. Give an agent work in a second document and it <b>splits in two</b>;
