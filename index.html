@@ -21,6 +21,7 @@
   <header class="masthead">
     <a class="wordmark" href="/"><svg class="mark" viewBox="0 0 96 84" aria-hidden="true"><rect x="12" y="32" width="12" height="52" rx="6" fill="var(--p-flows)" transform="rotate(-10 48 84)"/><rect x="32" y="18" width="12" height="66" rx="6" fill="var(--p-ui)" transform="rotate(-3.5 48 84)"/><rect x="52" y="18" width="12" height="66" rx="6" fill="var(--p-storage)" transform="rotate(3.5 48 84)"/><rect x="72" y="32" width="12" height="52" rx="6" fill="var(--p-base)" transform="rotate(10 48 84)"/></svg>Evolving Agents Labs</a>
     <nav class="navlinks">
+      <a href="/verify/">Check it</a>
       <a href="/#pillars">Pillars</a>
       <a href="/#status">Status</a>
       <a href="/coclea-sr/">COCLEA-SR</a>
@@ -52,10 +53,15 @@
           <a href="https://github.com/yc-software/qm">QM</a> — and that part is the
           <em>how</em>. The paragraph above is the <em>why</em>.</p>
         <p class="ctas">
-          <a class="cta primary" href="/demo/">Try the desk →</a>
-          <a class="cta" href="https://github.com/EvolvingAgentsLabs/ai-os/blob/main/doc/manual.md">Run it for real</a>
+          <a class="cta primary" href="/verify/">Check it yourself →</a>
+          <a class="cta" href="/demo/">Try the desk</a>
           <a class="cta" href="https://github.com/EvolvingAgentsLabs/ai-os">Repository</a>
         </p>
+        <p class="note">The first one is not a demonstration, it is the thing:
+          real artifacts embedded in a page, re-derived in your browser, no network
+          and no server. The second is the interface, with a simulated backend —
+          worth using, and every number on it is invented, which is why it is no
+          longer the first link on this page.</p>
       </div>
       <figure class="markfig">
         <svg viewBox="0 0 96 84" role="img" aria-label="Four pillars: ai-flows, ai-ui, ai-storage, ai-base">
@@ -290,6 +296,26 @@
       wrong</b>, and retracting it invalidated four other numbers. All of it is
       written up rather than deleted, because a finding that was wrong and the reason
       it looked right is the most useful record we can keep.</p>
+
+    <p class="sectionlabel" style="margin-top:2.6rem">Two demos, and they are not the same kind of thing</p>
+
+    <p>The desk above is <b>the real client with a simulated backend</b>, generated
+      from source so it cannot drift from the product. It is worth ten minutes. But
+      it demonstrates the pillar whose own falsification has never been run, and
+      every number on it is invented — which, on a page that says every number is
+      tied to the artifact that produced it, is an odd first handshake.</p>
+
+    <p><b><a href="/verify/">The other one has nothing simulated in it.</a></b> Real
+      artifacts out of <code>projects/</code>, embedded verbatim, checked in your own
+      browser with no network and no server: the hash chain re-derived entry by
+      entry, run directories shown to be the first twelve digits of their own
+      contents' hash, six published sentences resolved out of the runs that produced
+      them, and the one statistic that moved between library versions sitting red
+      among seven that did not. Edit a ledger entry from the page and watch exactly
+      one link break; re-chain the tail and watch the break vanish and the head move
+      instead. The code doing it is a second implementation, in a second language, of
+      the repository's own <code>verify_ledger.py</code> — because a verifier sharing
+      code with what it verifies checks self-consistency, not truth.</p>
 
     <p class="sectionlabel" style="margin-top:2.6rem">The workload that makes it real</p>
 
