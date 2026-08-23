@@ -1,6 +1,8 @@
 # GitHub Pages Configuration
 title: Evolving Agents Labs
-description: ai-os — an agent-based operating system. Flows above the turn, an intelligent canvas, and layered memory.
+description: ai-os — agent work you can check, and prove. Everyone can generate;
+  almost nobody can tell you six months later whether the number in their README is
+  still the number their code produces.
 url: "https://evolvingagentslabs.github.io"
 baseurl: ""
 
