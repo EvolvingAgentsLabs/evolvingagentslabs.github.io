@@ -8,31 +8,35 @@
 <meta property="og:title" content="token-trie — Evolving Agents Labs">
 <meta property="og:description" content="Every legal instruction is pre-tokenized into a trie of token IDs and the sampler's valid-next set is masked at each step. A 350M-parameter model plays Tetris in a browser tab, fully offline.">
 <meta property="og:type" content="website">
-<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 96 84'%3E%3Crect x='12' y='32' width='12' height='52' rx='6' fill='%23B0523C' transform='rotate(-10 48 84)'/%3E%3Crect x='32' y='18' width='12' height='66' rx='6' fill='%23C8873A' transform='rotate(-3.5 48 84)'/%3E%3Crect x='52' y='18' width='12' height='66' rx='6' fill='%236E7C3C' transform='rotate(3.5 48 84)'/%3E%3Crect x='72' y='32' width='12' height='52' rx='6' fill='%233E52A3' transform='rotate(10 48 84)'/%3E%3C/svg%3E">
-<link rel="preconnect" href="https://fonts.googleapis.com">
-<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Newsreader:ital,opsz,wght@0,6..72,300;0,6..72,400;1,6..72,300&family=IBM+Plex+Mono:wght@400;500&display=swap" rel="stylesheet">
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Crect x='2' y='2' width='13' height='13' rx='4' fill='%23F2F2F7'/%3E%3Crect x='17' y='2' width='13' height='13' rx='4' fill='%23F2F2F7'/%3E%3Crect x='2' y='17' width='13' height='13' rx='4' fill='%23F2F2F7'/%3E%3Crect x='18' y='18' width='11' height='11' rx='3' fill='none' stroke='%23F2F2F7' stroke-width='2' opacity='.42'/%3E%3C/svg%3E">
+<meta name="theme-color" content="#000000">
+<meta name="color-scheme" content="dark">
+<!-- No webfont link, deliberately. This site publishes numbers it says you
+     can check with the machine in front of you, and /verify/ already refuses
+     a stylesheet from fonts.googleapis.com for exactly that reason. The two
+     stacks below are the demo's, and they are already on the machine. -->
 <link rel="stylesheet" href="/assets/site.css">
 </head>
 <body>
 
+<header class="masthead">
+  <div class="masthead-in">
+      <a class="wordmark" href="/"><svg class="mark" viewBox="0 0 32 32" aria-hidden="true"><rect x="2" y="2" width="13" height="13" rx="4" fill="currentColor"/><rect x="17" y="2" width="13" height="13" rx="4" fill="currentColor"/><rect x="2" y="17" width="13" height="13" rx="4" fill="currentColor"/><rect x="18" y="18" width="11" height="11" rx="3" fill="none" stroke="currentColor" stroke-width="2" opacity=".42"/></svg>ai-os<span class="org">Evolving Agents Labs</span></a>
+      <nav class="navlinks">
+        <a href="/demo/">Demo</a>
+        <a href="/verify/">Verify</a>
+        <a href="/coclea-sr/">COCLEA-SR</a>
+        <a href="/hemo-verified/">HEMO-VERIFIED</a>
+        <a href="/archive/" aria-current="page">Archive</a>
+        <a href="https://github.com/EvolvingAgentsLabs/ai-os">GitHub</a>
+      </nav>
+  </div>
+</header>
+
 <div class="wrap narrow">
 
-  <header class="masthead">
-    <a class="wordmark" href="/"><svg class="mark" viewBox="0 0 96 84" aria-hidden="true"><rect x="12" y="32" width="12" height="52" rx="6" fill="var(--p-flows)" transform="rotate(-10 48 84)"/><rect x="32" y="18" width="12" height="66" rx="6" fill="var(--p-ui)" transform="rotate(-3.5 48 84)"/><rect x="52" y="18" width="12" height="66" rx="6" fill="var(--p-storage)" transform="rotate(3.5 48 84)"/><rect x="72" y="32" width="12" height="52" rx="6" fill="var(--p-base)" transform="rotate(10 48 84)"/></svg>Evolving Agents Labs</a>
-    <nav class="navlinks">
-      <a href="/">ai-os</a>
-      <a href="/archive/">Archive</a>
-      <a href="/thesis/">Thesis</a>
-      <a href="/archive/#method">Method</a>
-      <a href="https://github.com/EvolvingAgentsLabs">GitHub</a>
-    </nav>
-  </header>
 
-  <div class="stripe" aria-hidden="true"><span></span><span></span><span></span><span></span><span></span><span></span></div>
-
-  <p class="crumb"><a href="/">Evolving Agents Labs</a><span>/</span><a href="/">ai-os</a>
-      <a href="/archive/">Archive</a><span>/</span>token-trie</p>
+  <p class="crumb"><a href="/">ai-os</a><span>/</span><a href="/archive/">Archive</a><span>/</span>token-trie</p>
 
   
   <div class="frozen-banner"><b>Frozen.</b> This repository is archived and

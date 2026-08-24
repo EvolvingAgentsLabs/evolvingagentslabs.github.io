@@ -1,263 +1,51 @@
 #!/usr/bin/env python3
 """Render the Evolving Agents Labs site. Output is committed; this is not a build step."""
-import os, sys, shutil
+import os, pathlib, sys
 sys.path.insert(0, os.path.dirname(os.path.abspath(__file__)))
 from data import EXPERIMENTS, ORIGIN, BADGES, THESIS
 
 OUT = sys.argv[1] if len(sys.argv) > 1 else "site"
 
-CSS = """/* Evolving Agents Labs — shared styles. Hand-written; no preprocessor. */
-:root{
-  --paper:#F5F5F2; --ground:#FFFFFF;
-  --ink:#15171B; --ink-2:#4A4F58; --ink-3:#767C86;
-  --rule:#DEDEDA; --rule-strong:#C4C4BF;
-  --accent:#3E52A3; --signal:#8A5C10;
-  --serif:"Newsreader",Georgia,"Times New Roman",serif;
-  --mono:"IBM Plex Mono",ui-monospace,SFMono-Regular,Menlo,monospace;
-  --sans:-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,Helvetica,Arial,sans-serif;
-  --pad:clamp(1.25rem,5vw,3rem);
-}
-@media (prefers-color-scheme:dark){
-  :root{
-    --paper:#0F1114; --ground:#15181C;
-    --ink:#E8E8E4; --ink-2:#A8ADB6; --ink-3:#767C86;
-    --rule:#262A30; --rule-strong:#363B43;
-    --accent:#8B9BE0; --signal:#D9A441;
-  }
-}
-:root[data-theme="dark"]{
-  --paper:#0F1114; --ground:#15181C;
-  --ink:#E8E8E4; --ink-2:#A8ADB6; --ink-3:#767C86;
-  --rule:#262A30; --rule-strong:#363B43;
-  --accent:#8B9BE0; --signal:#D9A441;
-}
-:root[data-theme="light"]{
-  --paper:#F5F5F2; --ground:#FFFFFF;
-  --ink:#15171B; --ink-2:#4A4F58; --ink-3:#767C86;
-  --rule:#DEDEDA; --rule-strong:#C4C4BF;
-  --accent:#3E52A3; --signal:#8A5C10;
-}
-*{box-sizing:border-box;}
-html{-webkit-text-size-adjust:100%;}
-body{
-  margin:0;background:var(--paper);color:var(--ink);
-  font-family:var(--sans);font-size:16px;line-height:1.6;
-  -webkit-font-smoothing:antialiased;
-}
-:focus-visible{outline:2px solid var(--accent);outline-offset:3px;border-radius:2px;}
-.wrap{max-width:min(64rem,100%);margin:0 auto;padding-inline:var(--pad);}
-.wrap.narrow{max-width:min(46rem,100%);}
+# The stylesheet is READ, not carried. It used to be a verbatim copy of
+# assets/site.css pasted into this file, and the copy had already drifted: the
+# shipped sheet grew the pillars, the stripe and the ai-os home while this one
+# still described a site with none of them. A second copy of a thing nobody
+# diffs is how a number goes stale, and a design system is no different.
+CSS = (pathlib.Path(__file__).resolve().parent.parent / "assets" / "site.css").read_text()
 
-/* masthead */
-.masthead{
-  display:flex;align-items:baseline;justify-content:space-between;
-  gap:1.5rem;flex-wrap:wrap;padding-block:1.75rem 1.5rem;
-  border-bottom:1px solid var(--rule);
-}
-.wordmark{
-  font-family:var(--mono);font-size:.8125rem;font-weight:500;
-  letter-spacing:.08em;text-transform:uppercase;text-decoration:none;color:inherit;
-}
-.wordmark .mark{color:var(--accent);margin-right:.45em;}
-.navlinks{display:flex;gap:1.5rem;font-family:var(--mono);font-size:.75rem;letter-spacing:.04em;}
-.navlinks a{color:var(--ink-2);text-decoration:none;transition:color .15s;}
-.navlinks a:hover{color:var(--accent);}
 
-/* index hero */
-.hero{padding-block:clamp(3rem,9vw,5.5rem) clamp(2.5rem,6vw,4rem);}
-.hero h1{
-  font-family:var(--serif);font-weight:300;
-  font-size:clamp(2rem,5.4vw,3.5rem);line-height:1.12;
-  letter-spacing:-.018em;margin:0 0 1.5rem;max-width:22ch;text-wrap:balance;
-}
-.hero h1 em{font-style:italic;color:var(--accent);}
-.hero p{margin:0;max-width:66ch;color:var(--ink-2);font-size:1.0625rem;line-height:1.65;}
-.hero p + p{margin-top:1rem;}
-.hero .who{
-  margin-top:1.75rem;padding-top:1.25rem;
-  border-top:1px solid var(--rule);
-  font-size:.9375rem;color:var(--ink-3);
-}
-.hero .who a{color:var(--ink-2);text-decoration-thickness:1px;text-underline-offset:2px;}
-.hero .who a:hover{color:var(--accent);}
+FONTS = ("<!-- No webfont link, deliberately. This site publishes numbers it says you\n"
+         "     can check with the machine in front of you, and /verify/ already refuses\n"
+         "     a stylesheet from fonts.googleapis.com for exactly that reason. The two\n"
+         "     stacks in site.css are the demo's, and they are already on the machine. -->")
 
-/* legend */
-.legend{
-  display:flex;flex-wrap:wrap;gap:.6rem 1.75rem;
-  padding-block:1.25rem;border-block:1px solid var(--rule);
-  font-family:var(--mono);font-size:.75rem;color:var(--ink-3);
-}
-.legend div{display:flex;align-items:center;gap:.5rem;}
+ICON = (
+    '<link rel="icon" href="data:image/svg+xml,'
+    "%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E"
+    "%3Crect x='2' y='2' width='13' height='13' rx='4' fill='%23F2F2F7'/%3E"
+    "%3Crect x='17' y='2' width='13' height='13' rx='4' fill='%23F2F2F7'/%3E"
+    "%3Crect x='2' y='17' width='13' height='13' rx='4' fill='%23F2F2F7'/%3E"
+    "%3Crect x='18' y='18' width='11' height='11' rx='3' fill='none' "
+    "stroke='%23F2F2F7' stroke-width='2' opacity='.42'/%3E%3C/svg%3E\">\n"
+    '<meta name="theme-color" content="#000000">\n'
+    '<meta name="color-scheme" content="dark">'
+)
 
-.badge{
-  font-family:var(--mono);font-size:.6875rem;font-weight:500;
-  letter-spacing:.06em;text-transform:uppercase;
-  padding:.2em .55em;border:1px solid currentColor;border-radius:2px;
-  white-space:nowrap;line-height:1.3;
-}
-.badge.reproducible{color:var(--accent);}
-.badge.results{color:var(--signal);}
-.badge.prototype{color:var(--ink-3);}
+#: The mark, inline, so a page renders it with no request of its own. Four
+#: buckets of time: three written into, and one drawn as an outline rather than
+#: as a zero. See assets/img/mark.svg.
+MARK = (
+    '<svg class="mark" viewBox="0 0 32 32" aria-hidden="true">'
+    '<rect x="2" y="2" width="13" height="13" rx="4" fill="currentColor"/>'
+    '<rect x="17" y="2" width="13" height="13" rx="4" fill="currentColor"/>'
+    '<rect x="2" y="17" width="13" height="13" rx="4" fill="currentColor"/>'
+    '<rect x="18" y="18" width="11" height="11" rx="3" fill="none" '
+    'stroke="currentColor" stroke-width="2" opacity=".42"/></svg>'
+)
 
-/* index listing */
-.listing{padding-block:1rem 4rem;}
-.sectionlabel{
-  font-family:var(--mono);font-size:.6875rem;letter-spacing:.14em;
-  text-transform:uppercase;color:var(--ink-3);margin:0;padding-block:2.25rem 1rem;
-}
-.row{
-  display:grid;grid-template-columns:7.5rem minmax(9rem,12rem) 1fr auto;
-  gap:.5rem 2rem;align-items:start;
-  padding:1.5rem .875rem;margin-inline:-.875rem;
-  border-bottom:1px solid var(--rule);
-  text-decoration:none;color:inherit;border-radius:3px;
-  transition:background-color .18s ease;
-}
-.row:first-of-type{border-top:1px solid var(--rule-strong);}
-.row:hover{background:var(--ground);}
-.row:hover .name{color:var(--accent);}
-.row:hover .arrow{transform:translateX(3px);opacity:1;}
-.thumb{
-  display:block;border:1px solid var(--rule);border-radius:3px;
-  overflow:hidden;background:var(--ground);aspect-ratio:16/9;
-}
-.thumb img{display:block;width:100%;height:100%;object-fit:cover;transition:transform .25s ease;}
-.row:hover .thumb img{transform:scale(1.03);}
-@media (prefers-color-scheme:dark){.thumb img{filter:brightness(.88) saturate(.95);}}
-:root[data-theme="dark"] .thumb img{filter:brightness(.88) saturate(.95);}
-:root[data-theme="light"] .thumb img{filter:none;}
-.rowhead{display:flex;flex-direction:column;gap:.55rem;align-items:flex-start;}
-/* The origin has no evidence badge — it is not being worked on, and inventing a
-   fourth badge would dilute what the other three mean. */
-.row.origin .rowhead{justify-content:flex-start;}
-.name{font-family:var(--mono);font-size:.9375rem;font-weight:500;letter-spacing:-.01em;transition:color .18s;}
-.question{
-  font-family:var(--serif);font-weight:300;
-  font-size:clamp(1.125rem,2.1vw,1.4375rem);
-  line-height:1.34;letter-spacing:-.012em;margin:0;max-width:44ch;text-wrap:balance;
-}
-.note{margin:.6rem 0 0;font-size:.875rem;line-height:1.55;color:var(--ink-2);max-width:52ch;}
-.meta{
-  display:flex;align-items:center;gap:.85rem;
-  font-family:var(--mono);font-size:.75rem;color:var(--ink-3);
-  font-variant-numeric:tabular-nums;white-space:nowrap;
-}
-.arrow{opacity:.45;transition:transform .18s ease,opacity .18s ease;}
-@media (max-width:44rem){
-  .row{grid-template-columns:1fr;gap:.85rem;padding-block:1.375rem;}
-  .thumb{max-width:none;}
-  .rowhead{flex-direction:row;align-items:center;gap:.75rem;flex-wrap:wrap;}
-  .meta{order:3;}
-}
-
-/* detail page */
-.crumb{
-  font-family:var(--mono);font-size:.6875rem;letter-spacing:.1em;text-transform:uppercase;
-  color:var(--ink-3);padding-block:2rem .5rem;
-}
-.crumb a{color:var(--ink-3);text-decoration:none;}
-.crumb a:hover{color:var(--accent);}
-.crumb span{margin-inline:.5em;opacity:.5;}
-.detail-hero{padding-block:.5rem 2rem;border-bottom:1px solid var(--rule);}
-.detail-hero h1{
-  font-family:var(--mono);font-weight:500;
-  font-size:clamp(1.5rem,3.6vw,2rem);letter-spacing:-.02em;margin:0 0 1rem;
-}
-.detail-hero .question{
-  font-size:clamp(1.375rem,3.2vw,1.875rem);margin:0 0 1.5rem;max-width:30ch;color:var(--ink);
-}
-.hero-meta{display:flex;align-items:center;gap:.85rem;flex-wrap:wrap;margin-bottom:1.75rem;}
-.hero-meta .when{font-family:var(--mono);font-size:.75rem;color:var(--ink-3);}
-.ctas{display:flex;gap:.75rem;flex-wrap:wrap;}
-.cta{
-  display:inline-flex;align-items:center;gap:.5rem;
-  font-family:var(--mono);font-size:.8125rem;
-  padding:.6rem 1rem;border:1px solid var(--rule-strong);border-radius:3px;
-  text-decoration:none;color:var(--ink);background:var(--ground);
-  transition:border-color .18s,color .18s;
-}
-.cta:hover{border-color:var(--accent);color:var(--accent);}
-.cta.primary{border-color:var(--accent);color:var(--accent);}
-
-.article{padding-block:2.5rem 3rem;}
-.hero-figure{
-  margin:2rem 0 0;border:1px solid var(--rule);border-radius:4px;
-  overflow:hidden;background:var(--ground);
-}
-.hero-figure img{display:block;width:100%;height:auto;}
-.hero .mark{
-  display:block;width:clamp(3.5rem,7vw,4.75rem);height:auto;
-  margin:0 0 1.75rem -.35rem;mix-blend-mode:multiply;
-}
-/* In dark mode the figures stay on their paper ground rather than being
-   inverted. Inverting would drag the indigo through olive and shift the amber
-   that means "signal detected" in sleep-harness — the accents carry meaning
-   here. A light plate on a dark page reads as a printed figure, which suits a
-   site set in Newsreader. Dimmed slightly so it does not glare. */
-@media (prefers-color-scheme:dark){
-  .hero-figure{border-color:var(--rule-strong);}
-  .hero-figure img,.hero .mark{filter:brightness(.88) saturate(.95);}
-  .hero .mark{mix-blend-mode:normal;}
-}
-:root[data-theme="dark"] .hero-figure{border-color:var(--rule-strong);}
-:root[data-theme="dark"] .hero-figure img,
-:root[data-theme="dark"] .hero .mark{filter:brightness(.88) saturate(.95);}
-:root[data-theme="dark"] .hero .mark{mix-blend-mode:normal;}
-:root[data-theme="light"] .hero-figure img,
-:root[data-theme="light"] .hero .mark{filter:none;}
-.article h2{
-  font-family:var(--serif);font-weight:400;
-  font-size:clamp(1.375rem,2.6vw,1.75rem);line-height:1.25;letter-spacing:-.012em;
-  margin:2.75rem 0 1rem;text-wrap:balance;
-}
-.article h2:first-child{margin-top:0;}
-.article .lede{
-  font-family:var(--serif);font-weight:300;
-  font-size:clamp(1.1875rem,2.4vw,1.5rem);line-height:1.4;
-  color:var(--ink);margin-bottom:2rem;
-}
-.article p{margin:0 0 1.15rem;color:var(--ink-2);}
-.article strong{color:var(--ink);font-weight:600;}
-.article em{color:var(--ink);}
-.article a{color:var(--accent);text-decoration-thickness:1px;text-underline-offset:2px;}
-.article ul{margin:0 0 1.15rem;padding-left:1.25rem;color:var(--ink-2);}
-.article li{margin-bottom:.5rem;}
-.article code{
-  font-family:var(--mono);font-size:.875em;
-  background:var(--ground);border:1px solid var(--rule);border-radius:3px;padding:.1em .35em;
-}
-.article pre{
-  background:var(--ground);border:1px solid var(--rule);border-radius:4px;
-  padding:1rem;overflow-x:auto;margin:0 0 1.15rem;
-}
-.article pre code{background:none;border:none;padding:0;font-size:.8125rem;line-height:1.7;}
-
-.nextprev{
-  border-top:1px solid var(--rule-strong);padding-block:2rem 1rem;
-  font-family:var(--mono);font-size:.8125rem;
-}
-.nextprev a{color:var(--accent);text-decoration:none;}
-.nextprev a:hover{text-decoration:underline;}
-
-.foot{
-  border-top:1px solid var(--rule-strong);
-  padding-block:2.5rem 3.5rem;
-  display:flex;flex-direction:column;gap:.75rem;
-  font-family:var(--mono);font-size:.75rem;color:var(--ink-3);
-}
-.foot .by{max-width:62ch;line-height:1.7;color:var(--ink-2);}
-.foot .meta-foot{color:var(--ink-3);}
-.foot a{color:var(--ink-2);text-decoration:none;}
-.foot a:hover{color:var(--accent);}
-@media (prefers-reduced-motion:reduce){*{transition:none !important;animation:none !important;}}
-"""
-
-FONTS = ('<link rel="preconnect" href="https://fonts.googleapis.com">\n'
-         '<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>\n'
-         '<link href="https://fonts.googleapis.com/css2?family=Newsreader:ital,opsz,wght@0,6..72,300;0,6..72,400;1,6..72,300&family=IBM+Plex+Mono:wght@400;500&display=swap" rel="stylesheet">')
-
-ICON = ("<link rel=\"icon\" href=\"data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' "
-        "viewBox='0 0 32 32'><text y='25' font-size='24'>%E2%97%88</text></svg>\">")
+#: The same mark, at hero size. The page used to open on a raster logo made for
+#: paper; this one is four rectangles and scales.
+MARK_HERO = MARK.replace('class="mark"', 'class="mark" role="img"')
 
 FOOT = """  <footer class="foot">
     <span class="by">Ideas, architecture and implementation by
@@ -288,16 +76,30 @@ def head(title, desc, css_path):
 """
 
 
-def masthead(prefix):
-    return f"""  <header class="masthead">
-    <a class="wordmark" href="{prefix}"><span class="mark">◈</span>Evolving Agents Labs</a>
+def masthead(prefix, here=""):
+    """The bar, which is the demo's bar. It lives outside .wrap: the chrome spans
+    the window even where the prose does not."""
+    items = [
+        ("/demo/", "Demo"),
+        ("/verify/", "Verify"),
+        ("/coclea-sr/", "COCLEA-SR"),
+        ("/hemo-verified/", "HEMO-VERIFIED"),
+        ("/archive/", "Archive"),
+        ("https://github.com/EvolvingAgentsLabs/ai-os", "GitHub"),
+    ]
+    links = "\n".join(
+        '      <a href="%s"%s>%s</a>'
+        % (href, ' aria-current="page"' if href == here else "", label)
+        for href, label in items
+    )
+    return f"""<header class="masthead">
+  <div class="masthead-in">
+    <a class="wordmark" href="{prefix}">{MARK}ai-os<span class="org">Evolving Agents Labs</span></a>
     <nav class="navlinks">
-      <a href="{prefix}#experiments">Experiments</a>
-      <a href="{prefix}thesis/">Thesis</a>
-      <a href="{prefix}#method">Method</a>
-      <a href="https://github.com/EvolvingAgentsLabs">GitHub</a>
+{links}
     </nav>
-  </header>
+  </div>
+</header>
 """
 
 
@@ -328,11 +130,11 @@ def build_index(exps):
         "Evolving Agents Labs — Experiments in how agents learn, remember, and prove what they know",
         "Open experiments in agent memory, self-modification, interpretability and constrained execution. Each one labelled by how much evidence stands behind it.",
         "/assets/site.css") + f"""
+{masthead("/", "/archive/")}
 <div class="wrap">
 
-{masthead("/")}
   <section class="hero">
-    <img class="mark" src="/assets/img/logo.jpg" alt="" aria-hidden="true">
+    {MARK_HERO}
     <h1>Experiments in how agents learn, remember, and <em>prove</em> what they know.</h1>
     <p>Agents that modify themselves are easy to build and hard to trust. Everything here attacks the second half of that sentence — versioning an agent's evolution so a human can review it, reading a model's internal workspace to catch a memory it was tricked into keeping, or constraining a small model at the decoder so invalid output is not discouraged but impossible.</p>
     <p>Each experiment is labelled by how much evidence stands behind it — including the ones where the evidence went against us.</p>
@@ -405,10 +207,10 @@ def build_detail(e, prev_e, next_e):
         navhtml = f'  <div class="nextprev">{" &nbsp;·&nbsp; ".join(nav)}</div>\n'
 
     return head(f"{e['name']} — Evolving Agents Labs", e["blurb"], "/assets/site.css") + f"""
+{masthead("/", "/archive/")}
 <div class="wrap narrow">
 
-{masthead("/")}
-  <p class="crumb"><a href="/">Evolving Agents Labs</a><span>/</span><a href="/#experiments">Experiments</a><span>/</span>{e['name']}</p>
+  <p class="crumb"><a href="/">ai-os</a><span>/</span><a href="/archive/">Archive</a><span>/</span>{e['name']}</p>
 
   <section class="detail-hero">
     <h1>{e['name']}</h1>
@@ -439,10 +241,10 @@ def build_thesis():
         "What we are actually testing — Evolving Agents Labs",
         "Three mechanisms that kept working across eight experiments, the ones that did not, and where they point.",
         "/assets/site.css") + f"""
+{masthead("/", "/archive/")}
 <div class="wrap narrow">
 
-{masthead("/")}
-  <p class="crumb"><a href="/">Evolving Agents Labs</a><span>/</span>Thesis</p>
+  <p class="crumb"><a href="/">ai-os</a><span>/</span><a href="/archive/">Archive</a><span>/</span>Thesis</p>
 
   <section class="detail-hero">
     <h1>What we are actually testing</h1>
@@ -468,7 +270,13 @@ def main():
     with open(f"{OUT}/assets/site.css", "w") as f:
         f.write(CSS)
 
-    with open(f"{OUT}/index.html", "w") as f:
+    # The listing goes to /archive/, never to /index.html. It was the home once;
+    # the home is ai-os now, hand-written, and pointing this at the site root
+    # would silently replace it with a page about twenty-six frozen experiments.
+    # A generator that can destroy the thing it is not the source of is not a
+    # convenience.
+    os.makedirs(f"{OUT}/archive", exist_ok=True)
+    with open(f"{OUT}/archive/index.html", "w") as f:
         f.write(build_index(exps))
 
     os.makedirs(f"{OUT}/thesis", exist_ok=True)
@@ -488,7 +296,7 @@ def main():
         with open(f"{d}/index.html", "w") as f:
             f.write(build_detail(e, prev_e, next_e))
 
-    print(f"wrote index + {len(exps)} detail pages to {OUT}/")
+    print(f"wrote archive/ + {len(exps)} detail pages to {OUT}/")
 
 
 if __name__ == "__main__":
