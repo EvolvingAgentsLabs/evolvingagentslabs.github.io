@@ -1,0 +1,27 @@
+# The numbers on this website, against the artifacts that produced them.
+#
+# The front page claims every published number is tied to the artifact that
+# produced it and checked before publication. That was a promise until this file
+# existed. It runs on every push, on every pull request, and nightly — because
+# the artifacts live in another repository and can move without anything here
+# changing, which is exactly the failure it is for.
+name: Published numbers
+on:
+  push:
+    branches: [main]
+  pull_request:
+  schedule:
+    - cron: "17 4 * * *"
+  workflow_dispatch:
+
+jobs:
+  numbers:
+    name: Every number matches its artifact
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@11bd71901bbe5b1630ceea73d27597364c9af683
+      - uses: actions/setup-python@a26af69be951a213d495a4c3e4e4022e16d87065
+        with:
+          python-version: "3.12"
+      - name: Check
+        run: python3 scripts/check-numbers.py --ref main

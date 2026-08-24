@@ -13,6 +13,24 @@
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Newsreader:ital,opsz,wght@0,6..72,300;0,6..72,400;1,6..72,300&family=IBM+Plex+Mono:wght@400;500&display=swap" rel="stylesheet">
 <link rel="stylesheet" href="/assets/site.css">
+<style>
+  /* Scoped to this page. site.css has no table or diagram rules, and a section
+     whose whole argument is a comparison cannot make it in prose. */
+  #evidence table{width:100%;border-collapse:collapse;margin:1.6rem 0;font-size:.84rem;
+    font-family:var(--mono);display:block;overflow-x:auto;}
+  #evidence th,#evidence td{text-align:left;padding:.5rem .7rem;vertical-align:top;
+    border-bottom:1px solid var(--rule,#ddd6cc);}
+  #evidence th{font-weight:500;opacity:.65;font-size:.76rem;letter-spacing:.03em;}
+  #evidence td:first-child{white-space:nowrap;font-weight:500;}
+  #evidence tr.ours td{background:rgba(176,82,60,.06);}
+  #evidence pre{font-family:var(--mono);font-size:.78rem;line-height:1.5;overflow-x:auto;
+    background:var(--ground,#f6f2ec);border:1px solid var(--rule,#ddd6cc);border-radius:4px;
+    padding:1rem 1.1rem;margin:1.4rem 0;}
+  #evidence .boundary{border-left:3px solid var(--p-flows,#B0523C);padding:.1rem 0 .1rem 1.1rem;
+    margin:1.8rem 0;}
+  #evidence .unchecked{font-size:.82rem;opacity:.7;border-top:1px solid var(--rule,#ddd6cc);
+    padding-top:.9rem;margin-top:2rem;}
+</style>
 </head>
 <body>
 
@@ -23,9 +41,11 @@
     <nav class="navlinks">
       <a href="/demo/">Demo</a>
       <a href="/#pillars">Pillars</a>
+      <a href="/#evidence">Evidence layer</a>
       <a href="/verify/">Check the numbers</a>
       <a href="/#status">Status</a>
       <a href="/coclea-sr/">COCLEA-SR</a>
+      <a href="/hemo-verified/">HEMO-VERIFIED</a>
       <a href="/archive/">Archive</a>
       <a href="https://github.com/EvolvingAgentsLabs/ai-os">GitHub</a>
     </nav>
@@ -47,9 +67,10 @@
           is written in. Runs that are content-addressed and hash-chained, with the
           environment recorded inside the artifact. And every number published here
           tied to the artifact that produced it — <b>checked in the repository
-          nightly, and on this page by the same script before it is published</b>,
-          because a website is exactly the surface where a number goes stale
-          unwatched.</p>
+          nightly, and on this website by
+          <a href="https://github.com/EvolvingAgentsLabs/evolvingagentslabs.github.io/blob/main/scripts/check-numbers.py">a
+          check of its own</a> on every push and nightly</b>, because a website is
+          exactly the surface where a number goes stale unwatched.</p>
         <p>It is an agent-based <em>operating system</em>, built on
           <a href="https://github.com/yc-software/qm">QM</a> — and that part is the
           <em>how</em>. The paragraph above is the <em>why</em>.</p>
@@ -80,6 +101,194 @@
         </figcaption>
       </figure>
     </div>
+  </section>
+
+  <section id="evidence">
+    <p class="sectionlabel">The part that is actually new</p>
+
+    <h2 style="font-size:clamp(1.35rem,3.2vw,1.9rem);letter-spacing:-.02em;margin:.4rem 0 1rem">
+      An agent may assert anything. Only what has external, verifiable evidence
+      counts as established.</h2>
+
+    <p>None of the machinery underneath that sentence is new. Content addressing is
+      old. Hash chains are old. Experiment tracking, eval harnesses, CI, build
+      provenance — all of it exists and most of it is better engineered than ours.
+      <b>What is not common is treating it as an epistemological rule of the system
+      rather than as a feature.</b> Not <i>you can look up how this was produced</i>,
+      but <i>a result that cannot be reproduced from an independent artifact is not
+      a result this system will repeat.</i></p>
+
+    <p>The reason to care is coming, not hypothetical. As agents get more autonomy
+      the hard question stops being <i>can it produce something</i> and becomes
+      <b>which of the things it produced may I treat as true, and how do I show that
+      without asking it?</b></p>
+
+    <pre>Agent:  "I improved myself 17%."
+Human:  "How do I know?"
+Agent:  "I ran the benchmark."
+Human:  "Who wrote the benchmark?"
+Agent:  "I did."
+Human:  "Who read the result?"
+Agent:  "I did."</pre>
+
+    <div class="boundary">
+      <p style="margin:0"><b>So the boundary is structural.</b> In this repository
+      <code>truth/</code> is <b>forbidden to import <code>src/</code></b>: the code
+      that decides whether an answer is right cannot see the code that produced it.
+      A gate is declared before the run it judges. <code>unknown</code> is a
+      different verdict from <code>passed</code>, and <i>did not run</i> never
+      becomes <i>fine</i>. Runs are content-addressed, hash-chained, and carry the
+      environment inside the artifact. Every number on this website is tied to the
+      artifact that produced it and re-checked before publication.</p>
+    </div>
+
+    <pre>          agent / code
+                │  produces
+                ▼
+        hypothesis, result
+                │
+  ───────────── trust boundary ─────────────
+                │
+                ▼
+        independent verifier
+                │
+                ▼
+             evidence
+                │
+                ▼
+           attestation</pre>
+
+    <p class="sectionlabel" style="margin-top:2.6rem">Where this sits, next to the things it resembles</p>
+
+    <table>
+      <thead><tr><th>Prior art</th><th>What it does</th><th>What it is not built to do</th></tr></thead>
+      <tbody>
+        <tr>
+          <td>SLSA · in-toto · Sigstore</td>
+          <td>Prove cryptographically where an artifact came from and how it was
+            built; sign attestations and publish them to a transparency log.</td>
+          <td>It is aimed at the software supply chain. Its subject is a binary,
+            not a claim an agent made about its own work.</td>
+        </tr>
+        <tr>
+          <td>MLflow · W&amp;B · DVC</td>
+          <td>Record parameters, code version, metrics, artifacts and environment
+            per run; build a lineage graph across runs.</td>
+          <td>Tracking and reproducibility. Nothing refuses to promote a result,
+            and the tracker is inside the trust boundary with the thing it tracks.</td>
+        </tr>
+        <tr>
+          <td>LangSmith · Braintrust · Inspect AI</td>
+          <td>Traces, datasets, versioned experiments and immutable eval snapshots
+            for agents.</td>
+          <td>They record what happened extremely well. They do not turn a
+            published claim into something a stranger can verify offline.</td>
+        </tr>
+        <tr class="ours">
+          <td>ai-os</td>
+          <td>The same materials, wired as a rule: truth generated by code that
+            cannot import the code under test, gates declared first, and a number
+            that stops matching its artifact failing the build.</td>
+          <td>Younger, smaller, and — see below — not yet signed by anything a
+            stranger could check without trusting us.</td>
+        </tr>
+      </tbody>
+    </table>
+
+    <p>The closest antecedent is <b>in-toto</b>, which generalises SLSA's build
+      provenance into <i>authenticated claims about how something was produced</i>.
+      Read the analogy across:</p>
+
+    <pre>SLSA / in-toto            ai-os
+─────────────────         ─────────────────
+binary                    claim
+  ↓ build                   ↓ evaluation
+source, dependencies      gate declared first
+  ↓ builder                 ↓ artifact
+attestation               hash + environment
+                            ↓ reproduce</pre>
+
+    <p class="sectionlabel" style="margin-top:2.6rem">The sentence on this page that is too strong</p>
+
+    <p>Above, and in the repository, we say <b>“prove it to a stranger.”</b> That
+      overstates what a hash chain inside our own repository can do. It demonstrates
+      <b>integrity and consistency</b> — nobody changed the number after the fact.
+      It does not demonstrate <b>truth</b>:</p>
+
+    <pre>result = 92%
+sha256(result) = abc123…
+
+  ✓ nobody altered the 92%
+  ✗ the program that computed it may have had a bug
+
+  →  92% wrong, with perfect cryptographic integrity</pre>
+
+    <p>GitHub makes the same distinction explicitly about its own artifact
+      attestations: an attestation establishes provenance and integrity, and does
+      not certify that the artifact is correct or safe. It is worth saying plainly
+      on our own front page rather than letting the phrase do work it cannot.</p>
+
+    <p><b>What narrows the gap here is not the hash.</b> It is the independence:
+      the checker cannot import the thing it checks, the threshold was written down
+      before the run, and <code>make reproduce</code> re-derives the artifact on a
+      machine that has never seen it. That is why the two projects below found
+      defects in their own author's work — a quadrature biased 2.6%, a sign error,
+      a report that could not have come from the code beside it — rather than
+      producing five plausible numbers.</p>
+
+    <p><b>What it does not close:</b> everything still runs inside repositories we
+      control, and the last mile is trust in us.</p>
+
+    <p class="sectionlabel" style="margin-top:2.6rem">What would close it</p>
+
+    <p>Not more cryptography of our own. The parts exist: GitHub can produce
+      attestations bound to the workflow, repository, commit and event that made an
+      artifact, and public repositories can record those in Sigstore's transparency
+      log. Wiring the gate reports through that chain is the next thing worth
+      building.</p>
+
+    <pre>claim  "0.906 AUC"
+   │
+   ▼  ai-os gate
+evaluation artifact
+   ├── dataset hash
+   ├── code hash
+   ├── environment
+   ├── raw results
+   └── metric
+   │
+   ▼
+in-toto attestation
+   │
+   ▼
+Sigstore signature
+   │
+   ▼
+transparency log
+   │
+   ▼
+README / paper / website</pre>
+
+    <p>At which point a third party runs something like <code>verify claim
+      0.906</code> and has to trust neither the agent that produced it nor the
+      person who wrote the README. <b>That is the version of “prove it to a
+      stranger” that earns the phrase</b>, and it is not built yet.</p>
+
+    <p class="note" style="margin-top:1.6rem">One reservation about our own name,
+      while we are being exact: the part described on this page is more precisely a
+      <b>verification and provenance substrate for agentic work</b> than an
+      operating system. The word earns itself only because flows, memory, storage,
+      an interface and execution sit on top of it — the OS is the <i>how</i>, and
+      this section is the <i>why</i>.</p>
+
+    <p class="unchecked"><b>Two pointers we have not checked from here.</b> A
+      proposal for an <code>eval-result</code> predicate for AI/ML evaluation
+      results in the in-toto attestation framework, and 2026 work on execution
+      provenance for LLM agents, were both reported to us as evidence that other
+      groups are arriving at this problem independently. The machine that built this
+      page has no outbound network access, so neither was fetched, and neither is
+      cited here as established. They are worth looking up; they are not evidence
+      until somebody does.</p>
   </section>
 
   <section class="gap">
@@ -167,11 +376,13 @@
         <p class="question">What if memory had an address space?</p>
         <p class="note">Four levels — system, user, project, flow — with different
           lifetimes. Flow memory is expected to die. Promotion between levels is
-          explicit, recorded and reversible. The first piece of it runs: a project
-          knowledge base an <b>8,000-token window can navigate</b>. A flat file of
-          the same material stops fitting at 16 units; the index is still at 4,523
-          of 8,000 tokens at 2,000 notes — and where it does run out, at ~15,000,
-          is written down rather than left to be discovered.</p>
+          explicit, recorded and reversible. It is now built end to end around a
+          <b>local</b> model held to 8,192 tokens on purpose, and its first
+          benchmark <b>came back against the design</b>: a flat memory file does
+          not fit at any size — 200 notes is already 12,566 tokens — but exact
+          lexical search beats the hierarchy it was built for, 3/3 against 1–2/3,
+          reading less to do it. Published because the rule was that it ships
+          whichever way it comes out.</p>
       </article>
       <article>
         <h2>ai-base</h2>
@@ -334,6 +545,29 @@
       guide.</p>
 
     <p class="ctas"><a class="cta primary" href="/coclea-sr/">Read the whole arc →</a></p>
+
+    <p class="sectionlabel" style="margin-top:2.6rem">And the case where there is no right answer to check against</p>
+
+    <p>COCLEA-SR is the easy half in one specific sense: an exact solution exists,
+      so a gate can compare against truth. Most real work has no closed form.
+      <b>HEMO-VERIFIED</b> asks what a gate is worth when nothing can be compared —
+      can physics checks tell you a flow prediction is wrong <em>without ever seeing
+      the right answer?</em> — and then puts the checks themselves on trial against
+      a threshold declared first: <b>0.906 composite AUC against a kill line of
+      0.80</b>, while six of its seven oracles are near a coin flip alone.</p>
+
+    <p>Its most useful finding is not the AUC. Built from a clean clone on a
+      different machine, the attested report turned out to be one <b>the code beside
+      it could not have produced</b> — regenerated mid-change and never again — and
+      one of the seven per-oracle numbers moved, <b>0.706 → 0.652</b>, because 66 of
+      its 98 measurements are exactly zero and a single case sitting at
+      <code>1.03e-13</code> on one machine and <code>0.0</code> on the other crosses
+      into the tie block and drags a rank statistic. The composite is bit-identical.
+      <b>A statistic that moves with a library version rather than with the data is
+      not a property of the physics</b>, and the only way to learn which of your
+      numbers are like that is to run them somewhere else.</p>
+
+    <p class="ctas"><a class="cta primary" href="/hemo-verified/">The judge on trial →</a></p>
 
     <p>The predecessor of this project shipped eighteen thousand lines describing
       five subsystems and three test functions — an architecture written down and

@@ -1,0 +1,291 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>HEMO-VERIFIED — when there is no right answer to check against · Evolving Agents Labs</title>
+<meta name="description" content="Can physics checks tell you a flow prediction is wrong without ever seeing the right answer? The judge itself goes on trial against a threshold written down first — and one of its numbers turned out to be a property of the machine.">
+<meta property="og:title" content="HEMO-VERIFIED — when there is no right answer to check against">
+<meta property="og:description" content="Can physics checks tell you a flow prediction is wrong without ever seeing the right answer? The judge itself goes on trial against a threshold written down first — and one of its numbers turned out to be a property of the machine.">
+<meta property="og:type" content="article">
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 96 84'%3E%3Crect x='12' y='32' width='12' height='52' rx='6' fill='%23B0523C' transform='rotate(-10 48 84)'/%3E%3Crect x='32' y='18' width='12' height='66' rx='6' fill='%23C8873A' transform='rotate(-3.5 48 84)'/%3E%3Crect x='52' y='18' width='12' height='66' rx='6' fill='%236E7C3C' transform='rotate(3.5 48 84)'/%3E%3Crect x='72' y='32' width='12' height='52' rx='6' fill='%233E52A3' transform='rotate(10 48 84)'/%3E%3C/svg%3E">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Newsreader:ital,opsz,wght@0,6..72,300;0,6..72,400;1,6..72,300&family=IBM+Plex+Mono:wght@400;500&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="/assets/site.css">
+<style>
+  /* Scoped to this page, for the same reason the COCLEA-SR page carries its own:
+     a results page that cannot show a table would have to paraphrase its own
+     numbers, and paraphrasing a number is how it stops matching its artifact. */
+  .article table{width:100%;border-collapse:collapse;margin:1.6rem 0;font-size:.86rem;
+    font-family:"IBM Plex Mono",ui-monospace,monospace;display:block;overflow-x:auto;}
+  .article th,.article td{text-align:left;padding:.42rem .6rem;border-bottom:1px solid var(--rule,#ddd6cc);white-space:nowrap;}
+  .article th{font-weight:500;opacity:.7;font-size:.78rem;letter-spacing:.02em;}
+  .article td:first-child,.article th:first-child{white-space:normal;}
+  .article .moved{font-weight:600;}
+  .article .quiet{opacity:.35;}
+  .article pre{font-family:"IBM Plex Mono",ui-monospace,monospace;font-size:.8rem;line-height:1.55;
+    overflow-x:auto;background:var(--ground,#f6f2ec);border:1px solid var(--rule,#ddd6cc);
+    border-radius:4px;padding:1rem 1.1rem;margin:1.5rem 0;}
+  .caveat{border-left:3px solid var(--p-flows,#B0523C);padding:.1rem 0 .1rem 1.1rem;margin:1.6rem 0;}
+</style>
+</head>
+<body>
+
+<div class="wrap narrow">
+
+  <header class="masthead">
+    <a class="wordmark" href="/"><svg class="mark" viewBox="0 0 96 84" aria-hidden="true"><rect x="12" y="32" width="12" height="52" rx="6" fill="var(--p-flows)" transform="rotate(-10 48 84)"/><rect x="32" y="18" width="12" height="66" rx="6" fill="var(--p-ui)" transform="rotate(-3.5 48 84)"/><rect x="52" y="18" width="12" height="66" rx="6" fill="var(--p-storage)" transform="rotate(3.5 48 84)"/><rect x="72" y="32" width="12" height="52" rx="6" fill="var(--p-base)" transform="rotate(10 48 84)"/></svg>Evolving Agents Labs</a>
+    <nav class="navlinks">
+      <a href="/">ai-os</a>
+      <a href="/#evidence">Evidence layer</a>
+      <a href="/coclea-sr/">COCLEA-SR</a>
+      <a href="/thesis/">Thesis</a>
+      <a href="https://github.com/EvolvingAgentsLabs/ai-os/tree/main/projects/hemo-verified">Repository</a>
+    </nav>
+  </header>
+
+  <div class="stripe" aria-hidden="true"><span></span><span></span><span></span><span></span><span></span><span></span></div>
+
+  <p class="crumb"><a href="/">Evolving Agents Labs</a><span>/</span>HEMO-VERIFIED</p>
+
+  <section class="detail-hero">
+    <h1>The other half of the problem: when there is no right answer to check against</h1>
+    <p class="question">COCLEA-SR has closed forms, so a gate can compare against
+      truth. Most real work does not. This project asks what a gate is worth when
+      nothing can be compared — and then puts the gate itself on trial.</p>
+  </section>
+
+  <article class="article">
+
+<p class="lede">Can a set of physics checks tell you that a flow prediction is
+<b>wrong</b>, without ever seeing the right answer? The pre-registered kill gate
+says yes, at <b>0.906 composite AUC against a threshold of 0.80 written down
+first</b>. It also says three things it cannot show — and one of its seven
+numbers turned out to be a property of the machine it ran on rather than of the
+physics.</p>
+
+<h2>Why this project exists next to the other one</h2>
+
+<p>COCLEA-SR is the easy case in one specific sense: an exact solution exists.
+<code>truth/</code> holds closed forms, <code>src/</code> holds the solver, the
+first is forbidden to import the second, and a gate compares them. When the
+model was wrong, the mathematics said so.</p>
+
+<p>Now take that away. In haemodynamics — blood moving through a heart chamber —
+there is no closed form for the geometry anyone cares about. A surrogate model
+predicts a flow field and <b>nobody has the right answer to compare it to</b>.
+The whole apparatus of the previous project stops applying.</p>
+
+<p>So the question changes shape:</p>
+
+<p><b>Can you catch a wrong prediction using only what must be true of any
+answer?</b></p>
+
+<p>Mass is conserved. Momentum balances. Velocity is zero at a wall. None of
+those requires knowing the correct field — they are properties any correct field
+has. Each becomes an <em>oracle</em>: a cheap, independent check that scores a
+prediction without the answer.</p>
+
+<h2>And then the same discipline, one level up</h2>
+
+<p>A panel of oracles that agrees with itself is worth nothing. So the panel goes
+on trial, against a condition registered before the run:</p>
+
+<div class="caveat">
+<p style="margin:0"><b>H0, the kill gate.</b> Run the oracles on exact solutions
+of the Navier–Stokes equations — steady Poiseuille and pulsatile Womersley —
+and on those same solutions <em>corrupted by amounts chosen in advance</em>, so
+the true error is known by construction rather than estimated. If the panel
+cannot separate bad from good at <b>0.80 AUC</b>, the project ends.</p>
+</div>
+
+<pre>98 predictions, 31.6% of them worse than 5% true error
+
+  AUC (composite)   0.906     kill below 0.80  ->  SURVIVES
+  Spearman rho      0.822
+  false-accept      2.1%      target <= 2%
+  decisions         ACCEPT 48   ESCALATE 18   REJECT 32</pre>
+
+<p>Every corruption type that produces more than 5% error is caught:</p>
+
+<table>
+<thead><tr><th>corruption</th><th>bad cases</th><th>not accepted</th><th>AUC alone</th></tr></thead>
+<tbody>
+<tr><td>phase</td><td>5</td><td>5/5</td><td>1.000</td></tr>
+<tr><td>bias</td><td>8</td><td>7/8</td><td>0.988</td></tr>
+<tr><td>divergence</td><td>4</td><td>4/4</td><td>0.982</td></tr>
+<tr><td>noise</td><td>8</td><td>8/8</td><td>0.863</td></tr>
+<tr><td>slip</td><td>6</td><td>6/6</td><td>0.819</td></tr>
+</tbody>
+</table>
+
+<p>The single false accept is a Womersley bias case whose true error is 0.050
+against a bad-case boundary of 0.050 — <b>the boundary itself, not a miss</b>.</p>
+
+<h2>The result that makes it a portfolio rather than a trick</h2>
+
+<p>The obvious suspicion is that one good oracle is doing all the work and the
+others are decoration. It is not what the numbers say. Six of the seven are near
+a coin flip on their own, and the panel still reaches 0.906:</p>
+
+<table>
+<thead><tr><th>oracle</th><th>alone</th><th>catches</th></tr></thead>
+<tbody>
+<tr><td>A3 momentum residual</td><td>0.838</td><td>most things</td></tr>
+<tr><td>A4 no-slip (hard)</td><td class="moved">0.652</td><td>slip — and see below</td></tr>
+<tr><td>A10 temporal envelope</td><td>0.639</td><td>phase</td></tr>
+<tr><td>A2 local mass</td><td>0.590</td><td>divergence</td></tr>
+<tr><td>A1 global mass</td><td>0.585</td><td>divergence</td></tr>
+<tr><td>A6 energy budget</td><td>0.522</td><td>bias, steady only</td></tr>
+<tr><td>A5 inlet vs BC</td><td>0.521</td><td>bias, steady only</td></tr>
+</tbody>
+</table>
+
+<p>Remove <em>both</em> A3 and A4 and the remainder still reaches <b>0.896</b>.
+Individually weak gates covering different failures beat each of their members —
+which is the argument for a panel rather than a better single check.</p>
+
+<p class="note">Two of those seven cells had been wrong on this page's ancestor:
+A5 and A6 were transposed, and A4 read 0.706. Every number in the table is now
+read out of <code>gates/reports/h0.json</code> by a script that fails the build
+when it stops matching.</p>
+
+<h2>The finding that is worth more than the AUC</h2>
+
+<p>On 2026-08-23 the suite was built from a clean clone, on a different machine
+with a different BLAS. Two things came back, and the first is the sharper one.</p>
+
+<p><b>The attested report could not have come from the code beside it.</b>
+<code>eval/h0.py</code> writes <code>runtime: {seconds}</code>; the committed
+<code>h0.json</code> carried a top-level <code>seconds</code> and no
+<code>runtime</code> at all. That nesting was introduced by the very commit that
+existed to make the run reproducible — so the artifact had been regenerated
+mid-change and never again. <b>A report whose provenance nobody checks is a
+report, not an attestation.</b></p>
+
+<p>Then, on a fresh run, the composite AUC, the Spearman coefficient, the
+decision counts and the false-accept rate came back <b>bit-identical</b> — and
+<code>A4 alone</code> moved from 0.706 to 0.652.</p>
+
+<pre>A4 alone   0.706  →  0.652     49 of 98 measurements differ in their last decimals
+                                66 of 98 are exactly 0.0
+
+one uncorrupted case:  1.03e-13  on one machine
+                       0.0       on the other
+                       → crosses into a 66-wide tie block
+                       → drags a rank statistic by 0.054</pre>
+
+<p>The composite is untouched because A4 is a <code>HARD</code> gate: it
+contributes a pass/fail against a threshold far above the noise floor, never its
+score. But the lesson generalises past this project. <b>A statistic that moves
+with a library version rather than with the data is not a property of the
+physics</b>, and the only way to find out which of your numbers are like that is
+to run them somewhere else. <code>make reproduce</code> is the instrument that
+was missing; <code>h0.json</code> now records the environment it was produced on,
+so the next comparison can tell <em>disagrees</em> from <em>was produced
+somewhere else</em>.</p>
+
+<pre>environment recorded inside the artifact
+
+  python   3.13.12
+  numpy    2.5.2
+  scipy    1.18.1
+  machine  x86_64</pre>
+
+<p>The report reproduced <b>1,207 of 1,207 fields bit-identical</b> on a third
+environment afterwards — the attestation machinery doing its job on hardware it
+had never seen.</p>
+
+<h2>Four more defects, each of which produced a plausible number first</h2>
+
+<ul>
+<li><b>The quadrature was biased 2.6%.</b> Summing <code>2πr·dr</code> at every
+  node overshoots the cross-section, because both endpoints are counted in full.
+  That bias is larger than A1's 1% threshold — so the mass oracle would have been
+  measuring the integration rule. Trapezoidal ends fix it to machine precision.</li>
+<li><b>Womersley had a sign error.</b> The closed form left an O(1) momentum
+  residual and its quasi-steady limit went to zero instead of Poiseuille. Caught
+  by the limit check, not by reading.</li>
+<li><b>H0 was not reproducible.</b> Perturbations were seeded with
+  <code>hash()</code>, and Python randomises string hashing per process, so every
+  run reported a slightly different AUC. It moved in the fourth decimal and
+  changed no conclusion — <b>which is luck, not a property</b>.</li>
+<li><b>A10's threshold was invented and fired on a perfect field.</b> The
+  replacement is derived from the momentum equation and holds a flat slack of 2.1
+  across a sixteen-fold range of sampling rates.</li>
+</ul>
+
+<p>The first two would each have produced a clean H0 number that meant nothing.
+The third and the fifth would have produced one nobody could reproduce — and the
+fifth would have <em>looked</em> reproducible while doing it, because the test the
+third one added compares two processes on one machine and never reads the
+committed artifact at all.</p>
+
+<h2>What this does not show, stated by the project itself</h2>
+
+<div class="caveat">
+<p style="margin:0 0 .8rem"><b>The corruptions and the oracles were designed by
+the same author.</b> H0 shows the panel ranks errors <em>of a kind we thought
+of</em>. It cannot show it ranks the errors a trained surrogate actually makes,
+because no surrogate has been trained. That is H1 — the next gate, not a
+refinement of this one.</p>
+<p style="margin:0">Two more: A7 (wall shear bounds) and A8 (residence-time
+scalar) are specified and unbuilt, because neither quantity exists on an
+analytical pipe. And every number here is on a <b>rigid axisymmetric tube</b> —
+the simplest geometry with an exact solution, and nothing like an atrium.</p>
+</div>
+
+<p>H1 is recorded in the system as <b>open work that cannot proceed</b>, with a
+null observation and a note explaining why it is stated at all: <i>a scope with
+nothing red in it reads as a finished one</i>. The
+<a href="/demo/">activity canvas</a> draws it as a hollow square — held, no
+verdict — which is a different mark from the one it uses for a step that ran and
+failed. Getting that distinction wrong in the interface was itself a bug found
+while building this site.</p>
+
+<h2>Why it is on this website</h2>
+
+<p>Every number on this page is read out of
+<code>projects/hemo-verified/gates/reports/h0.json</code>. Twenty-one of them are
+named individually in
+<a href="https://github.com/EvolvingAgentsLabs/evolvingagentslabs.github.io/blob/main/scripts/check-numbers.py"><code>check-numbers.py</code></a>,
+which fetches the artifact and fails this website's build if the page has stopped
+carrying one — on every push and nightly, because the artifact lives in another
+repository and can move without anything here changing. Each of the seven
+per-oracle cells is named separately, since two of them were wrong once. That is
+the <a href="/#evidence">evidence layer</a> applied to the page describing it.</p>
+
+<p class="note">The check's own limit, since this page is about stating them: it
+asks whether the page contains a value, so it catches an artifact that moved
+while the page did not — the failure this project has actually had — and not one
+mistyped occurrence among several.</p>
+
+<p>And the honest limit of that, the same one the front page now states: the hash
+chain proves nobody altered these numbers. It does not prove the code that
+computed them is right. What argues for that here is different and older — the
+threshold was declared before the run, the oracles never see the answer, and the
+artifact was re-derived on a machine that had never seen it. Which is how A4 was
+caught.</p>
+
+<p class="ctas">
+  <a class="cta primary" href="https://github.com/EvolvingAgentsLabs/ai-os/blob/main/projects/hemo-verified/README.md">The full write-up →</a>
+  <a class="cta" href="https://github.com/EvolvingAgentsLabs/ai-os/blob/main/projects/hemo-verified/SPEC.md">Specification</a>
+  <a class="cta" href="/verify/">Check the numbers yourself</a>
+  <a class="cta" href="https://github.com/EvolvingAgentsLabs/ai-os/tree/main/projects/hemo-verified">Repository</a>
+</p>
+
+  </article>
+
+  <footer class="foot">
+    <span class="by">Ideas, architecture and implementation by
+      <a href="https://github.com/matiasmolinas">Matias Molinas</a> and
+      <a href="https://github.com/ismaelfaro">Ismael Faro</a>.</span>
+    <span class="meta-foot">Apache 2.0 · permanently alpha ·
+      <a href="https://github.com/EvolvingAgentsLabs">github.com/EvolvingAgentsLabs</a></span>
+  </footer>
+
+</div>
+
+</body>
+</html>
