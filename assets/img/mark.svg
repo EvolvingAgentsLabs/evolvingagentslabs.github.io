@@ -1,7 +1,14 @@
-<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 96 84" role="img" aria-label="Evolving Agents Labs">
-  <title>Evolving Agents Labs — four pillars</title>
-  <rect x="12" y="32" width="12" height="52" rx="6" fill="#B0523C" transform="rotate(-10 48 84)"/>
-  <rect x="32" y="18" width="12" height="66" rx="6" fill="#C8873A" transform="rotate(-3.5 48 84)"/>
-  <rect x="52" y="18" width="12" height="66" rx="6" fill="#6E7C3C" transform="rotate(3.5 48 84)"/>
-  <rect x="72" y="32" width="12" height="52" rx="6" fill="#3E52A3" transform="rotate(10 48 84)"/>
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 32 32" role="img" aria-label="ai-os">
+  <title>ai-os — four buckets of time, and the one nothing has been written into yet</title>
+  <!-- The mark is cut from the demo's own primitive: on the activity canvas a
+       square is one flow in one bucket of time, and a bucket with nothing
+       recorded in it is drawn as an outline rather than as a zero — because
+       "nothing was written down" and "nothing happened" are different claims and
+       only the first is ours to make. Three recorded, one open. That sentence is
+       the whole project, and it is four rectangles. -->
+  <rect x="2"  y="2"  width="13" height="13" rx="4" fill="currentColor"/>
+  <rect x="17" y="2"  width="13" height="13" rx="4" fill="currentColor"/>
+  <rect x="2"  y="17" width="13" height="13" rx="4" fill="currentColor"/>
+  <rect x="18" y="18" width="11" height="11" rx="3" fill="none"
+        stroke="currentColor" stroke-width="2" opacity=".42"/>
 </svg>

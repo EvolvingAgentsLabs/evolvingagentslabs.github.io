@@ -8,50 +8,42 @@
 <meta property="og:title" content="ai-os — agent work you can check, and prove">
 <meta property="og:description" content="Everyone can generate. Almost nobody can tell you, six months later, whether the number in their README is still the number their code produces — and prove it to a stranger. That is the layer this builds.">
 <meta property="og:type" content="website">
-<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 96 84'%3E%3Crect x='12' y='32' width='12' height='52' rx='6' fill='%23B0523C' transform='rotate(-10 48 84)'/%3E%3Crect x='32' y='18' width='12' height='66' rx='6' fill='%23C8873A' transform='rotate(-3.5 48 84)'/%3E%3Crect x='52' y='18' width='12' height='66' rx='6' fill='%236E7C3C' transform='rotate(3.5 48 84)'/%3E%3Crect x='72' y='32' width='12' height='52' rx='6' fill='%233E52A3' transform='rotate(10 48 84)'/%3E%3C/svg%3E">
-<link rel="preconnect" href="https://fonts.googleapis.com">
-<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Newsreader:ital,opsz,wght@0,6..72,300;0,6..72,400;1,6..72,300&family=IBM+Plex+Mono:wght@400;500&display=swap" rel="stylesheet">
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Crect x='2' y='2' width='13' height='13' rx='4' fill='%23F2F2F7'/%3E%3Crect x='17' y='2' width='13' height='13' rx='4' fill='%23F2F2F7'/%3E%3Crect x='2' y='17' width='13' height='13' rx='4' fill='%23F2F2F7'/%3E%3Crect x='18' y='18' width='11' height='11' rx='3' fill='none' stroke='%23F2F2F7' stroke-width='2' opacity='.42'/%3E%3C/svg%3E">
+<meta name="theme-color" content="#000000">
+<meta name="color-scheme" content="dark">
+<!-- No webfont link, deliberately. This site publishes numbers it says you
+     can check with the machine in front of you, and /verify/ already refuses
+     a stylesheet from fonts.googleapis.com for exactly that reason. The two
+     stacks below are the demo's, and they are already on the machine. -->
 <link rel="stylesheet" href="/assets/site.css">
 <style>
-  /* Scoped to this page. site.css has no table or diagram rules, and a section
-     whose whole argument is a comparison cannot make it in prose. */
-  #evidence table{width:100%;border-collapse:collapse;margin:1.6rem 0;font-size:.84rem;
-    font-family:var(--mono);display:block;overflow-x:auto;}
-  #evidence th,#evidence td{text-align:left;padding:.5rem .7rem;vertical-align:top;
-    border-bottom:1px solid var(--rule,#ddd6cc);}
-  #evidence th{font-weight:500;opacity:.65;font-size:.76rem;letter-spacing:.03em;}
-  #evidence td:first-child{white-space:nowrap;font-weight:500;}
-  #evidence tr.ours td{background:rgba(176,82,60,.06);}
-  #evidence pre{font-family:var(--mono);font-size:.78rem;line-height:1.5;overflow-x:auto;
-    background:var(--ground,#f6f2ec);border:1px solid var(--rule,#ddd6cc);border-radius:4px;
-    padding:1rem 1.1rem;margin:1.4rem 0;}
-  #evidence .boundary{border-left:3px solid var(--p-flows,#B0523C);padding:.1rem 0 .1rem 1.1rem;
-    margin:1.8rem 0;}
-  #evidence .unchecked{font-size:.82rem;opacity:.7;border-top:1px solid var(--rule,#ddd6cc);
-    padding-top:.9rem;margin-top:2rem;}
+  /* Scoped to this page: one row of the prior-art table is ours, and site.css
+     has no rule for "this row is the one you are reading about". Everything
+     else that used to live here — the table, the diagrams, the boundary rule —
+     is in site.css now, because a second page wanted it. */
+  #evidence tr.ours td{background:rgba(10,132,255,.08);color:var(--ink);}
+  #evidence tr.ours td:first-child{color:var(--blue);}
 </style>
 </head>
 <body>
 
+<header class="masthead">
+  <div class="masthead-in">
+      <a class="wordmark" href="/"><svg class="mark" viewBox="0 0 32 32" aria-hidden="true"><rect x="2" y="2" width="13" height="13" rx="4" fill="currentColor"/><rect x="17" y="2" width="13" height="13" rx="4" fill="currentColor"/><rect x="2" y="17" width="13" height="13" rx="4" fill="currentColor"/><rect x="18" y="18" width="11" height="11" rx="3" fill="none" stroke="currentColor" stroke-width="2" opacity=".42"/></svg>ai-os<span class="org">Evolving Agents Labs</span></a>
+      <nav class="navlinks">
+        <a href="/demo/">Demo</a>
+        <a href="/verify/">Verify</a>
+        <a href="/coclea-sr/">COCLEA-SR</a>
+        <a href="/hemo-verified/">HEMO-VERIFIED</a>
+        <a href="/archive/">Archive</a>
+        <a href="https://github.com/EvolvingAgentsLabs/ai-os">GitHub</a>
+      </nav>
+      <span class="chip ok">every number checked nightly</span>
+  </div>
+</header>
+
 <div class="wrap">
 
-  <header class="masthead">
-    <a class="wordmark" href="/"><svg class="mark" viewBox="0 0 96 84" aria-hidden="true"><rect x="12" y="32" width="12" height="52" rx="6" fill="var(--p-flows)" transform="rotate(-10 48 84)"/><rect x="32" y="18" width="12" height="66" rx="6" fill="var(--p-ui)" transform="rotate(-3.5 48 84)"/><rect x="52" y="18" width="12" height="66" rx="6" fill="var(--p-storage)" transform="rotate(3.5 48 84)"/><rect x="72" y="32" width="12" height="52" rx="6" fill="var(--p-base)" transform="rotate(10 48 84)"/></svg>Evolving Agents Labs</a>
-    <nav class="navlinks">
-      <a href="/demo/">Demo</a>
-      <a href="/#pillars">Pillars</a>
-      <a href="/#evidence">Evidence layer</a>
-      <a href="/verify/">Check the numbers</a>
-      <a href="/#status">Status</a>
-      <a href="/coclea-sr/">COCLEA-SR</a>
-      <a href="/hemo-verified/">HEMO-VERIFIED</a>
-      <a href="/archive/">Archive</a>
-      <a href="https://github.com/EvolvingAgentsLabs/ai-os">GitHub</a>
-    </nav>
-  </header>
-
-  <div class="stripe" aria-hidden="true"><span></span><span></span><span></span><span></span><span></span><span></span></div>
 
   <section class="hero">
     <div class="hero-mark">
@@ -89,17 +81,44 @@
           stop taking our word for it.</p>
       </div>
       <figure class="markfig">
-        <svg viewBox="0 0 96 84" role="img" aria-label="Four pillars: ai-flows, ai-ui, ai-storage, ai-base">
-          <rect x="12" y="32" width="12" height="52" rx="6" fill="var(--p-flows)" transform="rotate(-10 48 84)"/>
-          <rect x="32" y="18" width="12" height="66" rx="6" fill="var(--p-ui)" transform="rotate(-3.5 48 84)"/>
-          <rect x="52" y="18" width="12" height="66" rx="6" fill="var(--p-storage)" transform="rotate(3.5 48 84)"/>
-          <rect x="72" y="32" width="12" height="52" rx="6" fill="var(--p-base)" transform="rotate(10 48 84)"/>
+        <svg viewBox="0 0 32 32" role="img" aria-label="ai-os">
+          <rect x="2"  y="2"  width="13" height="13" rx="4" fill="currentColor"/>
+          <rect x="17" y="2"  width="13" height="13" rx="4" fill="currentColor"/>
+          <rect x="2"  y="17" width="13" height="13" rx="4" fill="currentColor"/>
+          <rect x="18" y="18" width="11" height="11" rx="3" fill="none"
+                stroke="currentColor" stroke-width="2" opacity=".42"/>
         </svg>
-        <figcaption class="legend-pillars">
-          <span class="pf">ai-flows</span><span class="pu">ai-ui</span>
-          <span class="ps">ai-storage</span><span class="pb">ai-base</span>
-        </figcaption>
+        <figcaption class="markcap">Four buckets of time. Three were written
+          into; the fourth is drawn as an outline rather than as a zero, because
+          <b>&ldquo;nothing was recorded&rdquo; and &ldquo;nothing happened&rdquo;
+          are different claims</b> and only the first is ours to make. The mark is
+          one cell of <a href="/demo/">the canvas</a>.</figcaption>
       </figure>
+    </div>
+
+    <!-- The four numbers this project would be embarrassed to have wrong. Each
+         one is guarded: the first by scripts/check-test-count.sh, the middle two
+         by check-gate-count.py and check-numbers.py against the artifacts that
+         produced them, the last by `make reproduce` on a machine that has never
+         seen the report. They are set this large because they are checked, not
+         the other way round. -->
+    <div class="figs">
+      <a class="fig" href="https://github.com/EvolvingAgentsLabs/ai-os/blob/main/scripts/check-test-count.sh">
+        <span class="v">828</span>
+        <span class="k">tests of our own, counted from the suites by CI so the number cannot drift again</span>
+      </a>
+      <a class="fig" href="/coclea-sr/">
+        <span class="v">28 / 135</span>
+        <span class="k">gates and checks on <code>coclea-sr</code>, every one green, every one declared before its run</span>
+      </a>
+      <a class="fig" href="/hemo-verified/">
+        <span class="v">0.906</span>
+        <span class="k">composite AUC where no right answer exists, against a kill line of 0.80 written down first</span>
+      </a>
+      <a class="fig" href="/verify/">
+        <span class="v">1207 / 1207</span>
+        <span class="k">fields bit-identical when that report was rebuilt somewhere that had never seen it</span>
+      </a>
     </div>
   </section>
 

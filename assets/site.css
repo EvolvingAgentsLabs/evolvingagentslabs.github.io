@@ -1,372 +1,447 @@
-/* Evolving Agents Labs — shared styles. Hand-written; no preprocessor. */
+/* ai-os — the surface. Hand-written; no preprocessor, no webfont, no build step.
+ *
+ * ## Why this file was rewritten
+ *
+ * There used to be two products here. The pages were warm paper, Newsreader and
+ * six earth tones; the demo at /demo/ is black, the system sans, and Apple's
+ * system colours. A reader crossing between them could feel the seam, and the
+ * seam said something untrue: that this website is *about* ai-os rather than
+ * part of it. The demo is the product, so the demo's language wins outright and
+ * the pages are the ones that move.
+ *
+ * Everything below is taken from `ai-ui/scripts/build-grid.ts` — the same nine
+ * system colours, the same three greys, the same two font stacks, the same
+ * radii. Where the demo has no answer, because a tool has no long-form prose,
+ * the rule is derived rather than invented, and the derivation is written down
+ * beside it.
+ *
+ * ## The four rules
+ *
+ * 1. **One ground.** #000, everywhere, and no light mode. The demo has no light
+ *    mode; giving the pages one would rebuild the seam on the other side.
+ * 2. **Colour is who, never how it went.** On the canvas colour is identity: a
+ *    failure and a success by the same agent are the same colour. So on the
+ *    pages the four pillars carry four identity hues and nothing else does — and
+ *    green, red and yellow are spent only on a verdict, exactly as the demo's
+ *    inspector spends them.
+ * 3. **One hairline.** #38383A, 1px. Not two weights of the same line.
+ * 4. **Nothing fetched to render it.** No font server, no CDN. This site
+ *    publishes numbers it says you can check with the machine in front of you;
+ *    /verify/ already refuses a webfont for that reason, and the rest of the
+ *    site had no business being the exception.
+ */
+
 :root{
-  --paper:#F5F5F2; --ground:#FFFFFF;
-  --ink:#15171B; --ink-2:#4A4F58; --ink-3:#767C86;
-  --rule:#DEDEDA; --rule-strong:#C4C4BF;
-  --accent:#3E52A3; --signal:#8A5C10;
-  --p-flows:#B0523C; --p-ui:#C8873A; --p-storage:#6E7C3C; --p-base:#3E52A3;
-  --s1:#B0523C; --s2:#C8873A; --s3:#6E7C3C; --s4:#2F7A72; --s5:#3E52A3; --s6:#6B4A94;
-  --serif:"Newsreader",Georgia,"Times New Roman",serif;
-  --mono:"IBM Plex Mono",ui-monospace,SFMono-Regular,Menlo,monospace;
-  --sans:-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,Helvetica,Arial,sans-serif;
+  color-scheme:dark;
+
+  /* The nine system colours, verbatim from the demo. */
+  --blue:#0A84FF; --green:#30D158; --indigo:#5E5CE6; --orange:#FF9F0A;
+  --pink:#FF375F; --purple:#BF5AF2; --red:#FF453A; --teal:#64D2FF; --yellow:#FFD60A;
+
+  /* Ground, elevation, hairline. */
+  --bg:#000; --bg-2:#1C1C1E; --bg-3:#2C2C2E; --sep:#38383A;
+
+  /* The ink ramp. Three steps, used the way the demo uses them: --ink is what
+     you are reading, --dim is what supports it, --faint is what you are not
+     meant to read unless you go looking. Long prose is set in --ink rather than
+     --dim; the demo has no body copy to borrow a rule from, and #98989F is a
+     caption colour, not a reading colour. */
+  --ink:#F2F2F7; --dim:#98989F; --faint:#636366;
+
+  --sans:ui-sans-serif,-apple-system,"SF Pro Text",system-ui,"Segoe UI",Roboto,sans-serif;
+  --mono:ui-monospace,"SF Mono",Menlo,Monaco,"Roboto Mono",monospace;
+
+  /* Identity — the four pillars. Chosen out of the identity half of the palette
+     so that no pillar can ever be mistaken for a verdict. */
+  --p-flows:var(--orange); --p-ui:var(--teal);
+  --p-storage:var(--purple); --p-base:var(--indigo);
+
+  /* Geometry, from the demo: a chip, a control, a card, a pill. */
+  --r-s:6px; --r-m:9px; --r-l:12px;
+
   --pad:clamp(1.25rem,5vw,3rem);
+
+  /* Names the older pages still reach for. Kept as aliases so a scoped rule
+     nobody caught renders in the new system instead of falling back to a
+     hard-coded parchment. New rules use the tokens above. */
+  --paper:var(--bg); --ground:var(--bg-2);
+  --ink-2:var(--dim); --ink-3:var(--faint);
+  --rule:var(--sep); --rule-strong:var(--sep);
+  --accent:var(--blue); --signal:var(--orange);
 }
-@media (prefers-color-scheme:dark){
-  :root{
-    --paper:#0F1114; --ground:#15181C;
-    --ink:#E8E8E4; --ink-2:#A8ADB6; --ink-3:#767C86;
-    --rule:#262A30; --rule-strong:#363B43;
-    --accent:#8B9BE0; --signal:#D9A441;
-  --p-flows:#CE6B52; --p-ui:#D9A441; --p-storage:#8B9B55; --p-base:#8B9BE0;
-  --s1:#CE6B52; --s2:#D9A441; --s3:#8B9B55; --s4:#3E9A90; --s5:#8B9BE0; --s6:#9B7ACB;
-  }
-}
-:root[data-theme="dark"]{
-  --paper:#0F1114; --ground:#15181C;
-  --ink:#E8E8E4; --ink-2:#A8ADB6; --ink-3:#767C86;
-  --rule:#262A30; --rule-strong:#363B43;
-  --accent:#8B9BE0; --signal:#D9A441;
-  --p-flows:#CE6B52; --p-ui:#D9A441; --p-storage:#8B9B55; --p-base:#8B9BE0;
-  --s1:#CE6B52; --s2:#D9A441; --s3:#8B9B55; --s4:#3E9A90; --s5:#8B9BE0; --s6:#9B7ACB;
-}
-:root[data-theme="light"]{
-  --paper:#F5F5F2; --ground:#FFFFFF;
-  --ink:#15171B; --ink-2:#4A4F58; --ink-3:#767C86;
-  --rule:#DEDEDA; --rule-strong:#C4C4BF;
-  --accent:#3E52A3; --signal:#8A5C10;
-  --p-flows:#B0523C; --p-ui:#C8873A; --p-storage:#6E7C3C; --p-base:#3E52A3;
-  --s1:#B0523C; --s2:#C8873A; --s3:#6E7C3C; --s4:#2F7A72; --s5:#3E52A3; --s6:#6B4A94;
-}
+
 *{box-sizing:border-box;}
 html{-webkit-text-size-adjust:100%;}
 body{
-  margin:0;background:var(--paper);color:var(--ink);
-  font-family:var(--sans);font-size:16px;line-height:1.6;
-  -webkit-font-smoothing:antialiased;
+  margin:0;background:var(--bg);color:var(--ink);
+  font-family:var(--sans);font-size:17px;line-height:1.62;
+  letter-spacing:-.003em;-webkit-font-smoothing:antialiased;
 }
-:focus-visible{outline:2px solid var(--accent);outline-offset:3px;border-radius:2px;}
+:focus-visible{outline:2px solid var(--blue);outline-offset:3px;border-radius:var(--r-s);}
+::selection{background:rgba(10,132,255,.32);}
+
 .wrap{max-width:min(64rem,100%);margin:0 auto;padding-inline:var(--pad);}
 .wrap.narrow{max-width:min(46rem,100%);}
 
-/* masthead */
+a{color:var(--blue);text-decoration-thickness:1px;text-underline-offset:3px;
+  text-decoration-color:rgba(10,132,255,.4);transition:color .15s,text-decoration-color .15s;}
+a:hover{color:var(--teal);text-decoration-color:currentColor;}
+
+/* ── masthead ──────────────────────────────────────────────────────────────
+   Deliberately the demo's header and not a website's: same wordmark weight,
+   same monospace chip parked on the right, same glass over black. Crossing into
+   /demo/ then changes the view rather than the product. */
+/* The bar spans the window, the prose does not. The masthead therefore lives
+   outside .wrap entirely and carries its own measure — a detail page is 46rem
+   of text under a full-width piece of chrome, exactly as the demo is a canvas
+   under a full-width piece of chrome. */
 .masthead{
-  display:flex;align-items:baseline;justify-content:space-between;
-  gap:1.5rem;flex-wrap:wrap;padding-block:1.75rem 1.5rem;
-  border-bottom:1px solid var(--rule);
+  position:sticky;top:0;z-index:20;
+  background:rgba(0,0,0,.72);backdrop-filter:saturate(180%) blur(20px);
+  border-bottom:1px solid var(--sep);
 }
+.masthead-in{
+  max-width:min(64rem,100%);margin:0 auto;
+  padding:.85rem var(--pad) .8rem;
+  display:flex;align-items:center;gap:1rem 1.25rem;flex-wrap:nowrap;
+}
+.masthead .chip{flex:none;}
+.wordmark{flex:none;white-space:nowrap;}
+.wordmark .org{white-space:nowrap;}
 .wordmark{
-  font-family:var(--mono);font-size:.8125rem;font-weight:500;
-  letter-spacing:.08em;text-transform:uppercase;text-decoration:none;color:inherit;
+  display:inline-flex;align-items:center;gap:.55em;
+  font-size:.9375rem;font-weight:600;letter-spacing:-.02em;
+  text-decoration:none;color:var(--ink);
 }
-.wordmark .mark{color:var(--accent);margin-right:.45em;}
-.navlinks{display:flex;gap:1.5rem;font-family:var(--mono);font-size:.75rem;letter-spacing:.04em;}
-.navlinks a{color:var(--ink-2);text-decoration:none;transition:color .15s;}
-.navlinks a:hover{color:var(--accent);}
+.wordmark:hover{color:var(--ink);}
+.wordmark .mark{display:block;width:1.05em;height:1.05em;flex:none;color:var(--ink);}
+.wordmark .org{
+  font-family:var(--mono);font-size:.6875rem;font-weight:400;letter-spacing:.01em;
+  color:var(--faint);border-left:1px solid var(--sep);padding-left:.7em;
+}
+.navlinks{
+  display:flex;gap:1.15rem;flex-wrap:nowrap;margin-left:auto;
+  font-size:.8125rem;letter-spacing:-.005em;
+  min-width:0;overflow-x:auto;scrollbar-width:none;
+}
+.navlinks::-webkit-scrollbar{display:none;}
+.navlinks a{white-space:nowrap;}
+.navlinks a{color:var(--dim);text-decoration:none;}
+.navlinks a:hover{color:var(--ink);}
+.navlinks a[aria-current]{color:var(--ink);}
 
-/* index hero */
-.hero{padding-block:clamp(3rem,9vw,5.5rem) clamp(2.5rem,6vw,4rem);}
+/* The demo's build chip: a monospace fact, parked at the end of the header. */
+.chip{
+  font:400 10px/1.4 var(--mono);color:var(--dim);background:var(--bg-2);
+  border:1px solid var(--sep);border-radius:var(--r-s);padding:4px 9px;
+  white-space:nowrap;font-variant-numeric:tabular-nums;
+}
+.chip.ok{color:var(--green);border-color:rgba(48,209,88,.35);background:rgba(48,209,88,.1);}
+/* The demo's SIMULATED pill, for anything the reader must not take at face value. */
+.chip.warn{
+  font:600 10px/1.4 var(--sans);letter-spacing:.05em;text-transform:uppercase;
+  color:var(--orange);background:rgba(255,159,10,.12);
+  border-color:rgba(255,159,10,.28);border-radius:999px;padding:3px 10px;
+}
+@media(max-width:62rem){ .masthead .chip{display:none;} }
+@media(max-width:46rem){ .wordmark .org{display:none;} }
+/* Below this the bar stops being one line and becomes two, which is the only
+   place on the site where anything in the chrome is allowed to wrap. */
+@media(max-width:34rem){
+  .masthead-in{flex-wrap:wrap;gap:.65rem 1rem;}
+  .navlinks{margin-left:0;width:100%;}
+}
+
+/* ── hero ───────────────────────────────────────────────────────────────── */
+.hero{padding-block:clamp(2.75rem,8vw,4.75rem) clamp(2rem,5vw,3rem);}
 .hero h1{
-  font-family:var(--serif);font-weight:300;
-  font-size:clamp(2rem,5.4vw,3.5rem);line-height:1.12;
-  letter-spacing:-.018em;margin:0 0 1.5rem;max-width:22ch;text-wrap:balance;
+  font-weight:600;font-size:clamp(2rem,5.2vw,3.375rem);line-height:1.06;
+  letter-spacing:-.035em;margin:0 0 1.5rem;max-width:20ch;text-wrap:balance;
 }
-.hero h1 em{font-style:italic;color:var(--accent);}
-.hero p{margin:0;max-width:66ch;color:var(--ink-2);font-size:1.0625rem;line-height:1.65;}
-.hero p + p{margin-top:1rem;}
+.hero h1 em{font-style:normal;color:var(--blue);}
+.hero h1 .proj{font-family:var(--mono);font-size:.78em;font-weight:500;letter-spacing:-.04em;}
+.hero p{margin:0;max-width:64ch;font-size:1.0625rem;line-height:1.62;}
+.hero p + p{margin-top:1.05rem;}
+.hero .note{color:var(--dim);}
 .hero .who{
-  margin-top:1.75rem;padding-top:1.25rem;
-  border-top:1px solid var(--rule);
-  font-size:.9375rem;color:var(--ink-3);
+  margin-top:1.75rem;padding-top:1.25rem;border-top:1px solid var(--sep);
+  font-size:.9375rem;color:var(--dim);
 }
-.hero .who a{color:var(--ink-2);text-decoration-thickness:1px;text-underline-offset:2px;}
-.hero .who a:hover{color:var(--accent);}
+.hero .ctas{margin-top:2rem;}
 
-/* legend */
-.legend{
-  display:flex;flex-wrap:wrap;gap:.6rem 1.75rem;
-  padding-block:1.25rem;border-block:1px solid var(--rule);
-  font-family:var(--mono);font-size:.75rem;color:var(--ink-3);
+.eyebrow,.sectionlabel{
+  font:600 10.5px/1.4 var(--sans);letter-spacing:.09em;text-transform:uppercase;
+  color:var(--faint);
 }
-.legend div{display:flex;align-items:center;gap:.5rem;}
+.eyebrow{margin:0 0 1.25rem;}
+.sectionlabel{margin:0;padding-block:2.5rem 1rem;}
 
+/* ── the mark, at hero size ─────────────────────────────────────────────── */
+.hero-mark{display:grid;grid-template-columns:1fr auto;gap:3rem;align-items:start;}
+.hero-mark .markfig{display:flex;flex-direction:column;align-items:flex-start;gap:1.25rem;margin:0;}
+.hero-mark .markfig svg{width:clamp(5.5rem,9vw,7rem);height:auto;color:var(--ink);}
+.hero-mark .markfig{max-width:19rem;}
+.hero-mark .markcap{
+  font-size:.8125rem;line-height:1.6;color:var(--dim);text-align:left;
+}
+.hero-mark .markcap b{color:var(--ink);font-weight:600;}
+.hero-mark .legend-pillars{
+  display:grid;grid-template-columns:auto auto;gap:.45rem 1rem;
+  font:400 11px/1.3 var(--mono);
+}
+/* The archive page opens on the mark alone. */
+.hero > .mark{display:block;width:clamp(3rem,6vw,4rem);height:auto;
+  color:var(--ink);margin:0 0 1.75rem;}
+.pf{color:var(--p-flows);} .pu{color:var(--p-ui);}
+.ps{color:var(--p-storage);} .pb{color:var(--p-base);}
+@media(max-width:52rem){
+  .hero-mark{grid-template-columns:1fr;gap:2rem;}
+  .hero-mark .markfig{align-items:flex-start;}
+}
+
+/* ── the headline numbers ───────────────────────────────────────────────────
+   Every one of these is checked against the artifact that produced it, which is
+   the only reason they are allowed to be this large. Mono and tabular, because
+   a number that is the point should be set as a number. */
+.figs{
+  display:grid;grid-template-columns:repeat(auto-fit,minmax(11rem,1fr));
+  gap:1px;background:var(--sep);border:1px solid var(--sep);border-radius:var(--r-l);
+  overflow:hidden;margin:2.25rem 0 0;
+}
+.figs > *{background:var(--bg);padding:1rem 1.1rem 1.05rem;text-decoration:none;color:inherit;}
+a.fig{transition:background .15s;}
+a.fig:hover{background:var(--bg-2);}
+.fig .v{
+  display:block;font:500 1.4rem/1.15 var(--mono);letter-spacing:-.03em;
+  color:var(--ink);font-variant-numeric:tabular-nums;
+}
+.fig .k{display:block;margin-top:.45rem;font-size:.8125rem;line-height:1.45;color:var(--dim);}
+.fig .k code{white-space:nowrap;}
+
+/* ── controls ──────────────────────────────────────────────────────────────
+   The demo has exactly two: a bordered control on the dark ground, and one
+   filled pill for the single thing it wants you to press. */
+.ctas{display:flex;gap:.6rem;flex-wrap:wrap;align-items:center;}
+.cta{
+  display:inline-flex;align-items:center;gap:.45rem;
+  font:400 .875rem/1 var(--sans);letter-spacing:-.01em;
+  padding:.68rem 1.05rem;border:1px solid var(--sep);border-radius:var(--r-m);
+  text-decoration:none;color:var(--ink);background:var(--bg-2);
+  transition:background .15s,border-color .15s;
+}
+.cta:hover{background:var(--bg-3);color:var(--ink);border-color:#48484A;}
+.cta.primary{
+  background:var(--ink);color:#000;border-color:var(--ink);
+  border-radius:999px;font-weight:600;padding:.68rem 1.2rem;
+}
+.cta.primary:hover{background:#fff;border-color:#fff;color:#000;}
+
+/* ── evidence badges ────────────────────────────────────────────────────────
+   These say how much evidence stands behind a thing, so they are verdicts, and
+   they get the verdict colours: green established, yellow published but thin,
+   grey not yet measured. */
 .badge{
-  font-family:var(--mono);font-size:.6875rem;font-weight:500;
-  letter-spacing:.06em;text-transform:uppercase;
-  padding:.2em .55em;border:1px solid currentColor;border-radius:2px;
-  white-space:nowrap;line-height:1.3;
+  display:inline-block;
+  font:600 10px/1.3 var(--sans);letter-spacing:.06em;text-transform:uppercase;
+  padding:.28em .6em;border:1px solid currentColor;border-radius:var(--r-s);
+  white-space:nowrap;
 }
-.badge.reproducible{color:var(--accent);}
-.badge.results{color:var(--signal);}
-.badge.prototype{color:var(--ink-3);}
+.badge.reproducible{color:var(--green);}
+.badge.results{color:var(--yellow);}
+.badge.prototype{color:var(--faint);}
 /* Two end-states, kept distinct on purpose: code that moved is not code that
    stopped. One archive badge for both would read as a portfolio that was
    abandoned rather than one that was consolidated. */
-.badge.moved{color:var(--accent);border-style:dashed;}
-.badge.archived{color:var(--ink-3);border-style:dashed;opacity:.85;}
+.badge.moved{color:var(--blue);border-style:dashed;}
+.badge.archived{color:var(--faint);border-style:dashed;}
 
-/* index listing */
+.legend{
+  display:flex;flex-wrap:wrap;gap:.7rem 1.75rem;
+  padding-block:1.25rem;border-block:1px solid var(--sep);
+  font-size:.8125rem;color:var(--dim);
+}
+.legend div{display:flex;align-items:center;gap:.6rem;}
+
+/* ── the index listing ─────────────────────────────────────────────────────── */
 .listing{padding-block:1rem 4rem;}
-.sectionlabel{
-  font-family:var(--mono);font-size:.6875rem;letter-spacing:.14em;
-  text-transform:uppercase;color:var(--ink-3);margin:0;padding-block:2.25rem 1rem;
-}
 .row{
+  position:relative;
   display:grid;grid-template-columns:7.5rem minmax(9rem,12rem) 1fr auto;
-  gap:.5rem 2rem;align-items:start;
-  padding:1.5rem .875rem;margin-inline:-.875rem;
-  border-bottom:1px solid var(--rule);
-  text-decoration:none;color:inherit;border-radius:3px;
-  transition:background-color .18s ease;
+  gap:.55rem 1.75rem;align-items:start;
+  padding:1.35rem .9rem;margin-inline:-.9rem;
+  text-decoration:none;color:inherit;border-radius:var(--r-l);
+  transition:background-color .15s ease;
 }
-.row:first-of-type{border-top:1px solid var(--rule-strong);}
-.row:hover{background:var(--ground);}
-.row:hover .name{color:var(--accent);}
+/* The divider is a pseudo-element rather than a border: the row is rounded so
+   the highlight under the pointer has the demo's radius, and a border on a
+   rounded box bends at the corners into something that is not a hairline. */
+.row::after,.row:first-of-type::before{
+  content:"";position:absolute;left:0;right:0;height:1px;background:var(--sep);
+}
+.row::after{bottom:0;}
+.row:first-of-type::before{top:0;}
+.row:hover{background:var(--bg-2);}
 .row:hover .arrow{transform:translateX(3px);opacity:1;}
 .thumb{
-  display:block;border:1px solid var(--rule);border-radius:3px;
-  overflow:hidden;background:var(--ground);aspect-ratio:16/9;
+  display:block;border:1px solid var(--sep);border-radius:var(--r-m);
+  overflow:hidden;background:var(--bg-2);aspect-ratio:16/9;padding:3px;
 }
-.thumb img{display:block;width:100%;height:100%;object-fit:cover;transition:transform .25s ease;}
-.row:hover .thumb img{transform:scale(1.03);}
-@media (prefers-color-scheme:dark){.thumb img{filter:brightness(.88) saturate(.95);}}
-:root[data-theme="dark"] .thumb img{filter:brightness(.88) saturate(.95);}
-:root[data-theme="light"] .thumb img{filter:none;}
-.rowhead{display:flex;flex-direction:column;gap:.55rem;align-items:flex-start;}
+/* The figures are light plates made for paper. They stay light — inverting them
+   would drag the accents that carry meaning inside the figure — but they are
+   dimmed so they sit on the ground rather than glaring off it. */
+.thumb img{display:block;width:100%;height:100%;object-fit:cover;border-radius:5px;
+  filter:brightness(.78) saturate(.9);transition:transform .25s ease,filter .25s ease;}
+.row:hover .thumb img{transform:scale(1.03);filter:brightness(.95) saturate(1);}
+.rowhead{display:flex;flex-direction:column;gap:.6rem;align-items:flex-start;}
 /* The origin has no evidence badge — it is not being worked on, and inventing a
    fourth badge would dilute what the other three mean. */
 .row.origin .rowhead{justify-content:flex-start;}
-.name{font-family:var(--mono);font-size:.9375rem;font-weight:500;letter-spacing:-.01em;transition:color .18s;}
+.name{font:500 .9375rem/1.3 var(--mono);letter-spacing:-.02em;color:var(--ink);}
 .question{
-  font-family:var(--serif);font-weight:300;
-  font-size:clamp(1.125rem,2.1vw,1.4375rem);
-  line-height:1.34;letter-spacing:-.012em;margin:0;max-width:44ch;text-wrap:balance;
+  font-weight:500;font-size:clamp(1.0625rem,1.9vw,1.25rem);
+  line-height:1.35;letter-spacing:-.022em;margin:0;max-width:44ch;
+  text-wrap:balance;color:var(--ink);
 }
-.note{margin:.6rem 0 0;font-size:.875rem;line-height:1.55;color:var(--ink-2);max-width:52ch;}
+.note{margin:.55rem 0 0;font-size:.875rem;line-height:1.6;color:var(--dim);max-width:56ch;}
 .meta{
   display:flex;align-items:center;gap:.85rem;
-  font-family:var(--mono);font-size:.75rem;color:var(--ink-3);
+  font:400 .75rem/1 var(--mono);color:var(--faint);
   font-variant-numeric:tabular-nums;white-space:nowrap;
 }
-.arrow{opacity:.45;transition:transform .18s ease,opacity .18s ease;}
+.arrow{opacity:.5;transition:transform .18s ease,opacity .18s ease;}
 @media (max-width:44rem){
-  .row{grid-template-columns:1fr;gap:.85rem;padding-block:1.375rem;}
+  .row{grid-template-columns:1fr;gap:.85rem;padding-block:1.25rem;}
   .thumb{max-width:none;}
   .rowhead{flex-direction:row;align-items:center;gap:.75rem;flex-wrap:wrap;}
   .meta{order:3;}
 }
 
-/* detail page */
+/* ── detail pages ─────────────────────────────────────────────────────────── */
 .crumb{
-  font-family:var(--mono);font-size:.6875rem;letter-spacing:.1em;text-transform:uppercase;
-  color:var(--ink-3);padding-block:2rem .5rem;
+  font:400 .6875rem/1.4 var(--mono);letter-spacing:.06em;text-transform:uppercase;
+  color:var(--faint);padding-block:2rem .6rem;
 }
-.crumb a{color:var(--ink-3);text-decoration:none;}
-.crumb a:hover{color:var(--accent);}
-.crumb span{margin-inline:.5em;opacity:.5;}
-.detail-hero{padding-block:.5rem 2rem;border-bottom:1px solid var(--rule);}
+.crumb a{color:var(--faint);text-decoration:none;}
+.crumb a:hover{color:var(--ink);}
+.crumb span{margin-inline:.55em;opacity:.5;}
+.detail-hero{padding-block:.5rem 2rem;border-bottom:1px solid var(--sep);}
 .detail-hero h1{
-  font-family:var(--mono);font-weight:500;
-  font-size:clamp(1.5rem,3.6vw,2rem);letter-spacing:-.02em;margin:0 0 1rem;
+  font-weight:600;font-size:clamp(1.75rem,4vw,2.5rem);line-height:1.1;
+  letter-spacing:-.033em;margin:0 0 1rem;max-width:24ch;text-wrap:balance;
 }
 .detail-hero .question{
-  font-size:clamp(1.375rem,3.2vw,1.875rem);margin:0 0 1.5rem;max-width:30ch;color:var(--ink);
+  font-size:clamp(1.0625rem,2.2vw,1.25rem);font-weight:400;
+  margin:0 0 1.5rem;max-width:58ch;color:var(--dim);letter-spacing:-.012em;text-wrap:pretty;
 }
 .hero-meta{display:flex;align-items:center;gap:.85rem;flex-wrap:wrap;margin-bottom:1.75rem;}
-.hero-meta .when{font-family:var(--mono);font-size:.75rem;color:var(--ink-3);}
-.ctas{display:flex;gap:.75rem;flex-wrap:wrap;}
-.cta{
-  display:inline-flex;align-items:center;gap:.5rem;
-  font-family:var(--mono);font-size:.8125rem;
-  padding:.6rem 1rem;border:1px solid var(--rule-strong);border-radius:3px;
-  text-decoration:none;color:var(--ink);background:var(--ground);
-  transition:border-color .18s,color .18s;
-}
-.cta:hover{border-color:var(--accent);color:var(--accent);}
-.cta.primary{border-color:var(--accent);color:var(--accent);}
+.hero-meta .when{font:400 .75rem/1 var(--mono);color:var(--faint);}
 
 .article{padding-block:2.5rem 3rem;}
+/* The figures are light plates, drawn for paper, and they stay light: inverting
+   them would drag the accents that carry meaning inside the figure. What changes
+   is that they are mounted rather than pasted — a hairline, a matte of raised
+   ground, and enough dimming that a white rectangle does not sit straight
+   against #000 like a hole in the page. */
 .hero-figure{
-  margin:2rem 0 0;border:1px solid var(--rule);border-radius:4px;
-  overflow:hidden;background:var(--ground);
+  margin:2rem 0 0;border:1px solid var(--sep);border-radius:var(--r-l);
+  background:var(--bg-2);padding:.6rem;
 }
-.hero-figure img{display:block;width:100%;height:auto;}
-.hero .mark{
-  display:block;width:clamp(3.5rem,7vw,4.75rem);height:auto;
-  margin:0 0 1.75rem -.35rem;mix-blend-mode:multiply;
-}
-/* In dark mode the figures stay on their paper ground rather than being
-   inverted. Inverting would drag the indigo through olive and shift the amber
-   that means "signal detected" in sleep-harness — the accents carry meaning
-   here. A light plate on a dark page reads as a printed figure, which suits a
-   site set in Newsreader. Dimmed slightly so it does not glare. */
-@media (prefers-color-scheme:dark){
-  .hero-figure{border-color:var(--rule-strong);}
-  .hero-figure img,.hero .mark{filter:brightness(.88) saturate(.95);}
-  .hero .mark{mix-blend-mode:normal;}
-}
-:root[data-theme="dark"] .hero-figure{border-color:var(--rule-strong);}
-:root[data-theme="dark"] .hero-figure img,
-:root[data-theme="dark"] .hero .mark{filter:brightness(.88) saturate(.95);}
-:root[data-theme="dark"] .hero .mark{mix-blend-mode:normal;}
-:root[data-theme="light"] .hero-figure img,
-:root[data-theme="light"] .hero .mark{filter:none;}
+.hero-figure img{display:block;width:100%;height:auto;border-radius:calc(var(--r-l) - .4rem);
+  filter:brightness(.78) saturate(.9);}
 .article h2{
-  font-family:var(--serif);font-weight:400;
-  font-size:clamp(1.375rem,2.6vw,1.75rem);line-height:1.25;letter-spacing:-.012em;
-  margin:2.75rem 0 1rem;text-wrap:balance;
+  font-weight:600;font-size:clamp(1.3125rem,2.5vw,1.625rem);line-height:1.22;
+  letter-spacing:-.028em;margin:2.75rem 0 1rem;text-wrap:balance;color:var(--ink);
 }
 .article h2:first-child{margin-top:0;}
-.article .lede{
-  font-family:var(--serif);font-weight:300;
-  font-size:clamp(1.1875rem,2.4vw,1.5rem);line-height:1.4;
-  color:var(--ink);margin-bottom:2rem;
-}
-.article p{margin:0 0 1.15rem;color:var(--ink-2);}
-.article strong{color:var(--ink);font-weight:600;}
-.article em{color:var(--ink);}
-.article a{color:var(--accent);text-decoration-thickness:1px;text-underline-offset:2px;}
-.article ul{margin:0 0 1.15rem;padding-left:1.25rem;color:var(--ink-2);}
+.article .lede{font-size:clamp(1.125rem,2.2vw,1.3125rem);line-height:1.45;
+  letter-spacing:-.018em;color:var(--ink);margin-bottom:2rem;}
+.article p{margin:0 0 1.15rem;}
+.article strong,.article b{color:var(--ink);font-weight:600;}
+.article em{color:var(--ink);font-style:italic;}
+.article ul,.article ol{margin:0 0 1.15rem;padding-left:1.3rem;}
 .article li{margin-bottom:.5rem;}
-.article code{
-  font-family:var(--mono);font-size:.875em;
-  background:var(--ground);border:1px solid var(--rule);border-radius:3px;padding:.1em .35em;
+code,.mono{font-family:var(--mono);font-size:.86em;font-variant-numeric:tabular-nums;}
+.article code,.status code,.hero code,.note code,.meta-foot code,.figs code{
+  background:var(--bg-2);border:1px solid var(--sep);
+  border-radius:var(--r-s);padding:.1em .38em;color:var(--ink);
 }
-.article pre{
-  background:var(--ground);border:1px solid var(--rule);border-radius:4px;
-  padding:1rem;overflow-x:auto;margin:0 0 1.15rem;
+/* A fixed-width block on this site is almost always a diagram rather than code,
+   so it is set on the raised ground and otherwise left alone. */
+pre{
+  background:var(--bg-2);border:1px solid var(--sep);border-radius:var(--r-l);
+  padding:1.1rem 1.2rem;overflow-x:auto;margin:1.5rem 0;
+  font:400 .8125rem/1.65 var(--mono);color:var(--dim);
 }
-.article pre code{background:none;border:none;padding:0;font-size:.8125rem;line-height:1.7;}
+pre code{background:none;border:none;padding:0;font-size:inherit;color:inherit;}
 
-.nextprev{
-  border-top:1px solid var(--rule-strong);padding-block:2rem 1rem;
-  font-family:var(--mono);font-size:.8125rem;
+/* ── verdict card ───────────────────────────────────────────────────────────
+   Lifted from the demo's inspector, where a finding carries a verdict, a
+   sentence, and the address it read. Anything on these pages that states what
+   is and is not established should look like a finding, because it is one. */
+.fnd{
+  border:1px solid var(--sep);border-radius:var(--r-l);
+  padding:1rem 1.1rem;margin:1.75rem 0;background:var(--bg-2);
 }
-.nextprev a{color:var(--accent);text-decoration:none;}
-.nextprev a:hover{text-decoration:underline;}
+.fnd .vd{font:600 10px/1.4 var(--sans);letter-spacing:.06em;text-transform:uppercase;color:var(--dim);}
+.fnd.ok .vd{color:var(--green);}
+.fnd.problem .vd{color:var(--red);}
+.fnd.unknown .vd{color:var(--yellow);}
+.fnd .sy{margin:.5rem 0 .55rem;font-size:.9375rem;line-height:1.55;color:var(--ink);}
+.fnd p:last-child{margin-bottom:0;}
+.fnd .ct{font:400 11px/1.5 var(--mono);color:var(--faint);}
 
-.foot{
-  border-top:1px solid var(--rule-strong);
-  padding-block:2.5rem 3.5rem;
-  display:flex;flex-direction:column;gap:.75rem;
-  font-family:var(--mono);font-size:.75rem;color:var(--ink-3);
+/* A quoted caveat: one accent rule, no box. */
+.caveat,.boundary,.frozen-banner,.unchecked{
+  border-left:2px solid var(--orange);padding:.15rem 0 .15rem 1.1rem;margin:1.75rem 0;
+  color:var(--dim);
 }
-.foot .by{max-width:62ch;line-height:1.7;color:var(--ink-2);}
-.foot .meta-foot{color:var(--ink-3);}
-.foot a{color:var(--ink-2);text-decoration:none;}
-.foot a:hover{color:var(--accent);}
-@media (prefers-reduced-motion:reduce){*{transition:none !important;animation:none !important;}}
-/* ---- ai-os home ------------------------------------------------------- */
-.eyebrow{
-  font-family:var(--mono);font-size:.6875rem;letter-spacing:.09em;
-  text-transform:uppercase;color:var(--ink-3);margin:0 0 1.25rem;
-}
-.hero h1 .proj{font-family:var(--mono);font-size:.82em;font-weight:500;letter-spacing:-.02em;}
-.hero .ctas{margin-top:2rem;}
+.frozen-banner{display:block;margin-top:1.25rem;font-size:.9375rem;}
+.unchecked{font-size:.9375rem;}
+.frozen-banner b,.caveat b,.boundary b,.unchecked b{color:var(--ink);font-weight:600;}
 
-.gap{padding-block:2.5rem;border-top:1px solid var(--rule);}
+/* ── tables ─────────────────────────────────────────────────────────────────
+   The demo's inspector sets a field as a key then a value on a hairline. A
+   table is that, repeated. */
+.article table,#evidence table{
+  width:100%;border-collapse:collapse;margin:1.6rem 0;
+  font:400 .8125rem/1.5 var(--mono);font-variant-numeric:tabular-nums;
+  display:block;overflow-x:auto;
+}
+.article th,.article td,#evidence th,#evidence td{
+  text-align:left;padding:.5rem .7rem;border-bottom:1px solid var(--sep);
+  vertical-align:top;white-space:nowrap;color:var(--dim);
+}
+.article th,#evidence th{
+  font:600 10px/1.4 var(--sans);letter-spacing:.06em;text-transform:uppercase;color:var(--faint);
+}
+.article td:first-child,.article th:first-child{white-space:normal;color:var(--ink);}
+.article .quiet{color:var(--faint);}
+.article .moved{color:var(--ink);font-weight:500;}
+
+/* ── numbered list ──────────────────────────────────────────────────────────── */
 .qlist{margin:0;padding:0;list-style:none;counter-reset:q;max-width:62ch;}
 .qlist li{
-  position:relative;padding-left:2.25rem;margin-bottom:1.15rem;
-  font-size:.9375rem;line-height:1.6;color:var(--ink-2);
+  position:relative;padding-left:2.35rem;margin-bottom:1.1rem;
+  font-size:.9375rem;line-height:1.6;color:var(--dim);
 }
 .qlist li::before{
   counter-increment:q;content:counter(q,decimal-leading-zero);
-  position:absolute;left:0;top:.15em;
-  font-family:var(--mono);font-size:.75rem;color:var(--ink-3);
+  position:absolute;left:0;top:.2em;
+  font:400 .75rem/1 var(--mono);color:var(--faint);
 }
-.qlist b{color:var(--ink);font-weight:500;}
+.qlist b{color:var(--ink);font-weight:600;}
 
+/* ── the four pillars ───────────────────────────────────────────────────────
+   One hairline grid, one identity colour per card, and nothing else. */
 .pillars{
-  display:grid;gap:1px;background:var(--rule);
-  border:1px solid var(--rule);margin-bottom:3rem;
-  grid-template-columns:repeat(auto-fit,minmax(22rem,1fr));
+  display:grid;gap:1px;background:var(--sep);
+  border:1px solid var(--sep);border-radius:var(--r-l);overflow:hidden;
+  margin-bottom:3rem;grid-template-columns:repeat(auto-fit,minmax(21rem,1fr));
 }
-.pillars article{background:var(--paper);padding:1.5rem 1.35rem;}
-.pillars h2{
-  margin:0 0 .7rem;font-family:var(--mono);font-size:.9375rem;
-  font-weight:500;letter-spacing:-.01em;color:var(--accent);
-}
-.pillars .question{margin:0;}
+.pillars article{background:var(--bg);padding:1.5rem 1.4rem;border-top:2px solid transparent;}
+.pillars h2{margin:0 0 .7rem;font:500 .9375rem/1.3 var(--mono);letter-spacing:-.02em;}
+.pillars .question{margin:0;font-size:1.0625rem;}
 .pillars .note{max-width:none;}
-
-.status{padding-block:2.5rem 1rem;border-top:1px solid var(--rule);}
-.status p{max-width:64ch;color:var(--ink-2);font-size:.9375rem;line-height:1.65;}
-.status p + p{margin-top:1rem;}
-.status b{color:var(--ink);font-weight:500;}
-.status em{color:var(--signal);font-style:italic;}
-.status code,.meta-foot code{
-  font-family:var(--mono);font-size:.85em;
-  background:var(--ground);padding:.1em .35em;border-radius:2px;
-}
-.status .ctas{margin-top:1.75rem;}
-
-.archive-link{
-  display:grid;grid-template-columns:10rem 1fr auto;gap:1.5rem;align-items:start;
-  padding:1.6rem .5rem;margin-bottom:2rem;text-decoration:none;color:inherit;
-  border-top:1px solid var(--rule-strong);border-bottom:1px solid var(--rule);
-  transition:background .18s;
-}
-.archive-link:hover{background:var(--ground);}
-.archive-link:hover .name{color:var(--accent);}
-.archive-link:hover .arrow{transform:translateX(3px);opacity:1;}
-.archive-link .name{font-family:var(--mono);font-size:.9375rem;font-weight:500;transition:color .18s;}
-.archive-link .meta{font-family:var(--mono);font-size:.75rem;color:var(--ink-3);}
-
-.frozen-banner{
-  display:block;margin-top:1.25rem;padding:.85rem 1.1rem;
-  border:1px solid var(--rule-strong);border-left:3px solid var(--signal);
-  font-size:.875rem;line-height:1.55;color:var(--ink-2);
-}
-.frozen-banner b{color:var(--ink);font-weight:500;}
-.frozen-banner a{color:var(--accent);}
-
-@media(max-width:38rem){
-  .archive-link{grid-template-columns:1fr;gap:.75rem;}
-  .archive-link .meta{display:none;}
-}
-
-/* ---- identity: four pillars ------------------------------------------- */
-
-/* base link colour, per the identity doc (accent, signal on hover).
-   Without this the browser's default :visited purple lands on the dark
-   background at ~2:1 contrast. Component-scoped rules below stay more
-   specific and are unaffected. */
-a{color:var(--accent);}
-a:hover{color:var(--signal);}
-
-.wordmark{display:inline-flex;align-items:center;}
-.wordmark .mark{
-  display:block;width:1.55em;height:1.36em;margin-right:.5em;
-  flex:none;overflow:visible;
-}
-.wordmark .mark rect{transition:fill .2s;}
-
-/* the six-colour stripe — a 3px rule, never a background */
-.stripe{display:flex;height:3px;margin-bottom:2px;}
-.stripe span{flex:1;}
-.stripe span:nth-child(1){background:var(--s1);}
-.stripe span:nth-child(2){background:var(--s2);}
-.stripe span:nth-child(3){background:var(--s3);}
-.stripe span:nth-child(4){background:var(--s4);}
-.stripe span:nth-child(5){background:var(--s5);}
-.stripe span:nth-child(6){background:var(--s6);}
-.masthead{border-bottom:0;}
-
-/* hero mark + pillar legend */
-.hero-mark{
-  display:grid;grid-template-columns:1fr auto;gap:3rem;align-items:center;
-}
-.hero-mark .markfig{display:flex;flex-direction:column;align-items:center;gap:1.1rem;}
-.hero-mark .markfig svg{width:clamp(9rem,17vw,13.5rem);height:auto;overflow:visible;}
-.hero-mark .legend-pillars{
-  display:grid;grid-template-columns:auto auto;gap:.4rem .95rem;
-  font-family:var(--mono);font-size:.6875rem;
-}
-.pf{color:var(--p-flows);} .pu{color:var(--p-ui);}
-.ps{color:var(--p-storage);} .pb{color:var(--p-base);}
-
-/* pillar cards carry their own colour */
-.pillars article{border-top:2px solid transparent;}
 .pillars article:nth-child(1){border-top-color:var(--p-flows);}
 .pillars article:nth-child(2){border-top-color:var(--p-ui);}
 .pillars article:nth-child(3){border-top-color:var(--p-storage);}
@@ -376,19 +451,69 @@ a:hover{color:var(--signal);}
 .pillars article:nth-child(3) h2{color:var(--p-storage);}
 .pillars article:nth-child(4) h2{color:var(--p-base);}
 
-@media(max-width:52rem){
-  .hero-mark{grid-template-columns:1fr;}
-  .hero-mark .markfig{align-items:flex-start;}
+/* ── status section ─────────────────────────────────────────────────────────── */
+.gap{padding-block:2.5rem;border-top:1px solid var(--sep);}
+.status{padding-block:2.5rem 1rem;border-top:1px solid var(--sep);}
+.status p{max-width:64ch;font-size:1rem;line-height:1.65;}
+.status p + p{margin-top:1rem;}
+.status .note{max-width:64ch;}
+.status b{color:var(--ink);font-weight:600;}
+/* Reserved for a result that came back neither pass nor fail. The same yellow
+   the inspector spends on an unknown verdict, and spent nowhere else. */
+.status em{color:var(--yellow);font-style:italic;}
+.status .ctas{margin-top:1.75rem;}
+
+/* A screenshot of the running system, bordered and captioned so it reads as
+   evidence rather than decoration. */
+.status .shot{margin:2rem 0;}
+.status .shot img{
+  width:100%;height:auto;display:block;
+  border:1px solid var(--sep);border-radius:var(--r-l);
+}
+.status .shot figcaption{
+  margin-top:.9rem;font-size:.875rem;line-height:1.6;color:var(--dim);max-width:70ch;
+}
+.status .shot figcaption b{color:var(--ink);}
+
+/* ── archive link ───────────────────────────────────────────────────────────── */
+.archive-link{
+  display:grid;grid-template-columns:10rem 1fr auto;gap:1.5rem;align-items:start;
+  padding:1.5rem 1.2rem;margin:2rem 0;text-decoration:none;color:inherit;
+  border:1px solid var(--sep);border-radius:var(--r-l);
+  transition:background .15s;
+}
+.archive-link:hover{background:var(--bg-2);}
+.archive-link:hover .arrow{transform:translateX(3px);opacity:1;}
+.archive-link .name{font:500 .9375rem/1.3 var(--mono);}
+.archive-link .meta{font:400 .75rem/1 var(--mono);color:var(--faint);}
+@media(max-width:38rem){
+  .archive-link{grid-template-columns:1fr;gap:.75rem;}
+  .archive-link .meta{display:none;}
 }
 
-/* A screenshot of the running system. Bordered and captioned so it reads as
-   evidence rather than decoration — the status section claims software runs, and
-   this is what that claim looks like. */
-.status .shot { margin: 28px 0; }
-.status .shot img {
-  width: 100%; height: auto; display: block;
-  border: 1px solid rgba(255, 255, 255, 0.08); border-radius: 10px;
+.nextprev{
+  border-top:1px solid var(--sep);padding-block:2rem 1rem;
+  font:400 .8125rem/1.5 var(--mono);
 }
-.status .shot figcaption {
-  margin-top: 10px; font-size: 0.85rem; line-height: 1.5; opacity: 0.62;
+.nextprev a{text-decoration:none;}
+.nextprev a:hover{text-decoration:underline;}
+
+.foot{
+  border-top:1px solid var(--sep);padding-block:2.5rem 3.5rem;margin-top:2rem;
+  display:flex;flex-direction:column;gap:.85rem;
+  font-size:.8125rem;color:var(--faint);
 }
+.foot .by{max-width:62ch;line-height:1.7;color:var(--dim);}
+.foot a{color:var(--dim);text-decoration:none;}
+.foot a:hover{color:var(--ink);}
+
+/* The six-colour rule that used to sit under the masthead is gone: it was the
+   one piece of pure decoration on the site, and the demo answers a question
+   about ranked colour with a hairline. Neutralised rather than only deleted, so
+   a stray one on a page nobody edited cannot come back as six grey boxes. */
+.stripe{display:none;}
+
+@media (prefers-reduced-motion:reduce){*{transition:none !important;animation:none !important;}}
+
+/* The bar is sticky, so anything jumped to by id keeps clear of it. */
+:target,h2[id],section[id],h2{scroll-margin-top:5rem;}
