@@ -188,30 +188,29 @@
     <p><b>Three pillars run.</b> <code>ai-base</code> is vendored and runs.
       <b><code>ai-flows</code> runs</b> — the flow engine, a signed HTTP API,
       multi-agent composition from markdown-declared trees, and the measurement
-      harness below. <b><code>ai-ui</code> runs</b> — the desk pictured here.
+      harness below. <b><code>ai-ui</code> runs</b> — the activity canvas pictured here.
       626 tests of our own, on top of the 3,768 <code>ai-base</code> carries from
       upstream. Memory is now <b>agents rather than a store</b> — an archivist that
       decides what one unit of a document is, an indexer that writes one note per
       unit against an index that has to keep fitting, a reconciler, a librarian and
       a coverage auditor, all of them markdown files. Every decision is an agent;
-      every mechanic is code. The rest of <code>ai-storage</code> is still specified and <b>not
-      implemented</b>. Nothing on this page describes running software unless it
+      every mechanic is code. <code>ai-storage</code> now has a first
+      implementation — the model boundary, the local-only guarantee, the 8K context
+      invariant, the note schema, the provenance pipeline and the navigable index, 79
+      tests — built around a <b>local</b> model. Its agents and every one of its
+      benchmarks are <b>not built</b>, and the model it is built around has not been
+      verified to exist from the machine that wrote it. Nothing on this page describes running software unless it
       says so.</p>
 
     <figure class="shot">
       <img src="/assets/img/ai-os-desk.jpg" alt="A grid of coloured squares: one row per flow, left to right is time, and each square is one flow in one bucket of time held by one agent or person" loading="lazy">
-      <video src="/assets/img/ai-os-inspect.mp4" poster="/assets/img/ai-os-inspect-poster.jpg"
-             autoplay loop muted playsinline preload="none"
-             aria-label="Two flows indexing the same notes, both green. The panel then shows one of them flagged: a step used nothing it was given, because its note claims 663 characters of a passage that is 1,105."
-             style="width:100%;display:block;margin-top:1rem;border:1px solid #000"></video>
-      <p class="note" style="margin-top:.5rem">Top: the canvas on <b>coclea-sr</b>. Five flows,
-        five rows; the holes are buckets nothing was written down in, and the two dimmed rows
-        with a chevron have their work further back than this window reaches.
-        Below it, on the desk: two flows index the same notes with the same five agents, and
-        both are green. The right-hand panel is where that stops being true — the digest
-        counts a step that used nothing it was given, the menu offers it as somewhere to
-        look, and the trace names what caught it. That panel is the answer to "how do you
-        inspect this, and how do you interfere".</p>
+      <p class="note" style="margin-top:.5rem">The canvas on <b>coclea-sr</b>. Five flows, five
+        rows; the holes are buckets nothing was written down in, and the two dimmed rows with
+        a chevron have their work further back than this window reaches. Switch it to
+        <b>memory lab</b> and two flows index the same notes with the same five agents and
+        both are green — until you click the faint square, which arrived at a step that used
+        nothing it was given. That is the answer to "how do you inspect this, and how do you
+        interfere": you point at it, and what answers carries the address it read.</p>
       <figcaption><b><a href="/demo/">Open the demo and use it →</a></b> — press <b>Play</b>
         and it walks itself through by operating the real controls, or take over at any
         point: a real gesture stops it where it stands. Nothing there is a recording, so
@@ -251,15 +250,9 @@
         cleanly and is wrong.</figcaption>
     </figure>
 
-    <figure class="shot">
-      <img src="/assets/img/ai-os-system.jpg" alt="Every scope level, its members and the agents each defines" loading="lazy">
-      <figcaption>Organisation, projects, groups and individuals — with each scope's
-        roster and its agent tree, from a live instance. The interface borrows its
-        vocabulary from System 7: one colour per kind of thing, so what you are
-        looking at is legible before you read it. <code>AnomalyScanner</code> is struck
-        through because it is declared in an agent's markdown and has no file — a
-        declared name is a claim, a file is a fact.</figcaption>
-    </figure>
+    <p class="note">Scopes — organisation, projects, groups, individuals — each carry a
+      roster and an agent tree. A name declared in an agent's markdown with no file behind
+      it is shown struck through, because a declared name is a claim and a file is a fact.</p>
 
     <p>Each pillar ships with <b>the measurement that would show it is not worth
       building</b>, written before the code. Two have now come back and neither
