@@ -48,6 +48,8 @@ svg.grabbing{cursor:grabbing}
 .strand.open{stroke-dasharray:9 5}
 .strand.pending{stroke-dasharray:2 6}
 .gap{stroke:var(--faint);stroke-width:1;stroke-dasharray:1 4}
+.cut{fill:none}
+.rung{stroke-linecap:round}
 .stop{stroke-linecap:butt}
 .hit{fill:none;stroke:transparent;cursor:pointer}
 
@@ -131,7 +133,7 @@ button.on{background:rgba(100,210,255,.16);border-color:rgba(100,210,255,.5);col
     <header>
       <b>ai-os</b>
       <span class="sk" title="No core, no model, nothing stored. Every number comes from the projects' own artifacts.">Simulated</span>
-      <span class="build" title="When this file was generated. If this has not changed, you are looking at a cached copy.">build 08-23 23:41</span>
+      <span class="build" title="When this file was generated. If this has not changed, you are looking at a cached copy.">build 08-24 00:05</span>
       <select id="scene"><option value="coclea-sr">coclea-sr — truth is derivable</option><option value="hemo-verified">hemo-verified — truth is not derivable</option><option value="memory-lab">memory lab — green and wrong</option><option value="signal-lab">signal lab — ran and carried nothing</option></select>
       <span class="right">
         <span class="lvl" id="lvl"></span>
@@ -165,10 +167,23 @@ function rotationFor(ordinal, count, now) {
 
 function bundleOf(world, opts) {
   var n = world.threads.length;
-  var per = opts.steps === undefined ? 14 : opts.steps;
+  var base = opts.steps === undefined ? 14 : opts.steps;
   var out = [];
 
+  /**
+   * Sample the angle, not the segment.
+   *
+   * A fixed count per segment is a fixed count per *step*, and a step is not a
+   * fixed amount of winding: a forty-minute rest on a fifteen-minute pitch
+   * sweeps nearly three turns, and fourteen points across three turns is a
+   * sawtooth — the drawing showed the sampling rate, not the coil. So the count
+   * comes from how much angle this segment actually covers, at sixteen points a
+   * turn, floored at the old count for segments that barely turn at all and
+   * capped so one long stretch cannot fill the document with path data.
+   */
   var sample = function (ordinal, a, b) {
+    var swept = Math.abs((opts.twist === undefined ? 0 : opts.twist) * (b - a));
+    var per = Math.max(base, Math.min(600, Math.ceil((swept / (Math.PI * 2)) * 16)));
     var s = [];
     for (var i = 0; i <= per; i += 1)
       s.push(phaseOf(ordinal, n, a + ((b - a) * i) / per, opts.now, opts.rotation, opts.twist));
@@ -356,11 +371,32 @@ function assertJustified(a) {
    * The bundle coils once every PITCH minutes, so a window has to be a few
    * pitches across for the coil to be a coil. Opening on the whole history put
    * forty-eight turns in a thousand pixels: every strand a vertical sliver, and
-   * the shape an artefact of the sampling. Four pitches is enough to see the
-   * winding and enough to hold a scope's recent work. 'All' is one button away
-   * and it collapses the coil honestly — see TWIST_FLOOR_PX.
+   * the shape an artefact of the sampling. 'All' is one button away and it
+   * collapses the coil honestly — see TWIST_FLOOR_PX.
+   *
+   * It stopped being a constant when the picture stopped reading as a coil.
+   * Ninety minutes was longer than most flows in these projects last, so a
+   * strand existed for less than one turn and could not wind: five flows, five
+   * slow arcs, crossing. A pitch fixed in advance is only honest until it is
+   * longer than the thing it is supposed to measure, and then it measures
+   * nothing. So a turn is sized from the data — a quarter of how long a typical
+   * flow in *this* scope runs — and the readout says how long a turn is, the
+   * way a map says how long an inch is. The number is on the screen either way;
+   * the difference is that this one is true of what you are looking at.
    */
-  const PITCH = 90;
+  const PITCH = (() => {
+    const spans = scene.world.threads
+      .map((t) => Math.max(...t.rests.map((r) => r.x1)) - Math.min(...t.rests.map((r) => r.x0)))
+      .filter((v) => v > 0)
+      .sort((x, y) => x - y);
+    const med = spans.length ? spans[Math.floor(spans.length / 2)] : 60;
+    // Two or three turns over a typical flow: enough winding to see it wind,
+    // and wide enough that a turn comes out wider than the rope is thick, which
+    // is the aspect at which a coil reads as a coil instead of as a wave.
+    const want = med / 2.5;
+    const steps = [1, 2, 5, 10, 15, 30, 60, 120, 240, 480, 1440];
+    return steps.find((v) => v >= want) || 1440;
+  })();
 
   /**
    * Frame the object, not a duration.
@@ -387,7 +423,30 @@ function assertJustified(a) {
       .filter((t, i) => ends[i] >= recentCut)
       .map((t) => Math.min(...t.rests.map((r) => r.x0)));
     const from = starts.length ? Math.min(...starts) : latest - PITCH;
-    win = Math.max(PITCH * 0.6, Math.min(scene.world.span * 1.06, (n - from) * 1.18));
+    win = Math.max(minWin(), Math.min(scene.world.span * 1.06, (n - from) * 1.18));
+  };
+
+  /**
+   * The other end of the same rule as TWIST_FLOOR_PX.
+   *
+   * A turn narrower than the marks that draw it is aliasing, so the coil stops
+   * being drawn. A turn *wider than the frame* is the same failure upside down:
+   * the window holds less than one period, so there is no winding to see and no
+   * rhythm to read, and five strands riding one slow arc each look like five
+   * waves that happen to cross. That was the picture. Nothing was wrong with the
+   * strands; the window was a keyhole — twenty-eight minutes cut out of three
+   * days — and a keyhole onto a coil shows a curve.
+   *
+   * So the opening window is at least wide enough that a turn is no wider than
+   * the rope is thick. That is the aspect at which a coil looks like a coil, and
+   * it is why the first thing you see is a stretch of history rather than the
+   * last few minutes of it. Zooming in past it is allowed and honest: up close a
+   * helix *is* a long slow arc, and the axis says how long.
+   */
+  const minWin = () => {
+    const plot = W - M.l - M.r;
+    const thick = 2 * R * persp(1);           // the rope's thickness on screen
+    return PITCH * (plot / Math.max(1, thick));
   };
 
   /**
@@ -442,20 +501,114 @@ function assertJustified(a) {
      * screen and read as waves rather than as a bundle. A rope is a *band*: wide
      * enough that a strand at the front is clearly in front of one at the back,
      * narrow enough that the whole thing is one object.
+     *
+     * It came down again after the perspective pass. The pitch is fixed by the
+     * clock, so thickness is the only thing left that sets the coil's aspect,
+     * and a rope as thick as a turn is wide does not read as a coil — it reads
+     * as a wave, which is what the frame was showing. A helix reads as a helix
+     * when a turn is about as wide as the rope is thick: where the alpha helix
+     * sits, and where every cartoon of one is drawn.
      */
-    R = Math.max(48, Math.min(132, (H - M.t - M.b) / 2 - 26));
+    R = Math.max(40, Math.min(150, (H - M.t - M.b) / 2 - 26));
   };
   const xOf = (t) => M.l + ((t - t0()) / win) * (W - M.l - M.r);
   const tOf = (px) => t0() + ((px - M.l) / (W - M.l - M.r)) * win;
 
   /** Depth to ink. Everything the third dimension buys, in three lines. */
-  const wOf = (z) => 1.0 + 2.4 * ((z + 1) / 2);
-  const oOf = (z) => 0.14 + 0.86 * Math.pow((z + 1) / 2, 1.6);
-  const yOf = (y) => cy + y * R;
+  /**
+   * A real projection, instead of three quantities faked from depth.
+   *
+   * The first version put the strand at y = R·sinθ and then chose a width and an
+   * opacity from cosθ independently — three knobs, tuned until it looked like
+   * depth. What a helix actually looks like comes out of one projection: put the
+   * eye a distance D in front of a tube of radius R, and every one of those
+   * follows.
+   *
+   *     s = D / (D − R·cosθ)        the foreshortening at this point
+   *     y = cy + R·sinθ · s         further from the axis at the front
+   *     width, opacity ∝ s          bigger and brighter at the front
+   *
+   * The consequence that makes it read: **the strand is not just brighter at the
+   * front, it is wider apart from the axis.** The back of the tube compresses
+   * toward the centre line, which is the thing the eye actually uses to see a
+   * cylinder, and no amount of opacity substitutes for it.
+   */
+  const D_EYE = 2.6;
+  const persp = (z) => D_EYE / (D_EYE - z);
+  const S_MIN = D_EYE / (D_EYE + 1);
+  const S_MAX = D_EYE / (D_EYE - 1);
+  /** The foreshortening, normalised to 0..1, for width and ink. */
+  const near = (z) => (persp(z) - S_MIN) / (S_MAX - S_MIN);
+
+  /**
+   * How much thinner the far side is — and why it is not much.
+   *
+   * A four-to-one taper is what the projection says, and it was wrong on the
+   * screen: at one pixel the far half of every turn stopped being a rope and
+   * became a wire, and a wire crossing the whole amplitude reads as a separate
+   * straight object laid over the coil rather than as the same rope going
+   * round the back. Look at any drawing of a helix and the far side is barely
+   * narrower than the near side; what tells you it is behind is that the near
+   * side covers it. Occlusion is the depth cue. Width is the confirmation.
+   */
+  const wOf = (z) => 2.0 + 1.6 * near(z);
+  /**
+   * One channel, one job.
+   *
+   * Depth used to be on three: width, opacity, and the black stroke underneath.
+   * Opacity was the one doing it badly — at a floor of 0.12 the far side
+   * vanished, which reads as a *hole* rather than as a curve going behind, and
+   * raising the floor to 0.30 only made it a fainter version of the same
+   * mistake. The real problem was underneath: width and opacity were computed
+   * from the segment's *mean* depth, so a strand changed thickness in one jump
+   * at a step boundary and stayed flat in between. A coil does not read from
+   * brightness. It reads from a thickness that changes continuously as the
+   * curve turns away, and from the front of it removing the back.
+   *
+   * So the strand is drawn in short chunks along its own length, each with the
+   * width its own depth asks for — see chunks() — the black stroke under it
+   * does the removing, and opacity is out of the depth business entirely. What
+   * opacity says now is what happened: a strand that carried nothing forward,
+   * or has not begun, is faint. Nothing else on the surface dims with distance.
+   */
+  const yOf = (y, z) => cy + y * R * persp(z === undefined ? 0 : z);
 
   const pathOf = (samples) => samples
-    .map((s, i) => (i ? 'L' : 'M') + xOf(s.t) + ' ' + yOf(s.y))
+    .map((s, i) => (i ? 'L' : 'M') + xOf(s.t) + ' ' + yOf(s.y, s.z))
     .join(' ');
+
+  /**
+   * A strand, cut into pieces short enough that its depth is one number.
+   *
+   * Three samples a piece, which at sixteen samples a turn is about five pieces
+   * per turn — fine enough that the thickness reads as a gradient rather than a
+   * staircase, coarse enough that a busy scope is a few hundred paths and not a
+   * few thousand. Each piece overlaps the next by one sample so there is no seam
+   * to see.
+   *
+   * The dashes have to survive being cut up, because a dash pattern is what
+   * says 'carried nothing forward' and 'no verdict yet'. Each piece carries the
+   * distance already travelled along the strand as its dash offset, so the
+   * pattern runs continuously through the joins as if it were one line.
+   */
+  const CHUNK = 3;
+  const chunks = (samples) => {
+    const pts = samples.map((s) => [xOf(s.t), yOf(s.y, s.z), s.z]);
+    const out = [];
+    let at = 0;
+    for (let i = 0; i < pts.length - 1; i += CHUNK) {
+      const end = Math.min(pts.length - 1, i + CHUNK);
+      let d = '', zs = 0, len = 0;
+      for (let j = i; j <= end; j += 1) {
+        d += (j === i ? 'M' : 'L') + pts[j][0].toFixed(1) + ' ' + pts[j][1].toFixed(1);
+        zs += pts[j][2];
+        if (j > i) len += Math.hypot(pts[j][0] - pts[j - 1][0], pts[j][1] - pts[j - 1][1]);
+      }
+      out.push({ d: d, z: zs / (end - i + 1), at: at });
+      at += len;
+    }
+    return out;
+  };
 
   const isLive = (s) => s.kind === 'rest' && s.state === 'running';
   const isPending = (s) => s.kind === 'rest' &&
@@ -515,8 +668,13 @@ function assertJustified(a) {
      * make its thickness a function of which slice you are looking at, and
      * thickness is how a reader tells front from back.
      */
-    let lo = 1, hi = -1;
-    for (const sg of segs) for (const p of sg.samples) { if (p.y < lo) lo = p.y; if (p.y > hi) hi = p.y; }
+    let lo = Infinity, hi = -Infinity;
+    for (const sg of segs)
+      for (const p of sg.samples) {
+        const yy = p.y * persp(p.z);
+        if (yy < lo) lo = yy;
+        if (yy > hi) hi = yy;
+      }
     if (hi >= lo) cy -= ((lo + hi) / 2) * R;
     for (const s of segs) {
       const cls = clsOf(s);
@@ -526,18 +684,73 @@ function assertJustified(a) {
 
       if (cls === 'unknown') {
         // Nothing recorded: no strand. You see the axis through the hole.
-        svg.appendChild(el('path', { class: 'gap', d: d, opacity: oOf(s.z) * dim }));
+        svg.appendChild(el('path', { class: 'gap', d: d, opacity: 0.55 * dim }));
         continue;
       }
-      svg.appendChild(el('path', { class: 'glow', d: d, stroke: hue,
-        'stroke-width': wOf(s.z) * 4.6, opacity: oOf(s.z) * 0.13 * dim }));
-      const p = el('path', { class: 'strand ' + cls, d: d, stroke: hue,
-        'stroke-width': wOf(s.z) * (sel && sel.flowId === s.flowId ? 1.6 : 1),
-        opacity: oOf(s.z) * dim });
-      if (cls === 'ignored') p.setAttribute('opacity', String(oOf(s.z) * 0.3 * dim));
-      if (cls === 'pending') p.setAttribute('opacity', String(oOf(s.z) * 0.34 * dim));
-      svg.appendChild(p);
-      if (cls === 'running') p.classList.add('flow');
+      /**
+       * The strand cuts the one behind it.
+       *
+       * Depth ordering alone gives almost no occlusion when the marks are two
+       * pixels wide — the strands cross and nothing happens, so the eye reads
+       * flat curves with different brightnesses rather than a tube. A stroke in
+       * the background colour, laid under the coloured one and drawn in the same
+       * back-to-front order, makes the front strand physically remove the back
+       * one where they overlap. That is where most of the solidity comes from,
+       * and it costs one extra path.
+       */
+      // A soft pass under the rope, but only where there is rope: on a segment
+      // a few pixels long the halo is bigger than the thing it belongs to, and
+      // what you see is a smudge where a step should be.
+      if (xOf(s.t1) - xOf(s.t0) > 14)
+        svg.appendChild(el('path', { class: 'glow', d: d, stroke: hue,
+          'stroke-width': wOf(s.z) * 3.4, opacity: 0.10 * dim }));
+      const bold = sel && sel.flowId === s.flowId ? 1.6 : 1;
+      const soft = cls === 'ignored' ? 0.42 : cls === 'pending' ? 0.46 : 1;
+      let live = null;
+      for (const ch of chunks(s.samples)) {
+        svg.appendChild(el('path', { class: 'cut', d: ch.d, stroke: '#000',
+          'stroke-width': wOf(ch.z) * bold + 3.0, opacity: 0.94 * dim,
+          fill: 'none', 'stroke-linecap': 'round', 'stroke-linejoin': 'round' }));
+      }
+      for (const ch of chunks(s.samples)) {
+        const p = el('path', { class: 'strand ' + cls, d: ch.d, stroke: hue,
+          'stroke-width': wOf(ch.z) * bold,
+          'stroke-dashoffset': -ch.at,
+          opacity: soft * dim });
+        svg.appendChild(p);
+        if (cls === 'running') { p.classList.add('flow'); live = p; }
+      }
+
+      /**
+       * The rungs, and what they had to earn.
+       *
+       * A helix reads as a helix because of its ladder — the rhythm of the base
+       * pairs is what turns two curves into one object. Taking that idea meant
+       * asking what a rung could honestly *be* here, because on this surface
+       * every mark is a measurement and a rung invented for the look would be
+       * the first decoration on the page.
+       *
+       * A rung is **the boundary of a step**: a moment something was recorded to
+       * have started or finished. The density of rungs is the density of
+       * recorded events, so a stretch of strand with no rungs is a stretch where
+       * nothing was written down — and that is worth seeing.
+       *
+       * It runs from the strand to the axis, which is the second thing it is: a
+       * tick against the time line, dropped from the moment it marks. A base
+       * pair is the same bar and it is drawn the same way, except that in a DNA
+       * there is a second backbone at the far end to hold. Here there is not —
+       * a bar drawn all the way across the tube ends in empty space, and what
+       * it reads as is a grid line, not a tie. So it stops at the axis, where
+       * something really is. It is foreshortened for free: the strand's own y
+       * carries the projection, so a rung at the back is short because it *is*.
+       */
+      const ends = [s.samples[0], s.samples[s.samples.length - 1]];
+      for (const p of ends) {
+        if (p.z < -0.82) continue;              // directly behind the axis: hidden
+        const px = xOf(p.t);
+        svg.appendChild(el('line', { class: 'rung', x1: px, y1: yOf(p.y, p.z), x2: px, y2: cy,
+          stroke: hue, 'stroke-width': 0.6 + 1.0 * near(p.z), opacity: 0.3 * dim }));
+      }
 
       const hit = el('path', { class: 'hit', d: d, 'stroke-width': Math.max(14, wOf(s.z) * 6) });
       hit.addEventListener('pointerdown', (ev) => { ev.stopPropagation(); select(s); });
@@ -550,10 +763,10 @@ function assertJustified(a) {
       const last = th.crosses[th.crosses.length - 1];
       if (!last || last.x1 < a || last.x1 > b) continue;
       const ph = G.phase(th.ordinal, scene.world.threads.length, last.x1, now, rot, twistNow());
-      svg.appendChild(el('line', { class: 'stop', x1: xOf(last.x1) + 3, y1: yOf(ph.y) - 9,
-        x2: xOf(last.x1) + 3, y2: yOf(ph.y) + 9,
+      svg.appendChild(el('line', { class: 'stop', x1: xOf(last.x1) + 3, y1: yOf(ph.y, ph.z) - 9,
+        x2: xOf(last.x1) + 3, y2: yOf(ph.y, ph.z) + 9,
         stroke: last.state === 'open' ? '#98989F' : '#FF453A',
-        'stroke-width': wOf(ph.z) * 1.4, opacity: oOf(ph.z) }));
+        'stroke-width': wOf(ph.z) * 1.4, opacity: 1 }));
     }
 
     /**
@@ -576,13 +789,13 @@ function assertJustified(a) {
       x2: xOf(bodyT), y2: cy + R + 8, opacity: .12 }));
     for (const bo of bodies) {
       const hue = hueOf(bo.ordinal);
-      const x = xOf(bo.t), y = yOf(bo.y);
+      const x = xOf(bo.t), y = yOf(bo.y, bo.z);
       const dim = sel && sel.flowId !== bo.flowId ? 0.25 : 1;
       // A packet is smaller and hollow: it is a thing in transit, not somebody
       // working, and the two must not read alike.
       const isPkt = bo.kind === 'packet';
       const r = (isPkt ? 2.4 : 4) + (isPkt ? 1.6 : 3.2) * ((bo.z + 1) / 2);
-      const g = el('g', { class: bo.kind === 'human' ? 'human' : 'agent', opacity: oOf(bo.z) * dim });
+      const g = el('g', { class: bo.kind === 'human' ? 'human' : 'agent', opacity: dim });
       g.appendChild(el('circle', { class: 'body', cx: x, cy: y, r: r,
         fill: isPkt ? 'none' : bo.kind === 'human' ? '#F2F2F7' : hue,
         stroke: isPkt ? hue : '#000', 'stroke-width': isPkt ? 1.6 : 1.5 }));
@@ -609,7 +822,8 @@ function assertJustified(a) {
       }
     }
 
-    lvl.textContent = fmtDur(win) + ' wide' + (coiling() ? '' : ' · flat');
+    lvl.textContent = fmtDur(win) + ' wide · a turn is ' + fmtDur(PITCH)
+      + (coiling() ? '' : ' · flat');
     if (!sel) renderRest(); else renderPanel();
     animate();
   }
@@ -921,6 +1135,8 @@ function assertJustified(a) {
   });
   window.addEventListener('resize', draw);
 
+  // measure first: the opening window is derived from the rope on screen.
+  measure();
   resetWin();
   const first = scene.attention[0];
   if (first) { rot = G.rotationFor(first.ordinal, scene.world.threads.length, nowT()); rotTarget = rot; rotWhy = first; }
