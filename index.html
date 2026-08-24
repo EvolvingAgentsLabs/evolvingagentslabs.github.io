@@ -54,15 +54,15 @@
           <a href="https://github.com/yc-software/qm">QM</a> — and that part is the
           <em>how</em>. The paragraph above is the <em>why</em>.</p>
         <p class="ctas">
-          <a class="cta primary" href="/demo/">Try the desk →</a>
+          <a class="cta primary" href="/demo/">Open the canvas →</a>
           <a class="cta" href="/verify/">Check the numbers yourself</a>
           <a class="cta" href="https://github.com/EvolvingAgentsLabs/ai-os">Repository</a>
         </p>
-        <p class="note">The first is <b>the demo</b>: one axis, and it is time. Every
-          flow is a strand wound around it, so they separate in <b>depth</b> rather than
-          in height — drag to turn the bundle and a different one comes forward. The
-          agents ride the strands they are holding. The orchestration is simulated; the
-          numbers come from the projects' own artifacts. The second link is not a demo
+        <p class="note">The first is <b>the demo</b>: a canvas of activity. One row is
+          one flow, left to right is time, and every square is one flow in one bucket of
+          time held by somebody — the colour is who held it, the texture is what
+          happened. Click any square and it tells you, with the address it read. The
+          orchestration is simulated; the numbers come from the projects' own artifacts. The second link is not a demo
           at all — it is the evidence, with real artifacts re-derived in your own
           browser. Use the first to see what this is. Use the second when you want to
           stop taking our word for it.</p>
@@ -199,41 +199,50 @@
       says so.</p>
 
     <figure class="shot">
-      <img src="/assets/img/ai-os-desk.jpg" alt="A desk: two flows as documents with agent cubes stacked on them, and a panel showing a flow digest, a menu of proposed actions with their cost, and an answer read out of the flow's trace" loading="lazy">
+      <img src="/assets/img/ai-os-desk.jpg" alt="A grid of coloured squares: one row per flow, left to right is time, and each square is one flow in one bucket of time held by one agent or person" loading="lazy">
       <video src="/assets/img/ai-os-inspect.mp4" poster="/assets/img/ai-os-inspect-poster.jpg"
              autoplay loop muted playsinline preload="none"
              aria-label="Two flows indexing the same notes, both green. The panel then shows one of them flagged: a step used nothing it was given, because its note claims 663 characters of a passage that is 1,105."
              style="width:100%;display:block;margin-top:1rem;border:1px solid #000"></video>
-      <p class="note" style="margin-top:.5rem">Above: two flows index the same notes with the same five
-        agents, and both are green. The right-hand panel is where that stops being
-        true — the digest counts a step that used nothing it was given, the menu
-        offers it as somewhere to look, and the trace names what caught it. That
-        panel is the answer to "how do you inspect this, and how do you interfere".</p>
+      <p class="note" style="margin-top:.5rem">Top: the canvas on <b>coclea-sr</b>. Five flows,
+        five rows; the holes are buckets nothing was written down in, and the two dimmed rows
+        with a chevron have their work further back than this window reaches.
+        Below it, on the desk: two flows index the same notes with the same five agents, and
+        both are green. The right-hand panel is where that stops being true — the digest
+        counts a step that used nothing it was given, the menu offers it as somewhere to
+        look, and the trace names what caught it. That panel is the answer to "how do you
+        inspect this, and how do you interfere".</p>
       <figcaption><b><a href="/demo/">Open the demo and use it →</a></b> — press <b>Play</b>
         and it walks itself through by operating the real controls, or take over at any
         point: a real gesture stops it where it stands. Nothing there is a recording, so
         if the surface breaks the tour breaks.
-        <br><br><b>One axis, and it is time.</b> Every flow is a strand wound around it,
-        so they share a band of screen and separate in <b>depth</b> instead of in height:
-        what is bright and thick is at the front, what is faint is behind the bundle —
-        still there, still clickable. Drag to turn it. Turning is how you pay attention:
-        a different strand comes forward without anything having to move out of the way.
-        <br><br><b>The agents ride the strands they hold.</b> A circle is an agent with
-        the thought in hand. Where a strand carries a hollow mark instead, nobody is
-        holding it — that is the thing in transit between two of them, and "in transit"
-        and "somebody is working" are different statements that must not look alike.
-        <code>INSPECTOR</code> — a system agent with one tool, read — attaches to any
-        strand and rides it.
-        <br><br><b>Two motions, two meanings.</b> Everything drifts left, always, because
-        the clock is running: that is unconditionally true, and since the strands twist
-        along the axis it also turns the bundle, which is geometry rather than animation.
-        Light travels a strand <i>only</i> where a step is open right now — when none is,
-        nothing on any strand moves.
-        <br><br><b>Turning is a claim, so it carries an address.</b> The panel says which
-        strand is in front, why, and where it read that; a rotation the surface cannot
-        justify is one it refuses to make. Zooming out aggregates rather than shrinks:
-        below forty-six pixels a turn the coil stops being drawn and says so, because
-        what you would see is the sampling and not the shape.
+        <br><br><b>One row is one flow, left to right is time, now is the right edge.</b>
+        Every square is one flow in one bucket of time held by somebody, so reading across
+        a row is the sequence of hands a thought passed through, and reading down a column
+        is who was busy at that moment. <b>Colour is who held it</b> — identity, never how
+        it went, so a failure and a success by the same agent are the same colour and read
+        differently. <b>Texture is what happened</b>: solid carried, faint carried nothing
+        forward, hollow held with no verdict, dashed not begun, barred ran and did not
+        pass. The bar is a subtraction rather than a second colour, because red would mean
+        <i>bad</i> on a surface where colour already means <i>who</i>.
+        <br><br><b>An empty slot is not a zero.</b> A bucket with nothing written down in
+        it draws no square. A contribution grid can paint its palest shade for a quiet day
+        because a repository knows what it does not contain; here "nothing was recorded"
+        and "nothing happened" are different claims and only the first is ours to make.
+        What is drawn instead is an outline — this is a bucket of time you can point at —
+        so the holes stay visible and stay holes. A row whose recorded work continues past
+        the edge of the window says so with a chevron, because a row with no squares in
+        view otherwise looks exactly like a flow nothing was ever recorded for.
+        <br><br><b>Click any square and something reads it.</b> The panel reads the record,
+        or an agent does — and every finding carries the address it read, because one with
+        no address is not renderable on this surface at all. <code>INSPECTOR</code>, a
+        system agent with one tool (read), attaches to any flow.
+        <br><br><b>Two motions, two meanings.</b> The canvas drifts left, always, because
+        the clock is running: that is unconditionally true. A square breathes <i>only</i>
+        where a step is open right now — when none is, nothing on the canvas moves except
+        the drift. Zooming out merges squares rather than shrinking them: below about nine
+        pixels a square stops being something you can point at, so the bucket widens
+        instead and the header says how long a square now covers.
         <br><br>Four scopes, all real. <b>coclea-sr</b>: two chains, the same six agents,
         thirty hours apart — one came home, the other stops at a gate declared before the
         run that measured 2.592e-4 against a tolerance of 1.0e-4. <b>hemo-verified</b>: no
