@@ -3,10 +3,10 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<title>ai-os — agent work you can check, and prove · Evolving Agents Labs</title>
-<meta name="description" content="Everyone can generate. Almost nobody can tell you, six months later, whether the number in their README is still the number their code produces — and prove it to a stranger. That is the layer this builds.">
-<meta property="og:title" content="ai-os — agent work you can check, and prove">
-<meta property="og:description" content="Everyone can generate. Almost nobody can tell you, six months later, whether the number in their README is still the number their code produces — and prove it to a stranger. That is the layer this builds.">
+<title>Evolving Agents Labs — agent systems that turn into weights, and numbers you can check</title>
+<meta name="description" content="The entire agentic system as QLoRA adapters over one base model: experts draft, a frontier model verifies, and then the frontier is withdrawn. Plus ai-os, where every published number is tied to the artifact that produced it and checked nightly.">
+<meta property="og:title" content="Evolving Agents Labs — agent systems that turn into weights">
+<meta property="og:description" content="The entire agentic system as QLoRA adapters over one base model: experts draft, a frontier model verifies, and then the frontier is withdrawn. Plus ai-os, where every published number is tied to the artifact that produced it and checked nightly.">
 <meta property="og:type" content="website">
 <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Crect x='2' y='2' width='13' height='13' rx='4' fill='%23F2F2F7'/%3E%3Crect x='17' y='2' width='13' height='13' rx='4' fill='%23F2F2F7'/%3E%3Crect x='2' y='17' width='13' height='13' rx='4' fill='%23F2F2F7'/%3E%3Crect x='18' y='18' width='11' height='11' rx='3' fill='none' stroke='%23F2F2F7' stroke-width='2' opacity='.42'/%3E%3C/svg%3E">
 <meta name="theme-color" content="#000000">
@@ -29,14 +29,15 @@
 
 <header class="masthead">
   <div class="masthead-in">
-      <a class="wordmark" href="/"><svg class="mark" viewBox="0 0 32 32" aria-hidden="true"><rect x="2" y="2" width="13" height="13" rx="4" fill="currentColor"/><rect x="17" y="2" width="13" height="13" rx="4" fill="currentColor"/><rect x="2" y="17" width="13" height="13" rx="4" fill="currentColor"/><rect x="18" y="18" width="11" height="11" rx="3" fill="none" stroke="currentColor" stroke-width="2" opacity=".42"/></svg>ai-os<span class="org">Evolving Agents Labs</span></a>
+      <a class="wordmark" href="/"><svg class="mark" viewBox="0 0 32 32" aria-hidden="true"><rect x="2" y="2" width="13" height="13" rx="4" fill="currentColor"/><rect x="17" y="2" width="13" height="13" rx="4" fill="currentColor"/><rect x="2" y="17" width="13" height="13" rx="4" fill="currentColor"/><rect x="18" y="18" width="11" height="11" rx="3" fill="none" stroke="currentColor" stroke-width="2" opacity=".42"/></svg>Evolving Agents Labs</a>
       <nav class="navlinks">
+        <a href="#lora-kernel">lora-kernel</a>
         <a href="/demo/">Demo</a>
         <a href="/verify/">Verify</a>
         <a href="/coclea-sr/">COCLEA-SR</a>
         <a href="/hemo-verified/">HEMO-VERIFIED</a>
         <a href="/archive/">Archive</a>
-        <a href="https://github.com/EvolvingAgentsLabs/ai-os">GitHub</a>
+        <a href="https://github.com/EvolvingAgentsLabs">GitHub</a>
       </nav>
       <span class="chip ok">every number checked nightly</span>
   </div>
@@ -45,10 +46,101 @@
 <div class="wrap">
 
 
+
+  <!--
+    lora-kernel leads the page because it is the organisation's new flagship. The
+    ai-os hero below is left exactly as it was: it is a measured argument that is
+    still true and still checked nightly, and demoting a section is not the same
+    as deleting it.
+  -->
+  <section class="hero" id="lora-kernel">
+    <div class="hero-mark">
+      <div>
+        <p class="eyebrow">The new flagship &middot; <a href="https://github.com/EvolvingAgentsLabs/lora-kernel">lora-kernel</a></p>
+        <h1>The entire agentic system is a set of <span class="proj">QLoRA</span> adapters over one base model.</h1>
+        <p>No router model. No JSON schemas in the system prompt. No parser guessing
+          whether the model meant to call a tool. One GPU, one resident base, and a
+          pool of small weight deltas swapped per request by vLLM.
+          <b>The multi-agent framework does not get simpler — it turns into
+          weights.</b></p>
+        <p>Experts draft in parallel; a <b>frontier model</b> verifies every branch
+          in a single forward pass; the branch it accepts most wins. Because the
+          verifier is frontier-grade, a high acceptance rate is not a speed
+          statistic — it means <i>this small expert already produces what the
+          frontier would have produced, here</i>. A per-region distillation score,
+          collected inside inference that was going to happen anyway. <b>You never
+          run an evaluation; the serving path fills in the map while it
+          serves.</b></p>
+        <p>Then the expensive model is <b>withdrawn</b>. Adapters whose acceptance
+          crossed the threshold you set — per region — are promoted from drafter to
+          generator, the frontier comes out, and <b>only a router replaces it</b>.
+          One number decides the architecture: the <b>withdrawal gap</b>, the
+          verified score after the frontier leaves minus the score it had while it
+          was there.</p>
+        <p class="ctas">
+          <a class="cta primary" href="https://github.com/EvolvingAgentsLabs/lora-kernel/blob/main/docs/the-frontier-is-scaffolding.md">Read the article &rarr;</a>
+          <a class="cta" href="https://github.com/EvolvingAgentsLabs/lora-kernel/blob/main/docs/ARCHITECTURE.md">Architecture</a>
+          <a class="cta" href="https://github.com/EvolvingAgentsLabs/lora-kernel">Repository</a>
+        </p>
+        <p class="note"><span class="chip warn">specified &middot; nothing built</span>
+          &nbsp;Every claim it makes about a system outside itself is marked
+          <code>[read]</code> and cited, and there is no <code>[ran]</code> in it
+          yet. The first thing that runs is a headroom check.</p>
+      </div>
+    </div>
+  </section>
+
+  <section id="all-is-lora">
+    <p class="sectionlabel">What each piece becomes</p>
+    <div class="pillars">
+      <article>
+        <h2>harness.lora</h2>
+        <p class="question">What if the tool protocol lived in weights, not in the prompt?</p>
+        <p class="note"><b>Specified.</b> One adapter trained on nothing but the
+          execution protocol — tool syntax, state transitions, error shapes, and
+          <b>action tokens</b> emitted natively rather than recovered by a parser.
+          The schema leaves the context window. The domain adapter thinks; the
+          kernel acts. It has to beat a training-free baseline this organisation
+          already measured, and a constrained decoder that makes malformed output
+          impossible rather than unlikely.</p>
+      </article>
+      <article>
+        <h2>domain QLoRAs</h2>
+        <p class="question">What if an agent were a few hundred megabytes of delta?</p>
+        <p class="note"><b>Specified.</b> User space. Hot-swapped per request,
+          batched by vLLM's multi-LoRA serving, versioned like code, scored,
+          promoted and retired. Several per sub-domain, competing.</p>
+      </article>
+      <article>
+        <h2>the router</h2>
+        <p class="question">What if routing were a by-product rather than a call?</p>
+        <p class="note"><b>Specified.</b> While the frontier verifies, the router
+          <i>is</i> the acceptance rate — free, because the tokens were generated
+          and the pass was already happening. After withdrawal it is a small model
+          fitted to the surface that phase produced, and it is the only thing left
+          where the frontier used to be.</p>
+      </article>
+      <article>
+        <h2>what stays text</h2>
+        <p class="question">What deliberately never becomes a weight?</p>
+        <p class="note"><b>Two things, and it is not aesthetics.</b> Memory, as
+          markdown under git — a weight delta cannot be read, diffed, cited or
+          corrected by a person. And execution, as a sandbox where tools actually
+          run. Everything this lab has measured about memory says the durable asset
+          is the part a human can read.</p>
+      </article>
+    </div>
+    <p class="note">The engineering state is stated rather than assumed: multi-LoRA
+      over one target and tree-structured verification ship in vLLM today;
+      <a href="https://github.com/vllm-project/vllm/issues/52038">LoRA-as-drafter is an open RFC</a>
+      filed in August 2026, and the KV cache across different adapters is the hard
+      part, named rather than waved at.</p>
+  </section>
+
   <section class="hero">
     <div class="hero-mark">
       <div>
-        <p class="eyebrow">The organisation's only active project</p>
+        <p class="eyebrow">Shipped, measured, and still checked nightly</p>
         <h1><span class="proj">ai-os</span> — agent work you can <em>check</em>, and prove.</h1>
         <p><b>“Why another agent framework?”</b> It isn't one. Everyone can generate.
           Almost nobody can tell you, six months later, whether the number in their
@@ -69,7 +161,7 @@
         <p class="ctas">
           <a class="cta primary" href="/demo/">Open the canvas →</a>
           <a class="cta" href="/verify/">Check the numbers yourself</a>
-          <a class="cta" href="https://github.com/EvolvingAgentsLabs/ai-os">Repository</a>
+          <a class="cta" href="https://github.com/EvolvingAgentsLabs/evolving-agents/tree/main/ai-os">Repository</a>
         </p>
         <p class="note">The first is <b>the demo</b>: a canvas of activity. One row is
           one flow, left to right is time, and every square is one flow in one bucket of
@@ -103,7 +195,7 @@
          seen the report. They are set this large because they are checked, not
          the other way round. -->
     <div class="figs">
-      <a class="fig" href="https://github.com/EvolvingAgentsLabs/ai-os/blob/main/scripts/check-test-count.sh">
+      <a class="fig" href="https://github.com/EvolvingAgentsLabs/evolving-agents/blob/main/ai-os/scripts/check-test-count.sh">
         <span class="v">828</span>
         <span class="k">tests of our own, counted from the suites by CI so the number cannot drift again</span>
       </a>
