@@ -64,7 +64,11 @@ def claims(h0: dict) -> list[tuple[str, str, str]]:
     a = h0
     per = a["auc_per_oracle"]
     hemo = "hemo-verified/index.html"
-    home = "index.html"
+    # The home page became lora-kernel only on 2026-09-06 and ai-os moved to its
+    # own page. These two claims went with the prose that carries them; pointing
+    # the check at index.html afterwards would have looked for them where they no
+    # longer are, and "MISSING" would have read as a regression in the artifact.
+    home = "ai-os/index.html"
     out: list[tuple[str, str, str]] = []
 
     # Both pages carry the headline and the kill line.
