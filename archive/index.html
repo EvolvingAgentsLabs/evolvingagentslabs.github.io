@@ -42,10 +42,14 @@
     <svg class="mark" viewBox="0 0 32 32" aria-hidden="true"><rect x="2" y="2" width="13" height="13" rx="4" fill="currentColor"/><rect x="17" y="2" width="13" height="13" rx="4" fill="currentColor"/><rect x="2" y="17" width="13" height="13" rx="4" fill="currentColor"/><rect x="18" y="18" width="11" height="11" rx="3" fill="none" stroke="currentColor" stroke-width="2" opacity=".42"/></svg>
     <p class="eyebrow">Archive · 2025 – 2026</p>
     <h1>Experiments in how agents learn, remember, and <em>prove</em> what they know.</h1>
-    <div class="frozen-banner"><b>All of it is frozen.</b> Every repository below
-      is archived and read-only — kept because it is still true, not because it is
-      maintained. The organisation's active work is <a href="/">ai-os</a>, and
-      several of the ideas here are carried forward there. What the twenty-six of
+    <div class="frozen-banner"><b>Everything under &ldquo;Frozen&rdquo; is
+      archived and read-only</b> — kept because it is still true, not because it is
+      maintained. The live work is listed first, and it is a short list: the
+      organisation's active project is
+      <a href="https://github.com/EvolvingAgentsLabs/lora-kernel">lora-kernel</a>,
+      and <code>ai-os</code> now lives inside
+      <a href="https://github.com/EvolvingAgentsLabs/evolving-agents">evolving-agents</a>.
+      Several of the ideas below are carried forward in both. What the twenty-six of
       them added up to is written down once, in
       <a href="/thesis/">the thesis</a>.</div>
     <p>Agents that modify themselves are easy to build and hard to trust. Everything here attacks the second half of that sentence — versioning an agent's evolution so a human can review it, reading a model's internal workspace to catch a memory it was tricked into keeping, or constraining a small model at the decoder so invalid output is not discouraged but impossible.</p>
@@ -62,12 +66,56 @@
     <div><span class="badge results">Results</span> published findings, negative ones included</div>
     <div><span class="badge prototype">Prototype</span> runs, but needs setup or has no eval yet</div>
     <div><span class="badge moved">Moved</span> the code lives on inside evolving-agents</div>
+    <div><span class="badge live">Live</span> active work, not archived</div>
     <div><span class="badge archived">Archived</span> readable, not maintained</div>
   </div>
 
   <main class="listing" id="experiments">
 
-    <p class="sectionlabel">Where it ended — the last active work</p>
+    <p class="sectionlabel">Live &mdash; not archived, and not below</p>
+
+    <a class="row" href="https://github.com/EvolvingAgentsLabs/lora-kernel">
+      <span class="thumb"></span>
+      <span class="rowhead">
+        <span class="name">lora-kernel</span>
+        <span class="badge live">Live</span>
+      </span>
+      <span>
+        <p class="question">What if the entire agentic system were a set of adapters over one base model?</p>
+        <p class="note">Experts draft in parallel and a frontier model verifies every branch in a single pass, so a high acceptance rate means <i>this small expert already produces what the frontier would have produced, here</i> &mdash; a distillation score collected inside inference that was going to happen anyway. Then the frontier is withdrawn and only a router replaces it. <b>Specified; nothing built.</b> The first thing that runs is a headroom check.</p>
+      </span>
+      <span class="meta">Sep 2026 <span class="arrow" aria-hidden="true">&rarr;</span></span>
+    </a>
+
+    <a class="row" href="/coclea-sr/">
+      <span class="thumb"><img src="/assets/img/ai-os-desk.jpg" alt="" aria-hidden="true" loading="lazy"></span>
+      <span class="rowhead">
+        <span class="name">coclea-sr</span>
+        <span class="badge live">Live</span>
+        <span class="badge results">Results</span>
+      </span>
+      <span>
+        <p class="question">What does an agent workload look like when truth comes from somewhere it cannot reach?</p>
+        <p class="note">A 1995 biophysics hypothesis taken from mathematics, through a falsification of its own model, to a gated set of falsifiable statements about ear disease. The gates are not opinions about whether the numbers look right: the analytic value comes from a module forbidden to import the code under test.</p>
+      </span>
+      <span class="meta">Aug 2026 <span class="arrow" aria-hidden="true">&rarr;</span></span>
+    </a>
+
+    <a class="row" href="/hemo-verified/">
+      <span class="thumb"></span>
+      <span class="rowhead">
+        <span class="name">hemo-verified</span>
+        <span class="badge live">Live</span>
+        <span class="badge results">Results</span>
+      </span>
+      <span>
+        <p class="question">And what does it look like when the truth is <i>not</i> derivable, and a judge is all you have?</p>
+        <p class="note">The companion workload, and the one that tests the argument rather than repeating it. A frontier model was handed twelve fabricated results and nine subtly defective ones and caught all of them, twice &mdash; so the claim narrows to the one that survives: a model can judge a task, but it cannot generate one with a known answer, and a judge that is right every time still hands you no ledger, no freeze and no reproduction command.</p>
+      </span>
+      <span class="meta">Aug 2026 <span class="arrow" aria-hidden="true">&rarr;</span></span>
+    </a>
+
+    <p class="sectionlabel">Frozen &mdash; where it ended, and the last active work</p>
 
     <a class="row origin" href="/experiments/evolving-agents/">
       <span class="thumb"><img src="/assets/img/evolving-agents.jpg" alt="" aria-hidden="true" loading="lazy"></span>
