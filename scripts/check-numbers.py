@@ -6,7 +6,7 @@ them and checked before publication. Until this file existed that was a promise,
 which is exactly the distinction `hemo-verified/PROVENANCE.md` makes about
 itself: a promise does not make a claim checkable, a check does.
 
-So: fetch the attested reports from the `ai-os` repository, render each declared
+So: fetch the attested reports from the repository that holds `ai-os`, render each declared
 number the way the page renders it, and fail if the page does not contain it.
 Declared explicitly rather than scraped, because the failure worth catching is a
 page that quietly stops carrying a number, and a scraper cannot see an absence
@@ -35,7 +35,13 @@ import urllib.error
 import urllib.request
 
 ROOT = pathlib.Path(__file__).resolve().parent.parent
-RAW = "https://raw.githubusercontent.com/EvolvingAgentsLabs/ai-os/{ref}/{path}"
+# ai-os moved into `evolving-agents` as a subtree on 2026-09-06 and the old
+# repository was archived. Archived repositories still serve raw content, which
+# is the dangerous part: this script would have kept resolving every claim
+# against a tree that can no longer change, and reported success while the page
+# drifted from the artifacts that now produce it. That is the exact failure it
+# was written to catch, running backwards.
+RAW = "https://raw.githubusercontent.com/EvolvingAgentsLabs/evolving-agents/{ref}/ai-os/{path}"
 
 H0 = "projects/hemo-verified/gates/reports/h0.json"
 
@@ -47,7 +53,7 @@ def fetch(path: str, ref: str) -> dict:
             return json.loads(r.read().decode())
     except (urllib.error.URLError, TimeoutError) as e:
         print(f"could not read {url}: {e}", file=sys.stderr)
-        print("The artifacts live in the ai-os repository. Without them this "
+        print("The artifacts live under ai-os/ in the evolving-agents repository. Without them this "
               "script cannot check anything, and reporting success would be "
               "worse than reporting nothing.", file=sys.stderr)
         raise SystemExit(2)
