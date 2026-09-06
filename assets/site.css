@@ -258,6 +258,10 @@ a.fig:hover{background:var(--bg-2);}
    abandoned rather than one that was consolidated. */
 .badge.moved{color:var(--blue);border-style:dashed;}
 .badge.archived{color:var(--faint);border-style:dashed;}
+/* Live work, listed above the frozen set rather than among it. The page's own
+   banner promises everything below is archived and read-only, so anything that
+   is not has to sit outside that promise instead of quietly breaking it. */
+.badge.live{color:var(--green);border-color:rgba(48,209,88,.35);background:rgba(48,209,88,.1);}
 
 .legend{
   display:flex;flex-wrap:wrap;gap:.7rem 1.75rem;
