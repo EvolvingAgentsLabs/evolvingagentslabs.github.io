@@ -64,17 +64,16 @@ def claims(h0: dict) -> list[tuple[str, str, str]]:
     a = h0
     per = a["auc_per_oracle"]
     hemo = "hemo-verified/index.html"
-    # The home page became lora-kernel only on 2026-09-06 and ai-os moved to its
-    # own page. These two claims went with the prose that carries them; pointing
-    # the check at index.html afterwards would have looked for them where they no
-    # longer are, and "MISSING" would have read as a regression in the artifact.
-    home = "ai-os/index.html"
+    # Until 2026-09-06 the headline and the kill line appeared twice: on the
+    # front page and on the detail page. The front page became lora-kernel and
+    # the ai-os page was deleted, so hemo-verified is now the only page that
+    # states them. One page stating a number once is still a checked claim; two
+    # entries pointed at a page that does not exist would report MISSING, which
+    # reads as a regression in the artifact rather than in the site.
     out: list[tuple[str, str, str]] = []
 
-    # Both pages carry the headline and the kill line.
-    for page in (home, hemo):
-        out.append((page, f"{a['auc_composite']:.3f}", "H0 composite AUC"))
-        out.append((page, str(a["kill_threshold"]), "the kill threshold"))
+    out.append((hemo, f"{a['auc_composite']:.3f}", "H0 composite AUC"))
+    out.append((hemo, str(a["kill_threshold"]), "the kill threshold"))
 
     # The detail page carries the panel, cell by cell. These are the numbers
     # that were wrong once — A5 and A6 transposed, A4 reading 0.706 — which is
