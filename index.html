@@ -63,29 +63,14 @@
           pool of small weight deltas swapped per request by vLLM.
           <b>The multi-agent framework does not get simpler — it turns into
           weights.</b></p>
-        <p>Experts draft in parallel; a <b>frontier model</b> verifies every branch
-          in a single forward pass; the branch it accepts most wins. Because the
-          verifier is frontier-grade, a high acceptance rate is not a speed
-          statistic — it means <i>this small expert already produces what the
-          frontier would have produced, here</i>. A per-region distillation score,
-          collected inside inference that was going to happen anyway. <b>You never
-          run an evaluation; the serving path fills in the map while it
-          serves.</b></p>
-        <p>Then the expensive model is <b>withdrawn</b>. Adapters whose acceptance
-          crossed the threshold you set — per region — are promoted from drafter to
-          generator, the frontier comes out, and <b>only a router replaces it</b>.
-          One number decides the architecture: the <b>withdrawal gap</b>, the
-          verified score after the frontier leaves minus the score it had while it
-          was there.</p>
         <p class="ctas">
           <a class="cta primary" href="https://github.com/EvolvingAgentsLabs/lora-kernel/blob/main/docs/the-frontier-is-scaffolding.md">Read the article &rarr;</a>
           <a class="cta" href="https://github.com/EvolvingAgentsLabs/lora-kernel/blob/main/docs/ARCHITECTURE.md">Architecture</a>
           <a class="cta" href="https://github.com/EvolvingAgentsLabs/lora-kernel">Repository</a>
         </p>
         <p class="note"><span class="chip warn">specified &middot; nothing built</span>
-          &nbsp;Every claim it makes about a system outside itself is marked
-          <code>[read]</code> and cited, and there is no <code>[ran]</code> in it
-          yet. The first thing that runs is a headroom check.</p>
+          &nbsp;Every external claim is marked <code>[read]</code> and cited; there
+          is no <code>[ran]</code> yet. <b>Below: the eight steps it runs in.</b></p>
       </div>
     </div>
   </section>
@@ -199,11 +184,11 @@
       part, named rather than waved at.</p>
   </section>
 
-  <section class="hero">
+  <section id="ai-os">
     <div class="hero-mark">
       <div>
         <p class="eyebrow">Shipped, measured, and still checked nightly</p>
-        <h1><span class="proj">ai-os</span> — agent work you can <em>check</em>, and prove.</h1>
+        <h2 style="font:400 clamp(1.6rem,3.6vw,2.35rem)/1.16 var(--serif);letter-spacing:-.02em;margin:.2rem 0 1rem"><span class="proj">ai-os</span> — agent work you can <em>check</em>, and prove.</h2>
         <p><b>“Why another agent framework?”</b> It isn't one. Everyone can generate.
           Almost nobody can tell you, six months later, whether the number in their
           README is still the number their code produces — <b>and prove it to a
