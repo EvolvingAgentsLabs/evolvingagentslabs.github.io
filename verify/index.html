@@ -53,8 +53,7 @@ body{margin:0;background:var(--bg);color:var(--ink);font-family:var(--sans);
 .wordmark .mark{display:block;width:1.05em;height:1.05em;flex:none}
 .wordmark .org{font-family:var(--mono);font-size:.6875rem;font-weight:400;color:var(--faint);
   border-left:1px solid var(--sep);padding-left:.7em}
-.navlinks{display:flex;gap:1.15rem;margin-left:auto;min-width:0;overflow-x:auto;
-  scrollbar-width:none;font-size:.8125rem}
+.navlinks{display:flex;gap:1.15rem;margin-left:auto;flex-wrap:wrap;font-size:.8125rem}
 .navlinks::-webkit-scrollbar{display:none}
 .navlinks a{color:var(--dim);text-decoration:none;white-space:nowrap}
 .navlinks a:hover{color:var(--ink)}
@@ -157,14 +156,15 @@ table[data-kind="claims"] td:nth-child(2){white-space:normal}
      is fetched to render the page, which is the whole point of it. -->
 <header class="masthead">
   <div class="masthead-in">
-    <a class="wordmark" href="/"><svg class="mark" viewBox="0 0 32 32" aria-hidden="true"><rect x="2" y="2" width="13" height="13" rx="4" fill="currentColor"/><rect x="17" y="2" width="13" height="13" rx="4" fill="currentColor"/><rect x="2" y="17" width="13" height="13" rx="4" fill="currentColor"/><rect x="18" y="18" width="11" height="11" rx="3" fill="none" stroke="currentColor" stroke-width="2" opacity=".42"/></svg>ai-os<span class="org">Evolving Agents Labs</span></a>
+    <a class="wordmark" href="/"><svg class="mark" viewBox="0 0 32 32" aria-hidden="true"><rect x="2" y="2" width="13" height="13" rx="4" fill="currentColor"/><rect x="17" y="2" width="13" height="13" rx="4" fill="currentColor"/><rect x="2" y="17" width="13" height="13" rx="4" fill="currentColor"/><rect x="18" y="18" width="11" height="11" rx="3" fill="none" stroke="currentColor" stroke-width="2" opacity=".42"/></svg>Evolving Agents Labs</a>
     <nav class="navlinks">
+      <a href="/#lora-kernel">lora-kernel</a>
       <a href="/demo/">Demo</a>
       <a href="/verify/" aria-current="page">Verify</a>
       <a href="/coclea-sr/">COCLEA-SR</a>
       <a href="/hemo-verified/">HEMO-VERIFIED</a>
       <a href="/archive/">Archive</a>
-      <a href="https://github.com/EvolvingAgentsLabs/ai-os">GitHub</a>
+      <a href="https://github.com/EvolvingAgentsLabs">GitHub</a>
     </nav>
     <span class="chip">no network · no server · no model</span>
   </div>
@@ -281,8 +281,8 @@ themselves — a page maintained separately from its data stops being true withi
 week, quietly, while continuing to look right.</p>
 <p><a href="/">ai-os</a> ·
 <a href="/demo/">the demo — the desk, which is what the system looks like</a> ·
-<a href="https://github.com/EvolvingAgentsLabs/ai-os">the repository</a> ·
-<a href="https://github.com/EvolvingAgentsLabs/ai-os/blob/main/doc/19-what-would-make-this-matter.md">what would make this matter</a></p>
+<a href="https://github.com/EvolvingAgentsLabs/evolving-agents/tree/main/ai-os">the repository</a> ·
+<a href="https://github.com/EvolvingAgentsLabs/evolving-agents/blob/main/ai-os/doc/19-what-would-make-this-matter.md">what would make this matter</a></p>
 <p id="budget" class="note"></p>
 </div>
 

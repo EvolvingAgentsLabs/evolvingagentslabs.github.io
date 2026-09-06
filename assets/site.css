@@ -103,8 +103,13 @@ a:hover{color:var(--teal);text-decoration-color:currentColor;}
 .masthead-in{
   max-width:min(64rem,100%);margin:0 auto;
   padding:.85rem var(--pad) .8rem;
-  display:flex;align-items:center;gap:1rem 1.25rem;flex-wrap:nowrap;
+  display:flex;align-items:center;gap:.5rem 1.25rem;flex-wrap:wrap;
 }
+/* The masthead used to be nowrap with an overflow-x:auto nav and a hidden
+   scrollbar. A seventh link therefore did not clip — it scrolled out of reach
+   with nothing on screen to say so, which is the failure mode this site exists
+   to dislike. Wrapping costs a second row on narrow viewports and never hides
+   a link. */
 .masthead .chip{flex:none;}
 .wordmark{flex:none;white-space:nowrap;}
 .wordmark .org{white-space:nowrap;}
@@ -120,9 +125,8 @@ a:hover{color:var(--teal);text-decoration-color:currentColor;}
   color:var(--faint);border-left:1px solid var(--sep);padding-left:.7em;
 }
 .navlinks{
-  display:flex;gap:1.15rem;flex-wrap:nowrap;margin-left:auto;
+  display:flex;gap:1.15rem;flex-wrap:wrap;margin-left:auto;
   font-size:.8125rem;letter-spacing:-.005em;
-  min-width:0;overflow-x:auto;scrollbar-width:none;
 }
 .navlinks::-webkit-scrollbar{display:none;}
 .navlinks a{white-space:nowrap;}
