@@ -525,3 +525,137 @@ pre code{background:none;border:none;padding:0;font-size:inherit;color:inherit;}
 
 /* The bar is sticky, so anything jumped to by id keeps clear of it. */
 :target,h2[id],section[id],h2{scroll-margin-top:5rem;}
+
+/* ── the stage ───────────────────────────────────────────────────────────────
+   A full-bleed band that explains lora-kernel by running it, because the thing
+   being explained is a process with a before and an after — the frontier model
+   is present, and then it is removed — and prose makes the reader hold four
+   states in their head and step them forward by hand.
+
+   It is the one place on this site in a different register: Apple's dark
+   palette, near-black ground, one idea per frame. The rest of the site is a
+   document; this is a demonstration, and the break is deliberate rather than
+   decorative.
+
+   On motion, this site's own rule is "nothing moves unless you move it". That
+   rule was written for a work surface and this is an explainer, so the
+   adaptation keeps its substance rather than its letter: it plays, but the
+   first interaction hands control over and does not take it back, it never
+   plays off-screen, and `prefers-reduced-motion` turns autoplay off entirely.
+   Every one of the eight frames is a legible still.                          */
+.stage{
+  --stg-bg:#000000; --stg-surface:#1d1d1f; --stg-line:#2b2b2e;
+  --stg-ink:#f5f5f7; --stg-dim:#86868b; --stg-accent:#2997ff;
+  --stg-amber:#f5a623; --stg-green:#30d158; --stg-violet:#bf5af2; --stg-red:#ff6b5e;
+  background:var(--stg-bg);color:var(--stg-ink);
+  margin-inline:calc(50% - 50vw);padding:5.5rem var(--pad) 4.5rem;
+  border-block:1px solid var(--stg-line);
+}
+.stage-in{max-width:min(64rem,100%);margin:0 auto;}
+.stage .kicker{
+  font:500 .6875rem/1 var(--mono);letter-spacing:.16em;text-transform:uppercase;
+  color:var(--stg-accent);margin:0 0 1.1rem;
+}
+.stage h2{
+  font:400 clamp(1.75rem,4.2vw,2.75rem)/1.14 var(--serif);letter-spacing:-.02em;
+  margin:0 0 .7rem;color:var(--stg-ink);min-height:2.3em;
+}
+.stage .say{
+  font-size:1.0625rem;line-height:1.62;color:var(--stg-dim);margin:0 0 2.2rem;
+  max-width:46rem;min-height:3.3em;
+}
+
+/* the machine */
+.stg-rig{
+  display:grid;grid-template-columns:19rem 1fr;gap:2rem;
+  background:var(--stg-surface);border:1px solid var(--stg-line);
+  border-radius:18px;padding:1.6rem 1.7rem 1.8rem;
+}
+.stg-lbl{font:500 .625rem/1 var(--mono);letter-spacing:.14em;text-transform:uppercase;
+  color:#6e6e73;margin:0 0 .6rem;}
+.stg-base{
+  height:4rem;border-radius:10px;background:#2c2c2e;border:1px solid #3a3a3c;
+  display:flex;align-items:center;justify-content:center;margin-bottom:1.1rem;
+  font:400 .8125rem/1 var(--mono);color:#c7c7cc;
+}
+.stg-chips{display:grid;grid-template-columns:1fr 1fr;gap:.5rem;}
+.stg-chip{
+  height:2.9rem;border-radius:9px;display:flex;flex-direction:column;
+  align-items:center;justify-content:center;gap:1px;
+  border:1px solid transparent;background:#2c2c2e;color:#5c5c60;
+  font:400 .6875rem/1.2 var(--mono);
+  transition:background-color .45s ease,color .45s ease,border-color .45s ease,opacity .45s ease;
+  opacity:.45;
+}
+.stg-chip b{font-weight:500;}
+.stg-chip .r{font-size:.625rem;opacity:.7;}
+.stg-chip.on{opacity:1;color:#fff;}
+
+.stg-branches{display:flex;gap:.5rem;min-height:3.4rem;margin-bottom:.9rem;}
+.stg-branch{
+  flex:1;border-radius:9px;border:1px solid #3a3a3c;background:#242426;
+  display:flex;align-items:center;justify-content:center;text-align:center;
+  font:400 .6875rem/1.3 var(--mono);color:#5c5c60;opacity:.35;padding:.4rem;
+  transition:opacity .45s ease,background-color .45s ease,color .45s ease,
+             border-color .45s ease,transform .45s cubic-bezier(.22,1,.36,1);
+}
+.stg-branch.live{opacity:1;color:#c7c7cc;}
+.stg-branch.win{transform:translateY(-4px);color:#000;font-weight:500;}
+
+.stg-verifier{
+  height:3.6rem;border-radius:10px;display:flex;align-items:center;justify-content:center;
+  border:1px solid #3a3a3c;background:#242426;color:#5c5c60;opacity:.4;
+  font:400 .8125rem/1 var(--mono);
+  transition:opacity .5s ease,background-color .5s ease,color .5s ease,border-color .5s ease;
+}
+.stg-verifier.on{opacity:1;background:rgba(245,166,35,.14);border-color:rgba(245,166,35,.5);color:#f5c26b;}
+.stg-verifier.gone{opacity:1;background:rgba(48,209,88,.13);border-color:rgba(48,209,88,.45);color:#5ee07f;}
+
+.stg-bars{display:flex;flex-direction:column;gap:.45rem;margin-top:1.1rem;}
+.stg-bar{display:flex;align-items:center;gap:.6rem;font:400 .6875rem/1 var(--mono);}
+.stg-bar .n{width:5.5rem;flex:none;color:#6e6e73;}
+.stg-bar .t{flex:1;height:.5rem;border-radius:3px;background:#2c2c2e;overflow:hidden;}
+.stg-bar .f{height:100%;width:0;border-radius:3px;transition:width .7s cubic-bezier(.22,1,.36,1),background-color .4s ease;}
+.stg-bar .v{width:2.6rem;flex:none;text-align:right;color:#6e6e73;}
+
+/* the cost line */
+.stg-cost{display:flex;align-items:center;gap:.7rem;margin-bottom:1.1rem;
+  font:400 .6875rem/1 var(--mono);color:#6e6e73;}
+.stg-cost .rule{flex:1;height:1px;background:var(--stg-line);}
+.stg-cost .v{transition:color .45s ease;}
+
+/* controls — story-style segments, which are the progress and the scrubber */
+.stg-ctl{display:flex;align-items:center;gap:.9rem;margin-top:1.5rem;}
+.stg-seg{display:flex;gap:.28rem;flex:1;}
+.stg-seg button{
+  flex:1;height:3px;padding:0;border:none;border-radius:2px;background:#3a3a3c;
+  cursor:pointer;position:relative;overflow:hidden;
+}
+.stg-seg button::after{
+  content:"";position:absolute;inset:0;width:0;background:var(--stg-ink);border-radius:2px;
+}
+.stg-seg button[data-done]::after{width:100%;}
+.stg-seg button:focus-visible{outline:2px solid var(--stg-accent);outline-offset:3px;}
+.stg-btn{
+  font:400 .75rem/1 var(--sans);color:var(--stg-dim);background:transparent;
+  border:1px solid #3a3a3c;border-radius:980px;padding:.45rem .9rem;cursor:pointer;
+}
+.stg-btn:hover{color:var(--stg-ink);border-color:#545458;}
+.stg-note{font:400 .6875rem/1 var(--mono);color:#5c5c60;white-space:nowrap;}
+
+@media(max-width:52rem){
+  .stg-rig{grid-template-columns:1fr;}
+  .stage{padding-block:3.5rem 3rem;}
+  .stg-note{display:none;}
+}
+@media (prefers-reduced-motion: reduce){
+  .stg-chip,.stg-branch,.stg-verifier,.stg-bar .f{transition:none;}
+}
+
+/* Announced, not shown. The stage repaints on a timer, so the sentence a screen
+   reader needs is published once per frame in here rather than being inferred
+   from a dozen style changes. */
+.visually-hidden{
+  position:absolute;width:1px;height:1px;margin:-1px;padding:0;overflow:hidden;
+  clip-path:inset(50%);white-space:nowrap;border:0;
+}

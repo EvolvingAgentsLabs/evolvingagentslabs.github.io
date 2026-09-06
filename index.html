@@ -90,6 +90,68 @@
     </div>
   </section>
 
+
+  <!--
+    The stage. A band in a different register from the rest of the page: Apple's
+    dark palette, one idea per frame, and it runs the architecture rather than
+    describing it — because what is being explained is a process with a before
+    and an after, and prose makes a reader hold four states in their head.
+    Behaviour and the argument for it are in assets/stage.js.
+  -->
+  <section class="stage" id="stage" tabindex="-1" aria-roledescription="explainer">
+    <div class="stage-in">
+      <p class="kicker">How it works</p>
+      <h2 data-h>&nbsp;</h2>
+      <p class="say" data-say>&nbsp;</p>
+
+      <div class="stg-rig">
+        <div>
+          <p class="stg-lbl">the host &mdash; vLLM, one GPU</p>
+          <div class="stg-base">BASE MODEL &nbsp;&middot;&nbsp; resident</div>
+          <p class="stg-lbl">adapters &mdash; the whole agentic system</p>
+          <div class="stg-chips">
+            <div class="stg-chip" data-chip><b>harness.lora</b><span class="r">kernel</span></div>
+            <div class="stg-chip" data-chip><b>clinical-admin</b><span class="r">expert</span></div>
+            <div class="stg-chip" data-chip><b>contract-review</b><span class="r">expert</span></div>
+            <div class="stg-chip" data-chip><b>incident-triage</b><span class="r">expert</span></div>
+          </div>
+        </div>
+
+        <div>
+          <div class="stg-cost"><span>the pass</span><span class="rule"></span><span class="v" data-cost>cost: &mdash;</span></div>
+          <div class="stg-branches">
+            <div class="stg-branch" data-branch>code this referral</div>
+            <div class="stg-branch" data-branch>flag this clause</div>
+            <div class="stg-branch" data-branch>page the on-call</div>
+          </div>
+          <div class="stg-verifier" data-verifier>FRONTIER MODEL &mdash; verifies every branch</div>
+          <p class="stg-lbl" style="margin-top:1.1rem">acceptance, per region</p>
+          <div class="stg-bars">
+            <div class="stg-bar"><span class="n">clinical</span><span class="t"><span class="f" data-fill></span></span><span class="v" data-val>&mdash;</span></div>
+            <div class="stg-bar"><span class="n">contract</span><span class="t"><span class="f" data-fill></span></span><span class="v" data-val>&mdash;</span></div>
+            <div class="stg-bar"><span class="n">triage</span><span class="t"><span class="f" data-fill></span></span><span class="v" data-val>&mdash;</span></div>
+          </div>
+        </div>
+      </div>
+
+      <div class="stg-ctl">
+        <button class="stg-btn" data-toggle aria-label="Pause the explainer">Pause</button>
+        <div class="stg-seg" role="group" aria-label="Steps">
+          <button data-seg aria-label="Step 1"><i></i></button>
+          <button data-seg aria-label="Step 2"><i></i></button>
+          <button data-seg aria-label="Step 3"><i></i></button>
+          <button data-seg aria-label="Step 4"><i></i></button>
+          <button data-seg aria-label="Step 5"><i></i></button>
+          <button data-seg aria-label="Step 6"><i></i></button>
+          <button data-seg aria-label="Step 7"><i></i></button>
+          <button data-seg aria-label="Step 8"><i></i></button>
+        </div>
+        <span class="stg-note">click any step, or use &larr; &rarr;</span>
+      </div>
+      <p class="visually-hidden" data-live aria-live="polite"></p>
+    </div>
+  </section>
+
   <section id="all-is-lora">
     <p class="sectionlabel">What each piece becomes</p>
     <div class="pillars">
@@ -708,5 +770,6 @@ README / paper / website</pre>
 
 </div>
 
+<script src="/assets/stage.js" defer></script>
 </body>
 </html>
