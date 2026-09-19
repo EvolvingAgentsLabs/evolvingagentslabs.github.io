@@ -1,53 +1,48 @@
-/* ai-os — the surface. Hand-written; no preprocessor, no webfont, no build step.
+/* Evolving Agents Labs — the surface. Hand-written; no preprocessor, no webfont, no build step.
  *
- * ## Why this file was rewritten
+ * ## Why this file changed ground again (2026-09-19)
  *
- * There used to be two products here. The pages were warm paper, Newsreader and
- * six earth tones; the demo at /demo/ is black, the system sans, and Apple's
- * system colours. A reader crossing between them could feel the seam, and the
- * seam said something untrue: that this website is *about* ai-os rather than
- * part of it. The demo is the product, so the demo's language wins outright and
- * the pages are the ones that move.
+ * It was warm paper once, then it went black because the product was a demo and
+ * "the demo's language wins". That rule still holds — it is the product that
+ * changed. ai-os left this site on 2026-09-06; the flagship is lora-kernel, and
+ * lora-kernel speaks in pictures: a reading room, a card catalogue, a shelf of
+ * adapters, drawn in ink on parchment with a serif over them. The organisation's
+ * announcement elsewhere is folded paper on a pale ground. A black page under
+ * either of them is the seam this file was rewritten to remove, on the other
+ * side. So the pages move again, and the argument is the same one.
  *
- * Everything below is taken from `ai-ui/scripts/build-grid.ts` — the same nine
- * system colours, the same three greys, the same two font stacks, the same
- * radii. Where the demo has no answer, because a tool has no long-form prose,
- * the rule is derived rather than invented, and the derivation is written down
- * beside it.
+ * The palette is read off the illustrations, not invented: parchment, a warm
+ * ink, and the four spines on the shelf — forest, navy, brick, ochre.
  *
  * ## The four rules
  *
- * 1. **One ground.** #000, everywhere, and no light mode. The demo has no light
- *    mode; giving the pages one would rebuild the seam on the other side.
- * 2. **Colour is who, never how it went.** On the canvas colour is identity: a
- *    failure and a success by the same agent are the same colour. So on the
- *    pages the four pillars carry four identity hues and nothing else does — and
- *    green, red and yellow are spent only on a verdict, exactly as the demo's
- *    inspector spends them.
- * 3. **One hairline.** #38383A, 1px. Not two weights of the same line.
- * 4. **Nothing fetched to render it.** No font server, no CDN. This site
- *    publishes numbers it says you can check with the machine in front of you;
- *    /verify/ already refuses a webfont for that reason, and the rest of the
- *    site had no business being the exception.
+ * 1. **One ground.** Parchment, everywhere, and no second theme.
+ * 2. **Colour is who, never how it went.** Identity hues are the spines; green,
+ *    red and ochre-as-warning are spent only on a verdict.
+ * 3. **One hairline.** 1px, one weight.
+ * 4. **Nothing fetched to render it.** No font server, no CDN — the serif is the
+ *    one already on the machine. This site publishes numbers it says you can
+ *    check with the machine in front of you.
  */
 
 :root{
-  color-scheme:dark;
+  color-scheme:light;
 
   /* The nine system colours, verbatim from the demo. */
-  --blue:#0A84FF; --green:#30D158; --indigo:#5E5CE6; --orange:#FF9F0A;
-  --pink:#FF375F; --purple:#BF5AF2; --red:#FF453A; --teal:#64D2FF; --yellow:#FFD60A;
+  --blue:#2F4A6B; --green:#3F6B48; --indigo:#4A4A7A; --orange:#B5651D;
+  --pink:#A8452F; --purple:#6B4A6B; --red:#A8322A; --teal:#2F6B6B; --yellow:#C9922E;
 
   /* Ground, elevation, hairline. */
-  --bg:#000; --bg-2:#1C1C1E; --bg-3:#2C2C2E; --sep:#38383A;
+  --bg:#F4ECDB; --bg-2:#EDE3CE; --bg-3:#E4D8BF; --sep:#CDBF9F;
 
   /* The ink ramp. Three steps, used the way the demo uses them: --ink is what
      you are reading, --dim is what supports it, --faint is what you are not
      meant to read unless you go looking. Long prose is set in --ink rather than
      --dim; the demo has no body copy to borrow a rule from, and #98989F is a
      caption colour, not a reading colour. */
-  --ink:#F2F2F7; --dim:#98989F; --faint:#636366;
+  --ink:#211C15; --dim:#5C5344; --faint:#8A7F6A;
 
+  --serif:"Iowan Old Style","Palatino Linotype",Palatino,"Book Antiqua",Georgia,serif;
   --sans:ui-sans-serif,-apple-system,"SF Pro Text",system-ui,"Segoe UI",Roboto,sans-serif;
   --mono:ui-monospace,"SF Mono",Menlo,Monaco,"Roboto Mono",monospace;
 
@@ -78,13 +73,13 @@ body{
   letter-spacing:-.003em;-webkit-font-smoothing:antialiased;
 }
 :focus-visible{outline:2px solid var(--blue);outline-offset:3px;border-radius:var(--r-s);}
-::selection{background:rgba(10,132,255,.32);}
+::selection{background:rgba(47,74,107,.32);}
 
 .wrap{max-width:min(64rem,100%);margin:0 auto;padding-inline:var(--pad);}
 .wrap.narrow{max-width:min(46rem,100%);}
 
 a{color:var(--blue);text-decoration-thickness:1px;text-underline-offset:3px;
-  text-decoration-color:rgba(10,132,255,.4);transition:color .15s,text-decoration-color .15s;}
+  text-decoration-color:rgba(47,74,107,.4);transition:color .15s,text-decoration-color .15s;}
 a:hover{color:var(--teal);text-decoration-color:currentColor;}
 
 /* ── masthead ──────────────────────────────────────────────────────────────
@@ -97,7 +92,7 @@ a:hover{color:var(--teal);text-decoration-color:currentColor;}
    under a full-width piece of chrome. */
 .masthead{
   position:sticky;top:0;z-index:20;
-  background:rgba(0,0,0,.72);backdrop-filter:saturate(180%) blur(20px);
+  background:rgba(244,236,219,.82);backdrop-filter:saturate(180%) blur(20px);
   border-bottom:1px solid var(--sep);
 }
 .masthead-in{
@@ -140,12 +135,12 @@ a:hover{color:var(--teal);text-decoration-color:currentColor;}
   border:1px solid var(--sep);border-radius:var(--r-s);padding:4px 9px;
   white-space:nowrap;font-variant-numeric:tabular-nums;
 }
-.chip.ok{color:var(--green);border-color:rgba(48,209,88,.35);background:rgba(48,209,88,.1);}
+.chip.ok{color:var(--green);border-color:rgba(63,107,72,.35);background:rgba(63,107,72,.1);}
 /* The demo's SIMULATED pill, for anything the reader must not take at face value. */
 .chip.warn{
   font:600 10px/1.4 var(--sans);letter-spacing:.05em;text-transform:uppercase;
-  color:var(--orange);background:rgba(255,159,10,.12);
-  border-color:rgba(255,159,10,.28);border-radius:999px;padding:3px 10px;
+  color:var(--orange);background:rgba(181,101,29,.12);
+  border-color:rgba(181,101,29,.28);border-radius:999px;padding:3px 10px;
 }
 @media(max-width:62rem){ .masthead .chip{display:none;} }
 @media(max-width:46rem){ .wordmark .org{display:none;} }
@@ -233,12 +228,12 @@ a.fig:hover{background:var(--bg-2);}
   text-decoration:none;color:var(--ink);background:var(--bg-2);
   transition:background .15s,border-color .15s;
 }
-.cta:hover{background:var(--bg-3);color:var(--ink);border-color:#48484A;}
+.cta:hover{background:var(--bg-3);color:var(--ink);border-color:var(--faint);}
 .cta.primary{
-  background:var(--ink);color:#000;border-color:var(--ink);
+  background:var(--ink);color:var(--bg);border-color:var(--ink);
   border-radius:999px;font-weight:600;padding:.68rem 1.2rem;
 }
-.cta.primary:hover{background:#fff;border-color:#fff;color:#000;}
+.cta.primary:hover{background:#3A3227;border-color:#3A3227;color:var(--bg);}
 
 /* ── evidence badges ────────────────────────────────────────────────────────
    These say how much evidence stands behind a thing, so they are verdicts, and
@@ -261,7 +256,7 @@ a.fig:hover{background:var(--bg-2);}
 /* Live work, listed above the frozen set rather than among it. The page's own
    banner promises everything below is archived and read-only, so anything that
    is not has to sit outside that promise instead of quietly breaking it. */
-.badge.live{color:var(--green);border-color:rgba(48,209,88,.35);background:rgba(48,209,88,.1);}
+.badge.live{color:var(--green);border-color:rgba(63,107,72,.35);background:rgba(63,107,72,.1);}
 
 .legend{
   display:flex;flex-wrap:wrap;gap:.7rem 1.75rem;
@@ -526,142 +521,22 @@ pre code{background:none;border:none;padding:0;font-size:inherit;color:inherit;}
 /* The bar is sticky, so anything jumped to by id keeps clear of it. */
 :target,h2[id],section[id],h2{scroll-margin-top:5rem;}
 
-/* ── the stage ───────────────────────────────────────────────────────────────
-   A full-bleed band that explains lora-kernel by running it, because the thing
-   being explained is a process with a before and an after — the frontier model
-   is present, and then it is removed — and prose makes the reader hold four
-   states in their head and step them forward by hand.
-
-   It is the one place on this site in a different register: Apple's dark
-   palette, near-black ground, one idea per frame. The rest of the site is a
-   document; this is a demonstration, and the break is deliberate rather than
-   decorative.
-
-   On motion, this site's own rule is "nothing moves unless you move it". That
-   rule was written for a work surface and this is an explainer, so the
-   adaptation keeps its substance rather than its letter: it plays, but the
-   first interaction hands control over and does not take it back, it never
-   plays off-screen, and `prefers-reduced-motion` turns autoplay off entirely.
-   Every one of the eight frames is a legible still.                          */
-.stage{
-  --stg-bg:#000000; --stg-surface:#1d1d1f; --stg-line:#2b2b2e;
-  --stg-ink:#f5f5f7; --stg-dim:#86868b; --stg-accent:#2997ff;
-  --stg-amber:#f5a623; --stg-green:#30d158; --stg-violet:#bf5af2; --stg-red:#ff6b5e;
-  background:var(--stg-bg);color:var(--stg-ink);
-  margin-inline:calc(50% - 50vw);padding:5.5rem var(--pad) 4.5rem;
-  border-block:1px solid var(--stg-line);
-}
-.stage-in{max-width:min(64rem,100%);margin:0 auto;}
-.stage .kicker{
-  font:500 .6875rem/1 var(--mono);letter-spacing:.16em;text-transform:uppercase;
-  color:var(--stg-accent);margin:0 0 1.1rem;
-}
-.stage h2{
-  font:400 clamp(1.75rem,4.2vw,2.75rem)/1.14 var(--serif);letter-spacing:-.02em;
-  margin:0 0 .7rem;color:var(--stg-ink);min-height:2.3em;
-}
-.stage .say{
-  font-size:1.0625rem;line-height:1.62;color:var(--stg-dim);margin:0 0 2.2rem;
-  max-width:46rem;min-height:3.3em;
-}
-
-/* the machine */
-.stg-rig{
-  display:grid;grid-template-columns:19rem 1fr;gap:2rem;
-  background:var(--stg-surface);border:1px solid var(--stg-line);
-  border-radius:18px;padding:1.6rem 1.7rem 1.8rem;
-}
-.stg-lbl{font:500 .625rem/1 var(--mono);letter-spacing:.14em;text-transform:uppercase;
-  color:#6e6e73;margin:0 0 .6rem;}
-.stg-base{
-  height:4rem;border-radius:10px;background:#2c2c2e;border:1px solid #3a3a3c;
-  display:flex;align-items:center;justify-content:center;margin-bottom:1.1rem;
-  font:400 .8125rem/1 var(--mono);color:#c7c7cc;
-}
-.stg-chips{display:grid;grid-template-columns:1fr 1fr;gap:.5rem;}
-.stg-chip{
-  height:2.9rem;border-radius:9px;display:flex;flex-direction:column;
-  align-items:center;justify-content:center;gap:1px;
-  border:1px solid transparent;background:#2c2c2e;color:#5c5c60;
-  font:400 .6875rem/1.2 var(--mono);
-  transition:background-color .45s ease,color .45s ease,border-color .45s ease,opacity .45s ease;
-  opacity:.45;
-}
-.stg-chip b{font-weight:500;}
-.stg-chip .r{font-size:.625rem;opacity:.7;}
-.stg-chip.on{opacity:1;color:#fff;}
-
-.stg-branches{display:flex;gap:.5rem;min-height:3.4rem;margin-bottom:.9rem;}
-.stg-branch{
-  flex:1;border-radius:9px;border:1px solid #3a3a3c;background:#242426;
-  display:flex;align-items:center;justify-content:center;text-align:center;
-  font:400 .6875rem/1.3 var(--mono);color:#5c5c60;opacity:.35;padding:.4rem;
-  transition:opacity .45s ease,background-color .45s ease,color .45s ease,
-             border-color .45s ease,transform .45s cubic-bezier(.22,1,.36,1);
-}
-.stg-branch.live{opacity:1;color:#c7c7cc;}
-.stg-branch.win{transform:translateY(-4px);color:#000;font-weight:500;}
-
-.stg-verifier{
-  height:3.6rem;border-radius:10px;display:flex;align-items:center;justify-content:center;
-  border:1px solid #3a3a3c;background:#242426;color:#5c5c60;opacity:.4;
-  font:400 .8125rem/1 var(--mono);
-  transition:opacity .5s ease,background-color .5s ease,color .5s ease,border-color .5s ease;
-}
-.stg-verifier.on{opacity:1;background:rgba(245,166,35,.14);border-color:rgba(245,166,35,.5);color:#f5c26b;}
-.stg-verifier.gone{opacity:1;background:rgba(48,209,88,.13);border-color:rgba(48,209,88,.45);color:#5ee07f;}
-
-.stg-bars{display:flex;flex-direction:column;gap:.45rem;margin-top:1.1rem;}
-.stg-bar{display:flex;align-items:center;gap:.6rem;font:400 .6875rem/1 var(--mono);}
-.stg-bar .n{width:5.5rem;flex:none;color:#6e6e73;}
-.stg-bar .t{flex:1;height:.5rem;border-radius:3px;background:#2c2c2e;overflow:hidden;}
-/* display:block, and it is the whole fix. The fill is a <span> inside the track,
-   and the track is not a flex container — so the fill stayed an inline box, and
-   an inline box ignores width and height. getComputedStyle reported width:78%
-   quite happily while nothing was drawn. The bars, which are the most important
-   thing this section shows, were three empty grey rails on the live site. */
-.stg-bar .f{display:block;height:100%;width:0;border-radius:3px;
-  transition:width .7s cubic-bezier(.22,1,.36,1),background-color .4s ease;}
-.stg-bar .v{width:2.6rem;flex:none;text-align:right;color:#6e6e73;}
-
-/* the cost line */
-.stg-cost{display:flex;align-items:center;gap:.7rem;margin-bottom:1.1rem;
-  font:400 .6875rem/1 var(--mono);color:#6e6e73;}
-.stg-cost .rule{flex:1;height:1px;background:var(--stg-line);}
-.stg-cost .v{transition:color .45s ease;}
-
-/* controls — story-style segments, which are the progress and the scrubber */
-.stg-ctl{display:flex;align-items:center;gap:.9rem;margin-top:1.5rem;}
-.stg-seg{display:flex;gap:.28rem;flex:1;}
-.stg-seg button{
-  flex:1;height:3px;padding:0;border:none;border-radius:2px;background:#3a3a3c;
-  cursor:pointer;position:relative;overflow:hidden;
-}
-.stg-seg button::after{
-  content:"";position:absolute;inset:0;width:0;background:var(--stg-ink);border-radius:2px;
-}
-.stg-seg button[data-done]::after{width:100%;}
-.stg-seg button:focus-visible{outline:2px solid var(--stg-accent);outline-offset:3px;}
-.stg-btn{
-  font:400 .75rem/1 var(--sans);color:var(--stg-dim);background:transparent;
-  border:1px solid #3a3a3c;border-radius:980px;padding:.45rem .9rem;cursor:pointer;
-}
-.stg-btn:hover{color:var(--stg-ink);border-color:#545458;}
-.stg-note{font:400 .6875rem/1 var(--mono);color:#5c5c60;white-space:nowrap;}
-
-@media(max-width:52rem){
-  .stg-rig{grid-template-columns:1fr;}
-  .stage{padding-block:3.5rem 3rem;}
-  .stg-note{display:none;}
-}
-@media (prefers-reduced-motion: reduce){
-  .stg-chip,.stg-branch,.stg-verifier,.stg-bar .f{transition:none;}
-}
-
-/* Announced, not shown. The stage repaints on a timer, so the sentence a screen
-   reader needs is published once per frame in here rather than being inferred
-   from a dozen style changes. */
 .visually-hidden{
   position:absolute;width:1px;height:1px;margin:-1px;padding:0;overflow:hidden;
   clip-path:inset(50%);white-space:nowrap;border:0;
 }
+
+/* ── the serif, and the pictures ─────────────────────────────────────────────
+   Headlines take the serif the illustrations are lettered in; body copy and
+   every number stay in the system sans and mono, because a table of results is
+   not a poster. A figure is a picture on its own paper: a hairline, a small
+   radius, and a caption in the caption colour. */
+h1,h2,.hero h1{font-family:var(--serif);letter-spacing:-.015em;}
+.hero h1{font-weight:700;max-width:22ch;}
+.hero h1 .proj{font-family:var(--serif);font-size:1em;font-weight:700;letter-spacing:inherit;font-style:italic;}
+figure.plate{margin:2.25rem 0 0;}
+figure.plate img{display:block;width:100%;height:auto;border:1px solid var(--sep);border-radius:var(--r-l);}
+figure.plate figcaption{margin:.7rem 0 0;font-size:.875rem;line-height:1.55;color:var(--dim);max-width:70ch;}
+.measured td:nth-child(2){font-variant-numeric:tabular-nums;}
+.measured td b{color:var(--ink);}
+.measured .run{font:400 .75rem/1.4 var(--mono);color:var(--faint);white-space:nowrap;}

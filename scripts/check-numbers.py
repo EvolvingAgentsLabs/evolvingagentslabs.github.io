@@ -45,9 +45,15 @@ RAW = "https://raw.githubusercontent.com/EvolvingAgentsLabs/evolving-agents/{ref
 
 H0 = "projects/hemo-verified/gates/reports/h0.json"
 
+# The front page is lora-kernel, and since 2026-09-19 it publishes numbers of its
+# own. They live in another repository, in the results files the runs wrote.
+LK_RAW = "https://raw.githubusercontent.com/EvolvingAgentsLabs/lora-kernel/{ref}/{path}"
+LK_CORPUS_MODE = "results/M7-arm0b-corpus-mode-20260919/corpus_mode.json"
+LK_POOL = "results/M1-pool-qwen35-20260919/pool_base.json"
 
-def fetch(path: str, ref: str) -> dict:
-    url = RAW.format(ref=ref, path=path)
+
+def fetch(path: str, ref: str, raw: str = RAW) -> dict:
+    url = raw.format(ref=ref, path=path)
     try:
         with urllib.request.urlopen(url, timeout=30) as r:
             return json.loads(r.read().decode())
@@ -96,6 +102,22 @@ def claims(h0: dict) -> list[tuple[str, str, str]]:
     return out
 
 
+def lora_kernel_claims(mode: dict, pool: dict) -> list[tuple[str, str, str]]:
+    """The front page's numbers, each rendered the way the page renders it."""
+    home = "index.html"
+    pr = mode["pairs"][0]
+    arms = pool["arms"]
+    email, desk, base = arms["email-full"], arms["desk-commitment"], arms["base:email"]
+    return [
+        (home, f"{pr['a_total']}/{pr['n_paired']}", "the fluids expert in corpus mode"),
+        (home, f"{pr['b_total']}/{pr['n_paired']}", "the same expert through tool_calls"),
+        (home, f"{pr['only_a']}&nbsp;:&nbsp;{pr['only_b']}", "the discordant pairs"),
+        (home, f"{email['correct']}/{email['n']}", "email-full on Qwen3.5-4B"),
+        (home, f"{base['correct']}/{base['n']}", "the bare 4B on the same cases"),
+        (home, f"{desk['correct']}/{desk['n']}", "desk-commitment on Qwen3.5-4B"),
+    ]
+
+
 def main() -> int:
     ap = argparse.ArgumentParser()
     ap.add_argument("--ref", default="main", help="git ref to read the artifacts from")
@@ -106,7 +128,9 @@ def main() -> int:
     bad = 0
     checked = 0
 
-    for page, value, what in claims(h0):
+    # lora-kernel's own default branch is `main`; --ref pins evolving-agents only.
+    lk = lora_kernel_claims(fetch(LK_CORPUS_MODE, "main", LK_RAW), fetch(LK_POOL, "main", LK_RAW))
+    for page, value, what in claims(h0) + lk:
         if page not in pages:
             f = ROOT / page
             if not f.exists():
@@ -116,7 +140,7 @@ def main() -> int:
         checked += 1
         if value not in pages[page]:
             print(f"STALE  {page}: {what} should read {value} — "
-                  f"the page does not contain it ({H0})", file=sys.stderr)
+                  f"the page does not contain it", file=sys.stderr)
             bad += 1
 
     if bad:

@@ -9,8 +9,8 @@
 <meta property="og:description" content="Agent memory, self-modification, interpretability and constrained decoding, 2025–2026. Every repository here is archived and read-only.">
 <meta property="og:type" content="website">
 <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Crect x='2' y='2' width='13' height='13' rx='4' fill='%23F2F2F7'/%3E%3Crect x='17' y='2' width='13' height='13' rx='4' fill='%23F2F2F7'/%3E%3Crect x='2' y='17' width='13' height='13' rx='4' fill='%23F2F2F7'/%3E%3Crect x='18' y='18' width='11' height='11' rx='3' fill='none' stroke='%23F2F2F7' stroke-width='2' opacity='.42'/%3E%3C/svg%3E">
-<meta name="theme-color" content="#000000">
-<meta name="color-scheme" content="dark">
+<meta name="theme-color" content="#F4ECDB">
+<meta name="color-scheme" content="light">
 <!-- No webfont link, deliberately. This site publishes numbers it says you
      can check with the machine in front of you, and /verify/ already refuses
      a stylesheet from fonts.googleapis.com for exactly that reason. The two
@@ -69,14 +69,14 @@
     <p class="sectionlabel">Live &mdash; not archived, and not below</p>
 
     <a class="row" href="https://github.com/EvolvingAgentsLabs/lora-kernel">
-      <span class="thumb"></span>
+      <span class="thumb"><img src="/assets/img/lora-kernel/hero.jpg" alt="" aria-hidden="true" loading="lazy"></span>
       <span class="rowhead">
         <span class="name">lora-kernel</span>
         <span class="badge live">Live</span>
       </span>
       <span>
-        <p class="question">What if the entire agentic system were a set of adapters over one base model?</p>
-        <p class="note">Experts draft in parallel and a frontier model verifies every branch in a single pass, so a high acceptance rate means <i>this small expert already produces what the frontier would have produced, here</i> &mdash; a distillation score collected inside inference that was going to happen anyway. Then the frontier is withdrawn and only a router replaces it. <b>Specified; nothing built.</b> The first thing that runs is a headroom check.</p>
+        <p class="question">What if an expert were the specialist who knows how to use the library, not the textbook?</p>
+        <p class="note">QLoRA experts defined by their corpora over one small resident model, behind an API that routes each request to the expert whose corpus it falls in and sends the rest to a frontier model. <b>Running:</b> two released experts, and a reasoning expert that went from 11/90 to 90/90 when it was served the way its corpus taught it. <b>Being built:</b> a library of notes per subdomain and an adapter trained to navigate it. The numbers are on <a href="/#evidence">the front page</a>.</p>
       </span>
       <span class="meta">Sep 2026 <span class="arrow" aria-hidden="true">&rarr;</span></span>
     </a>
