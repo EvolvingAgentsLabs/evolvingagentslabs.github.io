@@ -19,7 +19,13 @@
 <style>
   /* Scoped to this page: the measured table is prose in its first two columns,
      so it wraps where the evidence tables elsewhere do not. */
-  #evidence td,#evidence th{white-space:normal;}
+  #evidence td,#evidence th,#rooms td,#rooms th{white-space:normal;}
+  #rooms{width:100%;border-collapse:collapse;margin:2rem 0 0;font-size:.875rem;}
+  #rooms th,#rooms td{text-align:left;padding:.55rem .7rem;border-bottom:1px solid var(--sep);vertical-align:top;color:var(--dim);}
+  #rooms th{font:600 10px/1.4 var(--sans);letter-spacing:.06em;text-transform:uppercase;color:var(--faint);}
+  #rooms td:first-child{color:var(--ink);font-weight:600;white-space:nowrap;}
+  .wanted-frame{border:1px dashed var(--faint);border-radius:var(--r-l);background:var(--bg-2);padding:clamp(1.25rem,4vw,2.5rem);}
+  .wanted-frame p{margin:0;max-width:72ch;font-size:.9375rem;line-height:1.6;color:var(--dim);}
   #evidence td:first-child{color:var(--ink);min-width:16rem;}
   #evidence td:last-child{white-space:nowrap;}
 </style>
@@ -156,6 +162,58 @@
     <p class="note">The full ledger, including everything that failed and the instruments that lied:
       <a href="https://github.com/EvolvingAgentsLabs/lora-kernel/blob/main/docs/RECORD.md">RECORD.md</a>. The position:
       <a href="https://github.com/EvolvingAgentsLabs/lora-kernel/blob/main/docs/PLAN.md">PLAN.md</a>.</p>
+  </section>
+
+  <section id="organisation">
+    <p class="sectionlabel">Where it sits in an organisation</p>
+    <div class="pillars">
+      <article>
+        <h2>One expert per role</h2>
+        <p class="question">Under the agent column, not beside it.</p>
+        <p class="note">An organisation that runs on agents draws the same picture: people in a few
+          roles, an agent runtime with one agent per role, the applications they operate, the channels
+          people already use, and one database underneath. In that picture every agent is a system
+          prompt over the same remote model. Here <b>each role becomes an expert</b> &mdash; an adapter
+          trained on how <i>this</i> organisation does that job &mdash; and the role a message arrives
+          from is the route.</p>
+      </article>
+      <article>
+        <h2>Three places for three things</h2>
+        <p class="question">Records, habits, knowledge.</p>
+        <p class="note"><b>Records stay in the database. Habits go in the adapter. Knowledge stays in
+          notes a person can read and correct</b> &mdash; two drawers per role: how we do it here, and
+          what we know. What an expert is measured to handle is answered on the organisation&rsquo;s own
+          machine; the rest goes to the frontier, or to a person where policy says nothing leaves the
+          building.</p>
+      </article>
+    </div>
+    <!-- PICTURE WANTED: /assets/img/lora-kernel/solution-architecture.jpg — the brief lives in
+         lora-kernel/docs/img/README.md under `solution-architecture.png`. Until it arrives the frame
+         below says what it will show, rather than leaving a hole or a broken image. -->
+    <figure class="plate wanted">
+      <div class="wanted-frame" role="img" aria-label="Illustration to come: the solution architecture">
+        <p><b>Illustration to come.</b> Five layers, top to bottom: people in four roles; an agent
+          runtime with one agent per role; scheduling and back-office applications; app and messaging
+          channels; one database with identity, payments and monitoring. Under the agent column, one
+          graphics card drawn as a bookshelf &mdash; a thick spine for the resident model, a thin spine
+          per role, two drawers of notes under each. A signpost routes by role; dashed lines leave for
+          the frontier, and for a person.</p>
+      </div>
+    </figure>
+    <table class="measured" id="rooms">
+      <thead><tr><th>organisation</th><th>roles that become experts</th><th>what goes in the two drawers</th></tr></thead>
+      <tbody>
+        <tr><td>a clinic</td><td>front desk, nursing procedures, billing and coding, purchasing, staffing</td><td>the unit&rsquo;s protocols over the textbook&rsquo;s &middot; formulary, tariffs, payer rules</td></tr>
+        <tr><td>an accounting or law office</td><td>intake, document review, deadlines, billing</td><td>the firm&rsquo;s checklists and templates &middot; the rules of its jurisdiction</td></tr>
+        <tr><td>a warehouse or distributor</td><td>receiving, dispatch, purchasing, claims</td><td>the site&rsquo;s handling procedures &middot; catalogue, carriers, service levels</td></tr>
+        <tr><td>a school or training centre</td><td>enrolment, teaching support, communications, purchasing</td><td>how this school handles each case &middot; programme, calendar, regulations</td></tr>
+        <tr><td>a property manager</td><td>tenant requests, maintenance, collections, suppliers</td><td>the escalation procedure per building &middot; contracts, by-laws, supplier terms</td></tr>
+      </tbody>
+    </table>
+    <p class="note"><span class="chip warn">not measured</span>&nbsp; These are where the design points,
+      not results. What they share is what makes a region worth an expert: the same few procedures,
+      repeated daily, with local rules that differ from the textbook, over data that should not leave.
+      The first library in the repository is the clinic&rsquo;s second role: IV-therapy nursing procedures.</p>
   </section>
 
   <section id="teams">
