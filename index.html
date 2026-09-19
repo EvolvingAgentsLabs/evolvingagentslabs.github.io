@@ -3,26 +3,25 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<title>Evolving Agents Labs — agent systems that turn into weights, and numbers you can check</title>
-<meta name="description" content="The entire agentic system is a set of QLoRA adapters over one base model. Experts draft, a frontier model verifies, and then the frontier is withdrawn and only a router replaces it.">
-<meta property="og:title" content="Evolving Agents Labs — agent systems that turn into weights">
-<meta property="og:description" content="The entire agentic system is a set of QLoRA adapters over one base model. Experts draft, a frontier model verifies, and then the frontier is withdrawn and only a router replaces it.">
+<title>Evolving Agents Labs — experts defined by their corpora, and numbers you can check</title>
+<meta name="description" content="Experts are QLoRA adapters defined by their corpora, over one small resident model. A router sends each request to the expert whose corpus it falls in, or out to a frontier model. Each expert gets a library it has learned to navigate.">
+<meta property="og:title" content="Evolving Agents Labs — the LoRA is not the textbook; it is the specialist who knows how to use the library">
+<meta property="og:description" content="Experts are QLoRA adapters defined by their corpora, over one small resident model. A router sends each request to the expert whose corpus it falls in, or out to a frontier model. Each expert gets a library it has learned to navigate.">
 <meta property="og:type" content="website">
 <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Crect x='2' y='2' width='13' height='13' rx='4' fill='%23F2F2F7'/%3E%3Crect x='17' y='2' width='13' height='13' rx='4' fill='%23F2F2F7'/%3E%3Crect x='2' y='17' width='13' height='13' rx='4' fill='%23F2F2F7'/%3E%3Crect x='18' y='18' width='11' height='11' rx='3' fill='none' stroke='%23F2F2F7' stroke-width='2' opacity='.42'/%3E%3C/svg%3E">
-<meta name="theme-color" content="#000000">
-<meta name="color-scheme" content="dark">
+<meta name="theme-color" content="#F4ECDB">
+<meta name="color-scheme" content="light">
 <!-- No webfont link, deliberately. This site publishes numbers it says you
      can check with the machine in front of you, and /verify/ already refuses
      a stylesheet from fonts.googleapis.com for exactly that reason. The two
      stacks below are the demo's, and they are already on the machine. -->
 <link rel="stylesheet" href="/assets/site.css">
 <style>
-  /* Scoped to this page: one row of the prior-art table is ours, and site.css
-     has no rule for "this row is the one you are reading about". Everything
-     else that used to live here — the table, the diagrams, the boundary rule —
-     is in site.css now, because a second page wanted it. */
-  #evidence tr.ours td{background:rgba(10,132,255,.08);color:var(--ink);}
-  #evidence tr.ours td:first-child{color:var(--blue);}
+  /* Scoped to this page: the measured table is prose in its first two columns,
+     so it wraps where the evidence tables elsewhere do not. */
+  #evidence td,#evidence th{white-space:normal;}
+  #evidence td:first-child{color:var(--ink);min-width:16rem;}
+  #evidence td:last-child{white-space:nowrap;}
 </style>
 </head>
 <body>
@@ -32,6 +31,7 @@
       <a class="wordmark" href="/"><svg class="mark" viewBox="0 0 32 32" aria-hidden="true"><rect x="2" y="2" width="13" height="13" rx="4" fill="currentColor"/><rect x="17" y="2" width="13" height="13" rx="4" fill="currentColor"/><rect x="2" y="17" width="13" height="13" rx="4" fill="currentColor"/><rect x="18" y="18" width="11" height="11" rx="3" fill="none" stroke="currentColor" stroke-width="2" opacity=".42"/></svg>Evolving Agents Labs</a>
       <nav class="navlinks">
         <a href="#lora-kernel">lora-kernel</a>
+        <a href="#evidence">Measured</a>
         <a href="/archive/">Archive</a>
         <a href="https://github.com/EvolvingAgentsLabs">GitHub</a>
       </nav>
@@ -41,143 +41,131 @@
 
 <div class="wrap">
 
-
-
   <!--
-    The home page is lora-kernel and nothing else. The ai-os page was deleted
-    on 2026-09-06 — the work itself is not gone, it lives in the evolving-agents
-    repository, and the numbers it published are still checked nightly on the
-    pages that carry them.
+    The home page is lora-kernel and nothing else. Rewritten 2026-09-19: the page
+    it replaces said "specified, nothing built" and described an architecture the
+    project has since redesigned. Every number below is read from a results file
+    in the lora-kernel repository and checked nightly by scripts/check-numbers.py.
   -->
   <section class="hero" id="lora-kernel">
-    <div class="hero-mark">
-      <div>
-        <p class="eyebrow">The new flagship &middot; <a href="https://github.com/EvolvingAgentsLabs/lora-kernel">lora-kernel</a></p>
-        <h1>The entire agentic system is a set of <span class="proj">QLoRA</span> adapters over one base model.</h1>
-        <p>No router model. No JSON schemas in the system prompt. No parser guessing
-          whether the model meant to call a tool. One GPU, one resident base, and a
-          pool of small weight deltas swapped per request by vLLM.
-          <b>The multi-agent framework does not get simpler — it turns into
-          weights.</b></p>
-        <p class="ctas">
-          <a class="cta primary" href="https://github.com/EvolvingAgentsLabs/lora-kernel/blob/main/docs/the-frontier-is-scaffolding.md">Read the article &rarr;</a>
-          <a class="cta" href="https://github.com/EvolvingAgentsLabs/lora-kernel/blob/main/docs/ARCHITECTURE.md">Architecture</a>
-          <a class="cta" href="https://github.com/EvolvingAgentsLabs/lora-kernel">Repository</a>
-        </p>
-        <p class="note"><span class="chip warn">specified &middot; nothing built</span>
-          &nbsp;Every external claim is marked <code>[read]</code> and cited; there
-          is no <code>[ran]</code> yet. <b>Below: the eight steps it runs in.</b></p>
-      </div>
-    </div>
+    <p class="eyebrow">The flagship &middot; <a href="https://github.com/EvolvingAgentsLabs/lora-kernel">lora-kernel</a> &middot; Apache 2.0</p>
+    <h1>The LoRA is not the textbook. It is the specialist who knows how to use the <span class="proj">library</span>.</h1>
+    <p>One GPU, one small resident model, and a shelf of QLoRA adapters &mdash; each an
+      expert <b>defined by its corpus</b>. An OpenAI-compatible API reads every request,
+      serves it with the expert whose corpus it falls in, and sends everything else to a
+      frontier model. The client names no model.</p>
+    <p>Version 1.0 adds what a small expert cannot hold in its weights: a library of short
+      notes per subdomain, and an adapter trained on the <i>habit of navigating it</i>.
+      The weights hold the navigation; the notes hold the content, and a person can read,
+      diff and correct them.</p>
+    <p class="ctas">
+      <a class="cta primary" href="https://github.com/EvolvingAgentsLabs/lora-kernel/blob/main/docs/articles/2026-09-it-was-the-harness.md">Read: it was the harness &rarr;</a>
+      <a class="cta" href="https://github.com/EvolvingAgentsLabs/lora-kernel/blob/main/docs/articles/2026-09-era-el-arnes.es.md">En espa&ntilde;ol</a>
+      <a class="cta" href="https://github.com/EvolvingAgentsLabs/lora-kernel/blob/main/docs/MEMORY.md">The memory</a>
+      <a class="cta" href="https://github.com/EvolvingAgentsLabs/lora-kernel">Repository</a>
+    </p>
+    <figure class="plate">
+      <img src="/assets/img/lora-kernel/hero.jpg" width="1800" height="720"
+           alt="A reader at a desk before a wall of card-catalogue drawers labelled Procedures and Encyclopedia; a small radar dish on the desk lights three drawers; through an open door, a domed building on a hill labelled frontier.">
+      <figcaption>The specialist, the library, the radar that lights the drawers worth opening &mdash;
+        and, through the door, the frontier for everything else.</figcaption>
+    </figure>
   </section>
 
-
-  <!--
-    The stage. A band in a different register from the rest of the page: Apple's
-    dark palette, one idea per frame, and it runs the architecture rather than
-    describing it — because what is being explained is a process with a before
-    and an after, and prose makes a reader hold four states in their head.
-    Behaviour and the argument for it are in assets/stage.js.
-  -->
-  <section class="stage" id="stage" tabindex="-1" aria-roledescription="explainer">
-    <div class="stage-in">
-      <p class="kicker">How it works</p>
-      <h2 data-h>&nbsp;</h2>
-      <p class="say" data-say>&nbsp;</p>
-
-      <div class="stg-rig">
-        <div>
-          <p class="stg-lbl">the host &mdash; vLLM, one GPU</p>
-          <div class="stg-base">BASE MODEL &nbsp;&middot;&nbsp; resident</div>
-          <p class="stg-lbl">adapters &mdash; the whole agentic system</p>
-          <div class="stg-chips">
-            <div class="stg-chip" data-chip><b>harness.lora</b><span class="r">kernel</span></div>
-            <div class="stg-chip" data-chip><b>clinical-admin</b><span class="r">expert</span></div>
-            <div class="stg-chip" data-chip><b>contract-review</b><span class="r">expert</span></div>
-            <div class="stg-chip" data-chip><b>incident-triage</b><span class="r">expert</span></div>
-          </div>
-        </div>
-
-        <div>
-          <div class="stg-cost"><span>the pass</span><span class="rule"></span><span class="v" data-cost>cost: &mdash;</span></div>
-          <div class="stg-branches">
-            <div class="stg-branch" data-branch>code this referral</div>
-            <div class="stg-branch" data-branch>flag this clause</div>
-            <div class="stg-branch" data-branch>page the on-call</div>
-          </div>
-          <div class="stg-verifier" data-verifier>FRONTIER MODEL &mdash; verifies every branch</div>
-          <p class="stg-lbl" style="margin-top:1.1rem">acceptance, per region</p>
-          <div class="stg-bars">
-            <div class="stg-bar"><span class="n">clinical</span><span class="t"><span class="f" data-fill></span></span><span class="v" data-val>&mdash;</span></div>
-            <div class="stg-bar"><span class="n">contract</span><span class="t"><span class="f" data-fill></span></span><span class="v" data-val>&mdash;</span></div>
-            <div class="stg-bar"><span class="n">triage</span><span class="t"><span class="f" data-fill></span></span><span class="v" data-val>&mdash;</span></div>
-          </div>
-        </div>
-      </div>
-
-      <div class="stg-ctl">
-        <button class="stg-btn" data-toggle aria-label="Pause the explainer">Pause</button>
-        <div class="stg-seg" role="group" aria-label="Steps">
-          <button data-seg aria-label="Step 1"><i></i></button>
-          <button data-seg aria-label="Step 2"><i></i></button>
-          <button data-seg aria-label="Step 3"><i></i></button>
-          <button data-seg aria-label="Step 4"><i></i></button>
-          <button data-seg aria-label="Step 5"><i></i></button>
-          <button data-seg aria-label="Step 6"><i></i></button>
-          <button data-seg aria-label="Step 7"><i></i></button>
-          <button data-seg aria-label="Step 8"><i></i></button>
-        </div>
-        <span class="stg-note">click any step, or use &larr; &rarr;</span>
-      </div>
-      <p class="visually-hidden" data-live aria-live="polite"></p>
-    </div>
-  </section>
-
-  <section id="all-is-lora">
-    <p class="sectionlabel">What each piece becomes</p>
+  <section id="finding">
+    <p class="sectionlabel">The finding that reorganised the project</p>
     <div class="pillars">
       <article>
-        <h2>harness.lora</h2>
-        <p class="question">What if the tool protocol lived in weights, not in the prompt?</p>
-        <p class="note"><b>Specified.</b> One adapter trained on nothing but the
-          execution protocol — tool syntax, state transitions, error shapes, and
-          <b>action tokens</b> emitted natively rather than recovered by a parser.
-          The schema leaves the context window. The domain adapter thinks; the
-          kernel acts. It has to beat a training-free baseline this organisation
-          already measured, and a constrained decoder that makes malformed output
-          impossible rather than unlikely.</p>
+        <h2>11 of 90 became 90 of 90</h2>
+        <p class="question">Same adapter, same cases. Only the serving path changed.</p>
+        <p class="note">A fluid-mechanics expert &mdash; 6-to-9-step chains with a calculator and a
+          per-case handbook &mdash; scored <b>11/90</b> when tool results came back as
+          <code>tool_calls</code> messages. Written inline, the way its corpus taught it to read them,
+          it scores <b>90/90</b> (79&nbsp;:&nbsp;0, paired). For four days that gap had been read as
+          &ldquo;small models cannot reason&rdquo;.</p>
       </article>
       <article>
-        <h2>domain QLoRAs</h2>
-        <p class="question">What if an agent were a few hundred megabytes of delta?</p>
-        <p class="note"><b>Specified.</b> User space. Hot-swapped per request,
-          batched by vLLM's multi-LoRA serving, versioned like code, scored,
-          promoted and retired. Several per sub-domain, competing.</p>
+        <h2>An expert is its corpus</h2>
+        <p class="question">Tool block, argument order, system prompt, result format.</p>
+        <p class="note">Under a foreign system prompt 2 of 32 live turns call a tool; under its own,
+          19 of 32. Serve an expert the way its corpus taught it, and suspect the path before
+          the model.</p>
       </article>
       <article>
-        <h2>the router</h2>
-        <p class="question">What if routing were a by-product rather than a call?</p>
-        <p class="note"><b>Specified.</b> While the frontier verifies, the router
-          <i>is</i> the acceptance rate — free, because the tokens were generated
-          and the pass was already happening. After withdrawal it is a small model
-          fitted to the surface that phase produced, and it is the only thing left
-          where the frontier used to be.</p>
+        <h2>The pool moved to Qwen&nbsp;3.x</h2>
+        <p class="question">Same corpora, same recipe, a new base.</p>
+        <p class="note">Both released members were retrained on <code>Qwen3.5-4B</code> and each
+          ties its own earlier release: inbox triage <b>471/475</b>, desk commitments
+          <b>240/240</b>.</p>
       </article>
       <article>
-        <h2>what stays text</h2>
+        <h2>What stays text</h2>
         <p class="question">What deliberately never becomes a weight?</p>
-        <p class="note"><b>Two things, and it is not aesthetics.</b> Memory, as
-          markdown under git — a weight delta cannot be read, diffed, cited or
-          corrected by a person. And execution, as a sandbox where tools actually
-          run. Everything this lab has measured about memory says the durable asset
-          is the part a human can read.</p>
+        <p class="note">The library. A weight delta cannot be read, cited or corrected by a person;
+          a half-page note can. Site rules override the textbook before the expert ever sees
+          the note.</p>
       </article>
     </div>
-    <p class="note">The engineering state is stated rather than assumed: multi-LoRA
-      over one target and tree-structured verification ship in vLLM today;
-      <a href="https://github.com/vllm-project/vllm/issues/52038">LoRA-as-drafter is an open RFC</a>
-      filed in August 2026, and the KV cache across different adapters is the hard
-      part, named rather than waved at.</p>
+  </section>
+
+  <section id="core">
+    <p class="sectionlabel">The core of version 1.0</p>
+    <figure class="plate">
+      <img src="/assets/img/lora-kernel/core-1-0.jpg" loading="lazy"
+           alt="The five parts of version 1.0: experts, router, memory, runtime and the release contract.">
+      <figcaption>Five things: experts, a router, the memory, a runtime that referees, and a release
+        contract that nothing ships without.</figcaption>
+    </figure>
+    <figure class="plate">
+      <img src="/assets/img/lora-kernel/memory-walkthrough.jpg" loading="lazy"
+           alt="A walk through the memory: a question, a search that lights a few notes, notes opened one after another, a calculation, an answer.">
+      <figcaption>Three verbs &mdash; <code>search</code>, <code>open</code>, <code>calc</code> &mdash;
+        with results written inline. A software referee turns the pages, applies the site's rules
+        and cuts a walk that skips a required step.</figcaption>
+    </figure>
+    <p class="note"><span class="chip warn">being built</span>&nbsp; The first library exists &mdash;
+      IV-therapy nursing procedures from Open RN <i>Nursing Skills</i> (CC&nbsp;BY&nbsp;4.0), as short linked
+      notes that pass a lint. The central claim is <b>untested</b>: that a library extends an expert
+      to a procedure it never trained on.</p>
+  </section>
+
+  <section id="evidence">
+    <p class="sectionlabel">What is measured</p>
+    <table class="measured">
+      <thead><tr><th>what</th><th>the number</th><th>run</th></tr></thead>
+      <tbody>
+        <tr><td>A reasoning expert served the way its corpus taught</td>
+            <td><b>90/90</b> against <b>11/90</b> through <code>tool_calls</code>, 79&nbsp;:&nbsp;0 paired</td><td class="run">M7 arm 0b</td></tr>
+        <tr><td>Inbox triage, retrained on <code>Qwen3.5-4B</code></td>
+            <td><b>471/475</b>, a tie with its earlier release; the bare base scores 346/475</td><td class="run">M1</td></tr>
+        <tr><td>A second expert on the same inbox, a different question</td>
+            <td><b>240/240</b>, a tie with its earlier release</td><td class="run">M1</td></tr>
+        <tr><td>The API routes per request; the client names no model</td>
+            <td>0.546 &rarr; 0.775 on a 240-case replay, 0 misrouted</td><td class="run">P41, P62</td></tr>
+        <tr><td>A procedure merely pasted into a 3B&rsquo;s prompt is not followed</td>
+            <td>0 tool calls on 351/351; the trained expert beats it 137&nbsp;:&nbsp;1</td><td class="run">P61</td></tr>
+      </tbody>
+    </table>
+    <p class="sectionlabel">What is not, or does not work</p>
+    <ul class="note">
+      <li><b>No real data yet.</b> Every suite so far is generated.</li>
+      <li><b>The router is still a keyword dictionary.</b> Two learned replacements &mdash; n-grams and
+        embeddings &mdash; both lose every request from a sender they never saw.</li>
+      <li><b>The memory&rsquo;s central claim is untested</b>, and the saving in money has never been measured.</li>
+    </ul>
+    <p class="note">The full ledger, including everything that failed and the instruments that lied:
+      <a href="https://github.com/EvolvingAgentsLabs/lora-kernel/blob/main/docs/RECORD.md">RECORD.md</a>. The position:
+      <a href="https://github.com/EvolvingAgentsLabs/lora-kernel/blob/main/docs/PLAN.md">PLAN.md</a>.</p>
+  </section>
+
+  <section id="teams">
+    <p class="sectionlabel">For a team running agents together</p>
+    <figure class="plate">
+      <img src="/assets/img/lora-kernel/article-team.jpg" loading="lazy"
+           alt="Four teams and their direct messages flow through an agent runtime and a proxy to one GPU holding one small resident model and an adapter per team, each with two drawers: how this team does it, what this team knows. A dashed line leads to the frontier as fallback.">
+      <figcaption>Many teams, one machine. The group a message arrives from <i>is</i> the route: each
+        team gets an adapter and two drawers &mdash; how this team does it, what this team knows.</figcaption>
+    </figure>
   </section>
 
   <footer class="foot">
@@ -191,6 +179,5 @@
 
 </div>
 
-<script src="/assets/stage.js" defer></script>
 </body>
 </html>

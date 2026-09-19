@@ -27,8 +27,8 @@ ICON = (
     "%3Crect x='2' y='17' width='13' height='13' rx='4' fill='%23F2F2F7'/%3E"
     "%3Crect x='18' y='18' width='11' height='11' rx='3' fill='none' "
     "stroke='%23F2F2F7' stroke-width='2' opacity='.42'/%3E%3C/svg%3E\">\n"
-    '<meta name="theme-color" content="#000000">\n'
-    '<meta name="color-scheme" content="dark">'
+    '<meta name="theme-color" content="#F4ECDB">\n'
+    '<meta name="color-scheme" content="light">'
 )
 
 #: The mark, inline, so a page renders it with no request of its own. Four
