@@ -24,8 +24,6 @@
   #rooms th,#rooms td{text-align:left;padding:.55rem .7rem;border-bottom:1px solid var(--sep);vertical-align:top;color:var(--dim);}
   #rooms th{font:600 10px/1.4 var(--sans);letter-spacing:.06em;text-transform:uppercase;color:var(--faint);}
   #rooms td:first-child{color:var(--ink);font-weight:600;white-space:nowrap;}
-  .wanted-frame{border:1px dashed var(--faint);border-radius:var(--r-l);background:var(--bg-2);padding:clamp(1.25rem,4vw,2.5rem);}
-  .wanted-frame p{margin:0;max-width:72ch;font-size:.9375rem;line-height:1.6;color:var(--dim);}
   #evidence td:first-child{color:var(--ink);min-width:16rem;}
   #evidence td:last-child{white-space:nowrap;}
 </style>
@@ -187,18 +185,11 @@
           building.</p>
       </article>
     </div>
-    <!-- PICTURE WANTED: /assets/img/lora-kernel/solution-architecture.jpg — the brief lives in
-         lora-kernel/docs/img/README.md under `solution-architecture.png`. Until it arrives the frame
-         below says what it will show, rather than leaving a hole or a broken image. -->
-    <figure class="plate wanted">
-      <div class="wanted-frame" role="img" aria-label="Illustration to come: the solution architecture">
-        <p><b>Illustration to come.</b> Five layers, top to bottom: people in four roles; an agent
-          runtime with one agent per role; scheduling and back-office applications; app and messaging
-          channels; one database with identity, payments and monitoring. Under the agent column, one
-          graphics card drawn as a bookshelf &mdash; a thick spine for the resident model, a thin spine
-          per role, two drawers of notes under each. A signpost routes by role; dashed lines leave for
-          the frontier, and for a person.</p>
-      </div>
+    <figure class="plate">
+      <img src="/assets/img/lora-kernel/solution-architecture.jpg" loading="lazy"
+           alt="A solution architecture in five layers: people in four roles; an agent runtime with one agent per role; scheduling and back-office applications; app and messaging channels; one database with identity, payments and monitoring. Under the agents, one graphics card drawn as a bookshelf: one thick spine, the resident model, and a thin spine per role, each with two drawers of notes. A signpost routes by role; dashed lines leave for the frontier and for a person.">
+      <figcaption>A clinic, as the example: one adapter per role under the agent column, two drawers of
+        notes under each, the role as the route &mdash; and the systems of record left where they are.</figcaption>
     </figure>
     <table class="measured" id="rooms">
       <thead><tr><th>organisation</th><th>roles that become experts</th><th>what goes in the two drawers</th></tr></thead>
