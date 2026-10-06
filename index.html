@@ -36,6 +36,7 @@
       <nav class="navlinks">
         <a href="#lora-kernel">lora-kernel</a>
         <a href="#evidence">Measured</a>
+        <a href="#agentvcs">agentvcs</a>
         <a href="/archive/">Archive</a>
         <a href="https://github.com/EvolvingAgentsLabs">GitHub</a>
       </nav>
@@ -46,10 +47,12 @@
 <div class="wrap">
 
   <!--
-    The home page is lora-kernel and nothing else. Rewritten 2026-09-19: the page
+    The home page is lora-kernel first. Rewritten 2026-09-19: the page
     it replaces said "specified, nothing built" and described an architecture the
     project has since redesigned. Every number below is read from a results file
     in the lora-kernel repository and checked nightly by scripts/check-numbers.py.
+    2026-10-06: agentvcs was revived and gets one section at the end, after
+    lora-kernel's. It publishes no numbers here until its benchmark is done.
   -->
   <section class="hero" id="lora-kernel">
     <p class="eyebrow">The flagship &middot; <a href="https://github.com/EvolvingAgentsLabs/lora-kernel">lora-kernel</a> &middot; Apache 2.0</p>
@@ -216,6 +219,26 @@
       <figcaption>Many teams, one machine. The group a message arrives from <i>is</i> the route: each
         team gets an adapter and two drawers &mdash; how this team does it, what this team knows.</figcaption>
     </figure>
+  </section>
+
+  <section id="agentvcs">
+    <p class="sectionlabel">Also active &middot; <a href="https://github.com/EvolvingAgentsLabs/agentvcs">agentvcs</a> &middot; Apache 2.0</p>
+    <div class="pillars">
+      <article>
+        <h2>agentvcs</h2>
+        <p class="question">Version control for live-patched agent systems: change your harness while it runs and still know what worked.</p>
+        <p class="note"><span class="chip warn">revived &mdash; validation in progress</span>&nbsp; One commit
+          carries the code, the goal, the model pins and the trace of an agent system together, so a
+          change made while the system runs is versioned next to the one your team made in git &mdash;
+          and the two can be compared and merged instead of one overwriting the other. It was frozen
+          in 2026 and is active again. Benchmark in progress.</p>
+        <p class="ctas">
+          <a class="cta primary" href="https://github.com/EvolvingAgentsLabs/agentvcs">Repository &rarr;</a>
+          <a class="cta" href="https://github.com/EvolvingAgentsLabs/agentvcs#readme">Quickstart: see the README</a>
+          <a class="cta" href="/experiments/agentvcs/">The write-up</a>
+        </p>
+      </article>
+    </div>
   </section>
 
   <footer class="foot">

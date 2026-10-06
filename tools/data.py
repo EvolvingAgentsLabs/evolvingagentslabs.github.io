@@ -102,9 +102,11 @@ the right to change.</p>"""),
         ],
     ),
     dict(
-        slug="agentvcs", image="agentvcs", image_alt="Two branches diverge and merge, sealed once the eval passes", name="agentvcs", badge="reproducible",
-        date="Jul 2026", sort="2026-07-24",
-        question="What if an agent's autonomous evolution could be merged back into your release, like any other branch?",
+        slug="agentvcs", image="agentvcs", image_alt="Two branches diverge and merge, sealed once the eval passes", name="agentvcs", badge="prototype",
+        # Revived 2026-10-06 — validation in progress. The archive row and the detail
+        # page are hand-edited (Live badge, revived banner); keep them in step.
+        date="Oct 2026", sort="2026-10-06",
+        question="Version control for live-patched agent systems: change your harness while it runs and still know what worked.",
         blurb="Version control where one commit carries code, goal, model pins, trace and sub-agent swarm together, and conflicts are handed to a reconciler over a plain stdin/stdout contract.",
         repo="https://github.com/EvolvingAgentsLabs/agentvcs",
         demo=None,
@@ -134,13 +136,13 @@ refuses unless the declared eval passes on every run, and <code>--force</code> p
 stamps <code>verified: false</code> rather than quietly lying. "Crystallized" means "proven",
 enforced in code rather than in the README.</p>"""),
             ("What's proven", """
-<p><strong>190 tests pass in 2.9 seconds.</strong> CI runs the matrix across Python
-3.10–3.13 plus an end-to-end smoke test that executes the demo and asserts a scorecard ≥5/6.
-Packaged on PyPI with zero runtime dependencies.</p>
-<pre><code>git clone https://github.com/EvolvingAgentsLabs/agentvcs
-cd agentvcs &amp;&amp; pip install -e .
-bash examples/eve-evolve-merge/demo.sh   # offline, no API key, seconds</code></pre>
-<p>That demo forks a RefundBot into a runtime line and a design-time line and merges them,
+<p>As frozen in July 2026: <strong>212 tests pass across Python 3.10–3.13.</strong> CI runs
+the full version matrix plus an end-to-end smoke test that executes the demo and asserts a
+scorecard ≥5/6. The revived version is not yet validated against this.</p>
+<p><strong>Quickstart: see the
+<a href="https://github.com/EvolvingAgentsLabs/agentvcs#readme">repository README</a>.</strong>
+Install from source; it is not on PyPI or crates.io.</p>
+<p>The July demo forks a RefundBot into a runtime line and a design-time line and merges them,
 producing a marker-free skill containing both rule sets and a swarm containing both
 sub-agents.</p>
 <p><strong>What to know before you trust it.</strong> The demo's reconciler is a

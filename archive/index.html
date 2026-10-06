@@ -41,8 +41,9 @@
     <div class="frozen-banner"><b>Everything under &ldquo;Frozen&rdquo; is
       archived and read-only</b> — kept because it is still true, not because it is
       maintained. The live work is listed first, and it is a short list: the
-      organisation's active project is
-      <a href="https://github.com/EvolvingAgentsLabs/lora-kernel">lora-kernel</a>.
+      organisation's main active project is
+      <a href="https://github.com/EvolvingAgentsLabs/lora-kernel">lora-kernel</a>,
+      and <a href="/experiments/agentvcs/">agentvcs</a> has been revived beside it.
       Several of the ideas below are carried forward in it. What the twenty-six of
       them added up to is written down once, in
       <a href="/thesis/">the thesis</a>.</div>
@@ -79,6 +80,20 @@
         <p class="note">QLoRA experts defined by their corpora over one small resident model, behind an API that routes each request to the expert whose corpus it falls in and sends the rest to a frontier model. <b>Running:</b> two released experts, and a reasoning expert that went from 11/90 to 90/90 when it was served the way its corpus taught it. <b>Being built:</b> a library of notes per subdomain and an adapter trained to navigate it. The numbers are on <a href="/#evidence">the front page</a>.</p>
       </span>
       <span class="meta">Sep 2026 <span class="arrow" aria-hidden="true">&rarr;</span></span>
+    </a>
+
+    <a class="row" href="/experiments/agentvcs/">
+      <span class="thumb"><img src="/assets/img/agentvcs.jpg" alt="" aria-hidden="true" loading="lazy"></span>
+      <span class="rowhead">
+        <span class="name">agentvcs</span>
+        <span class="badge live">Live</span>
+        <span class="badge prototype">Prototype</span>
+      </span>
+      <span>
+        <p class="question">Version control for live-patched agent systems: change your harness while it runs and still know what worked.</p>
+        <p class="note"><b>Revived &mdash; validation in progress.</b> One commit carries code, goal, model pins and trace together, so a change an agent system makes to itself while running is versioned beside the one your team makes in git, and the two can be merged. It was folded into evolving-agents and frozen; it is its own repository again, and active. Benchmark in progress.</p>
+      </span>
+      <span class="meta">Oct 2026 <span class="arrow" aria-hidden="true">&rarr;</span></span>
     </a>
 
     <a class="row" href="/coclea-sr/">
@@ -138,19 +153,6 @@
 
     <p class="sectionlabel">Folded into evolving-agents before it froze — the write-ups stay</p>
 
-    <a class="row" href="/experiments/agentvcs/">
-      <span class="thumb"><img src="/assets/img/agentvcs.jpg" alt="" aria-hidden="true" loading="lazy"></span>
-      <span class="rowhead">
-        <span class="name">agentvcs</span>
-        <span class="badge reproducible">Reproducible</span>
-        <span class="badge moved">Moved</span>
-      </span>
-      <span>
-        <p class="question">What if an agent's autonomous evolution could be merged back into your release, like any other branch?</p>
-        <p class="note">Version control where one commit carries code, goal, model pins, trace and sub-agent swarm together, and conflicts are handed to a reconciler over a plain stdin/stdout contract. Now the engine under the evolving-agents plugin, at <code>packages/agentvcs</code>.</p>
-      </span>
-      <span class="meta">Jul 2026 <span class="arrow" aria-hidden="true">→</span></span>
-    </a>
     <a class="row" href="/experiments/evolving-robot/">
       <span class="thumb"><img src="/assets/img/evolving-robot.jpg" alt="" aria-hidden="true" loading="lazy"></span>
       <span class="rowhead">
