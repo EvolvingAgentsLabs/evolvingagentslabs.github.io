@@ -5,7 +5,9 @@ Source for **[evolvingagentslabs.github.io](https://evolvingagentslabs.github.io
 > The LoRA is not the textbook; it is the specialist who knows how to use the library.
 
 The site leads with **[lora-kernel](https://github.com/EvolvingAgentsLabs/lora-kernel)**, the
-organisation's active project. Everything else is frozen and lives under `/archive/`.
+organisation's main active project. **[agentvcs](https://github.com/EvolvingAgentsLabs/agentvcs)**
+was revived on 2026-10-06 (validation in progress) and has one section at the end of the
+home, plus its detail page. Everything else is frozen and lives under `/archive/`.
 
 ## Structure
 

@@ -3,10 +3,10 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<title>Evolving Agents Labs — experts defined by their corpora, and numbers you can check</title>
-<meta name="description" content="Experts are QLoRA adapters defined by their corpora, over one small resident model. A router sends each request to the expert whose corpus it falls in, or out to a frontier model. Each expert gets a library it has learned to navigate.">
-<meta property="og:title" content="Evolving Agents Labs — the LoRA is not the textbook; it is the specialist who knows how to use the library">
-<meta property="og:description" content="Experts are QLoRA adapters defined by their corpora, over one small resident model. A router sends each request to the expert whose corpus it falls in, or out to a frontier model. Each expert gets a library it has learned to navigate.">
+<title>Evolving Agents Labs — lora-kernel and agentvcs</title>
+<meta name="description" content="Two open projects. lora-kernel: experts are QLoRA adapters defined by their corpora, over one small resident model, each with a library it has learned to navigate. agentvcs: version control for live-patched agent systems.">
+<meta property="og:title" content="Evolving Agents Labs — lora-kernel and agentvcs">
+<meta property="og:description" content="Two open projects. lora-kernel: experts are QLoRA adapters defined by their corpora, over one small resident model, each with a library it has learned to navigate. agentvcs: version control for live-patched agent systems.">
 <meta property="og:type" content="website">
 <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Crect x='2' y='2' width='13' height='13' rx='4' fill='%23F2F2F7'/%3E%3Crect x='17' y='2' width='13' height='13' rx='4' fill='%23F2F2F7'/%3E%3Crect x='2' y='17' width='13' height='13' rx='4' fill='%23F2F2F7'/%3E%3Crect x='18' y='18' width='11' height='11' rx='3' fill='none' stroke='%23F2F2F7' stroke-width='2' opacity='.42'/%3E%3C/svg%3E">
 <meta name="theme-color" content="#F4ECDB">
@@ -36,6 +36,8 @@
       <nav class="navlinks">
         <a href="#lora-kernel">lora-kernel</a>
         <a href="#evidence">Measured</a>
+        <a href="#agentvcs">agentvcs</a>
+        <a href="#anfaia">ANFAIA</a>
         <a href="/archive/">Archive</a>
         <a href="https://github.com/EvolvingAgentsLabs">GitHub</a>
       </nav>
@@ -46,11 +48,31 @@
 <div class="wrap">
 
   <!--
-    The home page is lora-kernel and nothing else. Rewritten 2026-09-19: the page
-    it replaces said "specified, nothing built" and described an architecture the
-    project has since redesigned. Every number below is read from a results file
-    in the lora-kernel repository and checked nightly by scripts/check-numbers.py.
+    The home page is the lab's two public projects: lora-kernel first, then agentvcs.
+    Every lora-kernel number below is read from a results file in the lora-kernel
+    repository and checked nightly by scripts/check-numbers.py. agentvcs publishes
+    no numbers here until its validation is done.
   -->
+  <section id="projects">
+    <p class="sectionlabel">Two open projects</p>
+    <div class="pillars">
+      <article>
+        <h2><a href="#lora-kernel">lora-kernel</a></h2>
+        <p class="question">Experts defined by their corpora, over one small resident model.</p>
+        <p class="note"><span class="chip ok">active</span>&nbsp; Each expert is a QLoRA adapter with a
+          library it has learned to navigate; a router sends each request to the expert whose corpus it
+          falls in, or out to a frontier model. Numbers on this page are checked nightly.</p>
+      </article>
+      <article>
+        <h2><a href="#agentvcs">agentvcs</a></h2>
+        <p class="question">Version control for live-patched agent systems.</p>
+        <p class="note"><span class="chip warn">revived &mdash; validation in progress</span>&nbsp; Change
+          your harness while it runs and still know what worked: every step stamped with the harness
+          version that produced it.</p>
+      </article>
+    </div>
+  </section>
+
   <section class="hero" id="lora-kernel">
     <p class="eyebrow">The flagship &middot; <a href="https://github.com/EvolvingAgentsLabs/lora-kernel">lora-kernel</a> &middot; Apache 2.0</p>
     <h1>The LoRA is not the textbook. It is the specialist who knows how to use the <span class="proj">library</span>.</h1>
@@ -216,6 +238,38 @@
       <figcaption>Many teams, one machine. The group a message arrives from <i>is</i> the route: each
         team gets an adapter and two drawers &mdash; how this team does it, what this team knows.</figcaption>
     </figure>
+  </section>
+
+  <section id="agentvcs">
+    <p class="sectionlabel">The second project &middot; <a href="https://github.com/EvolvingAgentsLabs/agentvcs">agentvcs</a> &middot; Apache 2.0</p>
+    <div class="pillars">
+      <article>
+        <h2>agentvcs</h2>
+        <p class="question">Version control for live-patched agent systems: change your harness while it runs and still know what worked.</p>
+        <p class="note"><span class="chip warn">revived &mdash; validation in progress</span>&nbsp; Every step of
+          a long multi-model run is stamped with the exact harness version that produced it &mdash;
+          prompts, models, sampling, tools, adapters, router &mdash; so a patch applied while the system
+          runs can be gated, attributed, rolled back, or resumed from a checkpoint instead of re-running
+          from the start. It was frozen in 2026 and is active again.</p>
+        <p class="ctas">
+          <a class="cta primary" href="https://github.com/EvolvingAgentsLabs/agentvcs">Repository &rarr;</a>
+          <a class="cta" href="https://github.com/EvolvingAgentsLabs/agentvcs#readme">Quickstart: see the README</a>
+          <a class="cta" href="/experiments/agentvcs/">The write-up</a>
+        </p>
+      </article>
+    </div>
+  </section>
+
+  <section id="anfaia">
+    <p class="sectionlabel">Research Lab &middot; ANFAIA</p>
+    <div class="pillars">
+      <article>
+        <h2>ANFAIA Research Lab</h2>
+        <p class="note">agentvcs is among the projects that passed the ANFAIA Research Lab.
+          The work it carries there is the one described above: version control for agent systems
+          that are patched while they run.</p>
+      </article>
+    </div>
   </section>
 
   <footer class="foot">

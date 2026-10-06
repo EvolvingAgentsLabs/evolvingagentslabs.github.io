@@ -4,9 +4,9 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>agentvcs — Evolving Agents Labs</title>
-<meta name="description" content="Version control where one commit carries code, goal, model pins, trace and sub-agent swarm together, and conflicts are handed to a reconciler over a plain stdin/stdout contract.">
+<meta name="description" content="Version control for live-patched agent systems: change your harness while it runs and still know what worked. Revived — validation in progress.">
 <meta property="og:title" content="agentvcs — Evolving Agents Labs">
-<meta property="og:description" content="Version control where one commit carries code, goal, model pins, trace and sub-agent swarm together, and conflicts are handed to a reconciler over a plain stdin/stdout contract.">
+<meta property="og:description" content="Version control for live-patched agent systems: change your harness while it runs and still know what worked. Revived — validation in progress.">
 <meta property="og:type" content="website">
 <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Crect x='2' y='2' width='13' height='13' rx='4' fill='%23F2F2F7'/%3E%3Crect x='17' y='2' width='13' height='13' rx='4' fill='%23F2F2F7'/%3E%3Crect x='2' y='17' width='13' height='13' rx='4' fill='%23F2F2F7'/%3E%3Crect x='18' y='18' width='11' height='11' rx='3' fill='none' stroke='%23F2F2F7' stroke-width='2' opacity='.42'/%3E%3C/svg%3E">
 <meta name="theme-color" content="#F4ECDB">
@@ -24,7 +24,8 @@
       <a class="wordmark" href="/"><svg class="mark" viewBox="0 0 32 32" aria-hidden="true"><rect x="2" y="2" width="13" height="13" rx="4" fill="currentColor"/><rect x="17" y="2" width="13" height="13" rx="4" fill="currentColor"/><rect x="2" y="17" width="13" height="13" rx="4" fill="currentColor"/><rect x="18" y="18" width="11" height="11" rx="3" fill="none" stroke="currentColor" stroke-width="2" opacity=".42"/></svg>Evolving Agents Labs</a>
       <nav class="navlinks">
         <a href="/#lora-kernel">lora-kernel</a>
-        <a href="/archive/" aria-current="page">Archive</a>
+        <a href="/#agentvcs" aria-current="page">agentvcs</a>
+        <a href="/archive/">Archive</a>
         <a href="https://github.com/EvolvingAgentsLabs">GitHub</a>
       </nav>
   </div>
@@ -33,19 +34,24 @@
 <div class="wrap narrow">
 
 
-  <p class="crumb"><a href="/">Evolving Agents Labs</a><span>/</span><a href="/archive/">Archive</a><span>/</span>agentvcs</p>
+  <p class="crumb"><a href="/">Evolving Agents Labs</a><span>/</span><a href="/#agentvcs">Active</a><span>/</span>agentvcs</p>
 
   
-  <div class="frozen-banner"><b>Frozen.</b> This repository is archived and
-    read-only. The organisation's active work is
-    <a href="/">Evolving Agents Labs</a>.</div>
+  <div class="frozen-banner"><b>Revived &mdash; validation in progress.</b> This
+    project was frozen and folded into evolving-agents; it is its own repository again,
+    and active. The organisation's main project remains
+    <a href="/#lora-kernel">lora-kernel</a>. The write-up below describes the version
+    frozen in July 2026; what the revival changes is published in the
+    <a href="https://github.com/EvolvingAgentsLabs/agentvcs">repository</a> as it is
+    validated.</div>
 
   <section class="detail-hero">
     <h1>agentvcs</h1>
-    <p class="question">What if an agent's autonomous evolution could be merged back into your release, like any other branch?</p>
+    <p class="question">Version control for live-patched agent systems: change your harness while it runs and still know what worked.</p>
     <div class="hero-meta">
-      <span class="badge reproducible">Reproducible</span>
-      <span class="when">Jul 2026</span>
+      <span class="badge live">Live</span>
+      <span class="badge prototype">Prototype</span>
+      <span class="when">Oct 2026</span>
     </div>
     <div class="ctas">
       <a class="cta primary" href="https://github.com/EvolvingAgentsLabs/agentvcs">GitHub <span aria-hidden="true">→</span></a>
@@ -145,14 +151,14 @@ proven, reputation that can't be cloned — and a corporate layer
 (<code>init --corporate</code>) with a signed audit log and human approvals.</p>
 
     <h2>What's proven</h2>
-<p><strong>212 tests pass across Python 3.10–3.13.</strong> CI runs the full version matrix
+<p>As frozen in July 2026: <strong>212 tests pass across Python 3.10–3.13.</strong> CI runs the full version matrix
 plus an end-to-end smoke test that executes the agent-loop demo and asserts a scorecard ≥5/6.
-Pure standard library, zero runtime dependencies; install from source (not on PyPI yet).</p>
-<pre><code>git clone https://github.com/EvolvingAgentsLabs/agentvcs
-cd agentvcs &amp;&amp; pip install -e .
-bash examples/business-cases/run.sh      # plain-English demos, offline, seconds
-bash examples/eve-evolve-merge/demo.sh   # the reconcile, offline, no API key</code></pre>
-<p>That demo forks a RefundBot into a runtime line and a design-time line and merges them,
+Pure standard library, zero runtime dependencies. The revived version is not yet validated against this.</p>
+<p><strong>Quickstart: see the
+<a href="https://github.com/EvolvingAgentsLabs/agentvcs#readme">repository README</a>.</strong>
+Install from source; it is not on PyPI or crates.io. The core is being reworked during
+the revival, so the README is the one place the commands are kept current.</p>
+<p>The July demo forks a RefundBot into a runtime line and a design-time line and merges them,
 producing a marker-free skill containing both rule sets and a swarm containing both
 sub-agents.</p>
 <p><strong>What to know before you trust it.</strong> The demo's reconciler is a
