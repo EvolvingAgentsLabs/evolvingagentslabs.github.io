@@ -37,6 +37,7 @@
         <a href="#lora-kernel">lora-kernel</a>
         <a href="#evidence">Measured</a>
         <a href="#agentvcs">agentvcs</a>
+        <a href="#anfaia">ANFAIA</a>
         <a href="/archive/">Archive</a>
         <a href="https://github.com/EvolvingAgentsLabs">GitHub</a>
       </nav>
@@ -227,16 +228,28 @@
       <article>
         <h2>agentvcs</h2>
         <p class="question">Version control for live-patched agent systems: change your harness while it runs and still know what worked.</p>
-        <p class="note"><span class="chip warn">revived &mdash; validation in progress</span>&nbsp; One commit
-          carries the code, the goal, the model pins and the trace of an agent system together, so a
-          change made while the system runs is versioned next to the one your team made in git &mdash;
-          and the two can be compared and merged instead of one overwriting the other. It was frozen
-          in 2026 and is active again. Benchmark in progress.</p>
+        <p class="note"><span class="chip warn">revived &mdash; validation in progress</span>&nbsp; Every step of
+          a long multi-model run is stamped with the exact harness version that produced it &mdash;
+          prompts, models, sampling, tools, adapters, router &mdash; so a patch applied while the system
+          runs can be gated, attributed, rolled back, or resumed from a checkpoint instead of re-running
+          from the start. It was frozen in 2026 and is active again. Benchmark in progress.</p>
         <p class="ctas">
           <a class="cta primary" href="https://github.com/EvolvingAgentsLabs/agentvcs">Repository &rarr;</a>
           <a class="cta" href="https://github.com/EvolvingAgentsLabs/agentvcs#readme">Quickstart: see the README</a>
           <a class="cta" href="/experiments/agentvcs/">The write-up</a>
         </p>
+      </article>
+    </div>
+  </section>
+
+  <section id="anfaia">
+    <p class="sectionlabel">Research Lab &middot; ANFAIA</p>
+    <div class="pillars">
+      <article>
+        <h2>ANFAIA Research Lab</h2>
+        <p class="note">agentvcs is among the projects that passed the ANFAIA Research Lab.
+          The work it carries there is the one described above: version control for agent systems
+          that are patched while they run.</p>
       </article>
     </div>
   </section>
