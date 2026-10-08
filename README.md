@@ -7,7 +7,11 @@ Source for **[evolvingagentslabs.github.io](https://evolvingagentslabs.github.io
 The site leads with **[lora-kernel](https://github.com/EvolvingAgentsLabs/lora-kernel)**, the
 organisation's main active project. **[agentvcs](https://github.com/EvolvingAgentsLabs/agentvcs)**
 was revived on 2026-10-06 (validation in progress) and has one section at the end of the
-home, plus its detail page. Everything else is frozen and lives under `/archive/`.
+home, plus its detail page. The home's **Projects** section lists every public repository
+that is not archived, with a status chip; `/archive/` ends with every archived one
+(`#all-archived`), one line each and where it moved. Both lists are hand-edited — not in
+`tools/data.py` — so re-check them against `gh repo list EvolvingAgentsLabs` when a
+repository is created, archived or moved.
 
 ## Structure
 
