@@ -50,6 +50,12 @@ H0 = "projects/hemo-verified/gates/reports/h0.json"
 LK_RAW = "https://raw.githubusercontent.com/EvolvingAgentsLabs/lora-kernel/{ref}/{path}"
 LK_CORPUS_MODE = "results/M7-arm0b-corpus-mode-20260919/corpus_mode.json"
 LK_POOL = "results/M1-pool-qwen35-20260919/pool_base.json"
+# Added 2026-10-08, when the home stopped saying "no real data yet": the runs on
+# real documents, the edit-after-training test and the router that replaced the
+# keyword dictionary as the proxy's default.
+LK_REAL3 = "results/REAL3-real-corpus-20260930/real3_fresh.json"
+LK_EDIT0 = "results/EDIT0-edit-without-retraining-20261004/verdict.json"
+LK_ROUTE0 = "results/ROUTE0-factored-router-20261002/verdict.json"
 
 
 def fetch(path: str, ref: str, raw: str = RAW) -> dict:
@@ -118,6 +124,24 @@ def lora_kernel_claims(mode: dict, pool: dict) -> list[tuple[str, str, str]]:
     ]
 
 
+def lora_kernel_real_claims(real3: dict, edit0: dict, route0: dict) -> list[tuple[str, str, str]]:
+    """The real-document, edit and router numbers, rendered the way the page renders them."""
+    home = "index.html"
+    pr = real3["analysis"]["pairs"]["headline"][0]
+    f3 = route0["per_set"]["factored"]["F3"]
+    return [
+        (home, f"{pr['a_total']}/{pr['n_paired']}", "REAL3: the real-document member on an unseen family"),
+        (home, f"{pr['b_total']}/{pr['n_paired']}", "REAL3: the untrained base on the same rows"),
+        (home, f"{pr['only_a']}&nbsp;:&nbsp;{pr['only_b']}", "REAL3: the discordant pairs"),
+        (home, edit0["right_new_value"], "EDIT0: rows answering the edited value"),
+        (home, f"{len(edit0['stale'])} stale", "EDIT0: stale answers"),
+        (home, route0["foreign_misrouted"], "ROUTE0: foreign text served locally, factored router"),
+        (home, route0["dictionary_foreign_misrouted"], "ROUTE0: the same, keyword dictionary"),
+        (home, f"{f3['lost_local']} of {f3['n']} lost", "ROUTE0: unseen senders lost"),
+        (home, route0["B3_recovered"], "ROUTE0: paraphrases kept local"),
+    ]
+
+
 def main() -> int:
     ap = argparse.ArgumentParser()
     ap.add_argument("--ref", default="main", help="git ref to read the artifacts from")
@@ -130,6 +154,8 @@ def main() -> int:
 
     # lora-kernel's own default branch is `main`; --ref pins evolving-agents only.
     lk = lora_kernel_claims(fetch(LK_CORPUS_MODE, "main", LK_RAW), fetch(LK_POOL, "main", LK_RAW))
+    lk += lora_kernel_real_claims(fetch(LK_REAL3, "main", LK_RAW), fetch(LK_EDIT0, "main", LK_RAW),
+                                  fetch(LK_ROUTE0, "main", LK_RAW))
     for page, value, what in claims(h0) + lk:
         if page not in pages:
             f = ROOT / page

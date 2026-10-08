@@ -16,6 +16,13 @@
      a stylesheet from fonts.googleapis.com for exactly that reason. The two
      stacks below are the demo's, and they are already on the machine. -->
 <link rel="stylesheet" href="/assets/site.css">
+<style>
+  /* The full list of archived repositories: one line each, names allowed to break on a phone. */
+  .repolist{list-style:none;margin:1.25rem 0 3rem;padding:0;max-width:72ch;}
+  .repolist li{padding:.7rem 0;border-top:1px solid var(--sep);font-size:.9375rem;line-height:1.6;color:var(--dim);}
+  .repolist li:last-child{border-bottom:1px solid var(--sep);}
+  .repolist .repo{font:500 .875rem/1.4 var(--mono);color:var(--ink);overflow-wrap:anywhere;margin-right:.4rem;}
+</style>
 </head>
 <body>
 
@@ -44,6 +51,9 @@
       organisation's main active project is
       <a href="https://github.com/EvolvingAgentsLabs/lora-kernel">lora-kernel</a>,
       and <a href="/experiments/agentvcs/">agentvcs</a> has been revived beside it.
+      Every public repository that is not archived is listed on
+      <a href="/#projects">the front page</a>, with its status; every archived one is
+      listed <a href="#all-archived">at the end of this page</a>.
       Several of the ideas below are carried forward in it. What the twenty-six of
       them added up to is written down once, in
       <a href="/thesis/">the thesis</a>.</div>
@@ -67,7 +77,7 @@
 
   <main class="listing" id="experiments">
 
-    <p class="sectionlabel">Live &mdash; not archived, and not below</p>
+    <p class="sectionlabel">Not archived &mdash; and not below</p>
 
     <a class="row" href="https://github.com/EvolvingAgentsLabs/lora-kernel">
       <span class="thumb"><img src="/assets/img/lora-kernel/hero.jpg" alt="" aria-hidden="true" loading="lazy"></span>
@@ -77,7 +87,7 @@
       </span>
       <span>
         <p class="question">What if an expert were the specialist who knows how to use the library, not the textbook?</p>
-        <p class="note">QLoRA experts defined by their corpora over one small resident model, behind an API that routes each request to the expert whose corpus it falls in and sends the rest to a frontier model. <b>Running:</b> two released experts, and a reasoning expert that went from 11/90 to 90/90 when it was served the way its corpus taught it. <b>Being built:</b> a library of notes per subdomain and an adapter trained to navigate it. The numbers are on <a href="/#evidence">the front page</a>.</p>
+        <p class="note">An operating layer for specialized local AI agents: one small resident model, many specialists &mdash; each an adapter, a library of notes it has learned to navigate, and its own scoped tools &mdash; and a router that abstains to a frontier model. The flagship. The numbers, including what has not passed, are on <a href="/#evidence">the front page</a>.</p>
       </span>
       <span class="meta">Sep 2026 <span class="arrow" aria-hidden="true">&rarr;</span></span>
     </a>
@@ -124,8 +134,6 @@
       <span class="meta">Aug 2026 <span class="arrow" aria-hidden="true">&rarr;</span></span>
     </a>
 
-    <p class="sectionlabel">Frozen &mdash; where it ended, and the last active work</p>
-
     <a class="row origin" href="/experiments/evolving-agents/">
       <span class="thumb"><img src="/assets/img/evolving-agents.jpg" alt="" aria-hidden="true" loading="lazy"></span>
       <span class="rowhead">
@@ -134,10 +142,12 @@
       </span>
       <span>
         <p class="question">The agent loop is solved. What happens after you fork a session is not.</p>
-        <p class="note">A plugin for the Claude Agent SDK. Fork branches a session and nothing rejoins the branches — no merge, no diff between two sessions, nothing that refuses to promote an agent whose eval regressed. This began in 2025 as eighteen thousand lines with three test functions; ten thousand of them were deleted the day the SDK made them unnecessary.</p>
+        <p class="note">A plugin for the Claude Agent SDK. Fork branches a session and nothing rejoins the branches — no merge, no diff between two sessions, nothing that refuses to promote an agent whose eval regressed. This began in 2025 as eighteen thousand lines with three test functions; ten thousand of them were deleted the day the SDK made them unnecessary. <b>Not archived, and not where the work is:</b> the repository also holds the <code>ai-os</code> subtree, last changed 2026-09-06, and a frozen copy of agentvcs.</p>
       </span>
       <span class="meta">Jul 2026 <span class="arrow" aria-hidden="true">→</span></span>
     </a>
+    <p class="sectionlabel">Frozen &mdash; where it ended, and the last active work</p>
+
     <a class="row" href="/experiments/skillos/">
       <span class="thumb"><img src="/assets/img/skillos.jpg" alt="" aria-hidden="true" loading="lazy"></span>
       <span class="rowhead">
@@ -236,6 +246,39 @@
     </a>
 
   </main>
+
+  <section id="all-archived">
+    <p class="sectionlabel">Every archived repository &mdash; twenty-five, all public and read-only</p>
+    <p class="note">The write-ups above cover the ones with a finding to report. This is the whole list,
+      from <code>gh repo list EvolvingAgentsLabs</code> on 2026-10-08, with where each one went if it moved.</p>
+    <ul class="repolist">
+      <li><a class="repo" href="https://github.com/EvolvingAgentsLabs/agent-command-center">agent-command-center</a> A Claude Code plugin for managing teams of parallel agents through tmux.</li>
+      <li><a class="repo" href="https://github.com/EvolvingAgentsLabs/agent-forge">agent-forge</a> Notebooks from mid-2025 exploring agent generation by LoRA fine-tuning; never engineered past them.</li>
+      <li><a class="repo" href="https://github.com/EvolvingAgentsLabs/agent-loadout">agent-loadout</a> A design specification with no source code; both halves were already built in evolving-memory and skillos&rsquo;s system-control plugin.</li>
+      <li><a class="repo" href="https://github.com/EvolvingAgentsLabs/ai-os">ai-os</a> An agent-based operating system on a vendored QM base. <b>Moved</b> to <a href="https://github.com/EvolvingAgentsLabs/evolving-agents/tree/main/ai-os">evolving-agents/ai-os</a>, history intact, 2026-09-06.</li>
+      <li><a class="repo" href="https://github.com/EvolvingAgentsLabs/autoresearch-mini">autoresearch-mini</a> A researcher agent that searches for better synthetic training data instead of better architectures, after karpathy/autoresearch.</li>
+      <li><a class="repo" href="https://github.com/EvolvingAgentsLabs/evolving-memory">evolving-memory</a> A trajectory engine for agent memory. <b>Moved</b> to <a href="https://github.com/EvolvingAgentsLabs/evolving-agents/tree/main/packages/memory">evolving-agents/packages/memory</a>.</li>
+      <li><a class="repo" href="https://github.com/EvolvingAgentsLabs/evolving-robot">evolving-robot</a> A 2D robot that rewrites its own care skills. <b>Moved</b> to <a href="https://github.com/EvolvingAgentsLabs/evolving-agents/tree/main/demos/robot">evolving-agents/demos/robot</a>.</li>
+      <li><a class="repo" href="https://github.com/EvolvingAgentsLabs/gemma4nanoloop">gemma4nanoloop</a> An autonomous engineering crew on a local Gemma&nbsp;4 12B; a fork of ismaelfaro/nanoLoop.</li>
+      <li><a class="repo" href="https://github.com/EvolvingAgentsLabs/jlens-harness">jlens-harness</a> An agent testbench that reads the model&rsquo;s internal workspace. <b>Merged</b> into sleep-harness.</li>
+      <li><a class="repo" href="https://github.com/EvolvingAgentsLabs/llm_os">llm_os</a> Token-trie constrained decoding for local models. <b>Moved</b>: the live kernel is in token-trie.</li>
+      <li><a class="repo" href="https://github.com/EvolvingAgentsLabs/llmos">llmos</a> A browser-native markdown agent workspace, superseded by skillos. Not related to llm_os.</li>
+      <li><a class="repo" href="https://github.com/EvolvingAgentsLabs/llmunix-dreamos">llmunix-dreamos</a> Memory consolidation for Claude Code, modelled on sleep.</li>
+      <li><a class="repo" href="https://github.com/EvolvingAgentsLabs/llmunix-marketplace">llmunix-marketplace</a> The LLMunix kernel plugin. <b>Superseded</b> by skillos_plugin, the same plugin renamed.</li>
+      <li><a class="repo" href="https://github.com/EvolvingAgentsLabs/llmunix-starter">llmunix-starter</a> A pure-markdown operating-system template; its kernel duplicates skillos_plugin.</li>
+      <li><a class="repo" href="https://github.com/EvolvingAgentsLabs/mjswan">mjswan</a> A fork of ttktjmt/mjswan: MuJoCo simulations in the browser on WebAssembly.</li>
+      <li><a class="repo" href="https://github.com/EvolvingAgentsLabs/nanoLoop">nanoLoop</a> A fork of ismaelfaro/nanoLoop, a minimal task harness. Its reconciler <b>moved</b> into agentvcs as an example.</li>
+      <li><a class="repo" href="https://github.com/EvolvingAgentsLabs/qa">qa</a> A QA plugin that fingerprints every assertion, so a check that quietly disappeared surfaces as a finding.</li>
+      <li><a class="repo" href="https://github.com/EvolvingAgentsLabs/skillos">skillos</a> An operating system written in markdown: skills as programs, traces as logs.</li>
+      <li><a class="repo" href="https://github.com/EvolvingAgentsLabs/skillos_plugin">skillos_plugin</a> The SkillOS kernel as a Claude Code plugin.</li>
+      <li><a class="repo" href="https://github.com/EvolvingAgentsLabs/skillos_robot">skillos_robot</a> A robot as a device driver for a language model, over a bytecode link to an ESP32.</li>
+      <li><a class="repo" href="https://github.com/EvolvingAgentsLabs/skillos_systemcontrol_plugin">skillos_systemcontrol_plugin</a> Audits, scoring and controlled evolution for SkillOS projects.</li>
+      <li><a class="repo" href="https://github.com/EvolvingAgentsLabs/skillos_x_mobile">skillos_x_mobile</a> CareCompanion: skills, memory and dreams on Gemma&nbsp;4, a Kaggle hackathon entry.</li>
+      <li><a class="repo" href="https://github.com/EvolvingAgentsLabs/skillos_x_robot">skillos_x_robot</a> A patrol-robot demo of skills, memory and dreams in a 2D simulation.</li>
+      <li><a class="repo" href="https://github.com/EvolvingAgentsLabs/sleep-harness">sleep-harness</a> An interpretability firewall for agent memory, read through a Jacobian lens.</li>
+      <li><a class="repo" href="https://github.com/EvolvingAgentsLabs/token-trie">token-trie</a> Constrained decoding by a trie of token IDs: a 350M model plays Tetris and cannot emit invalid syntax.</li>
+    </ul>
+  </section>
 
   <footer class="foot">
     <span class="by">Ideas, architecture and implementation by

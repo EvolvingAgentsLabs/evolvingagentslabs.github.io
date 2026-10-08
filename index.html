@@ -3,10 +3,10 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<title>Evolving Agents Labs — lora-kernel and agentvcs</title>
-<meta name="description" content="Two open projects. lora-kernel: experts are QLoRA adapters defined by their corpora, over one small resident model, each with a library it has learned to navigate. agentvcs: version control for live-patched agent systems.">
-<meta property="og:title" content="Evolving Agents Labs — lora-kernel and agentvcs">
-<meta property="og:description" content="Two open projects. lora-kernel: experts are QLoRA adapters defined by their corpora, over one small resident model, each with a library it has learned to navigate. agentvcs: version control for live-patched agent systems.">
+<title>Evolving Agents Labs — lora-kernel, agentvcs and the open projects</title>
+<meta name="description" content="The lab’s open projects. lora-kernel, the flagship: an operating layer for specialized local AI agents — one small resident model, many specialists, a router that abstains to a frontier model. agentvcs: version control for live-patched agent systems. And the rest, active and archived.">
+<meta property="og:title" content="Evolving Agents Labs — lora-kernel, agentvcs and the open projects">
+<meta property="og:description" content="The lab’s open projects. lora-kernel, the flagship: an operating layer for specialized local AI agents — one small resident model, many specialists, a router that abstains to a frontier model. agentvcs: version control for live-patched agent systems. And the rest, active and archived.">
 <meta property="og:type" content="website">
 <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Crect x='2' y='2' width='13' height='13' rx='4' fill='%23F2F2F7'/%3E%3Crect x='17' y='2' width='13' height='13' rx='4' fill='%23F2F2F7'/%3E%3Crect x='2' y='17' width='13' height='13' rx='4' fill='%23F2F2F7'/%3E%3Crect x='18' y='18' width='11' height='11' rx='3' fill='none' stroke='%23F2F2F7' stroke-width='2' opacity='.42'/%3E%3C/svg%3E">
 <meta name="theme-color" content="#F4ECDB">
@@ -26,6 +26,14 @@
   #rooms td:first-child{color:var(--ink);font-weight:600;white-space:nowrap;}
   #evidence td:first-child{color:var(--ink);min-width:16rem;}
   #evidence td:last-child{white-space:nowrap;}
+  /* On a phone the organisations table scrolls inside itself instead of widening the page. */
+  @media(max-width:40rem){#rooms td:first-child{white-space:normal;}#rooms{display:block;overflow-x:auto;}}
+  /* The project list: one line per repository, names allowed to break on a phone. */
+  .repolist{list-style:none;margin:1.25rem 0 0;padding:0;max-width:72ch;}
+  .repolist li{padding:.7rem 0;border-top:1px solid var(--sep);font-size:.9375rem;line-height:1.6;color:var(--dim);}
+  .repolist li:last-child{border-bottom:1px solid var(--sep);}
+  .repolist .repo{font:500 .875rem/1.4 var(--mono);color:var(--ink);overflow-wrap:anywhere;margin-right:.4rem;}
+  .repolist .chip{margin-right:.4rem;}
 </style>
 </head>
 <body>
@@ -34,6 +42,7 @@
   <div class="masthead-in">
       <a class="wordmark" href="/"><svg class="mark" viewBox="0 0 32 32" aria-hidden="true"><rect x="2" y="2" width="13" height="13" rx="4" fill="currentColor"/><rect x="17" y="2" width="13" height="13" rx="4" fill="currentColor"/><rect x="2" y="17" width="13" height="13" rx="4" fill="currentColor"/><rect x="18" y="18" width="11" height="11" rx="3" fill="none" stroke="currentColor" stroke-width="2" opacity=".42"/></svg>Evolving Agents Labs</a>
       <nav class="navlinks">
+        <a href="#projects">Projects</a>
         <a href="#lora-kernel">lora-kernel</a>
         <a href="#evidence">Measured</a>
         <a href="#agentvcs">agentvcs</a>
@@ -48,29 +57,53 @@
 <div class="wrap">
 
   <!--
-    The home page is the lab's two public projects: lora-kernel first, then agentvcs.
-    Every lora-kernel number below is read from a results file in the lora-kernel
-    repository and checked nightly by scripts/check-numbers.py. agentvcs publishes
-    no numbers here until its validation is done.
+    The home page leads with the lab's public projects: lora-kernel first, then agentvcs,
+    then every other repository that is not archived, each with its status. Every
+    lora-kernel number below is read from a results file in the lora-kernel repository
+    and checked nightly by scripts/check-numbers.py. agentvcs publishes no numbers here
+    until its validation is done. Archived repositories are listed at /archive/.
   -->
   <section id="projects">
-    <p class="sectionlabel">Two open projects</p>
+    <p class="sectionlabel">The public projects</p>
     <div class="pillars">
       <article>
         <h2><a href="#lora-kernel">lora-kernel</a></h2>
-        <p class="question">Experts defined by their corpora, over one small resident model.</p>
-        <p class="note"><span class="chip ok">active</span>&nbsp; Each expert is a QLoRA adapter with a
-          library it has learned to navigate; a router sends each request to the expert whose corpus it
-          falls in, or out to a frontier model. Numbers on this page are checked nightly.</p>
+        <p class="question">An operating layer for specialized local AI agents.</p>
+        <p class="note"><span class="chip ok">active &middot; flagship</span>&nbsp; One small resident model,
+          many specialists &mdash; each an adapter, a library of notes it has learned to navigate, and its
+          own scoped tools &mdash; and a router that abstains to a frontier model for whatever falls
+          outside every specialist&rsquo;s ground. Numbers on this page are checked nightly.</p>
       </article>
       <article>
         <h2><a href="#agentvcs">agentvcs</a></h2>
         <p class="question">Version control for live-patched agent systems.</p>
         <p class="note"><span class="chip warn">revived &mdash; validation in progress</span>&nbsp; Change
           your harness while it runs and still know what worked: every step stamped with the harness
-          version that produced it.</p>
+          version that produced it. Being rebuilt as a Rust core (v0.1, in progress); its merge draft (v0.2)
+          hands each real conflict between two harness manifests to an agent and checks the resolution.</p>
       </article>
     </div>
+    <ul class="repolist">
+      <li><a class="repo" href="https://github.com/EvolvingAgentsLabs/evolving-agents">evolving-agents</a><span class="chip">paused</span>
+        The lab&rsquo;s most-starred repository and its monorepo: a Claude Agent SDK plugin that versions an
+        agent&rsquo;s evolution, the <code>ai-os</code> subtree (last changed 2026-09-06), a frozen copy of
+        agentvcs, the memory package, the robot demo and the 2025 toolkit, kept readable.</li>
+      <li><a class="repo" href="https://github.com/EvolvingAgentsLabs/physics-verifiers">physics-verifiers</a><span class="chip">paused</span>
+        A generator of physics tasks with exact truth, for RL environments whose reward is computed by
+        physics. Built to show physics verifiers resist reward hacking where an LLM judge does not; measured
+        twice, that did not hold &mdash; the generator is what stands. Last changed 2026-08-16.</li>
+      <li><a class="repo" href="https://github.com/EvolvingAgentsLabs/nightshift">nightshift</a><span class="chip">proof of concept</span>
+        A procedural and epistemic memory engine, as a Claude Code plugin: capture, retrieval and a first
+        dream phase are built. Nobody has measured that it helps anywhere; its README says so first.
+        Last changed 2026-08-31.</li>
+      <li><a class="repo" href="https://github.com/EvolvingAgentsLabs/evolvingagentslabs.github.io">evolvingagentslabs.github.io</a><span class="chip ok">active</span>
+        This website, and the nightly check that every number on it still matches its results file.</li>
+      <li><a class="repo" href="https://github.com/EvolvingAgentsLabs/.github">.github</a><span class="chip">paused</span>
+        The organisation&rsquo;s profile on GitHub. Last changed 2026-07-25, before lora-kernel; this page is
+        the current list.</li>
+    </ul>
+    <p class="note">Twenty-five more repositories are archived and read-only &mdash; each is listed, with
+      where it moved if it moved, in <a href="/archive/#all-archived">the archive</a>.</p>
   </section>
 
   <section class="hero" id="lora-kernel">
@@ -118,11 +151,12 @@
           the model.</p>
       </article>
       <article>
-        <h2>The pool moved to Qwen&nbsp;3.x</h2>
+        <h2>The pool moves bases and holds</h2>
         <p class="question">Same corpora, same recipe, a new base.</p>
         <p class="note">Both released members were retrained on <code>Qwen3.5-4B</code> and each
           ties its own earlier release: inbox triage <b>471/475</b>, desk commitments
-          <b>240/240</b>.</p>
+          <b>240/240</b>. They have since moved again: every released member is now on Gemma&nbsp;4 E4B,
+          and the Qwen releases stay as the control arm.</p>
       </article>
       <article>
         <h2>What stays text</h2>
@@ -149,10 +183,12 @@
         with results written inline. A software referee turns the pages, applies the site's rules
         and cuts a walk that skips a required step.</figcaption>
     </figure>
-    <p class="note"><span class="chip warn">being built</span>&nbsp; The first library exists &mdash;
-      the step-by-step procedures of an open textbook (CC&nbsp;BY&nbsp;4.0), as short linked
-      notes that pass a lint, and the referee that walks them. The central claim is <b>untested</b>: that a library extends an expert
-      to a procedure it never trained on.</p>
+    <p class="note"><span class="chip warn">built &mdash; measured in part</span>&nbsp; All five parts
+      are built. Libraries now exist over an open textbook&rsquo;s procedures (CC&nbsp;BY&nbsp;4.0) and over
+      US regulations ingested verbatim. On real documents the central claim holds where it was measured:
+      an expert trained on walks over one regulation family cites on a family it never saw, and a number
+      edited in the library after training is answered from the edit (below). On generated procedures it
+      did not: the library arm did not beat the untrained base handed the same notes.</p>
   </section>
 
   <section id="evidence">
@@ -170,14 +206,25 @@
             <td>0.546 &rarr; 0.775 on a 240-case replay, 0 misrouted</td><td class="run">P41, P62</td></tr>
         <tr><td>A procedure merely pasted into a 3B&rsquo;s prompt is not followed</td>
             <td>0 tool calls on 351/351; the trained expert beats it 137&nbsp;:&nbsp;1</td><td class="run">P61</td></tr>
+        <tr><td>Trained on walks over real regulations, an expert cites on a regulation family it never saw</td>
+            <td><b>18/23</b> against the untrained base&rsquo;s <b>9/23</b>, 10&nbsp;:&nbsp;1 paired; a second seed ties it</td><td class="run">REAL3</td></tr>
+        <tr><td>A number edited in the library after training is answered from the edit, not the weights</td>
+            <td><b>17/17</b> rows answer the new value, each cited to the edited statement, 0 stale</td><td class="run">EDIT0</td></tr>
+        <tr><td>The router that replaced the keyword dictionary as the default: a request is factored into its task and its content</td>
+            <td>foreign text served locally <b>0/600</b> against the dictionary&rsquo;s 294/600; unseen senders 0 of 120 lost</td><td class="run">ROUTE0</td></tr>
       </tbody>
     </table>
     <p class="sectionlabel">What is not, or does not work</p>
     <ul class="note">
-      <li><b>No real data yet.</b> Every suite so far is generated.</li>
-      <li><b>The router is still a keyword dictionary.</b> Two learned replacements &mdash; n-grams and
-        embeddings &mdash; both lose every request from a sender they never saw.</li>
-      <li><b>The memory&rsquo;s central claim is untested</b>, and the saving in money has never been measured.</li>
+      <li><b>No real traffic yet.</b> Suites are generated, or built from real documents ingested verbatim;
+        live runs go through a real agent runtime, on synthetic organisations.</li>
+      <li><b>The router is literal by design.</b> A paraphrase of a member&rsquo;s task is sent to the frontier,
+        not served locally (0/120 kept local), and two learned routers &mdash; n-grams and embeddings &mdash;
+        both lost every request from a sender they never saw.</li>
+      <li><b>The radar that picks which notes to open has not passed its gate</b>, and the library arm lost
+        its kill test on generated procedures.</li>
+      <li><b>The saving in money is not established.</b> The frontier side of a replay has been costed; the
+        local GPU has not, and none of it is real traffic.</li>
     </ul>
     <p class="note">The full ledger, including everything that failed and the instruments that lied:
       <a href="https://github.com/EvolvingAgentsLabs/lora-kernel/blob/main/docs/RECORD.md">RECORD.md</a>. The position:
