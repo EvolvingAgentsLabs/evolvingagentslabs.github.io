@@ -3,10 +3,10 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<title>Evolving Agents Labs — lora-kernel, agentvcs and the open projects</title>
-<meta name="description" content="The lab’s open projects. lora-kernel, the flagship: an operating layer for specialized local AI agents — one small resident model, many specialists, a router that abstains to a frontier model. agentvcs: version control for live-patched agent systems. And the rest, active and archived.">
-<meta property="og:title" content="Evolving Agents Labs — lora-kernel, agentvcs and the open projects">
-<meta property="og:description" content="The lab’s open projects. lora-kernel, the flagship: an operating layer for specialized local AI agents — one small resident model, many specialists, a router that abstains to a frontier model. agentvcs: version control for live-patched agent systems. And the rest, active and archived.">
+<title>Evolving Agents Labs — lora-kernel, agentvcs, gene-evidence and the open projects</title>
+<meta name="description" content="The lab’s open projects. lora-kernel, the flagship: an operating layer for specialized local AI agents — one small resident model, many specialists, a router that abstains to a frontier model. agentvcs: version control for live-patched agent systems. gene-evidence, a prototype: auditable evidence reports for gene predictions the reference annotation does not have. And the rest, active and archived.">
+<meta property="og:title" content="Evolving Agents Labs — lora-kernel, agentvcs, gene-evidence and the open projects">
+<meta property="og:description" content="The lab’s open projects. lora-kernel, the flagship: an operating layer for specialized local AI agents — one small resident model, many specialists, a router that abstains to a frontier model. agentvcs: version control for live-patched agent systems. gene-evidence, a prototype: auditable evidence reports for gene predictions the reference annotation does not have. And the rest, active and archived.">
 <meta property="og:type" content="website">
 <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Crect x='2' y='2' width='13' height='13' rx='4' fill='%23F2F2F7'/%3E%3Crect x='17' y='2' width='13' height='13' rx='4' fill='%23F2F2F7'/%3E%3Crect x='2' y='17' width='13' height='13' rx='4' fill='%23F2F2F7'/%3E%3Crect x='18' y='18' width='11' height='11' rx='3' fill='none' stroke='%23F2F2F7' stroke-width='2' opacity='.42'/%3E%3C/svg%3E">
 <meta name="theme-color" content="#F4ECDB">
@@ -34,6 +34,16 @@
   .repolist li:last-child{border-bottom:1px solid var(--sep);}
   .repolist .repo{font:500 .875rem/1.4 var(--mono);color:var(--ink);overflow-wrap:anywhere;margin-right:.4rem;}
   .repolist .chip{margin-right:.4rem;}
+  /* How the three projects connect: the diagram scrolls inside itself on a phone, never the page. */
+  .linkmap{margin:2rem 0 0;overflow-x:auto;}
+  .linkmap svg{display:block;width:100%;min-width:560px;max-width:44rem;height:auto;margin:0 auto;}
+  .linkmap figcaption{margin-top:.75rem;font-size:.875rem;color:var(--dim);text-align:center;}
+  #links{width:100%;border-collapse:collapse;margin:2rem 0 0;font-size:.875rem;}
+  #links th,#links td{text-align:left;padding:.55rem .7rem;border-bottom:1px solid var(--sep);vertical-align:top;color:var(--dim);white-space:normal;}
+  #links th{font:600 10px/1.4 var(--sans);letter-spacing:.06em;text-transform:uppercase;color:var(--faint);}
+  #links td:first-child{color:var(--ink);font-weight:600;min-width:9rem;}
+  #links td:nth-child(2){white-space:nowrap;}
+  @media(max-width:40rem){#links{display:block;overflow-x:auto;}}
 </style>
 </head>
 <body>
@@ -46,6 +56,8 @@
         <a href="#lora-kernel">lora-kernel</a>
         <a href="#evidence">Measured</a>
         <a href="#agentvcs">agentvcs</a>
+        <a href="#gene-evidence">gene-evidence</a>
+        <a href="#connections">How they connect</a>
         <a href="#anfaia">ANFAIA</a>
         <a href="/archive/">Archive</a>
         <a href="https://github.com/EvolvingAgentsLabs">GitHub</a>
@@ -62,6 +74,10 @@
     lora-kernel number below is read from a results file in the lora-kernel repository
     and checked nightly by scripts/check-numbers.py. agentvcs publishes no numbers here
     until its validation is done. Archived repositories are listed at /archive/.
+    gene-evidence (added 2026-10-09) is a prototype whose repository is still private:
+    no link to it until it opens, and its numbers are copied from its BRIEF.md and are
+    NOT yet in scripts/check-numbers.py, which cannot fetch a private repository. Add
+    them there, and the links, when it opens.
   -->
   <section id="projects">
     <p class="sectionlabel">The public projects</p>
@@ -81,6 +97,16 @@
           your harness while it runs and still know what worked: every step stamped with the harness
           version that produced it. Being rebuilt as a Rust core (v0.1, in progress); its merge draft (v0.2)
           hands each real conflict between two harness manifests to an agent and checks the resolution.</p>
+      </article>
+      <article>
+        <!-- TODO: link https://github.com/EvolvingAgentsLabs/gene-evidence when public -->
+        <h2><a href="#gene-evidence">gene-evidence</a></h2>
+        <p class="question">Auditable evidence for gene predictions the reference annotation does not have.</p>
+        <p class="note"><span class="chip warn">prototype &middot; repo opening soon</span>&nbsp; For each
+          predicted protein-coding gene missing from the reference, it gathers the evidence a biologist would
+          collect by hand into an evidence graph, and writes a report in which every sentence cites the graph
+          nodes it rests on. No language model in this stage. How it relates to the two projects above is
+          <a href="#connections">below</a>.</p>
       </article>
     </div>
     <ul class="repolist">
@@ -305,6 +331,166 @@
         </p>
       </article>
     </div>
+  </section>
+
+  <!-- TODO: link https://github.com/EvolvingAgentsLabs/gene-evidence when public -->
+  <section id="gene-evidence">
+    <p class="sectionlabel">The newest project &middot; gene-evidence &middot; Apache 2.0 &middot; repo opening soon</p>
+    <div class="pillars">
+      <article>
+        <h2>gene-evidence</h2>
+        <p class="question">Auditable evidence for gene predictions that the reference annotation does not have.</p>
+        <p class="note"><span class="chip warn">prototype &middot; stage 1</span>&nbsp; Carbon-A, a public set of
+          gene predictions, covers thousands of GenBank assemblies, and some of its predicted genes are absent
+          from the species&rsquo; reference annotation (NCBI RefSeq). Each is either a gene the reference missed
+          or a prediction artefact. For each one, <code>gene-evidence analyze</code> collects what the reference
+          annotates at the locus, a retrocopy signature, Swiss-Prot homology, Pfam domains, ORF sanity and
+          optional RNA evidence into an <b>evidence graph</b>: every node is one tool output with its tool,
+          version, database hash, parameters and raw values. The report cites graph nodes in every sentence,
+          and <code>check-report</code> fails if one does not. There is <b>no language model and no learned
+          model</b> in this stage; the rules are fixed and written down.</p>
+      </article>
+      <article>
+        <h2>The evidence against comes first</h2>
+        <p class="question">Why locus context is read before homology.</p>
+        <p class="note">A processed pseudogene is a copy of a spliced mRNA inserted back into the genome: no
+          introns, nearly identical to its parent, often with a reading frame intact enough for a predictor to
+          call it a gene. On those loci a near-identical homolog and the parent&rsquo;s domains point the wrong
+          way. So a pseudogene at the locus or a retrocopy signature puts a candidate last, whatever the
+          evidence for it says. On the first run, <b>578 of 947</b> candidates (61&nbsp;%) sit on loci the
+          reference already calls pseudogenes.</p>
+      </article>
+      <article>
+        <h2>What the first run showed</h2>
+        <p class="question">A development run on rat, not a test of ranking quality.</p>
+        <p class="note">947 candidates analysed. Two independent runs gave <b>byte-identical</b> graph and
+          report, and every sentence passed the citation check; 35 unit tests on synthetic fixtures, no network.
+          Reading the top 100 found the failure mode written down before the run: repeat-rich families fill
+          them &mdash; 32 hit the Smok kinase family, 23 T-cell receptor or immunoglobulin variable segments.
+          The tier rule was not changed after seeing it.</p>
+        <p class="note"><span class="chip">not in the nightly check yet</span>&nbsp; These numbers come from
+          the project&rsquo;s own run record; they join the check when the repository opens.</p>
+      </article>
+      <article>
+        <h2>What it does not claim</h2>
+        <p class="question">Stated by the project, first.</p>
+        <p class="note">That its ranking finds real genes: no ranking of such candidates has been validated,
+          and that needs expert review and RNA evidence. That a candidate ranked last is not a gene &mdash;
+          retrocopies can be expressed, and pseudogene calls can be wrong. That &ldquo;no Swiss-Prot
+          hit&rdquo; means &ldquo;novel&rdquo;.</p>
+      </article>
+    </div>
+  </section>
+
+  <section id="connections">
+    <p class="sectionlabel">How the three connect</p>
+    <div class="pillars">
+      <article>
+        <h2>Is gene-evidence a use case of lora-kernel?</h2>
+        <p class="question">Not today. It is the first real-data case lora-kernel is meant for.</p>
+        <p class="note"><span class="chip warn">next &mdash; not built</span>&nbsp; gene-evidence runs no
+          model and does not use lora-kernel. What the two share is one rule: a statement that does not cite
+          its source does not ship. In gene-evidence, <code>check-report</code> fails any sentence whose
+          citation does not resolve to a node of the evidence graph. In lora-kernel, the served endpoint
+          withholds an answer whose citation fails the referee&rsquo;s check. The plan is a next stage in
+          which a lora-kernel expert reads the evidence graph and drafts or critiques the report, with
+          gene-evidence&rsquo;s checker gating every sentence it writes. Nothing of that stage is built or
+          measured.</p>
+      </article>
+      <article>
+        <h2>Does agentvcs connect with both?</h2>
+        <p class="question">With lora-kernel, yes, today. With gene-evidence, only as a plan.</p>
+        <p class="note"><span class="chip ok">built</span>&nbsp; agentvcs&rsquo;s lora-kernel example reads
+          lora-kernel&rsquo;s serving configuration into a harness manifest and turns measured configuration
+          changes into gated patches, so <code>blame</code> attributes each change in a metric to the patch
+          that brought it.<br>
+          <span class="chip warn">next &mdash; not built</span>&nbsp; gene-evidence already records what a run
+          depends on: tools, versions, database hashes, parameters. The plan is to run each evidence run as
+          an agentvcs run, so that a new database release or a rule change is a patch, and a change in the
+          report is traced to the change that caused it.</p>
+      </article>
+    </div>
+    <figure class="linkmap" role="img" aria-labelledby="linkmap-cap">
+      <svg viewBox="0 0 640 300" xmlns="http://www.w3.org/2000/svg" aria-hidden="true"
+           style="font-family:var(--sans);">
+        <defs>
+          <marker id="lm-built" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse">
+            <path d="M0,0 L10,5 L0,10 z" style="fill:var(--green);"/>
+          </marker>
+          <marker id="lm-next" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse">
+            <path d="M0,0 L10,5 L0,10 z" style="fill:var(--orange);"/>
+          </marker>
+        </defs>
+        <!-- edges -->
+        <line x1="270" y1="74" x2="128" y2="216" style="stroke:var(--orange);stroke-width:2;stroke-dasharray:7 6;" marker-end="url(#lm-next)"/>
+        <line x1="370" y1="74" x2="512" y2="216" style="stroke:var(--orange);stroke-width:2;stroke-dasharray:7 6;" marker-end="url(#lm-next)"/>
+        <line x1="188" y1="254" x2="452" y2="254" style="stroke:var(--green);stroke-width:2.5;" marker-start="url(#lm-built)" marker-end="url(#lm-built)"/>
+        <!-- nodes -->
+        <g>
+          <rect x="230" y="10" width="180" height="64" rx="9" style="fill:var(--bg-2);stroke:var(--sep);stroke-width:1.5;"/>
+          <text x="320" y="38" text-anchor="middle" style="fill:var(--ink);font:600 17px var(--mono);">gene-evidence</text>
+          <text x="320" y="60" text-anchor="middle" style="fill:var(--dim);font-size:13px;">evidence graph &middot; no model</text>
+        </g>
+        <g>
+          <rect x="8" y="222" width="180" height="64" rx="9" style="fill:var(--bg-2);stroke:var(--sep);stroke-width:1.5;"/>
+          <text x="98" y="250" text-anchor="middle" style="fill:var(--ink);font:600 17px var(--mono);">lora-kernel</text>
+          <text x="98" y="272" text-anchor="middle" style="fill:var(--dim);font-size:13px;">local experts, cited answers</text>
+        </g>
+        <g>
+          <rect x="452" y="222" width="180" height="64" rx="9" style="fill:var(--bg-2);stroke:var(--sep);stroke-width:1.5;"/>
+          <text x="542" y="250" text-anchor="middle" style="fill:var(--ink);font:600 17px var(--mono);">agentvcs</text>
+          <text x="542" y="272" text-anchor="middle" style="fill:var(--dim);font-size:13px;">versions a running harness</text>
+        </g>
+        <!-- edge labels -->
+        <text x="12" y="96" style="fill:var(--orange);font:600 12px var(--sans);letter-spacing:.06em;">NEXT &middot; NOT BUILT</text>
+        <text x="12" y="116" style="fill:var(--dim);font-size:13px;">an expert drafts the report;</text>
+        <text x="12" y="134" style="fill:var(--dim);font-size:13px;">the citation check gates</text>
+        <text x="12" y="152" style="fill:var(--dim);font-size:13px;">every sentence</text>
+        <text x="628" y="96" text-anchor="end" style="fill:var(--orange);font:600 12px var(--sans);letter-spacing:.06em;">NEXT &middot; NOT BUILT</text>
+        <text x="628" y="116" text-anchor="end" style="fill:var(--dim);font-size:13px;">each evidence run versioned;</text>
+        <text x="628" y="134" text-anchor="end" style="fill:var(--dim);font-size:13px;">a database or rule change</text>
+        <text x="628" y="152" text-anchor="end" style="fill:var(--dim);font-size:13px;">is a patch</text>
+        <text x="320" y="240" text-anchor="middle" style="fill:var(--green);font:600 12px var(--sans);letter-spacing:.06em;">BUILT</text>
+        <text x="320" y="276" text-anchor="middle" style="fill:var(--dim);font-size:13px;">configuration as a manifest,</text>
+        <text x="320" y="293" text-anchor="middle" style="fill:var(--dim);font-size:13px;">changes as gated patches</text>
+      </svg>
+      <figcaption id="linkmap-cap">Solid green: exists and runs today. Dashed orange: a plan, not built.
+        gene-evidence uses neither project yet.</figcaption>
+    </figure>
+    <table class="measured" id="links">
+      <thead><tr><th>connection</th><th>status</th><th>what it is</th></tr></thead>
+      <tbody>
+        <tr><td>agentvcs &harr; lora-kernel</td><td><span class="chip ok">built</span></td>
+            <td>agentvcs&rsquo;s <a href="https://github.com/EvolvingAgentsLabs/agentvcs/tree/main/examples/lora-kernel">lora-kernel example</a>
+              reads a lora-kernel checkout (read only) into a manifest, turns nine measured configuration changes
+              into gated patches whose numbers come from lora-kernel&rsquo;s committed results files, and hands a
+              conflict between two branches to Claude Code through <code>merge resolve</code>. Imported, not live:
+              nothing is re-run, the two branches are constructed for the demo, and CI runs it on a fixture with a
+              stand-in for Claude Code.</td></tr>
+        <tr><td>gene-evidence &rarr; lora-kernel</td><td><span class="chip warn">next &mdash; not built</span></td>
+            <td>A lora-kernel expert that reads the evidence graph and drafts or critiques the report, gated by
+              gene-evidence&rsquo;s own citation checker. It would be lora-kernel&rsquo;s first real-data case.
+              Today gene-evidence runs no model.</td></tr>
+        <tr><td>gene-evidence &rarr; agentvcs</td><td><span class="chip warn">next &mdash; not built</span></td>
+            <td>Each evidence run as an agentvcs run: inputs, database versions, tool outputs and report under
+              one manifest, so <code>blame</code> can trace a change in the report to the database release or
+              rule change that caused it. Today gene-evidence records its versions in its own
+              <code>versions.json</code> and graph.</td></tr>
+      </tbody>
+    </table>
+    <!-- Images: none required. Optional raster plates for this section are specified in
+         images/gene-evidence/IMAGES.md and stay commented out until the files exist:
+    <figure class="plate">
+      <img src="/assets/img/gene-evidence/hero.jpg" width="1800" height="720" loading="lazy"
+           alt="A bench with a genome browser track; one predicted gene is circled, and thin threads run from each line of a printed report to small labelled cards of tool output.">
+      <figcaption>Every sentence of the report is tied to the tool output it rests on.</figcaption>
+    </figure>
+    <figure class="plate">
+      <img src="/assets/img/gene-evidence/report-candidate.png" width="1600" height="1000" loading="lazy"
+           alt="One candidate's section of a gene-evidence report: evidence for, evidence against, context and a suggested validation experiment, each line ending in bracketed graph-node citations.">
+      <figcaption>One candidate from the rat development run: every line ends in the graph nodes it cites.</figcaption>
+    </figure>
+    -->
   </section>
 
   <section id="anfaia">
