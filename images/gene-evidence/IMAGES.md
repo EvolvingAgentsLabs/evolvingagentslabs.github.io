@@ -48,16 +48,13 @@ so the files go in **`assets/img/gene-evidence/`**. This instructions file is th
   in bracketed graph-node citations such as `[sprot:…]` `[rule:tiers]`.
 - **Exact steps:**
   1. In the gene-evidence repository, take lines **117–141** of
-     `runs/2026-10-08-rat-dev/run1/report.md` (the section `### 1. GCA_036323735.1_gene00003511: tier 1
-     (FOR-strong)` through its **Suggested validation** bullets). **Do not include line 1 of that file:
-     its title carries the project's earlier name and must not appear on the public site.** Either crop
-     below it, or copy only lines 117–141 into a scratch `.md` file.
+     `runs/2026-10-09-rat-dev/run1/report.md` (the section `### 1. GCA_036323735.1_gene00003511: tier 1
+     (FOR-strong)` through its **Suggested validation** bullets), copied into a scratch `.md` file.
   2. Render that Markdown on a light background (e.g. GitHub's Markdown preview, or
      `pandoc snippet.md -s -o snippet.html` opened in a browser at 1600 px width, zoom 125 %).
   3. Screenshot the rendered block at 1600 × 1000; if it is taller, keep the heading, both evidence
      blocks and the validation bullets, and cut the Context block's last lines rather than shrinking text.
-  4. Before committing: read the image and confirm it contains no title line, no earlier project name,
-     no local paths and no account names.
+  4. Before committing: read the image and confirm it contains no local paths and no account names.
 - **Alt text:** "One candidate's section of a gene-evidence report: evidence for, evidence against,
   context and a suggested validation experiment, each line ending in bracketed graph-node citations."
 - **Caption:** "One candidate from the rat development run: every line ends in the graph nodes it cites."
