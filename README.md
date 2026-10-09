@@ -41,7 +41,10 @@ elsewhere with its own tokens and is still dark — the one seam left.
 
 The home's pictures are copies of `lora-kernel/docs/img/*.png`, recompressed into
 `assets/img/lora-kernel/`. The home's numbers are declared in
-`scripts/check-numbers.py` against the results files in that repository.
+`scripts/check-numbers.py` against the results files in that repository, and the
+**[gene-evidence](https://github.com/EvolvingAgentsLabs/gene-evidence)** numbers against the
+committed files of its rat development run (`runs/2026-10-09-rat-dev/`). Optional plates that do
+not exist yet are specified in `images/<project>/IMAGES.md` and sit commented out in the HTML.
 
 Two rules carry meaning rather than taste, and both come from the canvas:
 
