@@ -74,10 +74,9 @@
     lora-kernel number below is read from a results file in the lora-kernel repository
     and checked nightly by scripts/check-numbers.py. agentvcs publishes no numbers here
     until its validation is done. Archived repositories are listed at /archive/.
-    gene-evidence (added 2026-10-09) is a prototype whose repository is still private:
-    no link to it until it opens, and its numbers are copied from its BRIEF.md and are
-    NOT yet in scripts/check-numbers.py, which cannot fetch a private repository. Add
-    them there, and the links, when it opens.
+    gene-evidence (added 2026-10-09, public the same day) is a prototype: every number the
+    home quotes about it is read from its rat development run (runs/2026-10-09-rat-dev/ in
+    that repository) and checked nightly by scripts/check-numbers.py, like lora-kernel's.
   -->
   <section id="projects">
     <p class="sectionlabel">The public projects</p>
@@ -99,14 +98,14 @@
           hands each real conflict between two harness manifests to an agent and checks the resolution.</p>
       </article>
       <article>
-        <!-- TODO: link https://github.com/EvolvingAgentsLabs/gene-evidence when public -->
         <h2><a href="#gene-evidence">gene-evidence</a></h2>
         <p class="question">Auditable evidence for gene predictions the reference annotation does not have.</p>
-        <p class="note"><span class="chip warn">prototype &middot; repo opening soon</span>&nbsp; For each
+        <p class="note"><span class="chip warn">prototype &middot; stage 1</span>&nbsp; For each
           predicted protein-coding gene missing from the reference, it gathers the evidence a biologist would
           collect by hand into an evidence graph, and writes a report in which every sentence cites the graph
-          nodes it rests on. No language model in this stage. How it relates to the two projects above is
-          <a href="#connections">below</a>.</p>
+          nodes it rests on. No language model in this stage. It explains candidates; it does not pick
+          which to validate first. <a href="https://github.com/EvolvingAgentsLabs/gene-evidence">Repository</a>; how it relates to the two
+          projects above is <a href="#connections">below</a>.</p>
       </article>
     </div>
     <ul class="repolist">
@@ -331,11 +330,18 @@
         </p>
       </article>
     </div>
+    <!-- Image: optional, specified in images/agentvcs/IMAGES.md; commented out until the file exists.
+    <figure class="plate">
+      <img src="/assets/img/agentvcs/hero.jpg" width="1800" height="720" loading="lazy"
+           alt="A long workshop ledger running across a bench; each line of a running machine's log carries a small numbered stamp, and a ribbon ties one changed gear in the machine to the stamped lines that came after it.">
+      <figcaption>Every step stamped with the harness version that produced it, so a change made while the
+        system runs can be traced to what it changed.</figcaption>
+    </figure>
+    -->
   </section>
 
-  <!-- TODO: link https://github.com/EvolvingAgentsLabs/gene-evidence when public -->
   <section id="gene-evidence">
-    <p class="sectionlabel">The newest project &middot; gene-evidence &middot; Apache 2.0 &middot; repo opening soon</p>
+    <p class="sectionlabel">The newest project &middot; <a href="https://github.com/EvolvingAgentsLabs/gene-evidence">gene-evidence</a> &middot; Apache 2.0</p>
     <div class="pillars">
       <article>
         <h2>gene-evidence</h2>
@@ -348,7 +354,13 @@
           optional RNA evidence into an <b>evidence graph</b>: every node is one tool output with its tool,
           version, database hash, parameters and raw values. The report cites graph nodes in every sentence,
           and <code>check-report</code> fails if one does not. There is <b>no language model and no learned
-          model</b> in this stage; the rules are fixed and written down.</p>
+          model</b> in this stage; the rules are fixed and written down in
+          <a href="https://github.com/EvolvingAgentsLabs/gene-evidence/blob/main/docs/EVIDENCE.md">EVIDENCE.md</a>.</p>
+        <p class="ctas">
+          <a class="cta primary" href="https://github.com/EvolvingAgentsLabs/gene-evidence">Repository &rarr;</a>
+          <a class="cta" href="https://github.com/EvolvingAgentsLabs/gene-evidence#quickstart">Quickstart: see the README</a>
+          <a class="cta" href="https://github.com/EvolvingAgentsLabs/gene-evidence/tree/main/runs/2026-10-09-rat-dev">The rat run</a>
+        </p>
       </article>
       <article>
         <h2>The evidence against comes first</h2>
@@ -357,29 +369,57 @@
           introns, nearly identical to its parent, often with a reading frame intact enough for a predictor to
           call it a gene. On those loci a near-identical homolog and the parent&rsquo;s domains point the wrong
           way. So a pseudogene at the locus or a retrocopy signature puts a candidate last, whatever the
-          evidence for it says. On the first run, <b>578 of 947</b> candidates (61&nbsp;%) sit on loci the
-          reference already calls pseudogenes.</p>
+          evidence for it says. On the <a href="https://github.com/EvolvingAgentsLabs/gene-evidence#development-run-rat">rat development run</a>,
+          <b>578 of 947</b> candidates (61&nbsp;%) sit on loci the reference already calls pseudogenes.</p>
       </article>
       <article>
         <h2>What the first run showed</h2>
         <p class="question">A development run on rat, not a test of ranking quality.</p>
         <p class="note">947 candidates analysed. Two independent runs gave <b>byte-identical</b> graph and
-          report, and every sentence passed the citation check; 35 unit tests on synthetic fixtures, no network.
-          Reading the top 100 found the failure mode written down before the run: repeat-rich families fill
-          them &mdash; 32 hit the Smok kinase family, 23 T-cell receptor or immunoglobulin variable segments.
-          The tier rule was not changed after seeing it.</p>
-        <p class="note"><span class="chip">not in the nightly check yet</span>&nbsp; These numbers come from
-          the project&rsquo;s own run record; they join the check when the repository opens.</p>
+          report (<a href="https://github.com/EvolvingAgentsLabs/gene-evidence/blob/main/runs/2026-10-09-rat-dev/determinism.txt">determinism.txt</a>),
+          and every sentence passed the citation check
+          (<a href="https://github.com/EvolvingAgentsLabs/gene-evidence/blob/main/runs/2026-10-09-rat-dev/check.txt">check.txt</a>); 35 unit tests on
+          synthetic fixtures, no network. The top 100 are all tier 1, and reading them found the failure mode
+          written down before the run: repeat-rich families fill them &mdash; 32 hit the Smok kinase family,
+          24 T-cell receptor or immunoglobulin variable segments, and 2 retroviral Pol polyproteins,
+          <a href="https://github.com/EvolvingAgentsLabs/gene-evidence/blob/main/runs/2026-10-09-rat-dev/run1/report.md#1-gca_0363237351_gene00003511-tier-1-for-strong">rank&nbsp;1</a>
+          among them. The tier rule was not changed after seeing it.</p>
+        <p class="note"><span class="chip ok">checked nightly</span>&nbsp; Each of these numbers is read from
+          <a href="https://github.com/EvolvingAgentsLabs/gene-evidence/tree/main/runs/2026-10-09-rat-dev">the run&rsquo;s committed files</a> by the same check as lora-kernel&rsquo;s.</p>
       </article>
       <article>
-        <h2>What it does not claim</h2>
-        <p class="question">Stated by the project, first.</p>
-        <p class="note">That its ranking finds real genes: no ranking of such candidates has been validated,
-          and that needs expert review and RNA evidence. That a candidate ranked last is not a gene &mdash;
-          retrocopies can be expressed, and pseudogene calls can be wrong. That &ldquo;no Swiss-Prot
-          hit&rdquo; means &ldquo;novel&rdquo;.</p>
+        <h2>Known limitation</h2>
+        <p class="question">Use the report to explain a candidate, not to choose which to validate first.</p>
+        <p class="note">Checked against independent long-read transcript evidence on plant genomes, the fixed
+          tier ordering ranked supported candidates better than chance but <b>worse than the gene
+          predictor&rsquo;s own confidence score</b>, and demoting candidates on their evidence against did not
+          improve the top of that ordering. The tiers are a reading aid, not a prediction.</p>
+        <p class="note">Nor does the project claim that tier 1 is enriched for real genes, that a candidate
+          ranked last is not a gene &mdash; retrocopies can be expressed, and pseudogene calls can be wrong
+          &mdash; or that &ldquo;no Swiss-Prot hit&rdquo; means &ldquo;novel&rdquo;. Its
+          <a href="https://github.com/EvolvingAgentsLabs/gene-evidence#known-limitation">README</a> says so first.</p>
       </article>
     </div>
+    <!-- Images: none required. Three optional plates for this section are specified in
+         images/gene-evidence/IMAGES.md and stay commented out until the files exist in
+         assets/img/gene-evidence/. To ship one, add the file and move its <figure> out of this comment.
+    <figure class="plate">
+      <img src="/assets/img/gene-evidence/hero.jpg" width="1800" height="720" loading="lazy"
+           alt="A bench with a genome browser track; one predicted gene is circled, and thin threads run from each line of a printed report to small cards of tool output pinned above.">
+      <figcaption>Every sentence of the report is tied to the tool output it rests on.</figcaption>
+    </figure>
+    <figure class="plate">
+      <img src="/assets/img/gene-evidence/locus-context.png" width="1600" height="700" loading="lazy"
+           alt="Bar chart of the 947 candidates of the rat development run by what the reference annotates at the locus: pseudogene 578, nothing 285, protein-coding gene on the other strand or in an intron 45, non-coding gene 39.">
+      <figcaption>The rat development run: 578 of the 947 candidates sit on loci the reference already
+        calls pseudogenes. That is why locus context is read before homology.</figcaption>
+    </figure>
+    <figure class="plate">
+      <img src="/assets/img/gene-evidence/report-candidate.png" width="1600" height="1000" loading="lazy"
+           alt="One candidate's section of a gene-evidence report: evidence for, evidence against, context and a suggested validation experiment, each line ending in bracketed graph-node citations.">
+      <figcaption>Rank 1 of the rat development run: every line ends in the graph nodes it cites.</figcaption>
+    </figure>
+    -->
   </section>
 
   <section id="connections">
@@ -469,28 +509,15 @@
               stand-in for Claude Code.</td></tr>
         <tr><td>gene-evidence &rarr; lora-kernel</td><td><span class="chip warn">next &mdash; not built</span></td>
             <td>A lora-kernel expert that reads the evidence graph and drafts or critiques the report, gated by
-              gene-evidence&rsquo;s own citation checker. It would be lora-kernel&rsquo;s first real-data case.
+              gene-evidence&rsquo;s own <a href="https://github.com/EvolvingAgentsLabs/gene-evidence/blob/main/src/gene_evidence/check.py">citation checker</a>. It would be lora-kernel&rsquo;s first real-data case.
               Today gene-evidence runs no model.</td></tr>
         <tr><td>gene-evidence &rarr; agentvcs</td><td><span class="chip warn">next &mdash; not built</span></td>
             <td>Each evidence run as an agentvcs run: inputs, database versions, tool outputs and report under
               one manifest, so <code>blame</code> can trace a change in the report to the database release or
               rule change that caused it. Today gene-evidence records its versions in its own
-              <code>versions.json</code> and graph.</td></tr>
+              <a href="https://github.com/EvolvingAgentsLabs/gene-evidence/blob/main/runs/2026-10-09-rat-dev/run1/versions.json"><code>versions.json</code></a> and graph.</td></tr>
       </tbody>
     </table>
-    <!-- Images: none required. Optional raster plates for this section are specified in
-         images/gene-evidence/IMAGES.md and stay commented out until the files exist:
-    <figure class="plate">
-      <img src="/assets/img/gene-evidence/hero.jpg" width="1800" height="720" loading="lazy"
-           alt="A bench with a genome browser track; one predicted gene is circled, and thin threads run from each line of a printed report to small labelled cards of tool output.">
-      <figcaption>Every sentence of the report is tied to the tool output it rests on.</figcaption>
-    </figure>
-    <figure class="plate">
-      <img src="/assets/img/gene-evidence/report-candidate.png" width="1600" height="1000" loading="lazy"
-           alt="One candidate's section of a gene-evidence report: evidence for, evidence against, context and a suggested validation experiment, each line ending in bracketed graph-node citations.">
-      <figcaption>One candidate from the rat development run: every line ends in the graph nodes it cites.</figcaption>
-    </figure>
-    -->
   </section>
 
   <section id="anfaia">

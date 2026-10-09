@@ -30,6 +30,7 @@ from __future__ import annotations
 import argparse
 import json
 import pathlib
+import re
 import sys
 import urllib.error
 import urllib.request
@@ -57,6 +58,19 @@ LK_REAL3 = "results/REAL3-real-corpus-20260930/real3_fresh.json"
 LK_EDIT0 = "results/EDIT0-edit-without-retraining-20261004/verdict.json"
 LK_ROUTE0 = "results/ROUTE0-factored-router-20261002/verdict.json"
 
+# gene-evidence opened on 2026-10-09. Its numbers on the home come from the rat
+# development run committed in that repository. Counts are recomputed from the
+# per-candidate table rather than copied from prose, so a re-run that moves them
+# fails here. Two are read from the run record's own [ran] sentences instead:
+# the unit-test count and the T-cell receptor / immunoglobulin count, which the
+# record states as a reading of the top 100 by name and no column encodes.
+GE_RAW = "https://raw.githubusercontent.com/EvolvingAgentsLabs/gene-evidence/{ref}/{path}"
+GE_RUN = "runs/2026-10-09-rat-dev"
+GE_TSV = f"{GE_RUN}/all_candidates.tsv"
+GE_DETERMINISM = f"{GE_RUN}/determinism.txt"
+GE_CHECK = f"{GE_RUN}/check.txt"
+GE_BRIEF = "BRIEF.md"
+
 
 def fetch(path: str, ref: str, raw: str = RAW) -> dict:
     url = raw.format(ref=ref, path=path)
@@ -68,6 +82,16 @@ def fetch(path: str, ref: str, raw: str = RAW) -> dict:
         print("The artifacts live under ai-os/ in the evolving-agents repository. Without them this "
               "script cannot check anything, and reporting success would be "
               "worse than reporting nothing.", file=sys.stderr)
+        raise SystemExit(2)
+
+
+def fetch_text(path: str, ref: str, raw: str) -> str:
+    url = raw.format(ref=ref, path=path)
+    try:
+        with urllib.request.urlopen(url, timeout=30) as r:
+            return r.read().decode()
+    except (urllib.error.URLError, TimeoutError) as e:
+        print(f"could not read {url}: {e}", file=sys.stderr)
         raise SystemExit(2)
 
 
@@ -142,6 +166,51 @@ def lora_kernel_real_claims(real3: dict, edit0: dict, route0: dict) -> list[tupl
     ]
 
 
+def gene_evidence_claims(tsv: str, determinism: str, check: str, brief: str) -> list[tuple[str, str, str]]:
+    """gene-evidence's rat development run, rendered the way the home renders it."""
+    home = "index.html"
+    lines = [l for l in tsv.splitlines() if l.strip()]
+    head = lines[0].split("\t")
+    rows = [dict(zip(head, l.split("\t"))) for l in lines[1:]]
+    n = len(rows)
+    pseudo = sum(r["locus_context"] == "pseudogene" for r in rows)
+    top = [r for r in rows if int(r["rank"]) <= 100]
+    smok = sum("SMKY_" in r["swissprot_best"] for r in top)
+    pol = sum("|POL_" in r["swissprot_best"] for r in top)
+    rank1_pol = any(r["rank"] == "1" and "|POL_" in r["swissprot_best"] for r in rows)
+    all_tier1 = len(top) == 100 and all(r["tier"] == "1" for r in top)
+
+    # determinism.txt: two sha256 pairs and a verdict. Recheck the pairs, do not
+    # trust the verdict line alone.
+    hashes: dict[str, set[str]] = {}
+    for l in determinism.splitlines():
+        parts = l.split()
+        if len(parts) == 2 and "/" in parts[1]:
+            hashes.setdefault(parts[1].split("/", 1)[1], set()).add(parts[0])
+    identical = (determinism.strip().splitlines()[-1].strip() == "IDENTICAL"
+                 and set(hashes) == {"graph.json", "report.md"}
+                 and all(len(v) == 1 for v in hashes.values()))
+    passed = check.strip() == "PASS"
+
+    m_tests = re.search(r"\*\*PASS\*\*\. (\d+) tests", brief)
+    m_tcr = re.search(r"(\d+) hit T-cell receptor or immunoglobulin variable segments", brief)
+    never = "(the artifact no longer supports this claim)"
+    return [
+        (home, f"{n} candidates", "gene-evidence: candidates analysed"),
+        (home, f"{pseudo} of {n}", "gene-evidence: candidates on reference pseudogene loci"),
+        (home, f"{round(100 * pseudo / n)}&nbsp;%", "gene-evidence: pseudogene share"),
+        (home, f"{smok} hit the Smok", "gene-evidence: Smok kinase hits in the top 100"),
+        (home, f"{pol} retroviral Pol" if rank1_pol else never, "gene-evidence: Pol polyproteins, rank 1 among them"),
+        (home, "all tier 1" if all_tier1 else never, "gene-evidence: the top 100 are all tier 1"),
+        (home, (m_tcr.group(1) if m_tcr else never) + " T-cell receptor or immunoglobulin",
+         "gene-evidence: TCR / Ig variable hits in the top 100 (run record)"),
+        (home, (m_tests.group(1) if m_tests else never) + " unit tests", "gene-evidence: unit tests (run record)"),
+        (home, "byte-identical" if identical else never, "gene-evidence: two runs, identical graph and report"),
+        (home, "every sentence passed the citation check" if passed else never,
+         "gene-evidence: check-report on the committed report"),
+    ]
+
+
 def main() -> int:
     ap = argparse.ArgumentParser()
     ap.add_argument("--ref", default="main", help="git ref to read the artifacts from")
@@ -156,7 +225,10 @@ def main() -> int:
     lk = lora_kernel_claims(fetch(LK_CORPUS_MODE, "main", LK_RAW), fetch(LK_POOL, "main", LK_RAW))
     lk += lora_kernel_real_claims(fetch(LK_REAL3, "main", LK_RAW), fetch(LK_EDIT0, "main", LK_RAW),
                                   fetch(LK_ROUTE0, "main", LK_RAW))
-    for page, value, what in claims(h0) + lk:
+    # gene-evidence's default branch is `main`, like lora-kernel's.
+    ge = gene_evidence_claims(fetch_text(GE_TSV, "main", GE_RAW), fetch_text(GE_DETERMINISM, "main", GE_RAW),
+                              fetch_text(GE_CHECK, "main", GE_RAW), fetch_text(GE_BRIEF, "main", GE_RAW))
+    for page, value, what in claims(h0) + lk + ge:
         if page not in pages:
             f = ROOT / page
             if not f.exists():
