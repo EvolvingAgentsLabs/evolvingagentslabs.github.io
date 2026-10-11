@@ -44,6 +44,8 @@
   #links td:first-child{color:var(--ink);font-weight:600;min-width:9rem;}
   #links td:nth-child(2){white-space:nowrap;}
   @media(max-width:40rem){#links{display:block;overflow-x:auto;}}
+  /* The three active projects sit side by side where there is room, never two plus an empty cell. */
+  @media(min-width:62rem){#projects .pillars{grid-template-columns:repeat(3,1fr);}}
 </style>
 </head>
 <body>
@@ -53,11 +55,12 @@
       <a class="wordmark" href="/"><svg class="mark" viewBox="0 0 32 32" aria-hidden="true"><rect x="2" y="2" width="13" height="13" rx="4" fill="currentColor"/><rect x="17" y="2" width="13" height="13" rx="4" fill="currentColor"/><rect x="2" y="17" width="13" height="13" rx="4" fill="currentColor"/><rect x="18" y="18" width="11" height="11" rx="3" fill="none" stroke="currentColor" stroke-width="2" opacity=".42"/></svg>Evolving Agents Labs</a>
       <nav class="navlinks">
         <a href="#projects">Projects</a>
+        <a href="#connections">How they connect</a>
         <a href="#lora-kernel">lora-kernel</a>
         <a href="#evidence">Measured</a>
         <a href="#agentvcs">agentvcs</a>
         <a href="#gene-evidence">gene-evidence</a>
-        <a href="#connections">How they connect</a>
+        <a href="#others">Other repos</a>
         <a href="#anfaia">ANFAIA</a>
         <a href="/archive/">Archive</a>
         <a href="https://github.com/EvolvingAgentsLabs">GitHub</a>
@@ -69,66 +72,164 @@
 <div class="wrap">
 
   <!--
-    The home page leads with the lab's public projects: lora-kernel first, then agentvcs,
-    then every other repository that is not archived, each with its status. Every
-    lora-kernel number below is read from a results file in the lora-kernel repository
-    and checked nightly by scripts/check-numbers.py. agentvcs publishes no numbers here
-    until its validation is done. Archived repositories are listed at /archive/.
-    gene-evidence (added 2026-10-09, public the same day) is a prototype: every number the
-    home quotes about it is read from its rat development run (runs/2026-10-09-rat-dev/ in
-    that repository) and checked nightly by scripts/check-numbers.py, like lora-kernel's.
+    The home leads with the lab's three active projects, each with the question it explores, what is
+    built and what is next, and then how the three connect, before any project's detail. Every number
+    on this page is checked nightly by scripts/check-numbers.py against the file that produced it:
+    lora-kernel's results files, agentvcs's committed F2 rerun (examples/toy_pipeline/runs/), and
+    gene-evidence's rat development run (runs/2026-10-09-rat-dev/). The paused repositories are
+    listed near the end; the archived ones at /archive/.
   -->
   <section id="projects">
-    <p class="sectionlabel">The public projects</p>
+    <p class="sectionlabel">Three active projects</p>
+    <p class="note" style="max-width:72ch;font-size:1rem;color:var(--ink);">Evolving Agents Labs is an
+      open-source lab, and three of its projects are active.
+      <b>lora-kernel</b> serves small local models as trained specialists. <b>agentvcs</b> versions and merges
+      the harness those models run in, and attributes each change in a result to the change that caused it.
+      <b>gene-evidence</b> writes evidence reports on predicted genes in which every sentence cites its source. The idea
+      they share: what an AI system answers, changes or reports should be traceable to what produced it.
+      One connection is built today; two are planned &mdash; <a href="#connections">how they connect</a>.</p>
     <div class="pillars">
       <article>
         <h2><a href="#lora-kernel">lora-kernel</a></h2>
-        <p class="question">An operating layer for specialized local AI agents.</p>
-        <p class="note"><span class="chip ok">active &middot; flagship</span>&nbsp; One small resident model,
-          many specialists &mdash; each an adapter, a library of notes it has learned to navigate, and its
-          own scoped tools &mdash; and a router that abstains to a frontier model for whatever falls
-          outside every specialist&rsquo;s ground. Numbers on this page are checked nightly.</p>
+        <p class="question">Can one small local model, given a trained specialist per job and a library of
+          notes it has learned to navigate, do an organisation&rsquo;s routine work &mdash; and hand the rest
+          to a frontier model?</p>
+        <p class="note"><span class="chip ok">active &middot; flagship</span>&nbsp; An operating layer for
+          specialized local AI agents: one resident model, a LoRA per job, facts in notes a person can edit,
+          a router that abstains.</p>
+        <p class="note"><b>Built:</b> specialists that beat the bare base on their job, a router that serves
+          no foreign text locally, edits answered without retraining &mdash; <a href="#evidence">measured
+          below</a>. <b>Not yet:</b> no installable package, no real traffic.</p>
       </article>
       <article>
         <h2><a href="#agentvcs">agentvcs</a></h2>
-        <p class="question">Version control for live-patched agent systems.</p>
-        <p class="note"><span class="chip warn">revived &mdash; validation in progress</span>&nbsp; Change
-          your harness while it runs and still know what worked: every step stamped with the harness
-          version that produced it. Being rebuilt as a Rust core (v0.1, in progress); its merge draft (v0.2)
-          hands each real conflict between two harness manifests to an agent and checks the resolution.</p>
+        <p class="question">When an agent&rsquo;s harness changes while it runs, can every result still be
+          traced to the change that caused it &mdash; and can two diverging harnesses be merged on the
+          evidence?</p>
+        <p class="note"><span class="chip ok">active &middot; Rust core v0.1</span>&nbsp; Version control for
+          agent harnesses: every step stamped with the harness version that produced it, patches gated,
+          <code>blame</code> per metric, and a three-way merge whose real conflicts go to Claude Code &mdash;
+          its only LLM.</p>
+        <p class="note"><b>Built:</b> the Rust core, CLI, MCP server and Python SDK; attribution on a real
+          model (<a href="#agentvcs">below</a>). <b>Not yet:</b> no PyPI package; no real Claude Code merge
+          session recorded in the repository.</p>
       </article>
       <article>
         <h2><a href="#gene-evidence">gene-evidence</a></h2>
-        <p class="question">Auditable evidence for gene predictions the reference annotation does not have.</p>
-        <p class="note"><span class="chip warn">prototype &middot; stage 1</span>&nbsp; For each
-          predicted protein-coding gene missing from the reference, it gathers the evidence a biologist would
-          collect by hand into an evidence graph, and writes a report in which every sentence cites the graph
-          nodes it rests on. No language model in this stage. It explains candidates; it does not pick
-          which to validate first. <a href="https://github.com/EvolvingAgentsLabs/gene-evidence">Repository</a>; how it relates to the two
-          projects above is <a href="#connections">below</a>.</p>
+        <p class="question">Can every sentence of a report on a predicted gene be traced to the tool output
+          it rests on?</p>
+        <p class="note"><span class="chip warn">prototype &middot; stage 1</span>&nbsp; Auditable evidence
+          reports for gene predictions the reference annotation does not have: an evidence graph of tool
+          outputs, and a report that cites it in every sentence.</p>
+        <p class="note"><b>Built:</b> stage 1, deterministic, no language model; a development run on rat.
+          <b>Not yet:</b> a model that drafts the report. <b>Known limitation:</b> it explains a candidate; it
+          does not pick which to validate first.</p>
       </article>
     </div>
-    <ul class="repolist">
-      <li><a class="repo" href="https://github.com/EvolvingAgentsLabs/evolving-agents">evolving-agents</a><span class="chip">paused</span>
-        The lab&rsquo;s most-starred repository and its monorepo: a Claude Agent SDK plugin that versions an
-        agent&rsquo;s evolution, the <code>ai-os</code> subtree (last changed 2026-09-06), a frozen copy of
-        agentvcs, the memory package, the robot demo and the 2025 toolkit, kept readable.</li>
-      <li><a class="repo" href="https://github.com/EvolvingAgentsLabs/physics-verifiers">physics-verifiers</a><span class="chip">paused</span>
-        A generator of physics tasks with exact truth, for RL environments whose reward is computed by
-        physics. Built to show physics verifiers resist reward hacking where an LLM judge does not; measured
-        twice, that did not hold &mdash; the generator is what stands. Last changed 2026-08-16.</li>
-      <li><a class="repo" href="https://github.com/EvolvingAgentsLabs/nightshift">nightshift</a><span class="chip">proof of concept</span>
-        A procedural and epistemic memory engine, as a Claude Code plugin: capture, retrieval and a first
-        dream phase are built. Nobody has measured that it helps anywhere; its README says so first.
-        Last changed 2026-08-31.</li>
-      <li><a class="repo" href="https://github.com/EvolvingAgentsLabs/evolvingagentslabs.github.io">evolvingagentslabs.github.io</a><span class="chip ok">active</span>
-        This website, and the nightly check that every number on it still matches its results file.</li>
-      <li><a class="repo" href="https://github.com/EvolvingAgentsLabs/.github">.github</a><span class="chip">paused</span>
-        The organisation&rsquo;s profile on GitHub. Last changed 2026-07-25, before lora-kernel; this page is
-        the current list.</li>
-    </ul>
-    <p class="note">Twenty-five more repositories are archived and read-only &mdash; each is listed, with
-      where it moved if it moved, in <a href="/archive/#all-archived">the archive</a>.</p>
+    <figure class="plate">
+      <img src="/assets/img/lab/three-projects.jpg" width="1800" height="720"
+           alt="Three workbenches in one long room. On the left a card-catalogue cabinet, three of its drawers lit by a small brass radar dish; in the middle a brass machine whose paper ledger carries wax seals that change colour at a swapped gear; on the right a naturalist's bench with a printed report tied by red threads to pinned evidence cards. A solid green cord joins the first two benches; two dashed ochre chalk lines lead from the third bench to the other two.">
+      <figcaption>Three benches, one room: lora-kernel, agentvcs, gene-evidence. The solid cord exists today; the
+        dashed lines are planned.</figcaption>
+    </figure>
+  </section>
+
+  <section id="connections">
+    <p class="sectionlabel">How the three connect</p>
+    <div class="pillars">
+      <article>
+        <h2>Is gene-evidence a use case of lora-kernel?</h2>
+        <p class="question">Not today. It is a case lora-kernel is meant to serve next.</p>
+        <p class="note"><span class="chip warn">next &mdash; not built</span>&nbsp; gene-evidence runs no
+          model and does not use lora-kernel. What the two share is one rule: a statement that does not cite
+          its source does not ship. In gene-evidence, <code>check-report</code> fails any sentence whose
+          citation does not resolve to a node of the evidence graph. In lora-kernel, the served endpoint
+          withholds an answer whose citation fails the referee&rsquo;s check. The plan is a next stage in
+          which a lora-kernel expert reads the evidence graph and drafts or critiques the report, with
+          gene-evidence&rsquo;s checker gating every sentence it writes. Nothing of that stage is built or
+          measured.</p>
+      </article>
+      <article>
+        <h2>Does agentvcs connect with both?</h2>
+        <p class="question">With lora-kernel, yes, today. With gene-evidence, only as a plan.</p>
+        <p class="note"><span class="chip ok">built</span>&nbsp; agentvcs&rsquo;s lora-kernel example reads
+          lora-kernel&rsquo;s serving configuration into a harness manifest and turns measured configuration
+          changes into gated patches, so <code>blame</code> attributes each change in a metric to the patch
+          that brought it.<br>
+          <span class="chip warn">next &mdash; not built</span>&nbsp; gene-evidence already records what a run
+          depends on: tools, versions, database hashes, parameters. The plan is to run each evidence run as
+          an agentvcs run, so that a new database release or a rule change is a patch, and a change in the
+          report is traced to the change that caused it.</p>
+      </article>
+    </div>
+    <figure class="linkmap" role="img" aria-labelledby="linkmap-cap">
+      <svg viewBox="0 0 640 300" xmlns="http://www.w3.org/2000/svg" aria-hidden="true"
+           style="font-family:var(--sans);">
+        <defs>
+          <marker id="lm-built" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse">
+            <path d="M0,0 L10,5 L0,10 z" style="fill:var(--green);"/>
+          </marker>
+          <marker id="lm-next" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse">
+            <path d="M0,0 L10,5 L0,10 z" style="fill:var(--orange);"/>
+          </marker>
+        </defs>
+        <!-- edges -->
+        <line x1="270" y1="74" x2="128" y2="216" style="stroke:var(--orange);stroke-width:2;stroke-dasharray:7 6;" marker-end="url(#lm-next)"/>
+        <line x1="370" y1="74" x2="512" y2="216" style="stroke:var(--orange);stroke-width:2;stroke-dasharray:7 6;" marker-end="url(#lm-next)"/>
+        <line x1="188" y1="254" x2="452" y2="254" style="stroke:var(--green);stroke-width:2.5;" marker-start="url(#lm-built)" marker-end="url(#lm-built)"/>
+        <!-- nodes -->
+        <g>
+          <rect x="230" y="10" width="180" height="64" rx="9" style="fill:var(--bg-2);stroke:var(--sep);stroke-width:1.5;"/>
+          <text x="320" y="38" text-anchor="middle" style="fill:var(--ink);font:600 17px var(--mono);">gene-evidence</text>
+          <text x="320" y="60" text-anchor="middle" style="fill:var(--dim);font-size:13px;">evidence graph &middot; no model</text>
+        </g>
+        <g>
+          <rect x="8" y="222" width="180" height="64" rx="9" style="fill:var(--bg-2);stroke:var(--sep);stroke-width:1.5;"/>
+          <text x="98" y="250" text-anchor="middle" style="fill:var(--ink);font:600 17px var(--mono);">lora-kernel</text>
+          <text x="98" y="272" text-anchor="middle" style="fill:var(--dim);font-size:13px;">local experts, cited answers</text>
+        </g>
+        <g>
+          <rect x="452" y="222" width="180" height="64" rx="9" style="fill:var(--bg-2);stroke:var(--sep);stroke-width:1.5;"/>
+          <text x="542" y="250" text-anchor="middle" style="fill:var(--ink);font:600 17px var(--mono);">agentvcs</text>
+          <text x="542" y="272" text-anchor="middle" style="fill:var(--dim);font-size:13px;">versions a running harness</text>
+        </g>
+        <!-- edge labels -->
+        <text x="12" y="96" style="fill:var(--orange);font:600 12px var(--sans);letter-spacing:.06em;">NEXT &middot; NOT BUILT</text>
+        <text x="12" y="116" style="fill:var(--dim);font-size:13px;">an expert drafts the report;</text>
+        <text x="12" y="134" style="fill:var(--dim);font-size:13px;">the citation check gates</text>
+        <text x="12" y="152" style="fill:var(--dim);font-size:13px;">every sentence</text>
+        <text x="628" y="96" text-anchor="end" style="fill:var(--orange);font:600 12px var(--sans);letter-spacing:.06em;">NEXT &middot; NOT BUILT</text>
+        <text x="628" y="116" text-anchor="end" style="fill:var(--dim);font-size:13px;">each evidence run versioned;</text>
+        <text x="628" y="134" text-anchor="end" style="fill:var(--dim);font-size:13px;">a database or rule change</text>
+        <text x="628" y="152" text-anchor="end" style="fill:var(--dim);font-size:13px;">is a patch</text>
+        <text x="320" y="240" text-anchor="middle" style="fill:var(--green);font:600 12px var(--sans);letter-spacing:.06em;">BUILT</text>
+        <text x="320" y="276" text-anchor="middle" style="fill:var(--dim);font-size:13px;">configuration as a manifest,</text>
+        <text x="320" y="293" text-anchor="middle" style="fill:var(--dim);font-size:13px;">changes as gated patches</text>
+      </svg>
+      <figcaption id="linkmap-cap">Solid green: exists and runs today. Dashed orange: a plan, not built.
+        gene-evidence uses neither project yet.</figcaption>
+    </figure>
+    <table class="measured" id="links">
+      <thead><tr><th>connection</th><th>status</th><th>what it is</th></tr></thead>
+      <tbody>
+        <tr><td>agentvcs &harr; lora-kernel</td><td><span class="chip ok">built</span></td>
+            <td>agentvcs&rsquo;s <a href="https://github.com/EvolvingAgentsLabs/agentvcs/tree/main/examples/lora-kernel">lora-kernel example</a>
+              reads a lora-kernel checkout (read only) into a manifest, turns nine measured configuration changes
+              into gated patches whose numbers come from lora-kernel&rsquo;s committed results files, and hands a
+              conflict between two branches to Claude Code through <code>merge resolve</code>. Imported, not live:
+              nothing is re-run, the two branches are constructed for the demo, and CI runs it on a fixture with a
+              stand-in for Claude Code.</td></tr>
+        <tr><td>gene-evidence &rarr; lora-kernel</td><td><span class="chip warn">next &mdash; not built</span></td>
+            <td>A lora-kernel expert that reads the evidence graph and drafts or critiques the report, gated by
+              gene-evidence&rsquo;s own <a href="https://github.com/EvolvingAgentsLabs/gene-evidence/blob/main/src/gene_evidence/check.py">citation checker</a>. It would be the first such stage; nothing of it is built.
+              Today gene-evidence runs no model.</td></tr>
+        <tr><td>gene-evidence &rarr; agentvcs</td><td><span class="chip warn">next &mdash; not built</span></td>
+            <td>Each evidence run as an agentvcs run: inputs, database versions, tool outputs and report under
+              one manifest, so <code>blame</code> can trace a change in the report to the database release or
+              rule change that caused it. Today gene-evidence records its versions in its own
+              <a href="https://github.com/EvolvingAgentsLabs/gene-evidence/blob/main/runs/2026-10-09-rat-dev/run1/versions.json"><code>versions.json</code></a> and graph.</td></tr>
+      </tbody>
+    </table>
   </section>
 
   <section class="hero" id="lora-kernel">
@@ -248,6 +349,8 @@
         both lost every request from a sender they never saw.</li>
       <li><b>The radar that picks which notes to open has not passed its gate</b>, and the library arm lost
         its kill test on generated procedures.</li>
+      <li><b>Not installable yet.</b> There is no package or container, and the serving code does not yet load
+        the per-role packs it lints. What exists is a research codebase whose runs are reproducible on Colab.</li>
       <li><b>The saving in money is not established.</b> The frontier side of a replay has been costed; the
         local GPU has not, and none of it is real traffic.</li>
     </ul>
@@ -318,16 +421,43 @@
       <article>
         <h2>agentvcs</h2>
         <p class="question">Version control for live-patched agent systems: change your harness while it runs and still know what worked.</p>
-        <p class="note"><span class="chip warn">revived &mdash; validation in progress</span>&nbsp; Every step of
+        <p class="note"><span class="chip ok">active &middot; Rust core v0.1</span>&nbsp; Every step of
           a long multi-model run is stamped with the exact harness version that produced it &mdash;
           prompts, models, sampling, tools, adapters, router &mdash; so a patch applied while the system
-          runs can be gated, attributed, rolled back, or resumed from a checkpoint instead of re-running
-          from the start. It was frozen in 2026 and is active again.</p>
+          runs can be gated, attributed with <code>blame</code>, rolled back, or resumed from a checkpoint
+          instead of re-running from the start. Two harnesses that diverged are merged dimension by dimension;
+          each real conflict is handed, with the patches, gates and blame behind both sides, to an agent, and
+          agentvcs checks the resolution before it is recorded.</p>
         <p class="ctas">
           <a class="cta primary" href="https://github.com/EvolvingAgentsLabs/agentvcs">Repository &rarr;</a>
           <a class="cta" href="https://github.com/EvolvingAgentsLabs/agentvcs#readme">Quickstart: see the README</a>
-          <a class="cta" href="/experiments/agentvcs/">The write-up</a>
+          <a class="cta" href="/experiments/agentvcs/">The July 2026 write-up (the earlier Python version)</a>
         </p>
+      </article>
+      <article>
+        <h2>Its only LLM is Claude Code</h2>
+        <p class="question">agentvcs has no model of its own.</p>
+        <p class="note">When a merge needs judgment, <code>merge resolve</code> runs Claude Code headless in a
+          workspace that holds only the conflict and its evidence, with two tools bound to that merge; the
+          session is audited and the resolver recorded. The local models a harness serves are the system
+          agentvcs controls, never part of it.</p>
+      </article>
+      <article>
+        <h2>What is built</h2>
+        <p class="question">A Rust core, CLI and MCP server, a Python SDK, and a protocol with a conformance suite.</p>
+        <p class="note"><span class="chip ok">ran</span>&nbsp; On a real model (Qwen2.5-1.5B on llama.cpp), a
+          patch applied mid-run passed a paired gate with a gain of <b>+0.444</b> in recall, and over the
+          run&rsquo;s ledger <code>blame</code> attributed a delta of <b>+0.442</b> to <b>exactly one patch</b>
+          &mdash; the one applied (<a href="https://github.com/EvolvingAgentsLabs/agentvcs/blob/main/examples/toy_pipeline/RUN_REAL.md">RUN_REAL.md</a>).
+          <code>merge resolve</code> is tested end to end in CI with a stand-in for Claude Code.</p>
+      </article>
+      <article>
+        <h2>What is not</h2>
+        <p class="question">Stated in its README first.</p>
+        <p class="note"><span class="chip warn">not built</span>&nbsp; No PyPI package (build the SDK from
+          source). No real Claude Code merge session is recorded in the repository. <code>bisect --exec</code>,
+          remotes and sync are not implemented. Recording a step through the CLI misses its latency
+          target; the in-process SDK meets it.</p>
       </article>
     </div>
     <figure class="plate">
@@ -416,102 +546,30 @@
     </figure>
   </section>
 
-  <section id="connections">
-    <p class="sectionlabel">How the three connect</p>
-    <div class="pillars">
-      <article>
-        <h2>Is gene-evidence a use case of lora-kernel?</h2>
-        <p class="question">Not today. It is the first real-data case lora-kernel is meant for.</p>
-        <p class="note"><span class="chip warn">next &mdash; not built</span>&nbsp; gene-evidence runs no
-          model and does not use lora-kernel. What the two share is one rule: a statement that does not cite
-          its source does not ship. In gene-evidence, <code>check-report</code> fails any sentence whose
-          citation does not resolve to a node of the evidence graph. In lora-kernel, the served endpoint
-          withholds an answer whose citation fails the referee&rsquo;s check. The plan is a next stage in
-          which a lora-kernel expert reads the evidence graph and drafts or critiques the report, with
-          gene-evidence&rsquo;s checker gating every sentence it writes. Nothing of that stage is built or
-          measured.</p>
-      </article>
-      <article>
-        <h2>Does agentvcs connect with both?</h2>
-        <p class="question">With lora-kernel, yes, today. With gene-evidence, only as a plan.</p>
-        <p class="note"><span class="chip ok">built</span>&nbsp; agentvcs&rsquo;s lora-kernel example reads
-          lora-kernel&rsquo;s serving configuration into a harness manifest and turns measured configuration
-          changes into gated patches, so <code>blame</code> attributes each change in a metric to the patch
-          that brought it.<br>
-          <span class="chip warn">next &mdash; not built</span>&nbsp; gene-evidence already records what a run
-          depends on: tools, versions, database hashes, parameters. The plan is to run each evidence run as
-          an agentvcs run, so that a new database release or a rule change is a patch, and a change in the
-          report is traced to the change that caused it.</p>
-      </article>
-    </div>
-    <figure class="linkmap" role="img" aria-labelledby="linkmap-cap">
-      <svg viewBox="0 0 640 300" xmlns="http://www.w3.org/2000/svg" aria-hidden="true"
-           style="font-family:var(--sans);">
-        <defs>
-          <marker id="lm-built" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse">
-            <path d="M0,0 L10,5 L0,10 z" style="fill:var(--green);"/>
-          </marker>
-          <marker id="lm-next" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse">
-            <path d="M0,0 L10,5 L0,10 z" style="fill:var(--orange);"/>
-          </marker>
-        </defs>
-        <!-- edges -->
-        <line x1="270" y1="74" x2="128" y2="216" style="stroke:var(--orange);stroke-width:2;stroke-dasharray:7 6;" marker-end="url(#lm-next)"/>
-        <line x1="370" y1="74" x2="512" y2="216" style="stroke:var(--orange);stroke-width:2;stroke-dasharray:7 6;" marker-end="url(#lm-next)"/>
-        <line x1="188" y1="254" x2="452" y2="254" style="stroke:var(--green);stroke-width:2.5;" marker-start="url(#lm-built)" marker-end="url(#lm-built)"/>
-        <!-- nodes -->
-        <g>
-          <rect x="230" y="10" width="180" height="64" rx="9" style="fill:var(--bg-2);stroke:var(--sep);stroke-width:1.5;"/>
-          <text x="320" y="38" text-anchor="middle" style="fill:var(--ink);font:600 17px var(--mono);">gene-evidence</text>
-          <text x="320" y="60" text-anchor="middle" style="fill:var(--dim);font-size:13px;">evidence graph &middot; no model</text>
-        </g>
-        <g>
-          <rect x="8" y="222" width="180" height="64" rx="9" style="fill:var(--bg-2);stroke:var(--sep);stroke-width:1.5;"/>
-          <text x="98" y="250" text-anchor="middle" style="fill:var(--ink);font:600 17px var(--mono);">lora-kernel</text>
-          <text x="98" y="272" text-anchor="middle" style="fill:var(--dim);font-size:13px;">local experts, cited answers</text>
-        </g>
-        <g>
-          <rect x="452" y="222" width="180" height="64" rx="9" style="fill:var(--bg-2);stroke:var(--sep);stroke-width:1.5;"/>
-          <text x="542" y="250" text-anchor="middle" style="fill:var(--ink);font:600 17px var(--mono);">agentvcs</text>
-          <text x="542" y="272" text-anchor="middle" style="fill:var(--dim);font-size:13px;">versions a running harness</text>
-        </g>
-        <!-- edge labels -->
-        <text x="12" y="96" style="fill:var(--orange);font:600 12px var(--sans);letter-spacing:.06em;">NEXT &middot; NOT BUILT</text>
-        <text x="12" y="116" style="fill:var(--dim);font-size:13px;">an expert drafts the report;</text>
-        <text x="12" y="134" style="fill:var(--dim);font-size:13px;">the citation check gates</text>
-        <text x="12" y="152" style="fill:var(--dim);font-size:13px;">every sentence</text>
-        <text x="628" y="96" text-anchor="end" style="fill:var(--orange);font:600 12px var(--sans);letter-spacing:.06em;">NEXT &middot; NOT BUILT</text>
-        <text x="628" y="116" text-anchor="end" style="fill:var(--dim);font-size:13px;">each evidence run versioned;</text>
-        <text x="628" y="134" text-anchor="end" style="fill:var(--dim);font-size:13px;">a database or rule change</text>
-        <text x="628" y="152" text-anchor="end" style="fill:var(--dim);font-size:13px;">is a patch</text>
-        <text x="320" y="240" text-anchor="middle" style="fill:var(--green);font:600 12px var(--sans);letter-spacing:.06em;">BUILT</text>
-        <text x="320" y="276" text-anchor="middle" style="fill:var(--dim);font-size:13px;">configuration as a manifest,</text>
-        <text x="320" y="293" text-anchor="middle" style="fill:var(--dim);font-size:13px;">changes as gated patches</text>
-      </svg>
-      <figcaption id="linkmap-cap">Solid green: exists and runs today. Dashed orange: a plan, not built.
-        gene-evidence uses neither project yet.</figcaption>
-    </figure>
-    <table class="measured" id="links">
-      <thead><tr><th>connection</th><th>status</th><th>what it is</th></tr></thead>
-      <tbody>
-        <tr><td>agentvcs &harr; lora-kernel</td><td><span class="chip ok">built</span></td>
-            <td>agentvcs&rsquo;s <a href="https://github.com/EvolvingAgentsLabs/agentvcs/tree/main/examples/lora-kernel">lora-kernel example</a>
-              reads a lora-kernel checkout (read only) into a manifest, turns nine measured configuration changes
-              into gated patches whose numbers come from lora-kernel&rsquo;s committed results files, and hands a
-              conflict between two branches to Claude Code through <code>merge resolve</code>. Imported, not live:
-              nothing is re-run, the two branches are constructed for the demo, and CI runs it on a fixture with a
-              stand-in for Claude Code.</td></tr>
-        <tr><td>gene-evidence &rarr; lora-kernel</td><td><span class="chip warn">next &mdash; not built</span></td>
-            <td>A lora-kernel expert that reads the evidence graph and drafts or critiques the report, gated by
-              gene-evidence&rsquo;s own <a href="https://github.com/EvolvingAgentsLabs/gene-evidence/blob/main/src/gene_evidence/check.py">citation checker</a>. It would be lora-kernel&rsquo;s first real-data case.
-              Today gene-evidence runs no model.</td></tr>
-        <tr><td>gene-evidence &rarr; agentvcs</td><td><span class="chip warn">next &mdash; not built</span></td>
-            <td>Each evidence run as an agentvcs run: inputs, database versions, tool outputs and report under
-              one manifest, so <code>blame</code> can trace a change in the report to the database release or
-              rule change that caused it. Today gene-evidence records its versions in its own
-              <a href="https://github.com/EvolvingAgentsLabs/gene-evidence/blob/main/runs/2026-10-09-rat-dev/run1/versions.json"><code>versions.json</code></a> and graph.</td></tr>
-      </tbody>
-    </table>
+  <section id="others">
+    <p class="sectionlabel">The other public repositories</p>
+    <p class="note">Three are paused &mdash; kept readable, not where the lab&rsquo;s current work happens &mdash;
+      and two hold this website and the organisation&rsquo;s profile.</p>
+    <ul class="repolist">
+      <li><a class="repo" href="https://github.com/EvolvingAgentsLabs/evolving-agents">evolving-agents</a><span class="chip">paused</span>
+        The lab&rsquo;s most-starred repository and its monorepo: a Claude Agent SDK plugin that versions an
+        agent&rsquo;s evolution, the <code>ai-os</code> subtree (last changed 2026-09-06), a frozen copy of
+        agentvcs, the memory package, the robot demo and the 2025 toolkit, kept readable.</li>
+      <li><a class="repo" href="https://github.com/EvolvingAgentsLabs/physics-verifiers">physics-verifiers</a><span class="chip">paused</span>
+        A generator of physics tasks with exact truth, for RL environments whose reward is computed by
+        physics. Built to show physics verifiers resist reward hacking where an LLM judge does not; measured
+        twice, that did not hold &mdash; the generator is what stands. Last changed 2026-08-16.</li>
+      <li><a class="repo" href="https://github.com/EvolvingAgentsLabs/nightshift">nightshift</a><span class="chip">paused</span>
+        A proof of concept: a procedural and epistemic memory engine, as a Claude Code plugin: capture, retrieval and a first
+        dream phase are built. Nobody has measured that it helps anywhere; its README says so first.
+        Last changed 2026-08-31.</li>
+      <li><a class="repo" href="https://github.com/EvolvingAgentsLabs/evolvingagentslabs.github.io">evolvingagentslabs.github.io</a><span class="chip ok">active</span>
+        This website, and the nightly check that every number on it still matches its results file.</li>
+      <li><a class="repo" href="https://github.com/EvolvingAgentsLabs/.github">.github</a><span class="chip ok">active</span>
+        The organisation&rsquo;s profile on GitHub: the same three projects and how they connect, in short.</li>
+    </ul>
+    <p class="note">Twenty-five more repositories are archived and read-only &mdash; each is listed, with
+      where it moved if it moved, in <a href="/archive/#all-archived">the archive</a>.</p>
   </section>
 
   <section id="anfaia">
