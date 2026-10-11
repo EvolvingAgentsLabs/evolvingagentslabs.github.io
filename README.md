@@ -4,14 +4,17 @@ Source for **[evolvingagentslabs.github.io](https://evolvingagentslabs.github.io
 
 > The LoRA is not the textbook; it is the specialist who knows how to use the library.
 
-The site leads with **[lora-kernel](https://github.com/EvolvingAgentsLabs/lora-kernel)**, the
-organisation's main active project. **[agentvcs](https://github.com/EvolvingAgentsLabs/agentvcs)**
-was revived on 2026-10-06 (validation in progress) and has one section at the end of the
-home, plus its detail page. The home's **Projects** section lists every public repository
-that is not archived, with a status chip; `/archive/` ends with every archived one
-(`#all-archived`), one line each and where it moved. Both lists are hand-edited — not in
-`tools/data.py` — so re-check them against `gh repo list EvolvingAgentsLabs` when a
-repository is created, archived or moved.
+The home leads with the organisation's **three active projects** —
+**[lora-kernel](https://github.com/EvolvingAgentsLabs/lora-kernel)**,
+**[agentvcs](https://github.com/EvolvingAgentsLabs/agentvcs)** and
+**[gene-evidence](https://github.com/EvolvingAgentsLabs/gene-evidence)** — each with the question it
+explores, what is built and what is not, then **how the three connect** (built and planned links drawn
+apart), then one section per project. The same story, shorter, is the organisation profile
+(`EvolvingAgentsLabs/.github`, `profile/README.md`) and the "Part of EvolvingAgentsLabs" section of each
+project's README: change them together. **Other repositories** near the end lists every public repository
+that is not archived, with a status chip; `/archive/` ends with every archived one (`#all-archived`), one
+line each and where it moved. Both lists are hand-edited — not in `tools/data.py` — so re-check them
+against `gh repo list EvolvingAgentsLabs` when a repository is created, archived or moved.
 
 ## Structure
 
@@ -43,7 +46,8 @@ The home's pictures are copies of `lora-kernel/docs/img/*.png`, recompressed int
 `assets/img/lora-kernel/`. The home's numbers are declared in
 `scripts/check-numbers.py` against the results files in that repository, and the
 **[gene-evidence](https://github.com/EvolvingAgentsLabs/gene-evidence)** numbers against the
-committed files of its rat development run (`runs/2026-10-09-rat-dev/`). Optional plates that do
+committed files of its rat development run (`runs/2026-10-09-rat-dev/`), and agentvcs's against the result
+file of its Gate F2 rerun (`examples/toy_pipeline/runs/f2-rerun-2026-10-06/result.json`). Optional plates that do
 not exist yet are specified in `images/<project>/IMAGES.md` and sit commented out in the HTML.
 
 Two rules carry meaning rather than taste, and both come from the canvas:

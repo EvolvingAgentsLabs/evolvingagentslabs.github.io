@@ -71,6 +71,11 @@ GE_DETERMINISM = f"{GE_RUN}/determinism.txt"
 GE_CHECK = f"{GE_RUN}/check.txt"
 GE_BRIEF = "BRIEF.md"
 
+# agentvcs, since 2026-10-11: the home quotes its Gate F2 rerun on a real model
+# (Qwen2.5-1.5B on llama.cpp), read from the result file that run committed.
+AV_RAW = "https://raw.githubusercontent.com/EvolvingAgentsLabs/agentvcs/{ref}/{path}"
+AV_F2 = "examples/toy_pipeline/runs/f2-rerun-2026-10-06/result.json"
+
 
 def fetch(path: str, ref: str, raw: str = RAW) -> dict:
     url = raw.format(ref=ref, path=path)
@@ -211,6 +216,22 @@ def gene_evidence_claims(tsv: str, determinism: str, check: str, brief: str) -> 
     ]
 
 
+def agentvcs_claims(f2: dict) -> list[tuple[str, str, str]]:
+    """agentvcs's Gate F2 rerun, rendered the way the home renders it."""
+    home = "index.html"
+    never = "(the artifact no longer supports this claim)"
+    attr = f2["blame"]["extract.recall"]["attributions"]
+    applied = [r["patch_id"] for r in f2["harness"]["reloads"]]
+    one = len(attr) == 1 and attr[0]["patches"] == applied == [f2["patch_id"]]
+    return [
+        (home, f"+{f2['gate']['extract.recall.gain']:.3f}" if f2["ok"] else never,
+         "agentvcs F2: paired gate gain on the real model"),
+        (home, f"+{attr[0]['delta']:.3f}" if one else never, "agentvcs F2: blame delta"),
+        (home, "exactly one patch" if one and f2["verify"] else never,
+         "agentvcs F2: one attribution, to the patch that was applied, ledger verified"),
+    ]
+
+
 def main() -> int:
     ap = argparse.ArgumentParser()
     ap.add_argument("--ref", default="main", help="git ref to read the artifacts from")
@@ -228,7 +249,9 @@ def main() -> int:
     # gene-evidence's default branch is `main`, like lora-kernel's.
     ge = gene_evidence_claims(fetch_text(GE_TSV, "main", GE_RAW), fetch_text(GE_DETERMINISM, "main", GE_RAW),
                               fetch_text(GE_CHECK, "main", GE_RAW), fetch_text(GE_BRIEF, "main", GE_RAW))
-    for page, value, what in claims(h0) + lk + ge:
+    # agentvcs's default branch is `main` too.
+    av = agentvcs_claims(fetch(AV_F2, "main", AV_RAW))
+    for page, value, what in claims(h0) + lk + ge + av:
         if page not in pages:
             f = ROOT / page
             if not f.exists():
