@@ -57,6 +57,26 @@ LK_POOL = "results/M1-pool-qwen35-20260919/pool_base.json"
 LK_REAL3 = "results/REAL3-real-corpus-20260930/real3_fresh.json"
 LK_EDIT0 = "results/EDIT0-edit-without-retraining-20261004/verdict.json"
 LK_ROUTE0 = "results/ROUTE0-factored-router-20261002/verdict.json"
+# Added 2026-10-11, when lora-kernel's measured detail moved from the home to its own page
+# (lora-kernel/index.html): the three rows of that table that had no check yet (P41, P62, P61),
+# and the τ² headroom line (T1, T1b), read from T1b's verdict, which recomputes T1's arms.
+LK_P41 = "results/P41-routing-20260915/routing.json"
+LK_P62 = "results/P62-route-per-request-20260918/replay.json"
+LK_P61 = "results/P61-knowledge-vs-weights-20260918/session.json"
+LK_TAU2 = "results/TAU2-T1b-12b-base-20261006/verdict.json"
+
+# Where each project's numbers are published. The home keeps a short list per project; the
+# detail page carries every measured row. A number on both pages is checked on both.
+HOME = "index.html"
+LK_PAGE = "lora-kernel/index.html"
+# The lora-kernel claims the home repeats in its short section, by their `what`.
+LK_ON_HOME = {
+    "the fluids expert in corpus mode", "the same expert through tool_calls", "the discordant pairs",
+    "email-full on Qwen3.5-4B",
+    "REAL3: the real-document member on an unseen family", "REAL3: the untrained base on the same rows",
+    "EDIT0: rows answering the edited value", "EDIT0: stale answers",
+    "ROUTE0: foreign text served locally, factored router", "ROUTE0: the same, keyword dictionary",
+}
 
 # gene-evidence opened on 2026-10-09. Its numbers on the home come from the rat
 # development run committed in that repository. Counts are recomputed from the
@@ -138,8 +158,8 @@ def claims(h0: dict) -> list[tuple[str, str, str]]:
 
 
 def lora_kernel_claims(mode: dict, pool: dict) -> list[tuple[str, str, str]]:
-    """The front page's numbers, each rendered the way the page renders it."""
-    home = "index.html"
+    """lora-kernel's first numbers, each rendered the way the detail page renders it."""
+    home = LK_PAGE
     pr = mode["pairs"][0]
     arms = pool["arms"]
     email, desk, base = arms["email-full"], arms["desk-commitment"], arms["base:email"]
@@ -154,8 +174,8 @@ def lora_kernel_claims(mode: dict, pool: dict) -> list[tuple[str, str, str]]:
 
 
 def lora_kernel_real_claims(real3: dict, edit0: dict, route0: dict) -> list[tuple[str, str, str]]:
-    """The real-document, edit and router numbers, rendered the way the page renders them."""
-    home = "index.html"
+    """The real-document, edit and router numbers, rendered the way the detail page renders them."""
+    home = LK_PAGE
     pr = real3["analysis"]["pairs"]["headline"][0]
     f3 = route0["per_set"]["factored"]["F3"]
     return [
@@ -168,6 +188,30 @@ def lora_kernel_real_claims(real3: dict, edit0: dict, route0: dict) -> list[tupl
         (home, route0["dictionary_foreign_misrouted"], "ROUTE0: the same, keyword dictionary"),
         (home, f"{f3['lost_local']} of {f3['n']} lost", "ROUTE0: unseen senders lost"),
         (home, route0["B3_recovered"], "ROUTE0: paraphrases kept local"),
+    ]
+
+
+def lora_kernel_more_claims(p41: dict, p62: dict, p61: dict, tau2: dict) -> list[tuple[str, str, str]]:
+    """The routing replay, the pasted-procedure arm and the τ² headroom line, on the detail page."""
+    page = LK_PAGE
+    never = "(the artifact no longer supports this claim)"
+    local = p41["policies"]["everything local"]["accuracy"]
+    req = p62["by_request"]
+    v = p61["verdict"]
+    ev = v["expert_vs_kb"]
+    t, g, h = tau2["pass1"], tau2["12B_vs_E4B"], tau2["31B_vs_12B"]
+    w = g["wins"].replace(":", "&nbsp;:&nbsp;")
+    return [
+        (page, f"{local:.3f} &rarr; {req['accuracy']:.3f}", "P41/P62: everything local against routed, 240-case replay"),
+        (page, f"{req['misrouted']} misrouted", "P62: requests handed to the wrong member"),
+        (page, f"{ev['only_a']}&nbsp;:&nbsp;{ev['only_b']}" if v["kb_calls"] == 0 else never,
+         "P61: the expert against the pasted procedure, which made no tool calls"),
+        (page, f"pass^1 <b>{t['12B']}</b>", "τ² T1b: the 12B base on airline test"),
+        (page, f"the E4B&rsquo;s {t['E4B']}", "τ² T1: the E4B base"),
+        (page, f"+{g['delta_pp']}&nbsp;pp, {w} tasks" if tau2["decision"] == "12B IS THE STUDENT" else never,
+         "τ² T1b: the 12B over the E4B, paired"),
+        (page, f"the 31B&rsquo;s {t['31B']} is +{h['delta_pp']}&nbsp;pp over the 12B, inside the noise"
+         if h["ci_pp"][0] <= 0 <= h["ci_pp"][1] else never, "τ² T1b: the 31B over the 12B, CI crossing 0"),
     ]
 
 
@@ -246,6 +290,12 @@ def main() -> int:
     lk = lora_kernel_claims(fetch(LK_CORPUS_MODE, "main", LK_RAW), fetch(LK_POOL, "main", LK_RAW))
     lk += lora_kernel_real_claims(fetch(LK_REAL3, "main", LK_RAW), fetch(LK_EDIT0, "main", LK_RAW),
                                   fetch(LK_ROUTE0, "main", LK_RAW))
+    lk += [(HOME, value, what + " (home)") for _, value, what in lk if what in LK_ON_HOME]
+    if len({w for _, _, w in lk if w in LK_ON_HOME}) != len(LK_ON_HOME):
+        print("LK_ON_HOME names a claim that no longer exists", file=sys.stderr)
+        return 1
+    lk += lora_kernel_more_claims(fetch(LK_P41, "main", LK_RAW), fetch(LK_P62, "main", LK_RAW),
+                                  fetch(LK_P61, "main", LK_RAW), fetch(LK_TAU2, "main", LK_RAW))
     # gene-evidence's default branch is `main`, like lora-kernel's.
     ge = gene_evidence_claims(fetch_text(GE_TSV, "main", GE_RAW), fetch_text(GE_DETERMINISM, "main", GE_RAW),
                               fetch_text(GE_CHECK, "main", GE_RAW), fetch_text(GE_BRIEF, "main", GE_RAW))
