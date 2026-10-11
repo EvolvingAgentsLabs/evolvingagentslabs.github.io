@@ -17,17 +17,6 @@
      stacks below are the demo's, and they are already on the machine. -->
 <link rel="stylesheet" href="/assets/site.css">
 <style>
-  /* Scoped to this page: the measured table is prose in its first two columns,
-     so it wraps where the evidence tables elsewhere do not. */
-  #evidence td,#evidence th,#rooms td,#rooms th{white-space:normal;}
-  #rooms{width:100%;border-collapse:collapse;margin:2rem 0 0;font-size:.875rem;}
-  #rooms th,#rooms td{text-align:left;padding:.55rem .7rem;border-bottom:1px solid var(--sep);vertical-align:top;color:var(--dim);}
-  #rooms th{font:600 10px/1.4 var(--sans);letter-spacing:.06em;text-transform:uppercase;color:var(--faint);}
-  #rooms td:first-child{color:var(--ink);font-weight:600;white-space:nowrap;}
-  #evidence td:first-child{color:var(--ink);min-width:16rem;}
-  #evidence td:last-child{white-space:nowrap;}
-  /* On a phone the organisations table scrolls inside itself instead of widening the page. */
-  @media(max-width:40rem){#rooms td:first-child{white-space:normal;}#rooms{display:block;overflow-x:auto;}}
   /* The project list: one line per repository, names allowed to break on a phone. */
   .repolist{list-style:none;margin:1.25rem 0 0;padding:0;max-width:72ch;}
   .repolist li{padding:.7rem 0;border-top:1px solid var(--sep);font-size:.9375rem;line-height:1.6;color:var(--dim);}
@@ -46,6 +35,7 @@
   @media(max-width:40rem){#links{display:block;overflow-x:auto;}}
   /* The three active projects sit side by side where there is room, never two plus an empty cell. */
   @media(min-width:62rem){#projects .pillars{grid-template-columns:repeat(3,1fr);}}
+  .why{border-left:2px solid var(--sep);padding-left:.75rem;}
 </style>
 </head>
 <body>
@@ -57,11 +47,10 @@
         <a href="#projects">Projects</a>
         <a href="#connections">How they connect</a>
         <a href="#lora-kernel">lora-kernel</a>
-        <a href="#evidence">Measured</a>
         <a href="#agentvcs">agentvcs</a>
         <a href="#gene-evidence">gene-evidence</a>
         <a href="#others">Other repos</a>
-        <a href="#anfaia">ANFAIA</a>
+        <a href="#get-involved">Get involved</a>
         <a href="/archive/">Archive</a>
         <a href="https://github.com/EvolvingAgentsLabs">GitHub</a>
       </nav>
@@ -72,12 +61,11 @@
 <div class="wrap">
 
   <!--
-    The home leads with the lab's three active projects, each with the question it explores, what is
-    built and what is next, and then how the three connect, before any project's detail. Every number
-    on this page is checked nightly by scripts/check-numbers.py against the file that produced it:
-    lora-kernel's results files, agentvcs's committed F2 rerun (examples/toy_pipeline/runs/), and
-    gene-evidence's rat development run (runs/2026-10-09-rat-dev/). The paused repositories are
-    listed near the end; the archived ones at /archive/.
+    The home leads with the lab's three active projects: the question each explores, what is built,
+    what is not, and why it would matter if it works; then how the three connect, then a short section
+    per project. lora-kernel's measured detail lives on /lora-kernel/ since 2026-10-11. Every number
+    on this page and on /lora-kernel/ is checked nightly by scripts/check-numbers.py against the file
+    that produced it. The paused repositories are listed near the end; the archived ones at /archive/.
   -->
   <section id="projects">
     <p class="sectionlabel">Three active projects</p>
@@ -98,8 +86,11 @@
           specialized local AI agents: one resident model, a LoRA per job, facts in notes a person can edit,
           a router that abstains.</p>
         <p class="note"><b>Built:</b> specialists that beat the bare base on their job, a router that serves
-          no foreign text locally, edits answered without retraining &mdash; <a href="#evidence">measured
-          below</a>. <b>Not yet:</b> no installable package, no real traffic.</p>
+          no foreign text locally, edits answered without retraining &mdash; <a href="/lora-kernel/#evidence">measured</a>.
+          <b>Not yet:</b> no installable package, no real traffic.</p>
+        <p class="note why"><b>Why it matters:</b> if it works, an organisation&rsquo;s routine AI work is
+          served from one small local GPU &mdash; private, cheap to run, its facts in notes a person can
+          read and edit &mdash; and only the rest is sent to a frontier model. The saving is not measured yet.</p>
       </article>
       <article>
         <h2><a href="#agentvcs">agentvcs</a></h2>
@@ -113,6 +104,9 @@
         <p class="note"><b>Built:</b> the Rust core, CLI, MCP server and Python SDK; attribution on a real
           model (<a href="#agentvcs">below</a>). <b>Not yet:</b> no PyPI package; no real Claude Code merge
           session recorded in the repository.</p>
+        <p class="note why"><b>Why it matters:</b> harnesses now change while agents run &mdash; a prompt, a
+          model, a router. If it works, you know which change moved which result, and two harnesses that
+          diverged are merged on evidence rather than by guess. Attribution has run on one real model.</p>
       </article>
       <article>
         <h2><a href="#gene-evidence">gene-evidence</a></h2>
@@ -124,6 +118,9 @@
         <p class="note"><b>Built:</b> stage 1, deterministic, no language model; a development run on rat.
           <b>Not yet:</b> a model that drafts the report. <b>Known limitation:</b> it explains a candidate; it
           does not pick which to validate first.</p>
+        <p class="note why"><b>Why it matters:</b> a wet-lab experiment on a candidate gene costs real money.
+          If it works, every claim in the evidence report can be checked against its source before that
+          money is spent. The checkable report is built; choosing what to test is not.</p>
       </article>
     </div>
     <figure class="plate">
@@ -136,32 +133,9 @@
 
   <section id="connections">
     <p class="sectionlabel">How the three connect</p>
-    <div class="pillars">
-      <article>
-        <h2>Is gene-evidence a use case of lora-kernel?</h2>
-        <p class="question">Not today. It is a case lora-kernel is meant to serve next.</p>
-        <p class="note"><span class="chip warn">next &mdash; not built</span>&nbsp; gene-evidence runs no
-          model and does not use lora-kernel. What the two share is one rule: a statement that does not cite
-          its source does not ship. In gene-evidence, <code>check-report</code> fails any sentence whose
-          citation does not resolve to a node of the evidence graph. In lora-kernel, the served endpoint
-          withholds an answer whose citation fails the referee&rsquo;s check. The plan is a next stage in
-          which a lora-kernel expert reads the evidence graph and drafts or critiques the report, with
-          gene-evidence&rsquo;s checker gating every sentence it writes. Nothing of that stage is built or
-          measured.</p>
-      </article>
-      <article>
-        <h2>Does agentvcs connect with both?</h2>
-        <p class="question">With lora-kernel, yes, today. With gene-evidence, only as a plan.</p>
-        <p class="note"><span class="chip ok">built</span>&nbsp; agentvcs&rsquo;s lora-kernel example reads
-          lora-kernel&rsquo;s serving configuration into a harness manifest and turns measured configuration
-          changes into gated patches, so <code>blame</code> attributes each change in a metric to the patch
-          that brought it.<br>
-          <span class="chip warn">next &mdash; not built</span>&nbsp; gene-evidence already records what a run
-          depends on: tools, versions, database hashes, parameters. The plan is to run each evidence run as
-          an agentvcs run, so that a new database release or a rule change is a patch, and a change in the
-          report is traced to the change that caused it.</p>
-      </article>
-    </div>
+    <p class="note">What they share is one rule: a statement that does not cite its source does not ship.
+      gene-evidence&rsquo;s <code>check-report</code> fails a sentence whose citation does not resolve; lora-kernel&rsquo;s
+      endpoint withholds an answer whose citation fails the referee&rsquo;s check.</p>
     <figure class="linkmap" role="img" aria-labelledby="linkmap-cap">
       <svg viewBox="0 0 640 300" xmlns="http://www.w3.org/2000/svg" aria-hidden="true"
            style="font-family:var(--sans);">
@@ -214,20 +188,16 @@
       <tbody>
         <tr><td>agentvcs &harr; lora-kernel</td><td><span class="chip ok">built</span></td>
             <td>agentvcs&rsquo;s <a href="https://github.com/EvolvingAgentsLabs/agentvcs/tree/main/examples/lora-kernel">lora-kernel example</a>
-              reads a lora-kernel checkout (read only) into a manifest, turns nine measured configuration changes
-              into gated patches whose numbers come from lora-kernel&rsquo;s committed results files, and hands a
-              conflict between two branches to Claude Code through <code>merge resolve</code>. Imported, not live:
-              nothing is re-run, the two branches are constructed for the demo, and CI runs it on a fixture with a
-              stand-in for Claude Code.</td></tr>
+              turns nine measured lora-kernel configuration changes into gated patches and hands a branch conflict
+              to Claude Code. Imported, not live: nothing is re-run.</td></tr>
         <tr><td>gene-evidence &rarr; lora-kernel</td><td><span class="chip warn">next &mdash; not built</span></td>
-            <td>A lora-kernel expert that reads the evidence graph and drafts or critiques the report, gated by
-              gene-evidence&rsquo;s own <a href="https://github.com/EvolvingAgentsLabs/gene-evidence/blob/main/src/gene_evidence/check.py">citation checker</a>. It would be the first such stage; nothing of it is built.
+            <td>A lora-kernel expert that drafts or critiques the report from the evidence graph, gated by
+              gene-evidence&rsquo;s <a href="https://github.com/EvolvingAgentsLabs/gene-evidence/blob/main/src/gene_evidence/check.py">citation checker</a>.
               Today gene-evidence runs no model.</td></tr>
         <tr><td>gene-evidence &rarr; agentvcs</td><td><span class="chip warn">next &mdash; not built</span></td>
-            <td>Each evidence run as an agentvcs run: inputs, database versions, tool outputs and report under
-              one manifest, so <code>blame</code> can trace a change in the report to the database release or
-              rule change that caused it. Today gene-evidence records its versions in its own
-              <a href="https://github.com/EvolvingAgentsLabs/gene-evidence/blob/main/runs/2026-10-09-rat-dev/run1/versions.json"><code>versions.json</code></a> and graph.</td></tr>
+            <td>Each evidence run as an agentvcs run, so a database release or rule change is a patch and
+              <code>blame</code> traces a change in the report to it. Today the versions are recorded in
+              <a href="https://github.com/EvolvingAgentsLabs/gene-evidence/blob/main/runs/2026-10-09-rat-dev/run1/versions.json"><code>versions.json</code></a>.</td></tr>
       </tbody>
     </table>
   </section>
@@ -235,183 +205,29 @@
   <section class="hero" id="lora-kernel">
     <p class="eyebrow">The flagship &middot; <a href="https://github.com/EvolvingAgentsLabs/lora-kernel">lora-kernel</a> &middot; Apache 2.0</p>
     <h1>The LoRA is not the textbook. It is the specialist who knows how to use the <span class="proj">library</span>.</h1>
-    <p>One GPU, one small resident model, and a shelf of QLoRA adapters &mdash; each an
-      expert <b>defined by its corpus</b>. An OpenAI-compatible API reads every request,
-      serves it with the expert whose corpus it falls in, and sends everything else to a
-      frontier model. The client names no model.</p>
-    <p>Version 1.0 adds what a small expert cannot hold in its weights: a library of short
-      notes per subdomain, and an adapter trained on the <i>habit of navigating it</i>.
-      The weights hold the navigation; the notes hold the content, and a person can read,
-      diff and correct them.</p>
+    <p>One GPU, one small resident model, and a shelf of QLoRA adapters &mdash; each an expert
+      <b>defined by its corpus</b>. An OpenAI-compatible API serves each request with the matching expert
+      and sends everything else to a frontier model. Facts live in short notes a
+      person can read and correct; the adapter holds the habit of navigating them.</p>
+    <ul class="note" id="evidence">
+      <li>A reasoning expert served the way its corpus taught it: <b>90/90</b>, against <b>11/90</b> through
+        <code>tool_calls</code> (79&nbsp;:&nbsp;0 paired). Same adapter, same cases.</li>
+      <li>Trained on walks over real regulations, it cites on a family it never saw: <b>18/23</b> against
+        the untrained base&rsquo;s <b>9/23</b>.</li>
+      <li>A number edited in the notes after training: <b>17/17</b> rows answer the new value, 0 stale.</li>
+      <li>The default router serves foreign text locally <b>0/600</b> times, against the keyword
+        dictionary&rsquo;s 294/600.</li>
+      <li>Inbox triage on a new base: <b>471/475</b>, a tie with its earlier release.</li>
+    </ul>
     <p class="ctas">
-      <a class="cta primary" href="https://github.com/EvolvingAgentsLabs/lora-kernel/blob/main/docs/articles/2026-09-it-was-the-harness.md">Read the architecture article &rarr;</a>
-      <a class="cta" href="https://github.com/EvolvingAgentsLabs/lora-kernel/blob/main/docs/articles/2026-09-era-el-arnes.es.md">En espa&ntilde;ol</a>
-      <a class="cta" href="https://github.com/EvolvingAgentsLabs/lora-kernel/blob/main/docs/MEMORY.md">The memory</a>
+      <a class="cta primary" href="/lora-kernel/">What is measured, and what is not &rarr;</a>
+      <a class="cta" href="https://github.com/EvolvingAgentsLabs/lora-kernel/blob/main/docs/articles/2026-09-it-was-the-harness.md">The architecture article</a>
       <a class="cta" href="https://github.com/EvolvingAgentsLabs/lora-kernel">Repository</a>
     </p>
     <figure class="plate">
-      <img src="/assets/img/lora-kernel/hero.jpg" width="1800" height="720"
+      <img src="/assets/img/lora-kernel/hero.jpg" width="1800" height="720" loading="lazy"
            alt="A reader at a desk before a wall of card-catalogue drawers labelled Procedures and Encyclopedia; a small radar dish on the desk lights three drawers; through an open door, a domed building on a hill labelled frontier.">
-      <figcaption>The specialist, the library, the radar that lights the drawers worth opening &mdash;
-        and, through the door, the frontier for everything else.</figcaption>
-    </figure>
-  </section>
-
-  <section id="finding">
-    <p class="sectionlabel">The finding that reorganised the project</p>
-    <div class="pillars">
-      <article>
-        <h2>11 of 90 became 90 of 90</h2>
-        <p class="question">Same adapter, same cases. Only the serving path changed.</p>
-        <p class="note">A fluid-mechanics expert &mdash; 6-to-9-step chains with a calculator and a
-          per-case handbook &mdash; scored <b>11/90</b> when tool results came back as
-          <code>tool_calls</code> messages. Written inline, the way its corpus taught it to read them,
-          it scores <b>90/90</b> (79&nbsp;:&nbsp;0, paired). For four days that gap had been read as
-          &ldquo;small models cannot reason&rdquo;.</p>
-      </article>
-      <article>
-        <h2>An expert is its corpus</h2>
-        <p class="question">Tool block, argument order, system prompt, result format.</p>
-        <p class="note">Under a foreign system prompt 2 of 32 live turns call a tool; under its own,
-          19 of 32. Serve an expert the way its corpus taught it, and suspect the path before
-          the model.</p>
-      </article>
-      <article>
-        <h2>The pool moves bases and holds</h2>
-        <p class="question">Same corpora, same recipe, a new base.</p>
-        <p class="note">Both released members were retrained on <code>Qwen3.5-4B</code> and each
-          ties its own earlier release: inbox triage <b>471/475</b>, desk commitments
-          <b>240/240</b>. They have since moved again: every released member is now on Gemma&nbsp;4 E4B,
-          and the Qwen releases stay as the control arm.</p>
-      </article>
-      <article>
-        <h2>What stays text</h2>
-        <p class="question">What deliberately never becomes a weight?</p>
-        <p class="note">The library. A weight delta cannot be read, cited or corrected by a person;
-          a half-page note can. Site rules override the textbook before the expert ever sees
-          the note.</p>
-      </article>
-    </div>
-  </section>
-
-  <section id="core">
-    <p class="sectionlabel">The core of version 1.0</p>
-    <figure class="plate">
-      <img src="/assets/img/lora-kernel/core-1-0.jpg" loading="lazy"
-           alt="The five parts of version 1.0: experts, router, memory, runtime and the release contract.">
-      <figcaption>Five things: experts, a router, the memory, a runtime that referees, and a release
-        contract that nothing ships without.</figcaption>
-    </figure>
-    <figure class="plate">
-      <img src="/assets/img/lora-kernel/memory-walkthrough.jpg" loading="lazy"
-           alt="A walk through the memory: a question, a search that lights a few notes, notes opened one after another, a calculation, an answer.">
-      <figcaption>Three verbs &mdash; <code>search</code>, <code>open</code>, <code>calc</code> &mdash;
-        with results written inline. A software referee turns the pages, applies the site's rules
-        and cuts a walk that skips a required step.</figcaption>
-    </figure>
-    <p class="note"><span class="chip warn">built &mdash; measured in part</span>&nbsp; All five parts
-      are built. Libraries now exist over an open textbook&rsquo;s procedures (CC&nbsp;BY&nbsp;4.0) and over
-      US regulations ingested verbatim. On real documents the central claim holds where it was measured:
-      an expert trained on walks over one regulation family cites on a family it never saw, and a number
-      edited in the library after training is answered from the edit (below). On generated procedures it
-      did not: the library arm did not beat the untrained base handed the same notes.</p>
-  </section>
-
-  <section id="evidence">
-    <p class="sectionlabel">What is measured</p>
-    <table class="measured">
-      <thead><tr><th>what</th><th>the number</th><th>run</th></tr></thead>
-      <tbody>
-        <tr><td>A reasoning expert served the way its corpus taught</td>
-            <td><b>90/90</b> against <b>11/90</b> through <code>tool_calls</code>, 79&nbsp;:&nbsp;0 paired</td><td class="run">M7 arm 0b</td></tr>
-        <tr><td>Inbox triage, retrained on <code>Qwen3.5-4B</code></td>
-            <td><b>471/475</b>, a tie with its earlier release; the bare base scores 346/475</td><td class="run">M1</td></tr>
-        <tr><td>A second expert on the same inbox, a different question</td>
-            <td><b>240/240</b>, a tie with its earlier release</td><td class="run">M1</td></tr>
-        <tr><td>The API routes per request; the client names no model</td>
-            <td>0.546 &rarr; 0.775 on a 240-case replay, 0 misrouted</td><td class="run">P41, P62</td></tr>
-        <tr><td>A procedure merely pasted into a 3B&rsquo;s prompt is not followed</td>
-            <td>0 tool calls on 351/351; the trained expert beats it 137&nbsp;:&nbsp;1</td><td class="run">P61</td></tr>
-        <tr><td>Trained on walks over real regulations, an expert cites on a regulation family it never saw</td>
-            <td><b>18/23</b> against the untrained base&rsquo;s <b>9/23</b>, 10&nbsp;:&nbsp;1 paired; a second seed ties it</td><td class="run">REAL3</td></tr>
-        <tr><td>A number edited in the library after training is answered from the edit, not the weights</td>
-            <td><b>17/17</b> rows answer the new value, each cited to the edited statement, 0 stale</td><td class="run">EDIT0</td></tr>
-        <tr><td>The router that replaced the keyword dictionary as the default: a request is factored into its task and its content</td>
-            <td>foreign text served locally <b>0/600</b> against the dictionary&rsquo;s 294/600; unseen senders 0 of 120 lost</td><td class="run">ROUTE0</td></tr>
-      </tbody>
-    </table>
-    <p class="sectionlabel">What is not, or does not work</p>
-    <ul class="note">
-      <li><b>No real traffic yet.</b> Suites are generated, or built from real documents ingested verbatim;
-        live runs go through a real agent runtime, on synthetic organisations.</li>
-      <li><b>The router is literal by design.</b> A paraphrase of a member&rsquo;s task is sent to the frontier,
-        not served locally (0/120 kept local), and two learned routers &mdash; n-grams and embeddings &mdash;
-        both lost every request from a sender they never saw.</li>
-      <li><b>The radar that picks which notes to open has not passed its gate</b>, and the library arm lost
-        its kill test on generated procedures.</li>
-      <li><b>Not installable yet.</b> There is no package or container, and the serving code does not yet load
-        the per-role packs it lints. What exists is a research codebase whose runs are reproducible on Colab.</li>
-      <li><b>The saving in money is not established.</b> The frontier side of a replay has been costed; the
-        local GPU has not, and none of it is real traffic.</li>
-    </ul>
-    <p class="note">The full ledger, including everything that failed and the instruments that lied:
-      <a href="https://github.com/EvolvingAgentsLabs/lora-kernel/blob/main/docs/RECORD.md">RECORD.md</a>. The position:
-      <a href="https://github.com/EvolvingAgentsLabs/lora-kernel/blob/main/docs/PLAN.md">PLAN.md</a>.</p>
-  </section>
-
-  <section id="organisation">
-    <p class="sectionlabel">Where it sits in an organisation</p>
-    <div class="pillars">
-      <article>
-        <h2>One expert per role</h2>
-        <p class="question">Under the agent column, not beside it.</p>
-        <p class="note">An organisation that runs on agents draws the same picture: people in a few
-          roles, an agent runtime with one agent per role, the applications they operate, the channels
-          people already use, and one database underneath. In that picture every agent is a system
-          prompt over the same remote model. Here <b>each role becomes an expert</b> &mdash; an adapter
-          trained on how <i>this</i> organisation does that job &mdash; and the role a message arrives
-          from is the route.</p>
-      </article>
-      <article>
-        <h2>Three places for three things</h2>
-        <p class="question">Records, habits, knowledge.</p>
-        <p class="note"><b>Records stay in the database. Habits go in the adapter. Knowledge stays in
-          notes a person can read and correct</b> &mdash; two drawers per role: how we do it here, and
-          what we know. What an expert is measured to handle is answered on the organisation&rsquo;s own
-          machine; the rest goes to the frontier, or to a person where policy says nothing leaves the
-          building.</p>
-      </article>
-    </div>
-    <figure class="plate">
-      <img src="/assets/img/lora-kernel/solution-architecture.jpg" loading="lazy"
-           alt="A solution architecture in five layers: people in four roles; an agent runtime with one agent per role; order and back-office applications; app and messaging channels; one database with identity, payments and monitoring. Under the agents, one graphics card drawn as a bookshelf: one thick spine, the resident model, and a thin spine per role, each with two drawers of notes. A signpost routes by role; dashed lines leave for the frontier and for a person.">
-      <figcaption>A distributor, as the example: one adapter per role under the agent column, two drawers of
-        notes under each, the role as the route &mdash; and the systems of record left where they are.</figcaption>
-    </figure>
-    <table class="measured" id="rooms">
-      <thead><tr><th>organisation</th><th>roles that become experts</th><th>what goes in the two drawers</th></tr></thead>
-      <tbody>
-        <tr><td>a distributor</td><td>customer service, receiving, dispatch, purchasing, claims</td><td>the site&rsquo;s handling procedures &middot; catalogue, carriers, service levels</td></tr>
-        <tr><td>an accounting or law office</td><td>intake, document review, deadlines, billing</td><td>the firm&rsquo;s checklists and templates &middot; the rules of its jurisdiction</td></tr>
-        <tr><td>a school or training centre</td><td>enrolment, teaching support, communications, purchasing</td><td>how this school handles each case &middot; programme, calendar, regulations</td></tr>
-        <tr><td>a repair or field-service company</td><td>equipment intake, diagnosis, spare parts, warranties</td><td>the procedure for each kind of repair &middot; manuals, parts lists, warranty terms</td></tr>
-        <tr><td>a club or community centre</td><td>memberships, activity sign-ups, facilities, collections</td><td>how this club handles each case &middot; activities, fees, house rules</td></tr>
-        <tr><td>a property manager</td><td>tenant requests, maintenance, collections, suppliers</td><td>the escalation procedure per building &middot; contracts, by-laws, supplier terms</td></tr>
-      </tbody>
-    </table>
-    <p class="note"><span class="chip warn">not measured</span>&nbsp; These are where the design points,
-      not results. What they share is what makes a region worth an expert: the same few procedures,
-      repeated daily, with local rules that differ from the textbook, over data that should not leave.
-      The first library in the repository is built from an open textbook&rsquo;s step-by-step procedures.</p>
-  </section>
-
-  <section id="teams">
-    <p class="sectionlabel">For a team running agents together</p>
-    <figure class="plate">
-      <img src="/assets/img/lora-kernel/article-team.jpg" loading="lazy"
-           alt="Four teams and their direct messages flow through an agent runtime and a proxy to one GPU holding one small resident model and an adapter per team, each with two drawers: how this team does it, what this team knows. A dashed line leads to the frontier as fallback.">
-      <figcaption>Many teams, one machine. The group a message arrives from <i>is</i> the route: each
-        team gets an adapter and two drawers &mdash; how this team does it, what this team knows.</figcaption>
+      <figcaption>The specialist, the library, and through the door the frontier for everything else.</figcaption>
     </figure>
   </section>
 
@@ -420,51 +236,31 @@
     <div class="pillars">
       <article>
         <h2>agentvcs</h2>
-        <p class="question">Version control for live-patched agent systems: change your harness while it runs and still know what worked.</p>
-        <p class="note"><span class="chip ok">active &middot; Rust core v0.1</span>&nbsp; Every step of
-          a long multi-model run is stamped with the exact harness version that produced it &mdash;
-          prompts, models, sampling, tools, adapters, router &mdash; so a patch applied while the system
-          runs can be gated, attributed with <code>blame</code>, rolled back, or resumed from a checkpoint
-          instead of re-running from the start. Two harnesses that diverged are merged dimension by dimension;
-          each real conflict is handed, with the patches, gates and blame behind both sides, to an agent, and
-          agentvcs checks the resolution before it is recorded.</p>
+        <p class="question">Change your harness while it runs and still know what worked.</p>
+        <p class="note">Every step of a run is stamped with the harness version that produced it, so a patch
+          applied mid-run can be gated, attributed with <code>blame</code>, rolled back or resumed from a checkpoint. Diverged harnesses
+          merge dimension by dimension; each real conflict goes, with its evidence, to Claude Code, agentvcs&rsquo;s
+          only LLM, and the resolution is checked before it is recorded.</p>
         <p class="ctas">
           <a class="cta primary" href="https://github.com/EvolvingAgentsLabs/agentvcs">Repository &rarr;</a>
-          <a class="cta" href="https://github.com/EvolvingAgentsLabs/agentvcs#readme">Quickstart: see the README</a>
-          <a class="cta" href="/experiments/agentvcs/">The July 2026 write-up (the earlier Python version)</a>
+          <a class="cta" href="/experiments/agentvcs/">The July 2026 write-up (earlier Python version)</a>
         </p>
       </article>
       <article>
-        <h2>Its only LLM is Claude Code</h2>
-        <p class="question">agentvcs has no model of its own.</p>
-        <p class="note">When a merge needs judgment, <code>merge resolve</code> runs Claude Code headless in a
-          workspace that holds only the conflict and its evidence, with two tools bound to that merge; the
-          session is audited and the resolver recorded. The local models a harness serves are the system
-          agentvcs controls, never part of it.</p>
-      </article>
-      <article>
-        <h2>What is built</h2>
-        <p class="question">A Rust core, CLI and MCP server, a Python SDK, and a protocol with a conformance suite.</p>
-        <p class="note"><span class="chip ok">ran</span>&nbsp; On a real model (Qwen2.5-1.5B on llama.cpp), a
-          patch applied mid-run passed a paired gate with a gain of <b>+0.444</b> in recall, and over the
-          run&rsquo;s ledger <code>blame</code> attributed a delta of <b>+0.442</b> to <b>exactly one patch</b>
-          &mdash; the one applied (<a href="https://github.com/EvolvingAgentsLabs/agentvcs/blob/main/examples/toy_pipeline/RUN_REAL.md">RUN_REAL.md</a>).
-          <code>merge resolve</code> is tested end to end in CI with a stand-in for Claude Code.</p>
-      </article>
-      <article>
-        <h2>What is not</h2>
-        <p class="question">Stated in its README first.</p>
-        <p class="note"><span class="chip warn">not built</span>&nbsp; No PyPI package (build the SDK from
-          source). No real Claude Code merge session is recorded in the repository. <code>bisect --exec</code>,
-          remotes and sync are not implemented. Recording a step through the CLI misses its latency
-          target; the in-process SDK meets it.</p>
+        <h2>Measured, and not</h2>
+        <p class="question">A Rust core, CLI, MCP server, Python SDK and a conformance suite.</p>
+        <p class="note"><span class="chip ok">ran</span>&nbsp; On Qwen2.5-1.5B on llama.cpp, a patch applied
+          mid-run passed a paired gate with a recall gain of <b>+0.444</b>, and <code>blame</code> attributed
+          <b>+0.442</b> to <b>exactly one patch</b> &mdash; the one applied
+          (<a href="https://github.com/EvolvingAgentsLabs/agentvcs/blob/main/examples/toy_pipeline/RUN_REAL.md">RUN_REAL.md</a>).</p>
+        <p class="note"><span class="chip warn">not built</span>&nbsp; No PyPI package; no real Claude Code merge
+          session recorded; no <code>bisect --exec</code>, remotes or sync.</p>
       </article>
     </div>
     <figure class="plate">
       <img src="/assets/img/agentvcs/hero.jpg" width="1800" height="720" loading="lazy"
            alt="A brass machine on a bench with one freshly replaced gear; a paper ledger unrolls from it, each line sealed in wax, blue before the change and orange after, and a red ribbon ties the new gear to the first orange seal.">
-      <figcaption>Every step stamped with the harness version that produced it, so a change made while the
-        system runs can be traced to what it changed.</figcaption>
+      <figcaption>Every step stamped with the harness version that produced it.</figcaption>
     </figure>
   </section>
 
@@ -473,115 +269,68 @@
     <div class="pillars">
       <article>
         <h2>gene-evidence</h2>
-        <p class="question">Auditable evidence for gene predictions that the reference annotation does not have.</p>
-        <p class="note"><span class="chip warn">prototype &middot; stage 1</span>&nbsp; Carbon-A, a public set of
-          gene predictions, covers thousands of GenBank assemblies, and some of its predicted genes are absent
-          from the species&rsquo; reference annotation (NCBI RefSeq). Each is either a gene the reference missed
-          or a prediction artefact. For each one, <code>gene-evidence analyze</code> collects what the reference
-          annotates at the locus, a retrocopy signature, Swiss-Prot homology, Pfam domains, ORF sanity and
-          optional RNA evidence into an <b>evidence graph</b>: every node is one tool output with its tool,
-          version, database hash, parameters and raw values. The report cites graph nodes in every sentence,
-          and <code>check-report</code> fails if one does not. There is <b>no language model and no learned
-          model</b> in this stage; the rules are fixed and written down in
+        <p class="question">Auditable evidence for gene predictions the reference annotation does not have.</p>
+        <p class="note">Some predicted genes are absent from the species&rsquo; reference annotation: missed
+          genes, or artefacts. For each, <code>gene-evidence analyze</code> builds an
+          <b>evidence graph</b> &mdash; locus context, retrocopy signature, Swiss-Prot homology, Pfam domains, ORF
+          sanity &mdash; each node one tool output with its version and parameters. The report cites nodes in
+          every sentence and <code>check-report</code> fails if one does not. No language model; the rules are in
           <a href="https://github.com/EvolvingAgentsLabs/gene-evidence/blob/main/docs/EVIDENCE.md">EVIDENCE.md</a>.</p>
         <p class="ctas">
           <a class="cta primary" href="https://github.com/EvolvingAgentsLabs/gene-evidence">Repository &rarr;</a>
-          <a class="cta" href="https://github.com/EvolvingAgentsLabs/gene-evidence#quickstart">Quickstart: see the README</a>
           <a class="cta" href="https://github.com/EvolvingAgentsLabs/gene-evidence/tree/main/runs/2026-10-09-rat-dev">The rat run</a>
         </p>
       </article>
       <article>
-        <h2>The evidence against comes first</h2>
-        <p class="question">Why locus context is read before homology.</p>
-        <p class="note">A processed pseudogene is a copy of a spliced mRNA inserted back into the genome: no
-          introns, nearly identical to its parent, often with a reading frame intact enough for a predictor to
-          call it a gene. On those loci a near-identical homolog and the parent&rsquo;s domains point the wrong
-          way. So a pseudogene at the locus or a retrocopy signature puts a candidate last, whatever the
-          evidence for it says. On the <a href="https://github.com/EvolvingAgentsLabs/gene-evidence#development-run-rat">rat development run</a>,
-          <b>578 of 947</b> candidates (61&nbsp;%) sit on loci the reference already calls pseudogenes.</p>
-      </article>
-      <article>
-        <h2>What the first run showed</h2>
-        <p class="question">A development run on rat, not a test of ranking quality.</p>
-        <p class="note">947 candidates analysed. Two independent runs gave <b>byte-identical</b> graph and
-          report (<a href="https://github.com/EvolvingAgentsLabs/gene-evidence/blob/main/runs/2026-10-09-rat-dev/determinism.txt">determinism.txt</a>),
-          and every sentence passed the citation check
-          (<a href="https://github.com/EvolvingAgentsLabs/gene-evidence/blob/main/runs/2026-10-09-rat-dev/check.txt">check.txt</a>); 35 unit tests on
-          synthetic fixtures, no network. The top 100 are all tier 1, and reading them found the failure mode
-          written down before the run: repeat-rich families fill them &mdash; 32 hit the Smok kinase family,
-          24 T-cell receptor or immunoglobulin variable segments, and 2 retroviral Pol polyproteins,
-          <a href="https://github.com/EvolvingAgentsLabs/gene-evidence/blob/main/runs/2026-10-09-rat-dev/run1/report.md#1-gca_0363237351_gene00003511-tier-1-for-strong">rank&nbsp;1</a>
-          among them. The tier rule was not changed after seeing it.</p>
-        <p class="note"><span class="chip ok">checked nightly</span>&nbsp; Each of these numbers is read from
-          <a href="https://github.com/EvolvingAgentsLabs/gene-evidence/tree/main/runs/2026-10-09-rat-dev">the run&rsquo;s committed files</a> by the same check as lora-kernel&rsquo;s.</p>
-      </article>
-      <article>
-        <h2>Known limitation</h2>
-        <p class="question">Use the report to explain a candidate, not to choose which to validate first.</p>
-        <p class="note">Checked against independent long-read transcript evidence on plant genomes, the fixed
-          tier ordering ranked supported candidates better than chance but <b>worse than the gene
-          predictor&rsquo;s own confidence score</b>, and demoting candidates on their evidence against did not
-          improve the top of that ordering. The tiers are a reading aid, not a prediction.</p>
-        <p class="note">Nor does the project claim that tier 1 is enriched for real genes, that a candidate
-          ranked last is not a gene &mdash; retrocopies can be expressed, and pseudogene calls can be wrong
-          &mdash; or that &ldquo;no Swiss-Prot hit&rdquo; means &ldquo;novel&rdquo;. Its
-          <a href="https://github.com/EvolvingAgentsLabs/gene-evidence#known-limitation">README</a> says so first.</p>
+        <h2>The first run, on rat</h2>
+        <p class="question">A development run, not a test of ranking quality.</p>
+        <p class="note">947 candidates; <b>578 of 947</b> (61&nbsp;%) sit on loci the reference calls
+          pseudogenes, which is why locus context is read before homology. Two runs gave <b>byte-identical</b>
+          graph and report, and every sentence passed the citation check; 35 unit tests. The top 100 are
+          all tier 1 and repeat-rich families fill them, as written down before the run: 32 hit the Smok kinase
+          family, 24 T-cell receptor or immunoglobulin variable segments, 2 retroviral Pol polyproteins
+          (<a href="https://github.com/EvolvingAgentsLabs/gene-evidence/blob/main/runs/2026-10-09-rat-dev/run1/report.md#1-gca_0363237351_gene00003511-tier-1-for-strong">rank&nbsp;1</a> among them).</p>
+        <p class="note"><span class="chip warn">known limitation</span>&nbsp; On plant genomes, against long-read
+          transcript evidence, the tiers ranked supported candidates worse than the predictor&rsquo;s own
+          confidence score. Use the report to explain a candidate, not to choose which to validate first
+          (<a href="https://github.com/EvolvingAgentsLabs/gene-evidence#known-limitation">README</a>).</p>
       </article>
     </div>
     <figure class="plate">
-      <img src="/assets/img/gene-evidence/hero.jpg" width="1800" height="720" loading="lazy"
-           alt="A bench with a genome browser track; one predicted gene is circled, and thin threads run from each line of a printed report to small cards of tool output pinned above.">
-      <figcaption>Every sentence of the report is tied to the tool output it rests on.</figcaption>
-    </figure>
-    <figure class="plate">
       <img src="/assets/img/gene-evidence/locus-context.png" width="1600" height="700" loading="lazy"
            alt="Bar chart of the 947 candidates of the rat development run by what the reference annotates at the locus: pseudogene 578, nothing 285, protein-coding gene on the other strand or in an intron 45, non-coding gene 39.">
-      <figcaption>The rat development run: 578 of the 947 candidates sit on loci the reference already
-        calls pseudogenes. That is why locus context is read before homology.</figcaption>
+      <figcaption>The rat run by what the reference annotates at each candidate&rsquo;s locus.</figcaption>
     </figure>
     <figure class="plate">
       <img src="/assets/img/gene-evidence/report-candidate.png" width="1600" height="1000" loading="lazy"
            alt="One candidate's section of a gene-evidence report: evidence for, evidence against, context and a suggested validation experiment, each line ending in bracketed graph-node citations.">
-      <figcaption>Rank 1 of the rat development run: every line ends in the graph nodes it cites.</figcaption>
+      <figcaption>Rank 1 of the rat run: every line ends in the graph nodes it cites.</figcaption>
     </figure>
   </section>
 
   <section id="others">
     <p class="sectionlabel">The other public repositories</p>
-    <p class="note">Three are paused &mdash; kept readable, not where the lab&rsquo;s current work happens &mdash;
-      and two hold this website and the organisation&rsquo;s profile.</p>
     <ul class="repolist">
       <li><a class="repo" href="https://github.com/EvolvingAgentsLabs/evolving-agents">evolving-agents</a><span class="chip">paused</span>
-        The lab&rsquo;s most-starred repository and its monorepo: a Claude Agent SDK plugin that versions an
-        agent&rsquo;s evolution, the <code>ai-os</code> subtree (last changed 2026-09-06), a frozen copy of
-        agentvcs, the memory package, the robot demo and the 2025 toolkit, kept readable.</li>
+        The lab&rsquo;s monorepo: a Claude Agent SDK plugin, the <code>ai-os</code> subtree, the memory package and the 2025 toolkit.</li>
       <li><a class="repo" href="https://github.com/EvolvingAgentsLabs/physics-verifiers">physics-verifiers</a><span class="chip">paused</span>
-        A generator of physics tasks with exact truth, for RL environments whose reward is computed by
-        physics. Built to show physics verifiers resist reward hacking where an LLM judge does not; measured
-        twice, that did not hold &mdash; the generator is what stands. Last changed 2026-08-16.</li>
+        Physics tasks with exact truth for RL rewards; the reward-hacking claim did not hold, the generator stands.</li>
       <li><a class="repo" href="https://github.com/EvolvingAgentsLabs/nightshift">nightshift</a><span class="chip">paused</span>
-        A proof of concept: a procedural and epistemic memory engine, as a Claude Code plugin: capture, retrieval and a first
-        dream phase are built. Nobody has measured that it helps anywhere; its README says so first.
-        Last changed 2026-08-31.</li>
+        A memory-engine proof of concept for Claude Code; nobody has measured that it helps.</li>
       <li><a class="repo" href="https://github.com/EvolvingAgentsLabs/evolvingagentslabs.github.io">evolvingagentslabs.github.io</a><span class="chip ok">active</span>
-        This website, and the nightly check that every number on it still matches its results file.</li>
-      <li><a class="repo" href="https://github.com/EvolvingAgentsLabs/.github">.github</a><span class="chip ok">active</span>
-        The organisation&rsquo;s profile on GitHub: the same three projects and how they connect, in short.</li>
+        This website and its nightly number check.</li>
     </ul>
-    <p class="note">Twenty-five more repositories are archived and read-only &mdash; each is listed, with
-      where it moved if it moved, in <a href="/archive/#all-archived">the archive</a>.</p>
+    <p class="note">Twenty-five more are archived and read-only, listed in <a href="/archive/#all-archived">the archive</a>.
+      <span id="anfaia">agentvcs is among the projects that passed the ANFAIA Research Lab.</span></p>
   </section>
 
-  <section id="anfaia">
-    <p class="sectionlabel">Research Lab &middot; ANFAIA</p>
-    <div class="pillars">
-      <article>
-        <h2>ANFAIA Research Lab</h2>
-        <p class="note">agentvcs is among the projects that passed the ANFAIA Research Lab.
-          The work it carries there is the one described above: version control for agent systems
-          that are patched while they run.</p>
-      </article>
-    </div>
+  <section id="get-involved">
+    <p class="sectionlabel">Get involved</p>
+    <p class="note">Questions, reproductions that disagree with a number here, and proposals are welcome as
+      issues: <a href="https://github.com/EvolvingAgentsLabs/lora-kernel/issues">lora-kernel</a> &middot;
+      <a href="https://github.com/EvolvingAgentsLabs/agentvcs/issues">agentvcs</a> &middot;
+      <a href="https://github.com/EvolvingAgentsLabs/gene-evidence/issues">gene-evidence</a> &middot;
+      everything else under <a href="https://github.com/EvolvingAgentsLabs">github.com/EvolvingAgentsLabs</a>.</p>
   </section>
 
   <footer class="foot">

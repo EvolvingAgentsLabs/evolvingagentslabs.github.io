@@ -1,0 +1,267 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>lora-kernel — what is measured, and what is not · Evolving Agents Labs</title>
+<meta name="description" content="lora-kernel in detail: the finding that reorganised it, the core of version 1.0, every measured number with the run that produced it, what does not work yet, and where it sits in an organisation.">
+<meta property="og:title" content="lora-kernel — what is measured, and what is not">
+<meta property="og:description" content="lora-kernel in detail: the finding that reorganised it, the core of version 1.0, every measured number with the run that produced it, what does not work yet, and where it sits in an organisation.">
+<meta property="og:type" content="website">
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Crect x='2' y='2' width='13' height='13' rx='4' fill='%23F2F2F7'/%3E%3Crect x='17' y='2' width='13' height='13' rx='4' fill='%23F2F2F7'/%3E%3Crect x='2' y='17' width='13' height='13' rx='4' fill='%23F2F2F7'/%3E%3Crect x='18' y='18' width='11' height='11' rx='3' fill='none' stroke='%23F2F2F7' stroke-width='2' opacity='.42'/%3E%3C/svg%3E">
+<meta name="theme-color" content="#F4ECDB">
+<meta name="color-scheme" content="light">
+<!-- No webfont link, deliberately. This site publishes numbers it says you
+     can check with the machine in front of you, and /verify/ already refuses
+     a stylesheet from fonts.googleapis.com for exactly that reason. The two
+     stacks below are the demo's, and they are already on the machine. -->
+<link rel="stylesheet" href="/assets/site.css">
+<style>
+  /* Scoped to this page: the measured table is prose in its first two columns,
+     so it wraps where the evidence tables elsewhere do not. */
+  #evidence td,#evidence th,#rooms td,#rooms th{white-space:normal;}
+  #rooms{width:100%;border-collapse:collapse;margin:2rem 0 0;font-size:.875rem;}
+  #rooms th,#rooms td{text-align:left;padding:.55rem .7rem;border-bottom:1px solid var(--sep);vertical-align:top;color:var(--dim);}
+  #rooms th{font:600 10px/1.4 var(--sans);letter-spacing:.06em;text-transform:uppercase;color:var(--faint);}
+  #rooms td:first-child{color:var(--ink);font-weight:600;white-space:nowrap;}
+  #evidence td:first-child{color:var(--ink);min-width:16rem;}
+  #evidence td:last-child{white-space:nowrap;}
+  /* On a phone the organisations table scrolls inside itself instead of widening the page. */
+  @media(max-width:40rem){#rooms td:first-child{white-space:normal;}#rooms{display:block;overflow-x:auto;}}
+</style>
+</head>
+<body>
+
+<header class="masthead">
+  <div class="masthead-in">
+      <a class="wordmark" href="/"><svg class="mark" viewBox="0 0 32 32" aria-hidden="true"><rect x="2" y="2" width="13" height="13" rx="4" fill="currentColor"/><rect x="17" y="2" width="13" height="13" rx="4" fill="currentColor"/><rect x="2" y="17" width="13" height="13" rx="4" fill="currentColor"/><rect x="18" y="18" width="11" height="11" rx="3" fill="none" stroke="currentColor" stroke-width="2" opacity=".42"/></svg>Evolving Agents Labs</a>
+      <nav class="navlinks">
+        <a href="/#projects">All projects</a>
+        <a href="#finding">The finding</a>
+        <a href="#core">Version 1.0</a>
+        <a href="#evidence">Measured</a>
+        <a href="#organisation">In an organisation</a>
+        <a href="#get-involved">Get involved</a>
+        <a href="https://github.com/EvolvingAgentsLabs/lora-kernel">GitHub</a>
+      </nav>
+      <span class="chip ok">every number checked nightly</span>
+  </div>
+</header>
+
+<div class="wrap">
+
+  <!--
+    lora-kernel's detail page. Moved here from the home on 2026-10-11 so the home could stay short:
+    the finding, the core of version 1.0, the measured table with the run behind each row, what does
+    not work yet, and where it sits in an organisation. Every number on this page is checked nightly
+    by scripts/check-numbers.py against the results file that produced it.
+  -->
+  <p class="crumb"><a href="/">Evolving Agents Labs</a><span>/</span><a href="/#lora-kernel">Projects</a><span>/</span>lora-kernel</p>
+
+  <section class="hero" id="top">
+    <p class="eyebrow">The flagship &middot; <a href="https://github.com/EvolvingAgentsLabs/lora-kernel">lora-kernel</a> &middot; Apache 2.0</p>
+    <h1>The LoRA is not the textbook. It is the specialist who knows how to use the <span class="proj">library</span>.</h1>
+    <p>One GPU, one small resident model, and a shelf of QLoRA adapters &mdash; each an
+      expert <b>defined by its corpus</b>. An OpenAI-compatible API reads every request,
+      serves it with the expert whose corpus it falls in, and sends everything else to a
+      frontier model. The client names no model.</p>
+    <p>Version 1.0 adds what a small expert cannot hold in its weights: a library of short
+      notes per subdomain, and an adapter trained on the <i>habit of navigating it</i>.
+      The weights hold the navigation; the notes hold the content, and a person can read,
+      diff and correct them.</p>
+    <p class="ctas">
+      <a class="cta primary" href="https://github.com/EvolvingAgentsLabs/lora-kernel/blob/main/docs/articles/2026-09-it-was-the-harness.md">Read the architecture article &rarr;</a>
+      <a class="cta" href="https://github.com/EvolvingAgentsLabs/lora-kernel/blob/main/docs/articles/2026-09-era-el-arnes.es.md">En espa&ntilde;ol</a>
+      <a class="cta" href="https://github.com/EvolvingAgentsLabs/lora-kernel/blob/main/docs/MEMORY.md">The memory</a>
+      <a class="cta" href="https://github.com/EvolvingAgentsLabs/lora-kernel">Repository</a>
+    </p>
+    <figure class="plate">
+      <img src="/assets/img/lora-kernel/hero.jpg" width="1800" height="720"
+           alt="A reader at a desk before a wall of card-catalogue drawers labelled Procedures and Encyclopedia; a small radar dish on the desk lights three drawers; through an open door, a domed building on a hill labelled frontier.">
+      <figcaption>The specialist, the library, the radar that lights the drawers worth opening &mdash;
+        and, through the door, the frontier for everything else.</figcaption>
+    </figure>
+  </section>
+
+  <section id="finding">
+    <p class="sectionlabel">The finding that reorganised the project</p>
+    <div class="pillars">
+      <article>
+        <h2>11 of 90 became 90 of 90</h2>
+        <p class="question">Same adapter, same cases. Only the serving path changed.</p>
+        <p class="note">A fluid-mechanics expert &mdash; 6-to-9-step chains with a calculator and a
+          per-case handbook &mdash; scored <b>11/90</b> when tool results came back as
+          <code>tool_calls</code> messages. Written inline, the way its corpus taught it to read them,
+          it scores <b>90/90</b> (79&nbsp;:&nbsp;0, paired). For four days that gap had been read as
+          &ldquo;small models cannot reason&rdquo;.</p>
+      </article>
+      <article>
+        <h2>An expert is its corpus</h2>
+        <p class="question">Tool block, argument order, system prompt, result format.</p>
+        <p class="note">Under a foreign system prompt 2 of 32 live turns call a tool; under its own,
+          19 of 32. Serve an expert the way its corpus taught it, and suspect the path before
+          the model.</p>
+      </article>
+      <article>
+        <h2>The pool moves bases and holds</h2>
+        <p class="question">Same corpora, same recipe, a new base.</p>
+        <p class="note">Both released members were retrained on <code>Qwen3.5-4B</code> and each
+          ties its own earlier release: inbox triage <b>471/475</b>, desk commitments
+          <b>240/240</b>. They have since moved again: every released member is now on Gemma&nbsp;4 E4B,
+          and the Qwen releases stay as the control arm.</p>
+      </article>
+      <article>
+        <h2>What stays text</h2>
+        <p class="question">What deliberately never becomes a weight?</p>
+        <p class="note">The library. A weight delta cannot be read, cited or corrected by a person;
+          a half-page note can. Site rules override the textbook before the expert ever sees
+          the note.</p>
+      </article>
+    </div>
+  </section>
+
+  <section id="core">
+    <p class="sectionlabel">The core of version 1.0</p>
+    <figure class="plate">
+      <img src="/assets/img/lora-kernel/core-1-0.jpg" loading="lazy"
+           alt="The five parts of version 1.0: experts, router, memory, runtime and the release contract.">
+      <figcaption>Five things: experts, a router, the memory, a runtime that referees, and a release
+        contract that nothing ships without.</figcaption>
+    </figure>
+    <figure class="plate">
+      <img src="/assets/img/lora-kernel/memory-walkthrough.jpg" loading="lazy"
+           alt="A walk through the memory: a question, a search that lights a few notes, notes opened one after another, a calculation, an answer.">
+      <figcaption>Three verbs &mdash; <code>search</code>, <code>open</code>, <code>calc</code> &mdash;
+        with results written inline. A software referee turns the pages, applies the site's rules
+        and cuts a walk that skips a required step.</figcaption>
+    </figure>
+    <p class="note"><span class="chip warn">built &mdash; measured in part</span>&nbsp; All five parts
+      are built. Libraries now exist over an open textbook&rsquo;s procedures (CC&nbsp;BY&nbsp;4.0) and over
+      US regulations ingested verbatim. On real documents the central claim holds where it was measured:
+      an expert trained on walks over one regulation family cites on a family it never saw, and a number
+      edited in the library after training is answered from the edit (below). On generated procedures it
+      did not: the library arm did not beat the untrained base handed the same notes.</p>
+  </section>
+
+  <section id="evidence">
+    <p class="sectionlabel">What is measured</p>
+    <table class="measured">
+      <thead><tr><th>what</th><th>the number</th><th>run</th></tr></thead>
+      <tbody>
+        <tr><td>A reasoning expert served the way its corpus taught</td>
+            <td><b>90/90</b> against <b>11/90</b> through <code>tool_calls</code>, 79&nbsp;:&nbsp;0 paired</td><td class="run">M7 arm 0b</td></tr>
+        <tr><td>Inbox triage, retrained on <code>Qwen3.5-4B</code></td>
+            <td><b>471/475</b>, a tie with its earlier release; the bare base scores 346/475</td><td class="run">M1</td></tr>
+        <tr><td>A second expert on the same inbox, a different question</td>
+            <td><b>240/240</b>, a tie with its earlier release</td><td class="run">M1</td></tr>
+        <tr><td>The API routes per request; the client names no model</td>
+            <td>0.546 &rarr; 0.775 on a 240-case replay, 0 misrouted</td><td class="run">P41, P62</td></tr>
+        <tr><td>A procedure merely pasted into a 3B&rsquo;s prompt is not followed</td>
+            <td>0 tool calls on 351/351; the trained expert beats it 137&nbsp;:&nbsp;1</td><td class="run">P61</td></tr>
+        <tr><td>Trained on walks over real regulations, an expert cites on a regulation family it never saw</td>
+            <td><b>18/23</b> against the untrained base&rsquo;s <b>9/23</b>, 10&nbsp;:&nbsp;1 paired; a second seed ties it</td><td class="run">REAL3</td></tr>
+        <tr><td>A number edited in the library after training is answered from the edit, not the weights</td>
+            <td><b>17/17</b> rows answer the new value, each cited to the edited statement, 0 stale</td><td class="run">EDIT0</td></tr>
+        <tr><td>The router that replaced the keyword dictionary as the default: a request is factored into its task and its content</td>
+            <td>foreign text served locally <b>0/600</b> against the dictionary&rsquo;s 294/600; unseen senders 0 of 120 lost</td><td class="run">ROUTE0</td></tr>
+        <tr><td>A long-policy, multi-turn agent benchmark (&tau;&sup2;-bench airline, 20 test tasks &times; 4 trials), untrained bases &mdash; a headroom check, no member trained yet</td>
+            <td>Gemma&nbsp;4 12B pass^1 <b>0.45</b> against the E4B&rsquo;s 0.175, +27.5&nbsp;pp, 10&nbsp;:&nbsp;0 tasks; the 31B&rsquo;s 0.5375 is +8.8&nbsp;pp over the 12B, inside the noise</td><td class="run">T1, T1b</td></tr>
+      </tbody>
+    </table>
+    <p class="sectionlabel">What is not, or does not work</p>
+    <ul class="note">
+      <li><b>No real traffic yet.</b> Suites are generated, or built from real documents ingested verbatim;
+        live runs go through a real agent runtime, on synthetic organisations.</li>
+      <li><b>The router is literal by design.</b> A paraphrase of a member&rsquo;s task is sent to the frontier,
+        not served locally (0/120 kept local), and two learned routers &mdash; n-grams and embeddings &mdash;
+        both lost every request from a sender they never saw.</li>
+      <li><b>The radar that picks which notes to open has not passed its gate</b>, and the library arm lost
+        its kill test on generated procedures.</li>
+      <li><b>Not installable yet.</b> There is no package or container, and the serving code does not yet load
+        the per-role packs it lints. What exists is a research codebase whose runs are reproducible on Colab.</li>
+      <li><b>The saving in money is not established.</b> The frontier side of a replay has been costed; the
+        local GPU has not, and none of it is real traffic.</li>
+    </ul>
+    <p class="note">The full ledger, including everything that failed and the instruments that lied:
+      <a href="https://github.com/EvolvingAgentsLabs/lora-kernel/blob/main/docs/RECORD.md">RECORD.md</a>. The position:
+      <a href="https://github.com/EvolvingAgentsLabs/lora-kernel/blob/main/docs/PLAN.md">PLAN.md</a>.</p>
+  </section>
+
+  <section id="organisation">
+    <p class="sectionlabel">Where it sits in an organisation</p>
+    <div class="pillars">
+      <article>
+        <h2>One expert per role</h2>
+        <p class="question">Under the agent column, not beside it.</p>
+        <p class="note">An organisation that runs on agents draws the same picture: people in a few
+          roles, an agent runtime with one agent per role, the applications they operate, the channels
+          people already use, and one database underneath. In that picture every agent is a system
+          prompt over the same remote model. Here <b>each role becomes an expert</b> &mdash; an adapter
+          trained on how <i>this</i> organisation does that job &mdash; and the role a message arrives
+          from is the route.</p>
+      </article>
+      <article>
+        <h2>Three places for three things</h2>
+        <p class="question">Records, habits, knowledge.</p>
+        <p class="note"><b>Records stay in the database. Habits go in the adapter. Knowledge stays in
+          notes a person can read and correct</b> &mdash; two drawers per role: how we do it here, and
+          what we know. What an expert is measured to handle is answered on the organisation&rsquo;s own
+          machine; the rest goes to the frontier, or to a person where policy says nothing leaves the
+          building.</p>
+      </article>
+    </div>
+    <figure class="plate">
+      <img src="/assets/img/lora-kernel/solution-architecture.jpg" loading="lazy"
+           alt="A solution architecture in five layers: people in four roles; an agent runtime with one agent per role; order and back-office applications; app and messaging channels; one database with identity, payments and monitoring. Under the agents, one graphics card drawn as a bookshelf: one thick spine, the resident model, and a thin spine per role, each with two drawers of notes. A signpost routes by role; dashed lines leave for the frontier and for a person.">
+      <figcaption>A distributor, as the example: one adapter per role under the agent column, two drawers of
+        notes under each, the role as the route &mdash; and the systems of record left where they are.</figcaption>
+    </figure>
+    <table class="measured" id="rooms">
+      <thead><tr><th>organisation</th><th>roles that become experts</th><th>what goes in the two drawers</th></tr></thead>
+      <tbody>
+        <tr><td>a distributor</td><td>order desk, receiving, dispatch, purchasing, claims</td><td>the site&rsquo;s handling procedures &middot; catalogue, carriers, service levels</td></tr>
+        <tr><td>an accounting or law office</td><td>intake, document review, deadlines, billing</td><td>the firm&rsquo;s checklists and templates &middot; the rules of its jurisdiction</td></tr>
+        <tr><td>a school or training centre</td><td>enrolment, teaching support, communications, purchasing</td><td>how this school handles each case &middot; programme, calendar, regulations</td></tr>
+        <tr><td>a repair or field-service company</td><td>equipment intake, diagnosis, spare parts, warranties</td><td>the procedure for each kind of repair &middot; manuals, parts lists, warranty terms</td></tr>
+        <tr><td>a club or community centre</td><td>memberships, activity sign-ups, facilities, collections</td><td>how this club handles each case &middot; activities, fees, house rules</td></tr>
+        <tr><td>a property manager</td><td>tenant requests, maintenance, collections, suppliers</td><td>the escalation procedure per building &middot; contracts, by-laws, supplier terms</td></tr>
+      </tbody>
+    </table>
+    <p class="note"><span class="chip warn">not measured</span>&nbsp; These are where the design points,
+      not results. What they share is what makes a region worth an expert: the same few procedures,
+      repeated daily, with local rules that differ from the textbook, over data that should not leave.
+      The first library in the repository is built from an open textbook&rsquo;s step-by-step procedures.</p>
+  </section>
+
+  <section id="teams">
+    <p class="sectionlabel">For a team running agents together</p>
+    <figure class="plate">
+      <img src="/assets/img/lora-kernel/article-team.jpg" loading="lazy"
+           alt="Four teams and their direct messages flow through an agent runtime and a proxy to one GPU holding one small resident model and an adapter per team, each with two drawers: how this team does it, what this team knows. A dashed line leads to the frontier as fallback.">
+      <figcaption>Many teams, one machine. The group a message arrives from <i>is</i> the route: each
+        team gets an adapter and two drawers &mdash; how this team does it, what this team knows.</figcaption>
+    </figure>
+  </section>
+
+  <section id="get-involved">
+    <p class="sectionlabel">Get involved</p>
+    <p class="note">Questions, reproductions that disagree with a number here, and proposals are welcome as
+      issues: <a href="https://github.com/EvolvingAgentsLabs/lora-kernel/issues">lora-kernel</a> &middot;
+      <a href="https://github.com/EvolvingAgentsLabs/agentvcs/issues">agentvcs</a> &middot;
+      <a href="https://github.com/EvolvingAgentsLabs/gene-evidence/issues">gene-evidence</a> &middot;
+      everything else under <a href="https://github.com/EvolvingAgentsLabs">github.com/EvolvingAgentsLabs</a>.</p>
+  </section>
+
+  <footer class="foot">
+    <span class="by">Ideas, architecture and implementation by
+      <a href="https://github.com/matiasmolinas">Matias Molinas</a> and
+      <a href="https://github.com/ismaelfaro">Ismael Faro</a>.
+      Everything here started as a conversation between the two.</span>
+    <span class="meta-foot">Apache 2.0 · <code>ai-base</code> MIT · permanently alpha ·
+      <a href="https://github.com/EvolvingAgentsLabs">github.com/EvolvingAgentsLabs</a></span>
+  </footer>
+
+</div>
+
+</body>
+</html>
