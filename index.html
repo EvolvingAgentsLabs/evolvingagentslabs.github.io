@@ -34,7 +34,20 @@
   #links td:nth-child(2){white-space:nowrap;}
   @media(max-width:40rem){#links{display:block;overflow-x:auto;}}
   /* The three active projects sit side by side where there is room, never two plus an empty cell. */
-  @media(min-width:62rem){#projects .pillars{grid-template-columns:repeat(3,1fr);}}
+  @media(min-width:62rem){#projects .pillars{grid-template-columns:repeat(2,1fr);}}
+  /* The lab's main project, first on the page. */
+  .featured{border:1px solid var(--sep);border-radius:var(--r-m);background:var(--bg-2);padding:1.6rem 1.6rem 1.4rem;margin:0 0 3rem;}
+  .featured .top{display:flex;flex-wrap:wrap;gap:.6rem;align-items:center;margin-bottom:.9rem;}
+  .featured h1{font-size:clamp(1.6rem,3.6vw,2.4rem);line-height:1.15;margin:.2rem 0 .8rem;letter-spacing:-.02em;}
+  .featured p{max-width:68ch;font-size:1.0625rem;line-height:1.6;margin:0 0 .8rem;}
+  .featured .nums{display:flex;flex-wrap:wrap;gap:1.4rem;margin:1.1rem 0 1.3rem;}
+  .featured .num b{display:block;font-size:1.7rem;letter-spacing:-.02em;}
+  .featured .num span{font-size:.8125rem;color:var(--dim);}
+  .featured img{width:100%;height:auto;border-radius:var(--r-m);margin-top:1.4rem;}
+  .stars{font:600 .875rem/1 var(--sans);}
+  #roadmap ol{max-width:72ch;padding-left:1.2rem;}
+  #roadmap li{margin:.55rem 0;color:var(--dim);line-height:1.55;}
+  #roadmap li b{color:var(--ink);}
   .why{border-left:2px solid var(--sep);padding-left:.75rem;}
 </style>
 </head>
@@ -46,6 +59,7 @@
       <nav class="navlinks">
         <a href="#projects">Projects</a>
         <a href="#director">director</a>
+        <a href="#roadmap">Roadmap</a>
         <a href="#connections">How they connect</a>
         <a href="#lora-kernel">lora-kernel</a>
         <a href="#agentvcs">agentvcs</a>
@@ -68,6 +82,33 @@
     on this page and on /lora-kernel/ is checked nightly by scripts/check-numbers.py against the file
     that produced it. The paused repositories are listed near the end; the archived ones at /archive/.
   -->
+  <section class="featured" id="featured">
+    <div class="top">
+      <span class="sectionlabel">The lab&rsquo;s main project</span>
+      <a class="cta" href="https://github.com/EvolvingAgentsLabs/evolving-agents/stargazers">&#9733;&nbsp;<span class="stars" id="ea-stars">450+</span>&nbsp;stars on GitHub</a>
+      <span class="chip ok">active &middot; D0&ndash;D3 measured</span>
+    </div>
+    <h1>evolving-agents: a director that learns how your team works</h1>
+    <p>You wrote the rules down &mdash; in a <code>CLAUDE.md</code>, an <code>AGENTS.md</code>, Claude Code&rsquo;s
+      memory. Your agent still breaks them under pressure. The director compiles those rules into a memory of small,
+      linked statements, <b>recalls the one that applies before it plans</b>, hands each step to Claude Code or to a
+      model on your machine, and <b>learns from your corrections</b> &mdash; each lesson checked against what it already
+      knew and kept only if you accept it, as a reversible, versioned patch.</p>
+    <div class="nums">
+      <div class="num"><b>0.929</b><span>planning by your rules &mdash; vs 0.589 for today&rsquo;s session</span></div>
+      <div class="num"><b>0.0 &rarr; 0.781</b><span>learning from tasks, nothing it knew broken</span></div>
+      <div class="num"><b>6 / 6</b><span>learned where you want work done, after one move</span></div>
+    </div>
+    <div class="ctas">
+      <a class="cta primary" href="https://github.com/EvolvingAgentsLabs/evolving-agents#try-it-on-your-own-instructions">Try it on your own CLAUDE.md</a>
+      <a class="cta" href="https://github.com/EvolvingAgentsLabs/evolving-agents">GitHub</a>
+      <a class="cta" href="#roadmap">Roadmap</a>
+      <a class="cta" href="#director">How it was measured</a>
+    </div>
+    <img src="/assets/img/director/hero.jpg" width="1600" height="800" loading="eager"
+         alt="A chart table with a web of linked index cards and a route traced across them in red pencil, ending at a plan sheet; brass tubes lead from it to a distant domed building through an arched window and to a small local machine with a dial.">
+  </section>
+
   <section id="projects">
     <p class="sectionlabel">The director, and the three projects it draws on</p>
     <p class="note" style="max-width:72ch;font-size:1rem;color:var(--ink);">Evolving Agents Labs is an
@@ -278,6 +319,33 @@
     </figure>
   </section>
 
+  <section id="roadmap">
+    <p class="sectionlabel">Roadmap</p>
+    <p class="note" style="max-width:72ch">Each step names its measurement before it is built, against the version it
+      replaces; a flat result is published as flat. Order, not dates. The full table:
+      <a href="https://github.com/EvolvingAgentsLabs/evolving-agents/blob/main/ROADMAP.md">ROADMAP.md</a>.</p>
+    <figure class="plate">
+      <img src="/assets/img/director/roadmap.jpg" width="1800" height="720" loading="lazy"
+           alt="A railway survey map: seven stations along one line. The first three are drawn and coloured, joined by solid green track, each with a wax seal; the next four are pencil outlines joined by dashed ochre track. A surveyor's level stands where the built track ends.">
+    </figure>
+    <ol>
+      <li><b>Built:</b> plan by walking the memory (D0), the loop and its interface (D1), learn from a task (D2), learn
+        where work runs (D3), an Accept guarded by D0.</li>
+      <li><b>Your own director in ten minutes</b> &mdash; <code>director.compile</code> on your <code>CLAUDE.md</code>
+        and memory; judged by a first user&rsquo;s compile and the time and cost from a clean clone.</li>
+      <li><b>The local lane through lora-kernel</b> &mdash; a specialist serves its domain on your machine, the rest
+        abstains to the frontier; judged by the share served locally and no abstained task lost.</li>
+      <li><b>Cheaper walks</b> &mdash; today about eleven times today&rsquo;s session per plan; judged by D0 held within
+        0.03 at three times the cost or less.</li>
+      <li><b>Inside Claude Code</b> &mdash; the walk in the session you already use; judged by D0 run there.</li>
+      <li><b>A team&rsquo;s memory</b> &mdash; lessons shared and merged with their evidence; judged by two members&rsquo;
+        lessons merged without losing either&rsquo;s probes.</li>
+      <li><b>Held-out from the future</b> &mdash; cases from work done after the memory was compiled. Bring yours:
+        <a href="https://github.com/EvolvingAgentsLabs/evolving-agents/issues/new">a situation where your agent ignored
+        a rule you had written down</a>.</li>
+    </ol>
+  </section>
+
   <section class="hero" id="lora-kernel">
     <p class="eyebrow">The flagship &middot; <a href="https://github.com/EvolvingAgentsLabs/lora-kernel">lora-kernel</a> &middot; Apache 2.0</p>
     <h1>The LoRA is not the textbook. It is the specialist who knows how to use the <span class="proj">library</span>.</h1>
@@ -424,5 +492,11 @@
 
 </div>
 
+<script>
+  /* The star count, live from GitHub's API; the page reads "450+" if the request fails or is rate-limited. */
+  fetch("https://api.github.com/repos/EvolvingAgentsLabs/evolving-agents").then(r => r.ok ? r.json() : null)
+    .then(d => { if (d && d.stargazers_count) document.getElementById("ea-stars").textContent = d.stargazers_count; })
+    .catch(() => {});
+</script>
 </body>
 </html>
