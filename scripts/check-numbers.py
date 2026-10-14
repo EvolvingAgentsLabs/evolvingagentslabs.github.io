@@ -95,6 +95,10 @@ GE_BRIEF = "BRIEF.md"
 # (Qwen2.5-1.5B on llama.cpp), read from the result file that run committed.
 AV_RAW = "https://raw.githubusercontent.com/EvolvingAgentsLabs/agentvcs/{ref}/{path}"
 AV_F2 = "examples/toy_pipeline/runs/f2-rerun-2026-10-06/result.json"
+# Added 2026-10-14 with the director (evolving-agents/packages/director): its scores are stated in its briefs,
+# each in a table or a sentence written from the run; the check reads them there.
+EA_RAW = "https://raw.githubusercontent.com/EvolvingAgentsLabs/evolving-agents/{ref}/{path}"
+DIR_D0, DIR_D2, DIR_D3 = (f"packages/director/docs/BRIEF-{d}.md" for d in ("D0", "D2", "D3"))
 
 
 def fetch(path: str, ref: str, raw: str = RAW) -> dict:
@@ -276,6 +280,24 @@ def agentvcs_claims(f2: dict) -> list[tuple[str, str, str]]:
     ]
 
 
+def director_claims(d0: str, d2: str, d3: str) -> list[tuple[str, str, str]]:
+    """The director's D0, D2 and D3, rendered the way the home renders them."""
+    home = "index.html"
+    never = "(the artifact no longer supports this claim)"
+    m0 = re.search(r"\| mean \| (0\.\d+) \| (0\.\d+) \| \*\*(0\.\d+)\*\* \|", d0)
+    m2 = re.search(r"T1b − T0c = \*\*\+(0\.\d+)\*\*", d2)
+    g2 = re.search(r"guard (0\.\d+) ≥ 0\.86 → \*\*LEARNS\*\*", d2)
+    m3 = re.search(r"\| public-facing tasks planned on the frontier \| \*\*0\.0\*\* \(0 / 6\) \| \*\*1\.0\*\* \(6 / 6\) \|", d3)
+    return [
+        (home, f"<b>{m0.group(1)}</b>" if m0 else never, "director D0: today's session"),
+        (home, f"<b>{m0.group(2)}</b>" if m0 else never, "director D0: told to walk its files (A+)"),
+        (home, f"<b>{m0.group(3)}</b>" if m0 else never, "director D0: the director"),
+        (home, f"<b>{m2.group(1)}</b>" if m2 else never, "director D2: probes after learning"),
+        (home, f"<b>{g2.group(1)}</b>" if g2 else never, "director D2: guard on D0"),
+        (home, "<b>0 / 6 &rarr; 6 / 6</b>" if m3 else never, "director D3: public-facing drafts to the frontier"),
+    ]
+
+
 def main() -> int:
     ap = argparse.ArgumentParser()
     ap.add_argument("--ref", default="main", help="git ref to read the artifacts from")
@@ -301,7 +323,9 @@ def main() -> int:
                               fetch_text(GE_CHECK, "main", GE_RAW), fetch_text(GE_BRIEF, "main", GE_RAW))
     # agentvcs's default branch is `main` too.
     av = agentvcs_claims(fetch(AV_F2, "main", AV_RAW))
-    for page, value, what in claims(h0) + lk + ge + av:
+    di = director_claims(fetch_text(DIR_D0, "main", EA_RAW), fetch_text(DIR_D2, "main", EA_RAW),
+                         fetch_text(DIR_D3, "main", EA_RAW))
+    for page, value, what in claims(h0) + lk + ge + av + di:
         if page not in pages:
             f = ROOT / page
             if not f.exists():

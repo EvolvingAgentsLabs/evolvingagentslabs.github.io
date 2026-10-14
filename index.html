@@ -3,7 +3,7 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<title>Evolving Agents Labs — lora-kernel, agentvcs, gene-evidence and the open projects</title>
+<title>Evolving Agents Labs — the director, lora-kernel, agentvcs, gene-evidence</title>
 <meta name="description" content="The lab’s open projects. lora-kernel, the flagship: an operating layer for specialized local AI agents — one small resident model, many specialists, a router that abstains to a frontier model. agentvcs: version control for live-patched agent systems. gene-evidence, a prototype: auditable evidence reports for gene predictions the reference annotation does not have. And the rest, active and archived.">
 <meta property="og:title" content="Evolving Agents Labs — lora-kernel, agentvcs, gene-evidence and the open projects">
 <meta property="og:description" content="The lab’s open projects. lora-kernel, the flagship: an operating layer for specialized local AI agents — one small resident model, many specialists, a router that abstains to a frontier model. agentvcs: version control for live-patched agent systems. gene-evidence, a prototype: auditable evidence reports for gene predictions the reference annotation does not have. And the rest, active and archived.">
@@ -45,6 +45,7 @@
       <a class="wordmark" href="/"><svg class="mark" viewBox="0 0 32 32" aria-hidden="true"><rect x="2" y="2" width="13" height="13" rx="4" fill="currentColor"/><rect x="17" y="2" width="13" height="13" rx="4" fill="currentColor"/><rect x="2" y="17" width="13" height="13" rx="4" fill="currentColor"/><rect x="18" y="18" width="11" height="11" rx="3" fill="none" stroke="currentColor" stroke-width="2" opacity=".42"/></svg>Evolving Agents Labs</a>
       <nav class="navlinks">
         <a href="#projects">Projects</a>
+        <a href="#director">director</a>
         <a href="#connections">How they connect</a>
         <a href="#lora-kernel">lora-kernel</a>
         <a href="#agentvcs">agentvcs</a>
@@ -68,15 +69,32 @@
     that produced it. The paused repositories are listed near the end; the archived ones at /archive/.
   -->
   <section id="projects">
-    <p class="sectionlabel">Three active projects</p>
+    <p class="sectionlabel">The director, and the three projects it draws on</p>
     <p class="note" style="max-width:72ch;font-size:1rem;color:var(--ink);">Evolving Agents Labs is an
-      open-source lab, and three of its projects are active.
+      open-source lab for agents that learn how a team works &mdash; and can show what they learned.
+      The <b>director</b> keeps the team&rsquo;s way of working as a memory of small, linked statements, plans by
+      walking it, delegates each step to a frontier model or to local models, and learns from every task.
       <b>lora-kernel</b> serves small local models as trained specialists. <b>agentvcs</b> versions and merges
       the harness those models run in, and attributes each change in a result to the change that caused it.
       <b>gene-evidence</b> writes evidence reports on predicted genes in which every sentence cites its source. The idea
       they share: what an AI system answers, changes or reports should be traceable to what produced it.
-      One connection is built today; two are planned &mdash; <a href="#connections">how they connect</a>.</p>
+      What is built and what is planned between them: <a href="#connections">how they connect</a>.</p>
     <div class="pillars">
+      <article>
+        <h2><a href="#director">director</a></h2>
+        <p class="question">Can an agent keep a team&rsquo;s way of working as memory &mdash; and plan, delegate
+          and learn by it, so that each lesson is checked before it is kept?</p>
+        <p class="note"><span class="chip ok">active &middot; D0&ndash;D3 measured</span>&nbsp; A meta-agent in
+          <a href="https://github.com/EvolvingAgentsLabs/evolving-agents/tree/main/packages/director">evolving-agents</a>:
+          walks the operational memory to plan, hands each step to Claude Code or to a local model, learns from
+          each task and from where the user moves work.</p>
+        <p class="note"><b>Built:</b> the loop and its local interface, learning sealed as agentvcs patches
+          (<a href="#director">measured</a>). <b>Not yet:</b> its local lane through lora-kernel&rsquo;s
+          specialists; no write access by default.</p>
+        <p class="note why"><b>Why it matters:</b> the rules a team writes down are not the ones it follows
+          under pressure. If it works, the way of working is recalled at the moment it applies, and every new
+          lesson is a reviewed, reversible change instead of a line in a file nobody rereads.</p>
+      </article>
       <article>
         <h2><a href="#lora-kernel">lora-kernel</a></h2>
         <p class="question">Can one small local model, given a trained specialist per job and a library of
@@ -124,15 +142,15 @@
       </article>
     </div>
     <figure class="plate">
-      <img src="/assets/img/lab/three-projects.jpg" width="1800" height="720"
-           alt="Three workbenches in one long room. On the left a card-catalogue cabinet, three of its drawers lit by a small brass radar dish; in the middle a brass machine whose paper ledger carries wax seals that change colour at a swapped gear; on the right a naturalist's bench with a printed report tied by red threads to pinned evidence cards. A solid green cord joins the first two benches; two dashed ochre chalk lines lead from the third bench to the other two.">
-      <figcaption>Three benches, one room: lora-kernel, agentvcs, gene-evidence. The solid cord exists today; the
-        dashed lines are planned.</figcaption>
+      <img src="/assets/img/lab/lab.jpg" width="1800" height="720" loading="lazy"
+           alt="A workshop room. In front, a chart table with a map of linked index cards and a route traced in red; two brass tubes leave it, one to a window and a distant domed building, one to a small machine nearby. Behind, three benches: a card-catalogue library, a machine with a sealed ledger, an evidence table with threaded cards. Solid cords join the chart table to the ledger and the library to the ledger; dashed lines mark the links still planned.">
+      <figcaption>The director&rsquo;s chart table in front, the three benches behind: lora-kernel, agentvcs,
+        gene-evidence. Solid cords exist today; dashed lines are planned.</figcaption>
     </figure>
   </section>
 
   <section id="connections">
-    <p class="sectionlabel">How the three connect</p>
+    <p class="sectionlabel">How they connect</p>
     <p class="note">What they share is one rule: a statement that does not cite its source does not ship.
       gene-evidence&rsquo;s <code>check-report</code> fails a sentence whose citation does not resolve; lora-kernel&rsquo;s
       endpoint withholds an answer whose citation fails the referee&rsquo;s check.</p>
@@ -186,6 +204,14 @@
     <table class="measured" id="links">
       <thead><tr><th>connection</th><th>status</th><th>what it is</th></tr></thead>
       <tbody>
+        <tr><td>director &rarr; agentvcs</td><td><span class="chip ok">built</span></td>
+            <td>Every memory edit the director keeps is an agentvcs patch: proposed, gated (it lints clean and a
+              person accepted it), applied; <code>blame</code> credits the learning patch with the gain it made.</td></tr>
+        <tr><td>director &rarr; frontier and local lanes</td><td><span class="chip ok">built</span></td>
+            <td>Claude Code as a streamed <code>claude -p</code>; any OpenAI-compatible local server &mdash; it ran
+              on llama.cpp on a 16&nbsp;GB laptop. The director never starts a local model itself.</td></tr>
+        <tr><td>director &rarr; lora-kernel</td><td><span class="chip warn">next &mdash; not built</span></td>
+            <td>The local lane through lora-kernel&rsquo;s specialists and router rather than a bare model.</td></tr>
         <tr><td>agentvcs &harr; lora-kernel</td><td><span class="chip ok">built</span></td>
             <td>agentvcs&rsquo;s <a href="https://github.com/EvolvingAgentsLabs/agentvcs/tree/main/examples/lora-kernel">lora-kernel example</a>
               turns nine measured lora-kernel configuration changes into gated patches and hands a branch conflict
@@ -200,6 +226,56 @@
               <a href="https://github.com/EvolvingAgentsLabs/gene-evidence/blob/main/runs/2026-10-09-rat-dev/run1/versions.json"><code>versions.json</code></a>.</td></tr>
       </tbody>
     </table>
+  </section>
+
+  <section id="director">
+    <p class="sectionlabel">director</p>
+    <div class="pillars">
+      <article>
+        <h2>The director</h2>
+        <p class="question">Plan by the team&rsquo;s memory; learn by gated patches.</p>
+        <p class="note">The memory is a small wiki of the team&rsquo;s practices: pages of atomic statements
+          (<i>when</i> this situation, <i>do</i> this, <i>because</i> of that incident), each linking to the
+          ones that apply next. An index names the situations where a walk starts. The director walks it before
+          every plan and cites what it followed; after a task it proposes edits, and a person accepts or rejects
+          them. Code: <a href="https://github.com/EvolvingAgentsLabs/evolving-agents/tree/main/packages/director">packages/director</a>.</p>
+      </article>
+      <article>
+        <h2>Measured</h2>
+        <p class="question">Against our own previous way of working, never a frontier model.</p>
+        <p class="note"><span class="chip ok">ran</span>&nbsp; <b>Planning our way</b>, 14 real situations,
+          blind judge: today&rsquo;s session <b>0.589</b>, told to walk its own files <b>0.768</b>, the director
+          <b>0.929</b> (<a href="https://github.com/EvolvingAgentsLabs/evolving-agents/blob/main/packages/director/docs/BRIEF-D0.md">D0</a>).</p>
+        <p class="note"><span class="chip ok">ran</span>&nbsp; <b>Learning from tasks</b>: held-out probes of
+          lab-specific lessons from 0.0 to <b>0.781</b>, the first suite re-checked at <b>0.964</b>
+          (<a href="https://github.com/EvolvingAgentsLabs/evolving-agents/blob/main/packages/director/docs/BRIEF-D2.md">D2</a>).
+          <b>Learning the lane</b>: after one move, public-facing drafts went <b>0 / 6 &rarr; 6 / 6</b> to the
+          frontier while internal text stayed local
+          (<a href="https://github.com/EvolvingAgentsLabs/evolving-agents/blob/main/packages/director/docs/BRIEF-D3.md">D3</a>).</p>
+        <p class="note"><span class="chip warn">not yet</span>&nbsp; It costs about eleven times more per plan
+          than today&rsquo;s session; the cases come from the lab&rsquo;s own history, not from future work.</p>
+      </article>
+    </div>
+    <figure class="plate">
+      <img src="/assets/img/director/results.png" width="1600" height="700" loading="lazy"
+           alt="Three bar charts. D0, planning the team's way on 14 situations: today's session 0.589, today's session told to walk its files 0.768, the director 0.929. D2, learning from tasks on 8 held-out probes: before 0.0, after learning 0.781, and D0 re-checked afterwards 0.964. D3, learning the lane: public-facing drafts sent to the frontier before 0.0, after one move 1.0, and the internal control kept local 1.0.">
+      <figcaption>D0, D2 and D3, drawn from the briefs&rsquo; numbers.</figcaption>
+    </figure>
+    <figure class="plate">
+      <img src="/assets/img/director/walk.jpg" width="1600" height="900" loading="lazy"
+           alt="An open index book with one line underlined; a red-pencil route leaves it and steps across five index cards, leaving each from its highlighted line, to a plan of three items, each tagged back to the card it came from.">
+      <figcaption>It plans by walking the memory: each step of the plan is tagged to the statement it follows.</figcaption>
+    </figure>
+    <figure class="plate">
+      <img src="/assets/img/director/learning.jpg" width="1600" height="900" loading="lazy"
+           alt="A finished work order with a correction pinned to it; a new index card drafted at a desk; the card checked at a small brass gate; a ledger line closed with a fresh seal; the card filed in a cabinet drawer; a dashed arc back to the start.">
+      <figcaption>It learns from a task: a correction becomes a statement, checked at a gate, sealed in the ledger, filed.</figcaption>
+    </figure>
+    <figure class="plate">
+      <img src="/assets/img/director/lanes.jpg" width="1600" height="900" loading="lazy"
+           alt="A dispatch board with two columns of card slots: the left bordered in rust under a window with a distant domed building, the right in green under a small local machine. One card moves mid-air from the right column to the left; a lever below is thrown; the card beside its empty slot stays put.">
+      <figcaption>It learns where work runs: a task the user moved to the frontier teaches it where the next like it goes.</figcaption>
+    </figure>
   </section>
 
   <section class="hero" id="lora-kernel">
