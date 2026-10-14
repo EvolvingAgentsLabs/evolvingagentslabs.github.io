@@ -253,8 +253,12 @@
           mid-run passed a paired gate with a recall gain of <b>+0.444</b>, and <code>blame</code> attributed
           <b>+0.442</b> to <b>exactly one patch</b> &mdash; the one applied
           (<a href="https://github.com/EvolvingAgentsLabs/agentvcs/blob/main/examples/toy_pipeline/RUN_REAL.md">RUN_REAL.md</a>).</p>
+        <p class="note"><span class="chip ok">ran</span>&nbsp; <code>bisect</code> re-executes each candidate from the
+          run&rsquo;s checkpoint: on a toy run where a regression landed next to a harmless patch, <code>blame</code>
+          could only credit the pair; <code>bisect</code> named the regression
+          (<a href="https://github.com/EvolvingAgentsLabs/agentvcs/tree/main/examples/toy_pipeline">toy pipeline</a>).</p>
         <p class="note"><span class="chip warn">not built</span>&nbsp; No PyPI package; no real Claude Code merge
-          session recorded; no <code>bisect --exec</code>, remotes or sync.</p>
+          session recorded; no remotes or sync.</p>
       </article>
     </div>
     <figure class="plate">
