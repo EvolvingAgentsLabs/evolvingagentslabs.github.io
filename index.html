@@ -133,8 +133,9 @@
           walks the operational memory to plan, hands each step to Claude Code or to a local model, learns from
           each task and from where the user moves work.</p>
         <p class="note"><b>Built:</b> the loop and its local interface, learning sealed as agentvcs patches
-          (<a href="#director">measured</a>). <b>Not yet:</b> its local lane through lora-kernel&rsquo;s
-          specialists; no write access by default.</p>
+          (<a href="#director">measured</a>); its local lane through lora-kernel&rsquo;s specialists, run live once
+          (<a href="https://github.com/EvolvingAgentsLabs/evolving-agents/blob/main/packages/director/docs/BRIEF-D4.md">D4</a>).
+          <b>Not yet:</b> reliable abstention on that lane outside the phrasing it was measured on; no write access by default.</p>
         <p class="note why"><b>Why it matters:</b> the rules a team writes down are not the ones it follows
           under pressure. If it works, the way of working is recalled at the moment it applies, and every new
           lesson is a reviewed, reversible change instead of a line in a file nobody rereads.</p>
@@ -254,8 +255,12 @@
         <tr><td>director &rarr; frontier and local lanes</td><td><span class="chip ok">built</span></td>
             <td>Claude Code as a streamed <code>claude -p</code>; any OpenAI-compatible local server &mdash; it ran
               on llama.cpp on a 16&nbsp;GB laptop. The director never starts a local model itself.</td></tr>
-        <tr><td>director &rarr; lora-kernel</td><td><span class="chip warn">next &mdash; not built</span></td>
-            <td>The local lane through lora-kernel&rsquo;s specialists and router rather than a bare model.</td></tr>
+        <tr><td>director &rarr; lora-kernel</td><td><span class="chip ok">built</span></td>
+            <td>The local lane through lora-kernel&rsquo;s gateway (<code>local_kind: "lora-kernel"</code>). Run live
+              once (<a href="https://github.com/EvolvingAgentsLabs/evolving-agents/blob/main/packages/director/docs/BRIEF-D4.md">D4</a>):
+              a tracker request served by the specialist with its tools, an abstention sent to the frontier by itself.
+              A demonstration, not a rate: on two out-of-pattern requests the specialist abstained once wrongly and
+              missed once.</td></tr>
         <tr><td>agentvcs &harr; lora-kernel</td><td><span class="chip ok">built</span></td>
             <td>agentvcs&rsquo;s <a href="https://github.com/EvolvingAgentsLabs/agentvcs/tree/main/examples/lora-kernel">lora-kernel example</a>
               turns nine measured lora-kernel configuration changes into gated patches and hands a branch conflict
