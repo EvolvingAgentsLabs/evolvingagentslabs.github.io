@@ -86,9 +86,12 @@
     <div class="top">
       <span class="sectionlabel">The lab&rsquo;s main project</span>
       <a class="cta" href="https://github.com/EvolvingAgentsLabs/evolving-agents/stargazers">&#9733;&nbsp;<span class="stars" id="ea-stars">450+</span>&nbsp;stars on GitHub</a>
-      <span class="chip ok">active &middot; D0&ndash;D3 measured</span>
+      <span class="chip ok">active &middot; D0&ndash;D15 &middot; P0 measured</span>
     </div>
     <h1>evolving-agents: a director that learns how your team works</h1>
+    <p class="note" style="max-width:72ch">Evolving Agents&rsquo; 2025 SystemAgent, rebuilt on what we measured &mdash;
+      a <b>Claude Code plugin</b> today, built to move with its memory and its gate to Anthropic&rsquo;s Managed
+      Agents and Google&rsquo;s Antigravity agent next.</p>
     <p>You wrote the rules down &mdash; in a <code>CLAUDE.md</code>, an <code>AGENTS.md</code>, Claude Code&rsquo;s
       memory. Your agent still breaks them under pressure. The director compiles those rules into a memory of small,
       linked statements, <b>recalls the one that applies before it plans</b>, hands each step to Claude Code or to a
@@ -100,7 +103,7 @@
       <div class="num"><b>6 / 6</b><span>learned where you want work done, after one move</span></div>
     </div>
     <div class="ctas">
-      <a class="cta primary" href="https://github.com/EvolvingAgentsLabs/evolving-agents#try-it-on-your-own-instructions">Try it on your own CLAUDE.md</a>
+      <a class="cta primary" href="https://github.com/EvolvingAgentsLabs/evolving-agents#install">Try it on your own CLAUDE.md</a>
       <a class="cta" href="https://github.com/EvolvingAgentsLabs/evolving-agents">GitHub</a>
       <a class="cta" href="#roadmap">Roadmap</a>
       <a class="cta" href="#director">How it was measured</a>
@@ -125,7 +128,7 @@
         <h2><a href="#director">director</a></h2>
         <p class="question">Can an agent keep a team&rsquo;s way of working as memory &mdash; and plan, delegate
           and learn by it, so that each lesson is checked before it is kept?</p>
-        <p class="note"><span class="chip ok">active &middot; D0&ndash;D3 measured</span>&nbsp; A meta-agent in
+        <p class="note"><span class="chip ok">active &middot; D0&ndash;D15 &middot; P0 measured</span>&nbsp; A meta-agent in
           <a href="https://github.com/EvolvingAgentsLabs/evolving-agents/tree/main/packages/director">evolving-agents</a>:
           walks the operational memory to plan, hands each step to Claude Code or to a local model, learns from
           each task and from where the user moves work.</p>
@@ -282,6 +285,26 @@
           them. Code: <a href="https://github.com/EvolvingAgentsLabs/evolving-agents/tree/main/packages/director">packages/director</a>.</p>
       </article>
       <article>
+        <h2>From the SystemAgent</h2>
+        <p class="question">The 2025 toolkit&rsquo;s parts, each pinned to a measurement.</p>
+        <p class="note">The Evolving Agents Toolkit had a SystemAgent, a smart memory, a library and a bus of agents,
+          Firmware rules and an evolution loop &mdash; and three test functions in 18,680 lines. The director keeps
+          each idea and changes how it works: the SystemAgent plans by walking the memory instead of running its own
+          loop; smart memory becomes linked When / Do / Because statements; the library and the bus become lanes;
+          Firmware becomes rules enforced in code; evolution becomes a gated, versioned lesson. Piece by piece:
+          <a href="https://github.com/EvolvingAgentsLabs/evolving-agents/blob/main/docs/EVOLUTION.md">EVOLUTION.md</a>.</p>
+      </article>
+      <article>
+        <h2>One harness today, three next</h2>
+        <p class="question">The harness is rented, never built.</p>
+        <p class="note"><span class="chip ok">ran</span>&nbsp; As a Claude Code plugin the walk holds at the
+          director&rsquo;s own score (<a href="https://github.com/EvolvingAgentsLabs/evolving-agents/blob/main/packages/director/docs/BRIEF-P0.md">P0</a>).
+          <span class="chip warn">not yet</span>&nbsp; Anthropic&rsquo;s Managed Agents and Google&rsquo;s Antigravity
+          agent read the same skills and MCP servers, so moving is packaging, not a rewrite &mdash; each lane is
+          trusted only once it plans the same 14 situations within 0.03 of the plugin, with the memory mounted
+          read-only and lessons returned through the gate.</p>
+      </article>
+      <article>
         <h2>Measured</h2>
         <p class="question">Against our own previous way of working, never a frontier model.</p>
         <p class="note"><span class="chip ok">ran</span>&nbsp; <b>Planning our way</b>, 14 real situations,
@@ -297,6 +320,16 @@
           than today&rsquo;s session; the cases come from the lab&rsquo;s own history, not from future work.</p>
       </article>
     </div>
+    <figure class="plate">
+      <img src="/assets/img/director/lineage.jpg" width="1800" height="720" loading="lazy"
+        alt="Left, a blueprint of an elaborate machine drawn only in outline and never built. Dashed ochre lines carry each of its parts across to the right, where the same parts stand real on one bench: a chart table of linked index cards with a red route, a card-catalogue drawer, two brass dispatch tubes, a small brass box with a lever, and a sealed ledger.">
+      <figcaption>From the SystemAgent to the director: the 2025 blueprint, each part now built and measured.</figcaption>
+    </figure>
+    <figure class="plate">
+      <img src="/assets/img/director/harnesses.jpg" width="1800" height="720" loading="lazy"
+        alt="The chart table, a brass gate and a sealed ledger. Three glass-fronted, locked card drawers travel from it: to a writing desk close by, joined by a solid green cord, and to two distant buildings on hills joined only by dashed ochre lines. From each place a single index card returns to the brass gate.">
+      <figcaption>One memory, mounted read-only on every harness; lessons come back only through the gate. Solid: built. Dashed: planned.</figcaption>
+    </figure>
     <figure class="plate">
       <img src="/assets/img/director/results.png" width="1600" height="700" loading="lazy"
            alt="Three bar charts. D0, planning the team's way on 14 situations: today's session 0.589, today's session told to walk its files 0.768, the director 0.929. D2, learning from tasks on 8 held-out probes: before 0.0, after learning 0.781, and D0 re-checked afterwards 0.964. D3, learning the lane: public-facing drafts sent to the frontier before 0.0, after one move 1.0, and the internal control kept local 1.0.">
@@ -341,7 +374,8 @@
         outside the phrasing it was measured on.</li>
       <li><b>Cheaper walks</b> &mdash; today about eleven times today&rsquo;s session per plan; judged by D0 held within
         0.03 at three times the cost or less.</li>
-      <li><b>Inside Claude Code</b> &mdash; the walk in the session you already use; judged by D0 run there.</li>
+      <li><b>Inside Claude Code</b> &mdash; the walk in the session you already use; judged by D0 run there. <span class="chip ok">ran</span> as a plugin: 0.929, the same as the director (P0).</li>
+      <li><b>Managed harnesses</b> &mdash; an <code>anthropic-managed</code> and an <code>antigravity</code> lane, the same memory and gate; judged by D0 through each within 0.03 of 0.929.</li>
       <li><b>A team&rsquo;s memory</b> &mdash; lessons shared and merged with their evidence; judged by two members&rsquo;
         lessons merged without losing either&rsquo;s probes.</li>
       <li><b>Held-out from the future</b> &mdash; cases from work done after the memory was compiled. Bring yours:
