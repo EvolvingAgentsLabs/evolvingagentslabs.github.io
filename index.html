@@ -86,7 +86,7 @@
     <div class="top">
       <span class="sectionlabel">The lab&rsquo;s main project</span>
       <a class="cta" href="https://github.com/EvolvingAgentsLabs/evolving-agents/stargazers">&#9733;&nbsp;<span class="stars" id="ea-stars">450+</span>&nbsp;stars on GitHub</a>
-      <span class="chip ok">active &middot; D0&ndash;D3 measured</span>
+      <span class="chip ok">active &middot; D0&ndash;D16 and P0 measured</span>
     </div>
     <h1>evolving-agents: a director that learns how your team works</h1>
     <p>You wrote the rules down &mdash; in a <code>CLAUDE.md</code>, an <code>AGENTS.md</code>, Claude Code&rsquo;s
@@ -105,6 +105,9 @@
       <a class="cta" href="#roadmap">Roadmap</a>
       <a class="cta" href="#director">How it was measured</a>
     </div>
+    <p class="note">Inside Claude Code: <code>/plugin install director --marketplace EvolvingAgentsLabs/evolving-agents</code>,
+      then <code>/director:compile</code>. The walk through the plugin plans as well as the director itself: <b>0.929</b>
+      on the same 14 situations.</p>
     <img src="/assets/img/director/hero.jpg" width="1600" height="800" loading="eager"
          alt="A chart table with a web of linked index cards and a route traced across them in red pencil, ending at a plan sheet; brass tubes lead from it to a distant domed building through an arched window and to a small local machine with a dial.">
   </section>
@@ -125,12 +128,13 @@
         <h2><a href="#director">director</a></h2>
         <p class="question">Can an agent keep a team&rsquo;s way of working as memory &mdash; and plan, delegate
           and learn by it, so that each lesson is checked before it is kept?</p>
-        <p class="note"><span class="chip ok">active &middot; D0&ndash;D3 measured</span>&nbsp; A meta-agent in
+        <p class="note"><span class="chip ok">active &middot; D0&ndash;D16 and P0 measured</span>&nbsp; A meta-agent in
           <a href="https://github.com/EvolvingAgentsLabs/evolving-agents/tree/main/packages/director">evolving-agents</a>:
           walks the operational memory to plan, hands each step to Claude Code or to a local model, learns from
           each task and from where the user moves work.</p>
-        <p class="note"><b>Built:</b> the loop and its local interface, learning sealed as agentvcs patches
-          (<a href="#director">measured</a>). <b>Not yet:</b> its local lane through lora-kernel&rsquo;s
+        <p class="note"><b>Built:</b> the loop and its local interface, learning sealed as agentvcs patches, an
+          Accept guarded by the lesson&rsquo;s own probes, and a Claude Code plugin with a band above the prompt
+          (<a href="#director">measured</a>). <b>Not yet:</b> reliable local routing through lora-kernel&rsquo;s
           specialists; no write access by default.</p>
         <p class="note why"><b>Why it matters:</b> the rules a team writes down are not the ones it follows
           under pressure. If it works, the way of working is recalled at the moment it applies, and every new
@@ -251,8 +255,10 @@
         <tr><td>director &rarr; frontier and local lanes</td><td><span class="chip ok">built</span></td>
             <td>Claude Code as a streamed <code>claude -p</code>; any OpenAI-compatible local server &mdash; it ran
               on llama.cpp on a 16&nbsp;GB laptop. The director never starts a local model itself.</td></tr>
-        <tr><td>director &rarr; lora-kernel</td><td><span class="chip warn">next &mdash; not built</span></td>
-            <td>The local lane through lora-kernel&rsquo;s specialists and router rather than a bare model.</td></tr>
+        <tr><td>director &rarr; lora-kernel</td><td><span class="chip warn">ran live &mdash; not reliable</span></td>
+            <td>The local lane through lora-kernel&rsquo;s specialists and router rather than a bare model. Ran live
+              once: a tracker read served by the specialist with its tools, an abstention sent to the frontier; the
+              specialist&rsquo;s abstention is unreliable outside the phrasing it was measured on.</td></tr>
         <tr><td>agentvcs &harr; lora-kernel</td><td><span class="chip ok">built</span></td>
             <td>agentvcs&rsquo;s <a href="https://github.com/EvolvingAgentsLabs/agentvcs/tree/main/examples/lora-kernel">lora-kernel example</a>
               turns nine measured lora-kernel configuration changes into gated patches and hands a branch conflict
@@ -293,7 +299,23 @@
           <b>Learning the lane</b>: after one move, public-facing drafts went <b>0 / 6 &rarr; 6 / 6</b> to the
           frontier while internal text stayed local
           (<a href="https://github.com/EvolvingAgentsLabs/evolving-agents/blob/main/packages/director/docs/BRIEF-D3.md">D3</a>).</p>
-        <p class="note"><span class="chip warn">not yet</span>&nbsp; It costs about eleven times more per plan
+        <p class="note"><span class="chip ok">ran</span>&nbsp; <b>Inside Claude Code</b>: through the plugin, the
+          same 14 situations plan at <b>0.929</b>, as the director does
+          (<a href="https://github.com/EvolvingAgentsLabs/evolving-agents/blob/main/packages/director/docs/BRIEF-P0.md">P0</a>).
+          <b>A guarded Accept</b>: a lesson is kept only if it breaks none of the cases that relied on what it
+          changes and its own probes show it changes the plan
+          (<a href="https://github.com/EvolvingAgentsLabs/evolving-agents/blob/main/packages/director/docs/BRIEF-D6.md">D6</a>,
+          <a href="https://github.com/EvolvingAgentsLabs/evolving-agents/blob/main/packages/director/docs/BRIEF-D7.md">D7</a>).</p>
+        <p class="note"><span class="chip ok">ran</span>&nbsp; <b>Planning on your machine</b>: a local gemma4:12b,
+          following recipes Claude writes from the memory and only answering yes/no, plans at <b>0.806</b> against
+          <b>0.854</b> for Sonnet walking with tools, in about ten seconds and at no cost; smaller models not yet
+          (<a href="https://github.com/EvolvingAgentsLabs/evolving-agents/blob/main/packages/director/docs/BRIEF-D15.md">D15</a>,
+          after flat and partial results in D8&ndash;D14).</p>
+        <p class="note"><span class="chip warn">flat</span>&nbsp; <b>The lanes as a directory of data</b> routed as
+          well as the same facts in prose, <b>0.880</b> against <b>0.864</b>, but broke clearance more often and did
+          not follow a lane going down well enough: not built
+          (<a href="https://github.com/EvolvingAgentsLabs/evolving-agents/blob/main/packages/director/docs/BRIEF-D16.md">D16</a>).</p>
+        <p class="note"><span class="chip warn">not yet</span>&nbsp; Walking costs about eleven times more per plan
           than today&rsquo;s session; the cases come from the lab&rsquo;s own history, not from future work.</p>
       </article>
     </div>
@@ -331,7 +353,9 @@
     <ol>
       <li><b>Built:</b> plan by walking the memory (D0), the loop and its interface (D1), learn from a task (D2), learn
         where work runs (D3), an Accept guarded by D0 &mdash; paired against the current memory, and run live to keep
-        a lesson taught from the interface (D4).</li>
+        a lesson taught from the interface (D4), a targeted guard and a positive probe behind it (D5&ndash;D7), the
+        walk inside Claude Code as a plugin (P0), local planning by recipes (D8&ndash;D15). Published flat: the lanes
+        as a directory of data (D16).</li>
       <li><b>Your own director in ten minutes</b> &mdash; <code>director.compile</code> on your <code>CLAUDE.md</code>
         and memory. <span class="chip ok">ran</span> from a clean clone on a public instruction file, to a first plan
         citing it, in about a minute and a half; next, a stranger&rsquo;s own <code>CLAUDE.md</code> on their machine.</li>
@@ -340,8 +364,8 @@
         its tools, an abstention sent to the frontier; <span class="chip warn">not yet</span> reliable abstention
         outside the phrasing it was measured on.</li>
       <li><b>Cheaper walks</b> &mdash; today about eleven times today&rsquo;s session per plan; judged by D0 held within
-        0.03 at three times the cost or less.</li>
-      <li><b>Inside Claude Code</b> &mdash; the walk in the session you already use; judged by D0 run there.</li>
+        0.03 at three times the cost or less. Two cheaper routes measured on other banks: local retrieval with Claude
+        writing the plan, and a local model following recipes.</li>
       <li><b>A team&rsquo;s memory</b> &mdash; lessons shared and merged with their evidence; judged by two members&rsquo;
         lessons merged without losing either&rsquo;s probes.</li>
       <li><b>Held-out from the future</b> &mdash; cases from work done after the memory was compiled. Bring yours:

@@ -99,6 +99,8 @@ AV_F2 = "examples/toy_pipeline/runs/f2-rerun-2026-10-06/result.json"
 # each in a table or a sentence written from the run; the check reads them there.
 EA_RAW = "https://raw.githubusercontent.com/EvolvingAgentsLabs/evolving-agents/{ref}/{path}"
 DIR_D0, DIR_D2, DIR_D3 = (f"packages/director/docs/BRIEF-{d}.md" for d in ("D0", "D2", "D3"))
+# Added 2026-10-20: the plugin (P0), local planning by recipes (D15) and the directory of lanes (D16, flat).
+DIR_P0, DIR_D15, DIR_D16 = (f"packages/director/docs/BRIEF-{d}.md" for d in ("P0", "D15", "D16"))
 
 
 def fetch(path: str, ref: str, raw: str = RAW) -> dict:
@@ -298,6 +300,23 @@ def director_claims(d0: str, d2: str, d3: str) -> list[tuple[str, str, str]]:
     ]
 
 
+def director_more_claims(p0: str, d15: str, d16: str) -> list[tuple[str, str, str]]:
+    """P0 (the plugin), D15 (recipes on a local 12B) and D16 (the directory, published flat), as the home renders them."""
+    home = "index.html"
+    never = "(the artifact no longer supports this claim)"
+    mp = re.search(r"\| mean, 14 cases × k = 2 \| \*\*(0\.\d+)\*\* \| \*\*(0\.\d+)\*\* \|", p0)
+    g12 = re.search(r"\| \*\*G12\*\* `gemma4:12b-mlx` \| \*\*(0\.\d+)\*\* \|", d15)
+    t15 = re.search(r"\| T \(Sonnet walking with tools\) \| (0\.\d+) \|", d15)
+    m16 = re.search(r"\| 1 · lane accuracy, 15 cases × k = 2 \| (0\.\d+) \| \*\*(0\.\d+)\*\* \|", d16)
+    return [
+        (home, f"<b>{mp.group(2)}</b>" if mp else never, "director P0: the walk through the plugin"),
+        (home, f"<b>{g12.group(1)}</b>" if g12 else never, "director D15: gemma4:12b following recipes"),
+        (home, f"<b>{t15.group(1)}</b>" if t15 else never, "director D15: Sonnet walking with tools"),
+        (home, f"<b>{m16.group(2)}</b>" if m16 else never, "director D16: the directory's lane accuracy"),
+        (home, f"<b>{m16.group(1)}</b>" if m16 else never, "director D16: prose's lane accuracy"),
+    ]
+
+
 def main() -> int:
     ap = argparse.ArgumentParser()
     ap.add_argument("--ref", default="main", help="git ref to read the artifacts from")
@@ -325,6 +344,8 @@ def main() -> int:
     av = agentvcs_claims(fetch(AV_F2, "main", AV_RAW))
     di = director_claims(fetch_text(DIR_D0, "main", EA_RAW), fetch_text(DIR_D2, "main", EA_RAW),
                          fetch_text(DIR_D3, "main", EA_RAW))
+    di += director_more_claims(fetch_text(DIR_P0, "main", EA_RAW), fetch_text(DIR_D15, "main", EA_RAW),
+                               fetch_text(DIR_D16, "main", EA_RAW))
     for page, value, what in claims(h0) + lk + ge + av + di:
         if page not in pages:
             f = ROOT / page
