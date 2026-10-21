@@ -98,10 +98,17 @@
       model on your machine, and <b>learns from your corrections</b> &mdash; each lesson checked against what it already
       knew and kept only if you accept it, as a reversible, versioned patch.</p>
     <div class="nums">
-      <div class="num"><b>0.929</b><span>planning by your rules &mdash; vs 0.589 for today&rsquo;s session</span></div>
+      <div class="num"><b>0.929</b><span>planning by your rules &mdash; vs 0.589 for today&rsquo;s session, both planned by Sonnet</span></div>
       <div class="num"><b>0.0 &rarr; 0.781</b><span>learning from tasks, nothing it knew broken</span></div>
       <div class="num"><b>6 / 6</b><span>learned where you want work done, after one move</span></div>
     </div>
+    <p class="note" style="max-width:72ch"><span class="chip warn">with Opus</span>&nbsp; These were measured with Sonnet 5.5
+      planning. With Opus 5.5 planning, today&rsquo;s session alone follows the same rules <b>0.964</b> of the time
+      (<a href="https://github.com/EvolvingAgentsLabs/evolving-agents/blob/main/packages/director/docs/BRIEF-D0O.md">D0O</a>)
+      and keeps a multi-day thread&rsquo;s decisions 0.80 against the director&rsquo;s 0.85
+      (<a href="https://github.com/EvolvingAgentsLabs/evolving-agents/blob/main/packages/director/docs/BRIEF-C2.md">C2</a>);
+      what the director still showed there is cost, 34&nbsp;% less per plan. Newer, harder situations with Opus are
+      measured next.</p>
     <div class="ctas">
       <a class="cta primary" href="https://github.com/EvolvingAgentsLabs/evolving-agents#install">Try it on your own CLAUDE.md</a>
       <a class="cta" href="https://github.com/EvolvingAgentsLabs/evolving-agents">GitHub</a>
@@ -313,8 +320,10 @@
         <h2>Measured</h2>
         <p class="question">Against our own previous way of working, never a frontier model.</p>
         <p class="note"><span class="chip ok">ran</span>&nbsp; <b>Planning our way</b>, 14 real situations,
-          blind judge: today&rsquo;s session <b>0.589</b>, told to walk its own files <b>0.768</b>, the director
-          <b>0.929</b> (<a href="https://github.com/EvolvingAgentsLabs/evolving-agents/blob/main/packages/director/docs/BRIEF-D0.md">D0</a>).</p>
+          blind judge, Sonnet 5.5 planning: today&rsquo;s session <b>0.589</b>, told to walk its own files <b>0.768</b>, the director
+          <b>0.929</b> (<a href="https://github.com/EvolvingAgentsLabs/evolving-agents/blob/main/packages/director/docs/BRIEF-D0.md">D0</a>).
+          <span class="chip warn">not with Opus</span> Opus 5.5 planning alone: <b>0.964</b>
+          (<a href="https://github.com/EvolvingAgentsLabs/evolving-agents/blob/main/packages/director/docs/BRIEF-D0O.md">D0O</a>).</p>
         <p class="note"><span class="chip ok">ran</span>&nbsp; <b>Learning from tasks</b>: held-out probes of
           lab-specific lessons from 0.0 to <b>0.781</b>, the first suite re-checked at <b>0.964</b>
           (<a href="https://github.com/EvolvingAgentsLabs/evolving-agents/blob/main/packages/director/docs/BRIEF-D2.md">D2</a>).
