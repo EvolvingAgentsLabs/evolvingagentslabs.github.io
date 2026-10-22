@@ -86,7 +86,7 @@
     <div class="top">
       <span class="sectionlabel">The lab&rsquo;s main project</span>
       <a class="cta" href="https://github.com/EvolvingAgentsLabs/evolving-agents/stargazers">&#9733;&nbsp;<span class="stars" id="ea-stars">450+</span>&nbsp;stars on GitHub</a>
-      <span class="chip ok">active &middot; D0&ndash;D15 &middot; P0 measured</span>
+      <span class="chip ok">active &middot; D0&ndash;D16 &middot; C0&ndash;C2 measured &middot; director-bench next</span>
     </div>
     <h1>evolving-agents: a director that learns how your team works</h1>
     <p class="note" style="max-width:72ch">Evolving Agents&rsquo; 2025 SystemAgent, rebuilt on what we measured &mdash;
@@ -107,8 +107,15 @@
       (<a href="https://github.com/EvolvingAgentsLabs/evolving-agents/blob/main/packages/director/docs/BRIEF-D0O.md">D0O</a>)
       and keeps a multi-day thread&rsquo;s decisions 0.80 against the director&rsquo;s 0.85
       (<a href="https://github.com/EvolvingAgentsLabs/evolving-agents/blob/main/packages/director/docs/BRIEF-C2.md">C2</a>);
-      what the director still showed there is cost, 34&nbsp;% less per plan. Newer, harder situations with Opus are
-      measured next.</p>
+      what the director still showed there is cost, 34&nbsp;% less per plan. On situations from after the memory was
+      frozen, Opus alone left room only under its own judge (<a href="https://github.com/EvolvingAgentsLabs/evolving-agents/blob/main/packages/director/docs/BRIEF-F1O.md">F1O</a>), and Gemini follows the
+      same rules written as plain notes 0.875 (<a href="https://github.com/EvolvingAgentsLabs/evolving-agents/blob/main/packages/director/docs/BRIEF-PG.md">PG</a>).</p>
+    <p style="max-width:72ch"><b>What it is now:</b> an <b>auditable external memory of how you work</b> &mdash; your
+      methods and operational knowledge, learned only through a gate (your yes, or a verifier of your domain), kept as
+      plain files that travel to other models. The next question is the one that matters with the strongest models:
+      <b>does Claude Code get better from one session to the next on the work you repeat, and does the memory ever make
+      it worse?</b> It is measured in the open by <a href="https://github.com/EvolvingAgentsLabs/director-bench">director-bench</a>,
+      after a pilot (<a href="https://github.com/EvolvingAgentsLabs/evolving-agents/blob/main/packages/director/docs/BRIEF-DB0.md">DB0</a>).</p>
     <div class="ctas">
       <a class="cta primary" href="https://github.com/EvolvingAgentsLabs/evolving-agents#install">Try it on your own CLAUDE.md</a>
       <a class="cta" href="https://github.com/EvolvingAgentsLabs/evolving-agents">GitHub</a>
@@ -135,7 +142,7 @@
         <h2><a href="#director">director</a></h2>
         <p class="question">Can an agent keep a team&rsquo;s way of working as memory &mdash; and plan, delegate
           and learn by it, so that each lesson is checked before it is kept?</p>
-        <p class="note"><span class="chip ok">active &middot; D0&ndash;D15 &middot; P0 measured</span>&nbsp; A meta-agent in
+        <p class="note"><span class="chip ok">active &middot; D0&ndash;D16 &middot; C0&ndash;C2 measured &middot; director-bench next</span>&nbsp; A meta-agent in
           <a href="https://github.com/EvolvingAgentsLabs/evolving-agents/tree/main/packages/director">evolving-agents</a>:
           walks the operational memory to plan, hands each step to Claude Code or to a local model, learns from
           each task and from where the user moves work.</p>
@@ -317,6 +324,28 @@
           read-only and lessons returned through the gate.</p>
       </article>
       <article>
+        <h2>An auditable memory that travels</h2>
+        <p class="question">What survives the move to Opus.</p>
+        <p class="note"><span class="chip ok">built</span>&nbsp; Every lesson is a diff of When / Do / Because
+          statements with its own probes, a lint, an optional check that it changes the plan, and a decision &mdash; a
+          person&rsquo;s yes, or with no person present a declared policy (<code>director.headless</code>: lessons only
+          from sessions whose verifier passed), recorded in the journal; every accepted edit is an agentvcs patch.
+          <span class="chip ok">ran</span>&nbsp; The memory is plain Markdown: Gemini follows it as notes at 0.875
+          (<a href="https://github.com/EvolvingAgentsLabs/evolving-agents/blob/main/packages/director/docs/BRIEF-PG.md">PG</a>). <span class="chip warn">not yet</span>&nbsp; Whether it helps across
+          sessions against Claude Code&rsquo;s own memory: director-bench, beside this.</p>
+      </article>
+      <article>
+        <h2>Measured next: director-bench</h2>
+        <p class="question">Better from one session to the next &mdash; or worse?</p>
+        <p class="note"><span class="chip warn">next</span>&nbsp; An open benchmark, independent of the director:
+          chained headless Claude Code sessions on recurring tasks, a binary verifier per task, only the memory store
+          kept between them. No memory, native memory, the director, both, and the director learning from every
+          session instead of only verified ones. Primary metric: errors repeated from an earlier session; also cost,
+          retention, regressions and errors the memory itself induced. Win criteria fixed before it runs; a 90-session
+          pilot first (<a href="https://github.com/EvolvingAgentsLabs/evolving-agents/blob/main/packages/director/docs/BRIEF-DB0.md">DB0</a>).
+          <a href="https://github.com/EvolvingAgentsLabs/director-bench">Repository</a>.</p>
+      </article>
+      <article>
         <h2>Measured</h2>
         <p class="question">Against our own previous way of working, never a frontier model.</p>
         <p class="note"><span class="chip ok">ran</span>&nbsp; <b>Planning our way</b>, 14 real situations,
@@ -330,8 +359,13 @@
           <b>Learning the lane</b>: after one move, public-facing drafts went <b>0 / 6 &rarr; 6 / 6</b> to the
           frontier while internal text stayed local
           (<a href="https://github.com/EvolvingAgentsLabs/evolving-agents/blob/main/packages/director/docs/BRIEF-D3.md">D3</a>).</p>
-        <p class="note"><span class="chip warn">not yet</span>&nbsp; It costs about eleven times more per plan
-          than today&rsquo;s session; the cases come from the lab&rsquo;s own history, not from future work.</p>
+        <p class="note"><span class="chip ok">ran</span>&nbsp; <b>Outside our own history and our own judge</b>:
+          on situations from after the memory was frozen the gap held with Sonnet planning, and under another
+          provider&rsquo;s judge (<a href="https://github.com/EvolvingAgentsLabs/evolving-agents/blob/main/packages/director/docs/BRIEF-F1.md">F1</a>, <a href="https://github.com/EvolvingAgentsLabs/evolving-agents/blob/main/packages/director/docs/BRIEF-J0.md">J0</a>). <b>Over days</b>: a
+          session kept 0.275 of a thread&rsquo;s decisions, 0.725 with the director&rsquo;s lessons, with Sonnet
+          (<a href="https://github.com/EvolvingAgentsLabs/evolving-agents/blob/main/packages/director/docs/BRIEF-C1.md">C1</a>); with Opus, 0.80 against 0.85 (<a href="https://github.com/EvolvingAgentsLabs/evolving-agents/blob/main/packages/director/docs/BRIEF-C2.md">C2</a>).
+          <span class="chip warn">flat</span>&nbsp; The lanes as a directory of data instead of prose: not built
+          (<a href="https://github.com/EvolvingAgentsLabs/evolving-agents/blob/main/packages/director/docs/BRIEF-D16.md">D16</a>).</p>
       </article>
     </div>
     <figure class="plate">
@@ -392,9 +426,15 @@
       <li><b>Managed harnesses</b> &mdash; an <code>anthropic-managed</code> and an <code>antigravity</code> lane, the same memory and gate; judged by D0 through each within 0.03 of 0.929.</li>
       <li><b>A team&rsquo;s memory</b> &mdash; lessons shared and merged with their evidence; judged by two members&rsquo;
         lessons merged without losing either&rsquo;s probes.</li>
-      <li><b>Held-out from the future</b> &mdash; cases from work done after the memory was compiled. Bring yours:
-        <a href="https://github.com/EvolvingAgentsLabs/evolving-agents/issues/new">a situation where your agent ignored
-        a rule you had written down</a>.</li>
+      <li><b>Held-out from the future, another provider&rsquo;s judge, coherence over days</b> &mdash;
+        <span class="chip ok">ran</span> (<a href="https://github.com/EvolvingAgentsLabs/evolving-agents/blob/main/packages/director/docs/BRIEF-F1.md">F1</a>, <a href="https://github.com/EvolvingAgentsLabs/evolving-agents/blob/main/packages/director/docs/BRIEF-J0.md">J0</a>,
+        <a href="https://github.com/EvolvingAgentsLabs/evolving-agents/blob/main/packages/director/docs/BRIEF-C1.md">C1</a>): the gap holds with Sonnet; with Opus planning it is mostly gone
+        (<a href="https://github.com/EvolvingAgentsLabs/evolving-agents/blob/main/packages/director/docs/BRIEF-D0O.md">D0O</a>, <a href="https://github.com/EvolvingAgentsLabs/evolving-agents/blob/main/packages/director/docs/BRIEF-C2.md">C2</a>), and what is left is cost and what lasts.</li>
+      <li><b>Between sessions, against Claude Code&rsquo;s own memory</b> &mdash; <span class="chip warn">next</span>
+        <a href="https://github.com/EvolvingAgentsLabs/director-bench">director-bench</a>: a 90-session pilot
+        (<a href="https://github.com/EvolvingAgentsLabs/evolving-agents/blob/main/packages/director/docs/BRIEF-DB0.md">DB0</a>), then 1,000 sessions judged by criteria fixed before they run. Bring a
+        recurring task with a test that checks it:
+        <a href="https://github.com/EvolvingAgentsLabs/evolving-agents/issues/new">open an issue</a>.</li>
     </ol>
   </section>
 
