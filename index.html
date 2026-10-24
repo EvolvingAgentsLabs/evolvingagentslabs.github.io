@@ -3,10 +3,10 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<title>Evolving Agents Labs — the director, lora-kernel, agentvcs, gene-evidence</title>
-<meta name="description" content="An open lab for agents that learn how a team works. The director plans by walking the team’s operational memory, delegates to a frontier model or local models, and learns by gated patches. lora-kernel: an operating layer for specialized local AI agents — one small resident model, many specialists, a router that abstains to a frontier model. agentvcs: version control for live-patched agent systems. gene-evidence, a prototype: auditable evidence reports for gene predictions the reference annotation does not have. And the rest, active and archived.">
-<meta property="og:title" content="Evolving Agents Labs — lora-kernel, agentvcs, gene-evidence and the open projects">
-<meta property="og:description" content="The lab’s open projects. lora-kernel, the flagship: an operating layer for specialized local AI agents — one small resident model, many specialists, a router that abstains to a frontier model. agentvcs: version control for live-patched agent systems. gene-evidence, a prototype: auditable evidence reports for gene predictions the reference annotation does not have. And the rest, active and archived.">
+<title>Evolving Agents Labs — the director remembers how your team works</title>
+<meta name="description" content="The director remembers how your team works and makes every agent session work that way: your decisions and conventions carried into each plan, lessons kept only with your yes, confidential work only on machines you clear. A Claude Code plugin, open source, from Evolving Agents Labs.">
+<meta property="og:title" content="Evolving Agents Labs — the director: your team’s way of working, in every agent session">
+<meta property="og:description" content="The director remembers how your team works and makes every agent session work that way: your decisions and conventions carried into each plan, lessons kept only with your yes, confidential work only on machines you clear. A Claude Code plugin, open source, from Evolving Agents Labs.">
 <meta property="og:type" content="website">
 <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Crect x='2' y='2' width='13' height='13' rx='4' fill='%23F2F2F7'/%3E%3Crect x='17' y='2' width='13' height='13' rx='4' fill='%23F2F2F7'/%3E%3Crect x='2' y='17' width='13' height='13' rx='4' fill='%23F2F2F7'/%3E%3Crect x='18' y='18' width='11' height='11' rx='3' fill='none' stroke='%23F2F2F7' stroke-width='2' opacity='.42'/%3E%3C/svg%3E">
 <meta name="theme-color" content="#F4ECDB">
@@ -86,44 +86,31 @@
     <div class="top">
       <span class="sectionlabel">The lab&rsquo;s main project</span>
       <a class="cta" href="https://github.com/EvolvingAgentsLabs/evolving-agents/stargazers">&#9733;&nbsp;<span class="stars" id="ea-stars">450+</span>&nbsp;stars on GitHub</a>
-      <span class="chip ok">active &middot; D0&ndash;D16 &middot; C0&ndash;C2 measured &middot; director-bench next</span>
+      <span class="chip ok">active &middot; Claude Code plugin</span>
     </div>
-    <h1>evolving-agents: a director that learns how your team works</h1>
-    <p class="note" style="max-width:72ch">Evolving Agents&rsquo; 2025 SystemAgent, rebuilt on what we measured &mdash;
-      a <b>Claude Code plugin</b> today, built to move with its memory and its gate to Anthropic&rsquo;s Managed
-      Agents and Google&rsquo;s Antigravity agent next.</p>
-    <p>You wrote the rules down &mdash; in a <code>CLAUDE.md</code>, an <code>AGENTS.md</code>, Claude Code&rsquo;s
-      memory. Your agent still breaks them under pressure. The director compiles those rules into a memory of small,
-      linked statements, <b>recalls the one that applies before it plans</b>, hands each step to Claude Code or to a
-      model on your machine, and <b>learns from your corrections</b> &mdash; each lesson checked against what it already
-      knew and kept only if you accept it, as a reversible, versioned patch.</p>
+    <h1>The director remembers how your team works &mdash; and makes every agent session work that way</h1>
+    <p style="max-width:72ch">Your decisions, conventions and hard-won methods become a small memory of linked
+      rules. Before an agent plans, the director finds the rules that apply and puts them in front of it. Private work
+      goes only to machines you have cleared. When you correct it, it drafts a lesson that you accept or reject. It
+      runs inside <b>Claude Code</b> today.</p>
     <div class="nums">
-      <div class="num"><b>0.929</b><span>planning by your rules &mdash; vs 0.589 for today&rsquo;s session, both planned by Sonnet</span></div>
-      <div class="num"><b>0.0 &rarr; 0.781</b><span>learning from tasks, nothing it knew broken</span></div>
-      <div class="num"><b>6 / 6</b><span>learned where you want work done, after one move</span></div>
+      <div class="num"><b>Your decisions</b><span>carried into the work &mdash; the plan names the rule it followed, and lists the choices still yours</span></div>
+      <div class="num"><b>Your yes</b><span>every lesson learned from a correction is kept only if you accept it, as a change you can undo</span></div>
+      <div class="num"><b>Your machines</b><span>confidential work goes only where you cleared it &mdash; enforced in code, never sent to a cloud model</span></div>
     </div>
-    <p class="note" style="max-width:72ch"><span class="chip warn">with Opus</span>&nbsp; These were measured with Sonnet 5.5
-      planning. With Opus 5.5 planning, today&rsquo;s session alone follows the same rules <b>0.964</b> of the time
-      (<a href="https://github.com/EvolvingAgentsLabs/evolving-agents/blob/main/packages/director/docs/BRIEF-D0O.md">D0O</a>)
-      and keeps a multi-day thread&rsquo;s decisions 0.80 against the director&rsquo;s 0.85
-      (<a href="https://github.com/EvolvingAgentsLabs/evolving-agents/blob/main/packages/director/docs/BRIEF-C2.md">C2</a>);
-      what the director still showed there is cost, 34&nbsp;% less per plan. On situations from after the memory was
-      frozen, Opus alone left room only under its own judge (<a href="https://github.com/EvolvingAgentsLabs/evolving-agents/blob/main/packages/director/docs/BRIEF-F1O.md">F1O</a>), and Gemini follows the
-      same rules written as plain notes 0.875 (<a href="https://github.com/EvolvingAgentsLabs/evolving-agents/blob/main/packages/director/docs/BRIEF-PG.md">PG</a>).</p>
-    <p style="max-width:72ch"><b>What it is now:</b> an <b>auditable external memory of how you work</b> &mdash; your
-      methods and operational knowledge, learned only through a gate (your yes, or a verifier of your domain), kept as
-      plain files that travel to other models. The next question is the one that matters with the strongest models:
-      <b>does Claude Code get better from one session to the next on the work you repeat, and does the memory ever make
-      it worse?</b> It is measured in the open by <a href="https://github.com/EvolvingAgentsLabs/director-bench">director-bench</a>,
-      after a pilot (<a href="https://github.com/EvolvingAgentsLabs/evolving-agents/blob/main/packages/director/docs/BRIEF-DB0.md">DB0</a>).</p>
+    <p class="note" style="max-width:72ch"><span class="chip warn">what to expect</span>&nbsp; The director does not
+      make a strong model smarter: with today&rsquo;s best models an agent already follows general good practice on its
+      own, and we measured that. It pays where the model cannot know &mdash; your own conventions, your privacy rules,
+      and an auditable record of what was learned. Every number, the flat ones included, is
+      <a href="#director">below</a>.</p>
     <div class="ctas">
-      <a class="cta primary" href="https://github.com/EvolvingAgentsLabs/evolving-agents#install">Try it on your own CLAUDE.md</a>
+      <a class="cta primary" href="https://github.com/EvolvingAgentsLabs/evolving-agents#get-started">Install it in Claude Code</a>
       <a class="cta" href="https://github.com/EvolvingAgentsLabs/evolving-agents">GitHub</a>
       <a class="cta" href="#roadmap">Roadmap</a>
-      <a class="cta" href="#director">How it was measured</a>
+      <a class="cta" href="#director">What we measured</a>
     </div>
-    <img src="/assets/img/director/hero.jpg" width="1600" height="800" loading="eager"
-         alt="A chart table with a web of linked index cards and a route traced across them in red pencil, ending at a plan sheet; brass tubes lead from it to a distant domed building through an arched window and to a small local machine with a dial.">
+    <img src="/assets/img/director/what-it-does.jpg" width="1800" height="720" loading="eager"
+         alt="A card-catalogue drawer of linked index cards; one card carried by a red-pencil line and pinned to one line of an open plan on a writing desk, a blank card set apart; two brass tubes leave the desk, one through a window to a distant domed building, one to a padlocked cabinet in the same room that alone receives a sealed envelope; a ledger with a freshly pressed wax seal.">
   </section>
 
   <section id="projects">
